@@ -135,7 +135,12 @@
                                 <a class="nav-link" href="#">Page</a>
                             </li>
                             <li class="nav-item">
-                                <a id="loginBtn" class="nav-link" href="#">로그인</a>
+                            	<sec:authorize access="isAuthenticated()">
+                                	<a id="logoutBtn" class="nav-link" href="#">로그아웃</a>
+                                </sec:authorize>
+                                <sec:authorize access="isAnonymous()">
+                                	<a id="loginBtn" class="nav-link" href="#">로그인</a>
+                                </sec:authorize>
                             </li>
                         </ul>
                     </div>
@@ -190,6 +195,10 @@
       <input type='checkbox' id="remember-me" name='remember-me' style="opacity:0; position:absolute; left:9999px;">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
+
+<form id="logoutForm" method='post' action="/customLogout">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
 <!-- =================================================================================================  -->
     
 
@@ -226,7 +235,7 @@
 
 
     <!-- =================================================================================================  -->
-    <!-- 로그인버튼이벤트  -->
+    <!-- 로그인버튼 이벤트  -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -236,7 +245,7 @@
                     title: '로그인',
                     html: '<input type="text" id="username_temp" class="swal2-input" placeholder="아이디"></input>'
                         +'<input type="password" id="password_temp" class="swal2-input" placeholder="비밀번호"></input>'
-                        +'<input type="checkbox" id="remember_temp"> 자동로그인</input>'
+                        +'<label class="form-check-label"><input type="checkbox" id="remember_temp"> 자동로그인</input></label>'
                         ,
                     confirmButtonText: '로그인',
                     preConfirm: () => {
@@ -250,17 +259,28 @@
                         return {username: username, password: password, remember: remember}
                     }
                     }).then((result) => {
+                    	
                         $('#username').val(result.value.username);
                         $('#password').val(result.value.password);
-                        $('#remember-me').val(result.value.remember);
+                        
+                        //자동로그인 체크박스 확인
+                        if(result.value.remember){
+                            $('#remember-me').attr("checked", true);
+                        }
+                        
                         $("#loginForm").submit();
-                    /*
-                    Swal.fire(
-                                "아이디: " + result.value.username + "\n"
-                                + "비밀번호: " + result.value.password + "\n"
-                                + "자동로그인: " + result.value.remember
-                            );
-                            */
+                        
+                        
+                    	/*
+                    	*/
+                    	
+                    	/*
+            	        Swal.fire(
+							"아이디: " + result.value.username + "\n"
+							+ "비밀번호: " + result.value.password + "\n"
+							+ "자동로그인: " + result.value.remember
+						);
+						*/
                      });
             });
 
@@ -268,6 +288,19 @@
     </script>
     <!-- =================================================================================================  -->
 
+
+
+	<!-- =================================================================================================  -->
+    <!-- 로그아웃버튼 이벤트  -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#logoutBtn').on('click', function(){
+                $("#logoutForm").submit();
+            });
+        });
+    </script>
+    <!-- =================================================================================================  -->
 
 
 
