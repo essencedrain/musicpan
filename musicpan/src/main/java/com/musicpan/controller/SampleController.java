@@ -34,6 +34,11 @@ public class SampleController {
     log.info("admin only");
   }  
   
+  @GetMapping("/test1")
+  public void test1() {
+    
+    log.info("test1");
+  }
   
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
   @GetMapping("/annoMember")
