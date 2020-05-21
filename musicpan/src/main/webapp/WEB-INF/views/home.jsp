@@ -247,7 +247,8 @@
               }); 
         	
             $('#loginBtn').on('click', function () {
-                Swal.fire({
+                
+            	Swal.fire({
                     title: '로그인',
                     html: '<input type="text" id="username_temp" class="swal2-input" placeholder="아이디"></input>'
                         +'<input type="password" id="password_temp" class="swal2-input" placeholder="비밀번호"></input>'
@@ -272,10 +273,11 @@
                     }
                     }).then((result) => {
                     	
+                    	//스윗얼럿2 모달창 자동로그인 체크확인
+                    	//체크되어 있으면 form에 체크박스 체크처리
                     	if(result.value.remember){
                             $('#remember-me').attr("checked", true);
                         }
-                    	var me = $("#remember-me").prop("checked");
                     	
                     	$.ajax({
                 			url:"/login",
@@ -284,7 +286,7 @@
                 			data : {
                 				id : result.value.username,
                 				pwd : result.value.password,
-                				remember_me : me
+                				remember_me : $("#remember-me").prop("checked")
                 			},
                 			success : function(response){
                 				if(response.code == "200"){
@@ -304,59 +306,10 @@
                 				console.log(a,b,c);
                 			}
                 			
-                		});
-                		
-						/*
-						let params = {
-								id : result.value.username,
-					            password : result.value.password
-						};
-						
-                    	 $.ajaxSetup({
-                             beforeSend: function(xhr) {
-                                 xhr.setRequestHeader(csrfHeader, csrfToken);
-                             }  
-                         });
-                    	 
-                    	 $.ajax({
-                             url : "/loginAjax",
-                             type : "post",
-                             dataType : "json",
-                             data : params,
-                             success : function(response) {
-                                 console.log(response);
-                             }, error : function(jqXHR, status, e) {
-                                 console.error(status + " : " + e);
-                             }
-
-                         });
-                    	*/
-                    	
-                    	/*
-                        $('#username').val(result.value.username);
-                        $('#password').val(result.value.password);
-                        
-                        //자동로그인 체크박스 확인
-                        if(result.value.remember){
-                            $('#remember-me').attr("checked", true);
-                        }
-                        
-                        $("#loginForm").submit();
-                        
-                        
-                    	*/
-                    	
-                    	/*
-            	        Swal.fire(
-							"아이디: " + result.value.username + "\n"
-							+ "비밀번호: " + result.value.password + "\n"
-							+ "자동로그인: " + result.value.remember
-						);
-						*/
-                     });
-            });
-
-        });
+                		});//$.ajax
+                   	});//Swal.fire.then
+            	});//$('#loginBtn').on('click'
+	        });//$(document).ready(function ()
     </script>
     <!-- =================================================================================================  -->
 
