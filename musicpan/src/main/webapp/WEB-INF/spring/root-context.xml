@@ -45,6 +45,6 @@
 		base-package="com.musicpan.service">
 	</context:component-scan>
 
-	<mybatis-spring:scan base-package="com.musicpan.mapper"/>
 	-->
+	<mybatis-spring:scan base-package="com.musicpan.mapper"/>
 </beans>
