@@ -192,7 +192,7 @@
 <form id="loginForm" method='post' action="/login">  
       <input type='hidden' name='username' id="username">
       <input type='hidden' name='password' id="password">
-      <input type='checkbox' id="remember-me" name='remember-me' style="opacity:0; position:absolute; left:9999px;">
+      <input type='checkbox' id="remember-me" name='remember_me' style="opacity:0; position:absolute; left:9999px;">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 
@@ -239,7 +239,13 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
         $(document).ready(function () {
-
+        	var csrfHeaderName ="${_csrf.headerName}"; 
+            var csrfTokenValue="${_csrf.token}";
+            
+        	$(document).ajaxSend(function(e, xhr, options) { 
+                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+              }); 
+        	
             $('#loginBtn').on('click', function () {
                 Swal.fire({
                     title: '로그인',
@@ -248,6 +254,12 @@
                         +'<label class="form-check-label"><input type="checkbox" id="remember_temp"> 자동로그인</input></label>'
                         ,
                     confirmButtonText: '로그인',
+                    closeOnConfirm: false, //It does close the popup when I click on close button
+                    closeOnCancel: false,
+                    allowOutsideClick: false,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    cancelButtonText:'취소',
                     preConfirm: () => {
                         let username = Swal.getPopup().querySelector('#username_temp').value
                         let password = Swal.getPopup().querySelector('#password_temp').value
@@ -260,6 +272,67 @@
                     }
                     }).then((result) => {
                     	
+                    	if(result.value.remember){
+                            $('#remember-me').attr("checked", true);
+                        }
+                    	var me = $("#remember-me").prop("checked");
+                    	
+                    	$.ajax({
+                			url:"/login",
+                			type :  "POST",
+                			dataType : "json",
+                			data : {
+                				id : result.value.username,
+                				pwd : result.value.password,
+                				remember_me : me
+                			},
+                			success : function(response){
+                				if(response.code == "200"){
+                					// 정상 처리 된 경우
+                					window.location = response.item.url;	//이전페이지로 돌아가기
+                				} else {
+                					Swal.fire({
+                				  		  position: 'center',
+                				  		  icon: 'error',
+                				  		  title: "아이디 또는 비밀번호가 일치하지 않습니다.",
+                				  		  showConfirmButton: false,
+                				  		  timer: 1200
+                						}).then( (result) => {$('#loginBtn').trigger("click")});
+                				}
+                			},
+                			error : function(a,b,c){
+                				console.log(a,b,c);
+                			}
+                			
+                		});
+                		
+						/*
+						let params = {
+								id : result.value.username,
+					            password : result.value.password
+						};
+						
+                    	 $.ajaxSetup({
+                             beforeSend: function(xhr) {
+                                 xhr.setRequestHeader(csrfHeader, csrfToken);
+                             }  
+                         });
+                    	 
+                    	 $.ajax({
+                             url : "/loginAjax",
+                             type : "post",
+                             dataType : "json",
+                             data : params,
+                             success : function(response) {
+                                 console.log(response);
+                             }, error : function(jqXHR, status, e) {
+                                 console.error(status + " : " + e);
+                             }
+
+                         });
+                    	*/
+                    	
+                    	/*
                         $('#username').val(result.value.username);
                         $('#password').val(result.value.password);
                         
@@ -271,7 +344,6 @@
                         $("#loginForm").submit();
                         
                         
-                    	/*
                     	*/
                     	
                     	/*
