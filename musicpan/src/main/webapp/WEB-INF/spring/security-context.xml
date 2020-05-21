@@ -5,7 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!--  <bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"></bean> -->
+<bean id="customLoginSuccess" class="com.musicpan.security.CustomLoginSuccessHandler"></bean>
+<bean id="customLoginFailure" class="com.musicpan.security.CustomAuthenticationFailureHandler"></bean>
 <bean id="customAccessDenied" class="com.musicpan.security.CustomAccessDeniedHandler"></bean>
 <bean id="customUserDetailService" class="com.musicpan.security.CustomUserDetailsService"></bean>
 <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
@@ -19,6 +20,7 @@
 	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 	
 	
+	
 	<!-- <security:csrf disabled="true"/> -->
 	  
 	<!-- <security:access-denied-handler error-page="/accessError"/> -->
@@ -26,11 +28,16 @@
 	
 	<!--  <security:form-login/> -->
 	<!--  <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> -->
-	<security:form-login login-page="/customLogin" />
+	<security:form-login login-page="/login"
+		authentication-success-handler-ref="customLoginSuccess"
+		authentication-failure-handler-ref="customLoginFailure"
+		username-parameter="id"
+		password-parameter="pwd"
+	/>
 	
 	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="/"/>
 	
-	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800" remember-me-parameter="remember_me"/>
 	
 </security:http>
 
