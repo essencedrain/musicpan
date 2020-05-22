@@ -148,6 +148,12 @@
                                 	<a id="loginBtn" class="nav-link" href="/customLogin">로그인</a>
                                 </sec:authorize>
                             </li>
+                            <li class="nav-item">
+                                <sec:authorize access="isAnonymous()">
+                                	<a id="loginBtn" class="nav-link" href="/register">회원가입</a>
+                                </sec:authorize>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
