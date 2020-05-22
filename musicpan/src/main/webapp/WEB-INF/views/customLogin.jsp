@@ -1,38 +1,120 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-  
-  <h1>Custom Login Page</h1>
-  <h2><c:out value="${error}"/></h2>
-  <h2><c:out value="${logout}"/></h2>
-  
-  <form method='post' action="/login">
-  
-  <div>
-    <input type='text' name='username' value='admin'>
-  </div>
-  <div>
-    <input type='password' name='password' value='admin'>
-  </div>
-  <div>
-  <div>
-    <input type='checkbox' name='remember-me'> Remember Me
-  </div>
+  pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-  <div>
-    <input type='submit'>
-  </div>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-  
-  </form>
-  
-</body>
-</html>
+<%@include file="./includes/header.jsp"%>
+    
+            <!-- =================================================================================================  -->
+            <!-- start  -->
+            <!-- =================================================================================================  -->
+            
+			<div class="container">
+		        <div class="row">
+		            <div class="loginFormWrap mx-auto col-md-6 col-md-offset-3">
+		                <div class="heading pb-1 text-center pb-4">
+		                    <h1>로그인</h1>
+		                </div>
+		                <div class="loginForm">
+		                    <form name="loginForm_temp" method="post" action="">
+		                        <div class="input-group mb-3">
+		                            <div class="input-group-prepend">
+		                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+		                            </div>
+		                            <input type="text" class="form-control" id="username_temp" placeholder="아이디">
+		                        </div>
+		                        
+		                        <div class="input-group mb-4">
+		                            <div class="input-group-prepend">
+		                              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+		                            </div>
+		                            <input type="password" class="form-control" id="password_temp" placeholder="비밀번호">
+		                        </div>
+		                        
+								<label class="form-check-label"><input type="checkbox" id="remember_temp"> 자동로그인</input></label>
+								
+		                        <button type="submit" id="submitBtn" class="btn btn-lg btn-outline-secondary w-100">로그인</button>
+		                    </form>
+		                    <hr>
+		                    <button class="btn btn-lg btn-primary w-100" onclick="location.href='signup.jsp'">회원가입</button>
+		                </div>
+		            </div>
+		        </div>
+			</div>
+            
+            <!-- =================================================================================================  -->
+            <!-- end  -->
+            <!-- =================================================================================================  -->
+        </div>
+        <!-- =================================================================================================  -->
+        <!-- end Content  -->
+        <!-- =================================================================================================  -->
+    </div>
+    <!-- =================================================================================================  -->
+    <!-- end wrapper  -->
+    <!-- =================================================================================================  -->
+    <div class="overlay"></div>
+
+
+
+<!-- =================================================================================================  -->
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<!-- =================================================================================================  -->
+
+	<!-- =================================================================================================  -->
+    <!-- 로그인버튼 이벤트  -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#submitBtn').on('click', function(e){
+            	e.preventDefault();
+            	
+            	let username = $('#username_temp').val();
+                let password = $('#password_temp').val();
+                let remember = $('#remember_temp').is(":checked");
+                
+                if (username === '' || password === '') {
+                	swa("error","아이디 또는 비밀번호를 입력하세요");
+                	$('#username_temp').val("");
+                	$('#password_temp').val("");
+                	$('#username_temp').focus();
+                	return false;
+                }
+                
+                
+                $.ajax({
+        			url:"/login",
+        			type :  "POST",
+        			dataType : "json",
+        			data : {
+        				id : username,
+        				pwd : password,
+        				remember_me : remember
+        			},
+        			success : function(response){
+        				if(response.code == "200"){
+        					// 정상 처리 된 경우
+        					window.location = response.item.url;	//이전페이지로 돌아가기
+        				} else {
+        					swa("error","아이디 또는 비밀번호가 일치하지 않습니다");
+        				}
+        			},
+        			error : function(a,b,c){
+        				console.log(a,b,c);
+        			}
+        			
+       			});//$.ajax
+                
+                
+                //$("#loginForm").submit();
+            });//$('#submitBtn').on('click', function(e){
+        });//$(document).ready(function(){
+    </script>
+    <!-- =================================================================================================  -->
+    
+<!-- =================================================================================================  -->
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+<!-- =================================================================================================  -->
+
+<%@include file="./includes/footer.jsp"%>

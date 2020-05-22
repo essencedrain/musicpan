@@ -145,7 +145,7 @@
                                 	<a id="logoutBtn" class="nav-link" href="#">로그아웃</a>
                                 </sec:authorize>
                                 <sec:authorize access="isAnonymous()">
-                                	<a id="loginBtn" class="nav-link" href="#">로그인</a>
+                                	<a id="loginBtn" class="nav-link" href="/customLogin">로그인</a>
                                 </sec:authorize>
                             </li>
                         </ul>

@@ -85,9 +85,6 @@
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 
-<form id="logoutForm" method='post' action="/customLogout">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-</form>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
@@ -102,17 +99,6 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     $(document).ready(function(){
-    	
-    	//======================================================================
-	    // csrf
-	  	//======================================================================
-    	var csrfHeaderName ="${_csrf.headerName}"; 
-        var csrfTokenValue="${_csrf.token}";
-        
-    	$(document).ajaxSend(function(e, xhr, options) { 
-            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
-        }); 
-	  	//======================================================================
     	
 	  		
 		var validation = 0;
@@ -313,30 +299,6 @@
 	 	//======================================================================
 	 		
 				 		
-	 		
-	 	//======================================================================
-	 	// sweetalert 단축
-	 	//======================================================================
-	 	function swa(flag, msg){
-	 		if(flag=="success"){
-	 			Swal.fire({
-	 	    		  position: 'center',
-	 	    		  icon: 'success',
-	 	    		  title: msg,
-	 	    		  showConfirmButton: false,
-	 	    		  timer: 1000
-	 	    		});
-	 		}else if(flag=="error"){
-	 			Swal.fire({
-	 	    		  position: 'center',
-	 	    		  icon: 'error',
-	 	    		  title: msg,
-	 	    		  showConfirmButton: false,
-	 	    		  timer: 1000
-	 	    		});
-	 		}
-	 	}
-	 	//======================================================================
 	 		
 	 	//======================================================================
 	 	// 유효성검사 펑션들
