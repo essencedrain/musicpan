@@ -18,18 +18,25 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,900&display=swap&subset=korean" rel="stylesheet">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="/resources/css/jquery.mCustomScrollbar.min.css">
-
+	
     <!-- animate css -->
     <link rel="stylesheet" href="/resources/css/animate.css">
+    
     <!--  sweetalert2  -->
     <link rel="stylesheet" href="/resources/css/sweetalert2.min.css">
 
+	
+	<!-- font awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="/resources/css/style.css">
-
+    
     <!-- Font Awesome JS -->
+    <!--  
     <script defer src="/resources/js/solid.js"></script>
     <script defer src="/resources/js/fontawesome.js"></script>
+    -->
     <!-- jQuery -->
     <script src="/resources/js/jquery.min.js"></script>
 

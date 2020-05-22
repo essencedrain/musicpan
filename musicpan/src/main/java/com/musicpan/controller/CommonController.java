@@ -77,8 +77,11 @@ public class CommonController {
 		} catch(NullPointerException e) {
 			request.getSession().setAttribute("prevPage", "/");
 		}
-		return "login";
+		return "customLogin";
 	}
 
-	
+	@GetMapping("/register")
+	public void register() {
+		log.info("register");
+	}
 }

@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
-
+public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+	
 	@Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws ServletException, IOException {
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws ServletException, IOException {
     	
     	ObjectMapper mapper = new ObjectMapper();	//JSON 변경용
     	
