@@ -118,8 +118,9 @@ public class CommonController {
 	// URI : 
 	//=========================================================================================
 	@GetMapping("/register")
-	public void register() {
+	public String register() {
 		log.info("register");
+		return "member/register";
 	}
 	//=========================================================================================
 	

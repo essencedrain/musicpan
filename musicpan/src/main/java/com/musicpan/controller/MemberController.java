@@ -1,0 +1,43 @@
+package com.musicpan.controller;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.musicpan.service.MemberService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+//=========================================================================================
+// REST 컨트롤러
+//=========================================================================================
+@RequestMapping("/member") 
+@RestController
+@Log4j
+@AllArgsConstructor
+public class MemberController {
+
+	private MemberService service;
+	
+	
+	//=========================================================================================
+	// 기능 : 아이디 중복확인
+	// 리턴 : "true" || "false"
+	// 메서드 : POST
+	// URI : member/checkId/{id}
+	//=========================================================================================
+	@PostMapping(value = "/checkId/{id}", 
+			produces = "text/plain; charset=UTF-8")
+	public String checkId(@PathVariable("id") String id) {
+
+		log.info("MemberController checkId: " + id);
+		
+		return service.member_validation(id)==true ?
+				"true" : "false";
+
+	}
+	//=========================================================================================
+	
+}//class
