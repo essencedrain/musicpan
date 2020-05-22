@@ -37,6 +37,7 @@ public class CommonController {
 		g001	GET		/accessError
 	  	g002	GET		/customLogin
 	  	g003	GET		/register
+	  	g004	GET		/registerSuccess
 	  	
 	  	p000	POST	/customLogout
 	  	p001	POST	/register
@@ -127,12 +128,29 @@ public class CommonController {
 	//=========================================================================================
 	@GetMapping("/register")
 	public String register() {
-		log.info("register");
 		return "member/register";
 	}
 	//=========================================================================================
 	
 	
+	
+	//=========================================================================================
+	// g004
+	// 기능 : 회원가입 축하 폼 보여줌
+	// 메서드 : GET
+	// URI : /registerSuccess
+	//=========================================================================================
+	@GetMapping("/registerSuccess")
+	public String registerSuccess() {
+		return "member/registerSuccess";
+	}
+	//=========================================================================================
+		
+		
+	@GetMapping("/temp")
+	public String temp() {
+		return "board/temp";
+	}
 	
 	//=========================================================================================
 	// p001
@@ -150,7 +168,7 @@ public class CommonController {
         
         //가입처리
         if(memberService.register(memberVO)) {
-        	return "redirect:/customLogin";
+        	return "redirect:/registerSuccess";
         }else {
         	throw new Exception(); 
         }//if
