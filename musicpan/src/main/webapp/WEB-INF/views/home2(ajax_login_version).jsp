@@ -45,7 +45,16 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
+<form id="loginForm" method='post' action="/login">  
+      <input type='hidden' name='username' id="username">
+      <input type='hidden' name='password' id="password">
+      <input type='checkbox' id="remember-me" name='remember_me' class="d-none">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
 
+<form id="logoutForm" method='post' action="/customLogout">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->

@@ -35,6 +35,8 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     		prevPage = "/";
     	}
     	
+    	
+    	
     	Map<String, String> items = new HashMap<String,String>();	
     	items.put("url", prevPage);	// 이전 페이지 저장
     	responseDataDTO.setItem(items);

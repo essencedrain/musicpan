@@ -21,38 +21,38 @@
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="fas fa-user"></i></span>
 		                            </div>
-		                            <input type="text" class="form-control"  placeholder="아이디" name="m_id" id="m_id">
+		                            <input type="text" class="form-control"  placeholder="아이디" name="id" id="id">
 		                        </div>
 		                        
-		                        <div class="mb-3 d-none" id="m_id_len"><h6>아이디는 4글자 이상 사용해야 합니다.</h6></div>
-		                        <div class="mb-3 d-none" id="m_id_fir"><h6>아이디는 영어 소문자로 시작해야 합니다.</h6></div>
-		                        <div class="mb-3 d-none" id="m_id_spe"><h6>아이디에 특수문자는 사용할 수 없습니다.</h6></div>
+		                        <div class="mb-3 d-none" id="id_len"><h6>아이디는 4글자 이상 사용해야 합니다.</h6></div>
+		                        <div class="mb-3 d-none" id="id_fir"><h6>아이디는 영어 소문자로 시작해야 합니다.</h6></div>
+		                        <div class="mb-3 d-none" id="id_spe"><h6>아이디에 특수문자는 사용할 수 없습니다.</h6></div>
 		                        
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="fas fa-lock"></i></span>
 		                            </div>
-		                            <input type="password" class="form-control" placeholder="비밀번호" name="m_pwd" id="m_pwd">
+		                            <input type="password" class="form-control" placeholder="비밀번호" name="pwd" id="pwd">
 		                        </div>
 		
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="fas fa-key"></i></span>
 		                            </div>
-		                            <input type="password" class="form-control" placeholder="비밀번호 확인" name="m_pwd2" id="m_pwd2">
+		                            <input type="password" class="form-control" placeholder="비밀번호 확인" name="pwd2" id="pwd2">
 		                        </div>
 		
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
 		                            </div>
-		                            <input type="text" class="form-control" placeholder="닉네임" name="m_name" id="m_name">
+		                            <input type="text" class="form-control" placeholder="닉네임" name="name" id="name">
 		                        </div>
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="far fa-envelope"></i></span>
 		                            </div>
-		                            <input type="text" class="form-control" placeholder="이메일" name="m_email" id="m_email">
+		                            <input type="text" class="form-control" placeholder="이메일" name="email" id="email">
 		                        </div>
 		                        
 		                        <input type="hidden" name="flag" id="flag" value="join">
@@ -76,7 +76,7 @@
     <div class="overlay"></div>
 
 <!-- =================================================================================================  -->
-<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 <form id="loginForm" method='post' action="/login">  
       <input type='hidden' name='username' id="username">
@@ -85,14 +85,13 @@
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 
-<form id="logoutForm" method='post' action="/customLogout">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-</form>
+<!-- =================================================================================================  -->
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
     
 
 <!-- =================================================================================================  -->
-<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
 	<!-- =================================================================================================  -->
@@ -100,8 +99,10 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     $(document).ready(function(){
+    	
+	  		
 		var validation = 0;
-		$('#m_id').focus();
+		$('#id').focus();
 		
 		//버튼에 자동으로 포커스 잡히는걸 막음
 		$('button').focus(function(){
@@ -110,26 +111,26 @@
     
     
 		//======================================================================
-	    // $("#m_id").focus
+	    // $("#id").focus
 	  	//======================================================================
-	    $("#m_id").focus(function(){
+	    $("#id").focus(function(){
 			//가리기
 			//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
-			if(!$("#m_id_len").hasClass("d-none")){$("#m_id_len").addClass("d-none");}
+			if(!$("#id_len").hasClass("d-none")){$("#id_len").addClass("d-none");}
 			//"아이디는 영어 소문자로 시작해야 합니다."
-			if(!$("#m_id_fir").hasClass("d-none")){$("#m_id_fir").addClass("d-none");}
+			if(!$("#id_fir").hasClass("d-none")){$("#id_fir").addClass("d-none");}
 			//"아이디에 특수문자는 사용할 수 없습니다."
-	        if(!$("#m_id_spe").hasClass("d-none")){$("#m_id_spe").addClass("d-none");}
+	        if(!$("#id_spe").hasClass("d-none")){$("#id_spe").addClass("d-none");}
 		});
 	 	//======================================================================
 	
 	
 		//======================================================================
-	    // $("#m_id").keyup
+	    // $("#id").keyup
 	 	//======================================================================
-	 	$("#m_id").keyup(function(){
-		var str = $("#m_id").val().toUpperCase();
-		var len = $("#m_id").val().length;
+	 	$("#id").keyup(function(){
+		var str = $("#id").val().toUpperCase();
+		var len = $("#id").val().length;
 		//특수문자플래그
 		var isSpe = false;
 		
@@ -142,18 +143,18 @@
 	        	
 	        	//보이기
 	        	//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
-	            if($("#m_id_len").hasClass("d-none")){$("#m_id_len").removeClass("d-none");}
+	            if($("#id_len").hasClass("d-none")){$("#id_len").removeClass("d-none");}
 	            
 	            
 	            //첫글자가 영문자가 아니면
 		    	if( !( 'A'<= str.charAt(0) && 'Z'>= str.charAt(0) ) ){
 		    		//보이기
 	            	//"아이디는 영어 소문자로 시작해야 합니다."
-	                if($("#m_id_fir").hasClass("d-none")){$("#m_id_fir").removeClass("d-none");}
+	                if($("#id_fir").hasClass("d-none")){$("#id_fir").removeClass("d-none");}
 		    	}else{
 		    		//가리기
 		    		//"아이디는 영어 소문자로 시작해야 합니다."
-		    		if(!$("#m_id_fir").hasClass("d-none")){$("#m_id_fir").addClass("d-none");}
+		    		if(!$("#id_fir").hasClass("d-none")){$("#id_fir").addClass("d-none");}
 		    	}//if
 		    	
 		    	//특수문자 존재 여부
@@ -161,11 +162,11 @@
         			if( ( 'A' <= str.charAt(i) && 'Z' >= str.charAt(i) ) || ( '0'<=str.charAt(i) && '9'>=str.charAt(i) ) ){
         				// 가리기
         				//"아이디에 특수문자는 사용할 수 없습니다."
-        		        if(!$("#m_id_spe").hasClass("d-none")){$("#m_id_spe").addClass("d-none");}
+        		        if(!$("#id_spe").hasClass("d-none")){$("#id_spe").addClass("d-none");}
         			}else{
         				//보이기
     	            	//"아이디에 특수문자는 사용할 수 없습니다."
-    	                if($("#m_id_spe").hasClass("d-none")){$("#m_id_spe").removeClass("d-none");}
+    	                if($("#id_spe").hasClass("d-none")){$("#id_spe").removeClass("d-none");}
         			}//if
         		}//for
             
@@ -193,20 +194,20 @@
 	        			validation = 1;
 	        			//보이기
     	            	//"아이디에 특수문자는 사용할 수 없습니다."
-    	                if($("#m_id_spe").hasClass("d-none")){$("#m_id_spe").removeClass("d-none");}
+    	                if($("#id_spe").hasClass("d-none")){$("#id_spe").removeClass("d-none");}
 	        		}//if
 	        		
 	        		
 	        	}else{
 	        		//보이기
 	            	//"아이디는 영어 소문자로 시작해야 합니다."
-	                if($("#m_id_fir").hasClass("d-none")){$("#m_id_fir").removeClass("d-none");}
+	                if($("#id_fir").hasClass("d-none")){$("#id_fir").removeClass("d-none");}
 	                
 	        	}//if
 	        	
 	        	//가리기
 	    		//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
-	    		if(!$("#m_id_len").hasClass("d-none")){$("#m_id_len").addClass("d-none");}
+	    		if(!$("#id_len").hasClass("d-none")){$("#id_len").addClass("d-none");}
     		
 	        }//if
 	        
@@ -214,56 +215,179 @@
 	 	//======================================================================
 		
 	 	//======================================================================
-	    // $("#m_id").blur
+	    // $("#id").blur
 	 	//======================================================================
-	 	/*
-	 	$("#m_id").blur(function(){
+	 	$("#id").blur(function(){
 	        if(validation > -1){
 	            //alert("ID를 정확히 입력해주세요");
-	            $('#m_id').focus();
+	            $('#id').focus();
 	            
 	        }else{
 	        
 	            //Ajax사용
-	            $.ajax({
+				$.ajax({
 	                type : 'POST',
-	                url : '../ajax/confirmId.jsp',
-	                data : "m_id="+$('#m_id').val(), //서버로 보내는 파라미터 값
-	                dataType:'JSON', //서버가 보내주는 자료 형태
+	                url : '/member/checkId/' +$('#id').val() ,
+	                //data : "id="+$('#id').val(), //서버로 보내는 파라미터 값
+	                dataType:'text', //서버가 보내주는 자료 형태
 	                //cache : false,
 	                //async : true,
 	                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
-	                       //alert(data);
-	                       //alert(data.check);
-						                        if(data.check==1){
-						                        	swa("error","중복된 아이디 입니다.");
-						                            validation = 1;
-						                            
-						                            $('#m_id').val("");
-						                        	$('#m_id').focus();
-						                            
-						                        }else{
-						                            //alert("사용가능한 id" );
-						                            //$("#m_id_ok").removeClass("d-none");
-						                        	swa("success",'사용가능한 아이디 입니다.');
-						                            validation = -1;
-						                        }//else---
-	                						}
+	                       		//alert(data);
+		                        if(data==="true"){
+		                        	swa("error","중복된 아이디 입니다.");
+		                            validation = 1;
+		                            
+		                            $('#id').val("");
+		                        	$('#id').focus();
+		                            
+		                        }else{
+		                            //alert("사용가능한 id" );
+		                            //$("#id_ok").removeClass("d-none");
+		                        	swa("success",'사용가능한 아이디 입니다.');
+		                            validation = -1;
+		                        }//else---
+           						}
 
-		            });
-		        	
-	        	}//if
-		        
-		    });
+				});//$.ajax
+			}//if
 		});
-    	*/
 	 	//======================================================================
-    
- 	});//$(document).ready(function()
+	 		
+    });//$(document).ready(function()
+ 	</script>
+   	<!-- =================================================================================================  -->
+   	<!-- end 온로드 이벤트  ajax 아이디 중복확인 -->
+   	<!-- =================================================================================================  -->
+		
+		
+		
+		
+   	<!-- =================================================================================================  -->
+   	<!-- 일반펑션 -->
+   	<!-- =================================================================================================  -->
+ 	<script type="text/javascript">	
+	 	//======================================================================
+	    // 유효성 검사 check9()
+	 	//======================================================================
+	 	function check9(ff){
+	 		
+	 		if(!isID(ff.id)){
+	 			ff.id.focus();
+	 			return false;
+	 		}//if
+	 		
+	 		if(!isSame(ff.pwd,ff.pwd2)){
+	 			ff.pwd.value="";
+	 			ff.pwd2.value="";
+	 			ff.pwd.focus();
+	 			return false;
+	 		}
+	 		
+	 		if(!isNull(ff.name,"이름을 입력하세요")){
+	 			//ff.name.focus();
+	 			setTimeout(ff.name.focus(),10);
+	 			return false;
+	 		}//if
+	 		
+	 		if(!isEmail(ff.email)){
+	 			ff.email.focus();
+	 			return false;
+	 		}//if
+	 		
+	 	}//check9()
+	 	//======================================================================
+	 		
+				 		
+	 		
+	 	//======================================================================
+	 	// 유효성검사 펑션들
+	 	//======================================================================
+	 	function isNull(obj, msg){
+	 	    if(obj.value==""){
+	 	        
+	 	        if(msg){
+	 	        	swa("error",msg);
+	 	        }//if
+	 	        
+	 	        return false;//입력이 안되었으면 false
+	 	    }
+	 	    return true;//입력이 되었으면 true
+	 	}//isNull end -----------------------------
+	 	
+	 	function isID(obj){
+	 	    
+	 	    var str2=obj.value;
+	 	    if(str2.length==0){
+	 	    	swa("error","아이디를 입력하세요");
+	 	        return false;
+	 	    }//if
+	 	    str2=str2.toUpperCase();//대문자로 변환 ,A~Z, a~z
+	 	    
+	 	    //ID 첫글자가 영문자 이어야한다
+	 	    if(!('A'<=str2.charAt(0) && 'Z'>=str2.charAt(0))){ 
+	 	    	swa("error","첫글자를 영문자로 입력하세요");
+	 	        return false;
+	 	    }//if
+
+	 	    for(var i=1; i<str2.length; i++){
+	 	        if( !( ('A'<=str2.charAt(i) && 'Z'>=str2.charAt(i)) || ('0'<=str2.charAt(i) && str2.charAt(i)<='9') ) ) {
+	 	        	console.log(str2.charAt(i));
+	 	            swa("error","영문자, 숫자만 사용가능합니다.");
+	 	            return false;
+	 	        }//if
+	 	    }//for
+	 	    return true;
+	 	}//isID
+	 	
+	 	function isEmail(obj){
+	 	    var str=obj.value;
+	 	    
+	 	    if(str==""){
+	 	    	swa("error","이메일 주소를 입력하세요");
+	 	        return false;
+	 	    }//if
+	 	    
+	 	    var i=str.indexOf("@");
+	 	    if(i<0){
+	 	    	swa("error","올바르지 않은 이메일 형식입니다.");
+	 	        return false;
+	 	    }
+	 	    
+	 	    i=str.indexOf(".");
+	 	    if(i<0){
+	 	    	swa("error","올바르지 않은 이메일 형식입니다.");
+	 	        return false;
+	 	    }
+	 	    return true;
+	 	    
+	 	}//isEmail() end
+	 	
+	 	function isSame(ob1,ob2){
+	 	    var str1=ob1.value;
+	 	    var str2=ob2.value;
+	 	    
+	 	    if(str1.length==0 || str2.length==0){
+	 	    	swa("error","암호를 입력하세요");
+	 	        return false;
+	 	    }
+	 	    
+	 	    if(str1 != str2){
+	 	    	swa("error","암호가 일치하지 않습니다");
+	 	        return false;
+	 	    }
+	 	    return true;
+	 	}
+	 	
+	 	
+	 	//======================================================================
+	 		
 	</script>
     <!-- =================================================================================================  -->
-    <!-- end 온로드 이벤트  ajax 아이디 중복확인 -->
+    <!-- 일반펑션 -->
     <!-- =================================================================================================  -->
-
+<!-- =================================================================================================  -->
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+<!-- =================================================================================================  -->
 
 <%@include file="../includes/footer.jsp"%>
