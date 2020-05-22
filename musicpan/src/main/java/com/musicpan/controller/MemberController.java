@@ -1,5 +1,6 @@
 package com.musicpan.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @AllArgsConstructor
 public class MemberController {
-
+	
+	@Autowired
 	private MemberService service;
 	
 	

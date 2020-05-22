@@ -16,7 +16,7 @@
 		                    <h1>회원가입</h1>
 		                </div>
 		                <div class="signUpForm">
-		                    <form name="signUpForm" method="post" action="join.get" onsubmit="return check9(this)">
+		                    <form name="signUpForm" method="post" action="/register" onsubmit="return check9(this)">
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -54,8 +54,7 @@
 		                            </div>
 		                            <input type="text" class="form-control" placeholder="이메일" name="email" id="email">
 		                        </div>
-		                        
-		                        <input type="hidden" name="flag" id="flag" value="join">
+		                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		                        <button type="submit" class="btn btn-lg btn-primary w-100">가입하기</button>
 		                    </form>
 		                </div>
@@ -78,12 +77,6 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-<form id="loginForm" method='post' action="/login">  
-      <input type='hidden' name='username' id="username">
-      <input type='hidden' name='password' id="password">
-      <input type='checkbox' id="remember-me" name='remember_me' style="opacity:0; position:absolute; left:9999px;">
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-</form>
 
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

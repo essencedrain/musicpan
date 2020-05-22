@@ -5,18 +5,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.musicpan.domain.MemberVO;
+import com.musicpan.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,8 +25,10 @@ public class CommonController {
 	
 	
 	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder pwencoder;
 	
+	@Autowired
+	private MemberService memberService;
 	
 	
 	//=========================================================================================
@@ -38,6 +39,7 @@ public class CommonController {
 	  	g003	GET		/register
 	  	
 	  	p000	POST	/customLogout
+	  	p001	POST	/register
 	 */
 	//=========================================================================================
 	
@@ -130,24 +132,32 @@ public class CommonController {
 	}
 	//=========================================================================================
 	
+	
+	
 	//=========================================================================================
-	// g003
-	// 기능 : 회원가입 폼 보여줌
-	// 메서드 : GET
+	// p001
+	// 기능 : 회원가입 처리
+	// 메서드 : POST
 	// URI : /register
 	//=========================================================================================
-	//bindResult 다음에 Model 이 와야 한다. 순서가 틀리면 에러가 발생한다.
     @PostMapping("/register")
-    public String memberInsert(@ModelAttribute(name="usersVO") MemberVO memberVO, Model model ) throws Exception{
+    public String memberInsert(MemberVO memberVO) throws Exception{
          
-         
-        //비밀번호 암오화 작업
-        if(StringUtils.hasText(memberVO.getPwd())) {
-            String bCryptString=bCryptPasswordEncoder.encode(memberVO.getPwd());
-            memberVO.setPwd(bCryptString);
-        }
-         
-        return "redirect:/";
+        //비밀번호 암호화
+        memberVO.setPwd(pwencoder.encode(memberVO.getPwd()));
+        
+        log.info("register post : " + memberVO.toString());
+        
+        //가입처리
+        if(memberService.register(memberVO)) {
+        	return "redirect:/customLogin";
+        }else {
+        	throw new Exception(); 
+        }//if
+        
+        
+        
+        
     }
 	//=========================================================================================
 	
