@@ -20,7 +20,7 @@ public class BoardController {
 		
 		private BoardService service;
 		
-		@GetMapping("/list/{b_name}")
+		@GetMapping("/{b_name}/list")
 		public String list(@PathVariable("b_name") String b_name, Model model) {
 		
 			log.info("list");

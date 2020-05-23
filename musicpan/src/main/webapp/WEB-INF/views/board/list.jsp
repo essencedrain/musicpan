@@ -18,25 +18,27 @@
 		            
 		            <div class="center_area col-lg-10" >
 			            <div class="heading pb-4">
-		                	<h1><c:out value="${b_name}"/></h1>
+		                	<h1>${b_name}</h1>
 		                </div>
-		            	<div class="table-responsive mt-4">
-		            		<table class="table table-bordered">
+		            	<div class="mt-4">
+		            		<table class="table table-sm table-bordered table-hover">
 		            			<thead class="text-center">
-			                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr>번호</nobr></td>
-			                        <td style="width: 60%; overflow:hidden;text-overflow:ellipsis;"><nobr>제목</nobr></td>
-			                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr>글쓴이</nobr></td>
-			                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr>등록일</nobr></td>
-			                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr>조회수</nobr></td>
+			            			<tr>
+				                        <th style="width: 5%;">번호</td>
+				                        <th style="width: 60%;">제목</td>
+				                        <th style="width: 15%;">글쓴이</td>
+				                        <th style="width: 15%;">등록일</td>
+				                        <th style="width: 5%;">조회수</td>
+				                    </tr>
 			                    </thead>
                     			<tbody class="text-center">
                     				<c:forEach items="${list}" var="board">
 		                    			<tr>
-		                    				<td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr><c:out value="${board.bno}"/></nobr></td>
-	                    					<td class="text-left" style="width: 60%; overflow:hidden;text-overflow:ellipsis;"><nobr><c:out value="${board.title}"/></nobr></td>
-					                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr><c:out value="${board.id}"/></nobr></td>
-					                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr><c:out value="${board.regdate}"/></nobr></td>
-					                        <td style="width: 10%; overflow:hidden;text-overflow:ellipsis;"><nobr><c:out value="${board.hit}"/></nobr></td>
+		                    				<td style="width: 5%;">${board.bno}</td>
+	                    					<td style="width: 60%;" class="text-left">${board.title}</td>
+					                        <td style="width: 15%;">${board.id}</td>
+					                        <td style="width: 15%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
+					                        <td style="width: 5%;">${board.hit}</td>
 		                    			</tr>
 	                    			</c:forEach>
                     			</tbody>

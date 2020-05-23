@@ -188,3 +188,13 @@ a.article:hover {
     top: 0;
     right: 0;
 }
+/* ---------------------------------------------------
+    BOARD STYLE
+----------------------------------------------------- */
+tbody td, thead th {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
