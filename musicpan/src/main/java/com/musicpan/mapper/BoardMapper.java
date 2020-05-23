@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.musicpan.domain.BoardVO;
+import com.musicpan.domain.Criteria;
 
 public interface BoardMapper {
 
-	public List<BoardVO> getList(@Param("b_name") String b_name);
-	
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	public int getTotalCount(Criteria cri);
+	public BoardVO read(Criteria cri);
 }

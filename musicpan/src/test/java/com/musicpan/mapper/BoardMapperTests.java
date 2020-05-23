@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.musicpan.domain.Criteria;
+
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -16,14 +18,22 @@ public class BoardMapperTests {
 
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
-
+	
+	/*
 	@Test
 	public void testGetList() {
 
 		mapper.getList("sample").forEach(board -> log.info(board));
 		
 	}
-	
+	*/
+	@Test
+	public void testGetList() {
+		Criteria cri = new Criteria();
+		cri.setB_name("sample");
+		mapper.getListWithPaging(cri).forEach(board -> log.info(board));
+		
+	}
 	/*
 	@Test
 	public void testInsert() {

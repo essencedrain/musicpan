@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.musicpan.domain.BoardVO;
+import com.musicpan.domain.Criteria;
 import com.musicpan.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -19,11 +20,22 @@ public class BoardServiceImpl implements BoardService{
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
 	
+
 	@Override
-	public List<BoardVO> getList(String b_name) {
-		
-		
-		return mapper.getList(b_name);
+	public List<BoardVO> getList(Criteria cri) {
+		return mapper.getListWithPaging(cri);
+	}
+
+
+	@Override
+	public int getTotal(Criteria cri) {
+		return mapper.getTotalCount(cri);
+	}
+
+
+	@Override
+	public BoardVO content(Criteria cri) {
+		return mapper.read(cri);
 	}
 
 }//interface

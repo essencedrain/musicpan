@@ -3,6 +3,7 @@ package com.musicpan.service;
 import java.util.List;
 
 import com.musicpan.domain.BoardVO;
+import com.musicpan.domain.Criteria;
 
 public interface BoardService {
 	
@@ -14,13 +15,14 @@ public interface BoardService {
 
 	//public boolean remove(Long bno);
 
+	public List<BoardVO> getList(Criteria cri);
+	public int getTotal(Criteria cri);
+	public BoardVO content(Criteria cri);
+	/*
 	public List<BoardVO> getList(String b_name);
 	
-	/*
-	public List<BoardVO> getList(Criteria cri);
 
 	//추가
-	public int getTotal(Criteria cri);
 	
 	public List<BoardAttachVO> getAttachList(Long bno);
 	

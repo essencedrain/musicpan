@@ -4,11 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicpan.mapper.BoardMapper">
 
-	<select id="getList" resultType="com.musicpan.domain.BoardVO" parameterType="string">
-	<![CDATA[
-		select * from board_${b_name}
-		where bno > 0
-		]]>
+	
+	<select id="getListWithPaging" resultType="com.musicpan.domain.BoardVO">
+		select bno, title, regdate, hit, id
+		from board_${b_name}
+		order by bno desc
+		limit #{limitNum}, #{amount}
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from board_${b_name}
+	</select>
+	
+	<select id="read" resultType="com.musicpan.domain.BoardVO">
+		select * from board_${b_name} where bno = #{bno}
 	</select>
 	
 </mapper>
