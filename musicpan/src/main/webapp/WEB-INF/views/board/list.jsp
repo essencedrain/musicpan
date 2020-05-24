@@ -21,6 +21,11 @@
 		                	<h1><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h1>
 		                </div>
 		            	<div class="mt-4">
+		            		<sec:authorize access="isAuthenticated()">
+			            		<div class="py-2 d-flex justify-content-end">
+				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
+			            		</div>
+		            		</sec:authorize>
 		            		<table class="table table-sm table-hover table_gtx">
 		            			<thead class="text-center">
 			            			<tr>
@@ -47,6 +52,11 @@
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>
+		            		<sec:authorize access="isAuthenticated()">
+			            		<div class="py-2 d-flex justify-content-end">
+				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
+			            		</div>
+		            		</sec:authorize>
 							<ul class="pagination justify-content-center">
 								
 								<c:choose>
@@ -73,7 +83,6 @@
 									</c:otherwise>
 								</c:choose>
 							</ul>
-							<button type="button" class="btn btn-primary text-center float-right mt-n4" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 		            	</div>
 		            </div>
 		            
