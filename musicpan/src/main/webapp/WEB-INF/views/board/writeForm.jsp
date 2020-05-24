@@ -35,7 +35,7 @@
 							
 
 
-	                		<div class="text-right">
+	                		<div class="text-right mt-2">
 				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="javascript:window.history.back();">돌아가기</button>
 				                <button type="submit" class="btn btn-primary text-center mx-1">등록</button>
 			                </div>

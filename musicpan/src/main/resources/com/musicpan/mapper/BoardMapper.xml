@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="read" resultType="com.musicpan.domain.BoardVO">
-		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, m.name
+		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, b.id, m.name
 		from board_${b_name} b INNER JOIN member m
 				ON b.id=m.id
 		where bno = #{bno}

@@ -18,7 +18,7 @@
 		            
 		            <div class="center_area col-lg-10" >
 			            <div class="heading pb-4">
-		                	<h1>${pageMaker.cri.b_name2} 게시판</h1>
+		                	<h1><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h1>
 		                </div>
 		            	<div class="mt-4">
 		            		<table class="table table-sm table-hover table_gtx">

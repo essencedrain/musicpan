@@ -88,6 +88,11 @@ public class BoardController {
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("board", service.content(cri));
+		
+		//log.info("////////////////////cri : " + cri.toString());
+		//log.info("////////////////////pageMaker : " + new PageDTO(cri, total).toString());
+		//log.info("////////////////////board : " + service.content(cri).toString());
+		
 		return "board/content";
 	}
 	//=========================================================================================	

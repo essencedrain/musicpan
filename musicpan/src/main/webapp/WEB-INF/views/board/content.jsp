@@ -22,9 +22,9 @@
 						<!-- start 컨텐츠  -->
 						<!-- =================================================================================================  -->
 		            	<div class="heading pb-4">
-		                	<h1>${cri.b_name2} 게시판 컨텐츠</h1>
+		                	<h1><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판</a></h1>
 		                </div>
-		            	<div class="mt-4">
+		            	<div class="mt-4 pb-5">
 		            		<table class="table table-sm table-bordered">
 			            		<tr>
 			            			<td>${board.title}</td>
@@ -42,9 +42,14 @@
 			            			<td>${board.content}</td>
 			            		</tr>
 		            		</table>
-		            		<div class="float-right mt-3">
-		            			<button data-oper='delete' class="btn btn-outline-secondary text-center">삭제하기</button>
-								<button data-oper='modify' class="btn btn-outline-secondary text-center">수정하기</button>
+		            		<div class="float-right mt-2">
+		            			<sec:authentication property="principal" var="pinfo"/>
+		            			 <sec:authorize access="isAuthenticated()">
+			            			 <c:if test="${pinfo.username eq board.id}">
+				            			<button data-oper='delete' class="btn btn-outline-secondary text-center">삭제하기</button>
+										<button data-oper='modify' class="btn btn-outline-secondary text-center">수정하기</button>
+			            			 </c:if>
+		            			 </sec:authorize>
 								<button data-oper='list' class="btn btn-primary text-center">목록으로</button>
 		            		</div>
 	            		</div>    
@@ -54,8 +59,8 @@
 						<!-- =================================================================================================  -->
 						<!-- start 목록  -->
 						<!-- =================================================================================================  -->
-						<div class="heading pb-4">
-		                	<h1>${pageMaker.cri.b_name2} 게시판</h1>
+						<div class="mt-4 pb-4">
+		                	<h1><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h1>
 		                </div>
 		            	<div class="mt-4">
 		            		<table class="table table-sm table-hover table_gtx">
@@ -110,7 +115,6 @@
 									</c:otherwise>
 								</c:choose>
 							</ul>
-							<button type="button" class="btn btn-primary text-center float-right mt-n4" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 		            	</div>
 						<!-- =================================================================================================  -->
 						<!-- end 목록  -->
