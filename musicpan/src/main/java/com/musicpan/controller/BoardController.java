@@ -1,12 +1,16 @@
 package com.musicpan.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
 import com.musicpan.domain.PageDTO;
 import com.musicpan.service.BoardService;
@@ -28,7 +32,9 @@ public class BoardController {
 	 	--------------------------------------------------------------------------------------------
 	 	g000		리스트		GET		/board/{boardName}/list	
 	 	g001		내용		GET		/board/{boardName}/content
-	 	g003		글쓰기		GET		/board/writeForm			cri				list
+	 	g003		글쓰기		GET		/board/register
+	 					
+	 	p000		글쓰기		POST	/board/register				
 	 */
 	//==============================================================================================
 	
@@ -89,18 +95,37 @@ public class BoardController {
 	// g003
 	// 기능		:	글쓰기폼 보여주기
 	// 메서드	:	GET  
-	// URI		: 	/board/writeForm
+	// URI		: 	/board/register
 	//=========================================================================================
-	@GetMapping("/writeForm")
-	public String writeForm(@ModelAttribute("cri") Criteria cri, Model model) {
+	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()")
+	public String writeForm(Model model, @RequestParam("b_name") String b_name) {
 		
-		//log.info("////////////////////test : " + cri.toString());
-		cri.setB_name2(makeKorean(cri.getB_name())); //b_name2 생성
-		model.addAttribute("board", service.content(cri));
+		model.addAttribute("b_name", b_name);
+		model.addAttribute("b_name2", makeKorean(b_name));
 		return "board/writeForm";
 	}
 	//=========================================================================================
 	
+	
+	
+	//=========================================================================================
+	// p000
+	// 기능		:	글쓰기 처리
+	// 메서드	:	POST
+	// URI		:	/board/register
+	//=========================================================================================
+	@PostMapping("/register")
+	@PreAuthorize("isAuthenticated()")
+	public String writePro(Model model, BoardVO boardVO) {
+		
+		//log.info("//////////////////test : " + boardVO.toString());
+
+		service.register(boardVO);
+		
+		return "redirect:/board/"+boardVO.getB_name()+"/list";
+	}
+	//=========================================================================================
 	
 	
 	//=========================================================================================

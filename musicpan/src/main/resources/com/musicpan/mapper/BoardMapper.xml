@@ -18,7 +18,10 @@
 	</select>
 	
 	<select id="read" resultType="com.musicpan.domain.BoardVO">
-		select * from board_${b_name} where bno = #{bno}
+		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, m.name
+		from board_${b_name} b INNER JOIN member m
+				ON b.id=m.id
+		where bno = #{bno}
 	</select>
 	
 	<update id="increaseHit">
@@ -26,4 +29,9 @@
 		set hit = hit + 1
 		where bno = #{bno}
 	</update>
+	
+	<insert id="insert">
+		insert into board_${b_name} (title, content, regdate, updatedate, hit, id)
+		values (#{title}, #{content},now(),now(),0,#{id})
+	</insert>
 </mapper>

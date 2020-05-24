@@ -25,7 +25,7 @@
 	
 	<!--  <security:form-login/> -->
 	<!--  <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> -->
-	<security:form-login login-page="/login"
+	<security:form-login login-page="/customLogin"
 		authentication-success-handler-ref="customLoginSuccess"
 		authentication-failure-handler-ref="customLoginFailure"
 		username-parameter="id"

@@ -18,16 +18,16 @@
 		            
 		            <div class="center_area col-lg-10" >
 			            <div class="heading pb-4">
-		                	<h1>${pageMaker.cri.b_name2}</h1>
+		                	<h1>${pageMaker.cri.b_name2} 게시판</h1>
 		                </div>
 		            	<div class="mt-4">
-		            		<table class="table table-sm table-bordered table-hover">
+		            		<table class="table table-sm table-hover table_gtx">
 		            			<thead class="text-center">
 			            			<tr>
 				                        <th style="width: 5%;">번호</td>
 				                        <th style="width: 60%;">제목</td>
-				                        <th style="width: 15%;">글쓴이</td>
-				                        <th style="width: 15%;">등록일</td>
+				                        <th style="width: 20%;">글쓴이</td>
+				                        <th style="width: 10%;">등록일</td>
 				                        <th style="width: 5%;">조회수</td>
 				                    </tr>
 			                    </thead>
@@ -40,8 +40,8 @@
 					                        		${board.title}
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 15%;">${board.name}</td>
-					                        <td style="width: 15%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
+					                        <td style="width: 20%;">${board.name}</td>
+					                        <td style="width: 10%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
 					                        <td style="width: 5%;">${board.hit}</td>
 		                    			</tr>
 	                    			</c:forEach>
@@ -73,6 +73,7 @@
 									</c:otherwise>
 								</c:choose>
 							</ul>
+							<button type="button" class="btn btn-primary text-center float-right mt-n4" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 		            	</div>
 		            </div>
 		            

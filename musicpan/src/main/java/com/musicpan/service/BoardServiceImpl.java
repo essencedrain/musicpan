@@ -36,9 +36,14 @@ public class BoardServiceImpl implements BoardService{
 	@Transactional
 	@Override
 	public BoardVO content(Criteria cri) {
-			mapper.increaseHit(cri);
-			BoardVO vo = mapper.read(cri); 
-			return vo;
+		mapper.increaseHit(cri);
+		BoardVO vo = mapper.read(cri); 
+		return vo;
 	}
 
-}//interface
+	@Override
+	public void register(BoardVO board) {
+		mapper.insert(board);
+	}
+
+}//class

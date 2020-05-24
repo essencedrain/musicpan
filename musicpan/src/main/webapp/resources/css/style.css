@@ -191,7 +191,7 @@ a.article:hover {
 /* ---------------------------------------------------
     BOARD STYLE
 ----------------------------------------------------- */
-tbody td, thead th {
+.table_gtx tbody td, .table_gtx thead th {
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;

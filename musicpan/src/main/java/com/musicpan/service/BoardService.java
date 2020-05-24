@@ -7,17 +7,21 @@ import com.musicpan.domain.Criteria;
 
 public interface BoardService {
 	
-	//public void register(BoardVO board);
-
-	//public BoardVO get(Long bno);
-
-	//public boolean modify(BoardVO board);
-
-	//public boolean remove(Long bno);
+	public void register(BoardVO board);
 
 	public List<BoardVO> getList(Criteria cri);
+	
 	public int getTotal(Criteria cri);
+	
 	public BoardVO content(Criteria cri);
+	
+	
+	
+	//public BoardVO get(Long bno);
+	
+	//public boolean modify(BoardVO board);
+	
+	//public boolean remove(Long bno);
 	/*
 	public List<BoardVO> getList(String b_name);
 	
@@ -28,4 +32,4 @@ public interface BoardService {
 	
 	public void removeAttach(Long bno);
 	*/
-}
+}//interface
