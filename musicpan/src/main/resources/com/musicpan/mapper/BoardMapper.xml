@@ -20,4 +20,9 @@
 		select * from board_${b_name} where bno = #{bno}
 	</select>
 	
+	<update id="increaseHit">
+		update board_${b_name}
+		set hit = hit + 1
+		where bno = #{bno}
+	</update>
 </mapper>

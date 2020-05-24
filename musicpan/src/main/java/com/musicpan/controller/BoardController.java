@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.musicpan.domain.Criteria;
 import com.musicpan.domain.PageDTO;
@@ -49,8 +48,8 @@ public class BoardController {
 			cri.setB_name(boardName);
 		}
 		
-		cri.setB_name2(makeKorean(cri.getB_name()));
-		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() );
+		cri.setB_name2(makeKorean(cri.getB_name())); //b_name2 생성
+		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
 		
 		int total = service.getTotal(cri);
 		
@@ -75,6 +74,7 @@ public class BoardController {
 	public String content(@ModelAttribute("cri") Criteria cri, Model model) {
 		
 		//log.info("////////////////////test : " + cri.toString());
+		cri.setB_name2(makeKorean(cri.getB_name())); //b_name2 생성
 		model.addAttribute("board", service.content(cri));
 		return "board/content";
 	}
@@ -98,7 +98,7 @@ public class BoardController {
 	
 	
 	//=========================================================================================
-	// 메서드
+	// 메서드1
 	// 게시판 한글 이름 리턴 해주는 함수
 	//=========================================================================================
 	private String makeKorean(String b_name) {
@@ -110,4 +110,5 @@ public class BoardController {
 		return null;
 	}//b_name2
 	//=========================================================================================
+	
 }//class

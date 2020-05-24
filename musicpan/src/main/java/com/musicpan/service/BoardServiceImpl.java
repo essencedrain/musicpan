@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
@@ -32,10 +33,12 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getTotalCount(cri);
 	}
 
-
+	@Transactional
 	@Override
 	public BoardVO content(Criteria cri) {
-		return mapper.read(cri);
+			mapper.increaseHit(cri);
+			BoardVO vo = mapper.read(cri); 
+			return vo;
 	}
 
 }//interface

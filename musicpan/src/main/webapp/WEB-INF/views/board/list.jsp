@@ -100,11 +100,11 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 <form id='actionForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
-				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-				<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
-				<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
-				<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
+	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+	<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
+	<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
+	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
 </form>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

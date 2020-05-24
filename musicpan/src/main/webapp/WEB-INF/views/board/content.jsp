@@ -19,7 +19,7 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		                	<h1>페이지제목</h1>
+		                	<h1>${pageMaker.cri.b_name2}</h1>
 		                </div>
 		            	<div class="mt-4">
 		            		<table class="table table-sm table-bordered">
@@ -36,10 +36,9 @@
 			            		</tr>
 		            		</table>
 		            		<div class="float-right mt-3">
-		            			<button type="button" class="btn btn-outline-secondary text-center" onclick="">삭제하기</button>
-								<button type="button" class="btn btn-outline-secondary text-center" onclick="">수정하기</button>
-								<button type="button" class="btn btn-outline-secondary text-center" onclick="">답글달기</button>
-								<button type="button" class="btn btn-primary text-center" onclick="">목록으로</button>
+		            			<button data-oper='delete' class="btn btn-outline-secondary text-center">삭제하기</button>
+								<button data-oper='modify' class="btn btn-outline-secondary text-center">수정하기</button>
+								<button data-oper='list' class="btn btn-primary text-center">목록으로</button>
 		            		</div>
 	            		</div>    
 		            </div>
@@ -68,12 +67,13 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-<form id='operForm' action="/boad/modify" method="get">
-  <input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
-  <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-  <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-  <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-  <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>  
+<form id='operForm' action="/board/" method="get">
+  <input type='hidden' id='bno' name='bno' value='${board.bno}'>
+  <input type='hidden' name='pageNum' value='${cri.pageNum}'>
+  <input type='hidden' name='amount' value='${cri.amount}'>
+  <input type='hidden' name='keyword' value='${cri.keyword}'>
+  <input type='hidden' name='type' value='${cri.type}'>  
+  <input type='hidden' name='b_name' value='${cri.b_name}'>  
 </form>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
@@ -82,7 +82,24 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var operForm = $("#operForm");
+	
+	$("button[data-oper='modify']").on("click", function(e){
+		operForm.attr("action","/board/modify");
+		operForm.submit();
+	});
+	  
+	$("button[data-oper='list']").on("click", function(e){
+		operForm.find("#bno").remove();
+	    operForm.attr("action","/board/${cri.b_name}/list")
+	    operForm.submit();
+	}); 
+	
+});//$(document).ready(function(){
+</script>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
