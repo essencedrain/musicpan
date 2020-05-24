@@ -46,4 +46,10 @@ public class BoardServiceImpl implements BoardService{
 		mapper.insert(board);
 	}
 
+
+	@Override
+	public int getRank(Criteria cri) {
+		return mapper.getRank(cri);
+	}
+
 }//class

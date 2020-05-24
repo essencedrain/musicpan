@@ -31,7 +31,8 @@ public class BoardController {
 	 	NO			Task		Method	URL							Parameter		From		URL이동
 	 	--------------------------------------------------------------------------------------------
 	 	g000		리스트		GET		/board/{boardName}/list	
-	 	g001		내용		GET		/board/{boardName}/content
+	 	g001		내용		GET		/board/content
+	 	g002		내용2		GET		/board/{boardName}/content
 	 	g003		글쓰기		GET		/board/register
 	 					
 	 	p000		글쓰기		POST	/board/register				
@@ -48,17 +49,24 @@ public class BoardController {
 	// URI		:	/board/{boardName}/list
 	//=========================================================================================
 	@GetMapping("/{boardName}/list")
-	public String list(Criteria cri, Model model, @PathVariable("boardName") String boardName) {
+	public String list(Criteria cri, Model model, @PathVariable("boardName") String boardName) throws Exception {
 	
 		
+		//sql injection 체크
 		if(cri.getB_name()==null) {
+			if(isSqlInjection(boardName)) {throw new Exception();}
+			//cri에 b_name 비어 있으면 채워줌
 			cri.setB_name(boardName);
+		}else{
+			if(isSqlInjection(cri.getB_name())) {throw new Exception();}
 		}
 		
 		cri.setB_name2(makeKorean(cri.getB_name())); //b_name2 생성
 		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
 		
 		int total = service.getTotal(cri);
+		
+		if( (cri.getPageNum()*cri.getAmount()) > total ) {throw new Exception();}
 		
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
@@ -73,15 +81,19 @@ public class BoardController {
 	
 	//=========================================================================================
 	// g001
-	// 기능		:	내용 보여줌
+	// 기능		:	내용 보여줌1
 	// 메서드	:	GET
-	// URI		:	/board/{boardName}/content
+	// URI		:	/board/content
 	//=========================================================================================
-	@GetMapping("/{boardName}/content")
-	public String content(@ModelAttribute("cri") Criteria cri, Model model) {
+	@GetMapping("/content")
+	public String content(@ModelAttribute("cri") Criteria cri, Model model) throws Exception{
 		
 		//log.info("////////////////////test : " + cri.toString());
-		cri.setB_name2(makeKorean(cri.getB_name())); //b_name2 생성
+		
+		// sqlinjection 대응
+		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
+		
+		cri.setB_name2(makeKorean(cri.getB_name())); // 한글 게시판명 생성
 		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
 		
 		int total = service.getTotal(cri);
@@ -92,6 +104,46 @@ public class BoardController {
 		//log.info("////////////////////cri : " + cri.toString());
 		//log.info("////////////////////pageMaker : " + new PageDTO(cri, total).toString());
 		//log.info("////////////////////board : " + service.content(cri).toString());
+		
+		return "board/content";
+	}
+	//=========================================================================================	
+	
+	
+	
+	//=========================================================================================
+	// g002
+	// 기능		:	내용 보여줌2
+	// 메서드	:	GET
+	// URI		:	/board/{boardName}/content/{bno}
+	//=========================================================================================
+	@GetMapping("/{boardName}/content/{bno}")
+	public String content2(Model model, @PathVariable("boardName") String boardName, @PathVariable("bno") String bno) throws Exception{
+		
+		
+		// sqlinjection 대응
+		if(isSqlInjection(boardName)) {throw new Exception();}
+		
+		Criteria cri = new Criteria();
+		cri.setBno(Long.parseLong(bno)); //bno삽입
+		cri.setB_name(boardName);//게시판명 삽입
+		cri.setB_name2(makeKorean(cri.getB_name())); //한글 게시판명 생성
+		
+		int total = service.getTotal(cri);
+		int rank = service.getRank(cri);
+		
+		//(total - startRow + Amount)/amount= PageNum
+		//4866-4453
+		
+		cri.setPageNum( (int) Math.floor( (total-rank+cri.getAmount()) /(cri.getAmount()*1.0) ) );
+		
+		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
+		
+		model.addAttribute("cri",cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("board", service.content(cri));
+		
 		
 		return "board/content";
 	}
@@ -109,7 +161,10 @@ public class BoardController {
 	//=========================================================================================
 	@GetMapping("/register")
 	@PreAuthorize("isAuthenticated()")
-	public String writeForm(Model model, @RequestParam("b_name") String b_name) {
+	public String writeForm(Model model, @RequestParam("b_name") String b_name) throws Exception{
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
 		
 		model.addAttribute("b_name", b_name);
 		model.addAttribute("b_name2", makeKorean(b_name));
@@ -127,10 +182,13 @@ public class BoardController {
 	//=========================================================================================
 	@PostMapping("/register")
 	@PreAuthorize("isAuthenticated()")
-	public String writePro(Model model, BoardVO boardVO) {
+	public String writePro(Model model, BoardVO boardVO) throws Exception{
 		
 		//log.info("//////////////////test : " + boardVO.toString());
-
+		
+		// sqlinjection 대응
+		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
+		
 		service.register(boardVO);
 		
 		return "redirect:/board/"+boardVO.getB_name()+"/list";
@@ -161,6 +219,21 @@ public class BoardController {
 		}
 		
 		return null;
+	}//b_name2
+	//=========================================================================================
+	
+	//=========================================================================================
+	// 메서드2
+	// SqlInjection 대응 함수
+	// 정해진 값만 들어와짐
+	//=========================================================================================
+	private boolean isSqlInjection(String b_name) {
+		
+		switch(b_name) {
+		case "sample": return false;
+		default : return true;
+		}
+		
 	}//b_name2
 	//=========================================================================================
 	
