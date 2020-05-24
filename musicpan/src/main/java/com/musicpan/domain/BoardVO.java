@@ -14,6 +14,7 @@ public class BoardVO {
 	private Date updateDate;
 	private int hit;
 	private String id;
+	private String name;
 
 	//private int replyCnt;
 	//private List<BoardAttachVO> attachList;

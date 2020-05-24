@@ -19,7 +19,7 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		                	<h1>${pageMaker.cri.b_name2}</h1>
+		                	<h1>${cri.b_name2}</h1>
 		                </div>
 		            	<div class="mt-4">
 		            		<table class="table table-sm table-bordered">

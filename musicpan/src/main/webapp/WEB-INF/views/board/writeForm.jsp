@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp"%>
-
+    
             <!-- =================================================================================================  -->
             <!-- start  -->
             <!-- =================================================================================================  -->
@@ -13,75 +13,38 @@
             <div class="container">
 	            <div class="row">
 	            
-		            <div class="left_area col-lg-1 bg-info">
+	            	<div class="left_area col-lg-1 bg-info">
 		            </div>
 		            
 		            <div class="center_area col-lg-10" >
-			            <div class="heading pb-4">
-		                	<h1>${pageMaker.cri.b_name2}</h1>
+		            	<div class="heading pb-4">
+		                	<h1>${cri.b_name2}</h1>
 		                </div>
-		            	<div class="mt-4">
-		            		<table class="table table-sm table-bordered table-hover">
-		            			<thead class="text-center">
-			            			<tr>
-				                        <th style="width: 5%;">번호</td>
-				                        <th style="width: 60%;">제목</td>
-				                        <th style="width: 15%;">글쓴이</td>
-				                        <th style="width: 15%;">등록일</td>
-				                        <th style="width: 5%;">조회수</td>
-				                    </tr>
-			                    </thead>
-                    			<tbody class="text-center">
-                    				<c:forEach items="${list}" var="board">
-		                    			<tr>
-		                    				<td style="width: 5%;">${board.bno}</td>
-	                    					<td style="width: 60%;" class="text-left">
-	                    						<a class="move" href="${board.bno}">
-					                        		${board.title}
-					                        	</a>
-	                    					</td>
-					                        <td style="width: 15%;">${board.name}</td>
-					                        <td style="width: 15%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
-					                        <td style="width: 5%;">${board.hit}</td>
-		                    			</tr>
-	                    			</c:forEach>
-                    			</tbody>
-		            		</table>
-							<ul class="pagination justify-content-center">
-								
-								<c:choose>
-									<c:when test="${pageMaker.prev}">
-										<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">이전</a></li>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
-									</c:otherwise>
-								</c:choose>
-								
-								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-								  	<li class="page-item ${num==pageMaker.cri.pageNum ? "active" : ""}">
-								  		<a class="page-link" href="${num}">${num}</a>
-							  		</li>
-								</c:forEach>
-								
-								<c:choose>
-									<c:when test="${pageMaker.next}">
-										<li class="page-item"><a class="page-link" href="${pageMaker.endPage+1}">다음</a></li>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
-									</c:otherwise>
-								</c:choose>
-							</ul>
-		            	</div>
+		                <form action="freeboard.get" method="post">
+			                <div class="form-group">
+	                   			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요.">
+	                		</div>
+	                		
+	                		<div class="form-group">
+			                    <textarea class="form-control" rows="10" id="content" name="content" placeholder="내용을 입력해주세요." style="resize:none"></textarea>
+			                </div>
+			                
+	                		<div class="text-right">
+				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="javascript:window.history.back();">돌아가기</button>
+				                <button type="submit" class="btn btn-primary text-center mx-1">등록</button>
+			                </div>
+			                
+			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			                <input type="hidden" name="id" value='<sec:authentication property="principal.username"/>' />
+		                </form>
 		            </div>
-		            
 		            
 		            <div class="right_area col-lg-1 bg-info">
 	           	 	</div>
-	           	 	
-            	</div>
+	            
+	            </div>
             </div>
+            
             <!-- =================================================================================================  -->
             <!-- end  -->
             <!-- =================================================================================================  -->
@@ -99,13 +62,7 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-<form id='actionForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
-	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-	<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
-	<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
-	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
-</form>
+
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
@@ -113,26 +70,7 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	$('.page-item a').on('click',function(e){
-		e.preventDefault();
-		$("#actionForm").find("input[name='pageNum']").val( $(this).attr("href") );
-		$("#actionForm").submit();
-	});//$('.page_button a').on('click',function(e){
-	
-		
-	$('.move').on('click',function(e){
-		e.preventDefault();
-		$("#actionForm").append("<input type='hidden' name='bno' value='"+ $(this).attr("href") + "'>");
-		$("#actionForm").attr("action","/board/${pageMaker.cri.b_name}/content");
-		$("#actionForm").submit();
-	});//$('.move').on('click',function(e){
-		
-		
-});//$(document).ready(function(){
-</script>
+
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->

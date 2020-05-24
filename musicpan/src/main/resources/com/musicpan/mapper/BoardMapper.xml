@@ -6,10 +6,11 @@
 
 	
 	<select id="getListWithPaging" resultType="com.musicpan.domain.BoardVO">
-		select bno, title, regdate, hit, id
-		from board_${b_name}
-		order by bno desc
-		limit #{limitNum}, #{amount}
+		SELECT b.bno, b.title, b.regdate, b.hit, b.id, m.name 
+		from board_${b_name} b INNER JOIN member m
+			ON b.id=m.id
+		order BY b.bno desc
+		LIMIT #{limitNum}, #{amount}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
