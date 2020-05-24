@@ -114,26 +114,32 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	$('.page-item a').on('click',function(e){
-		e.preventDefault();
-		$("#actionForm").find("input[name='pageNum']").val( $(this).attr("href") );
-		$("#actionForm").submit();
-	});//$('.page_button a').on('click',function(e){
-	
+	<!-- =================================================================================================  -->
+    <!-- start list 페이지 이동 -->
+    <!-- =================================================================================================  -->
+	<script type="text/javascript">
+	$(document).ready(function(){
 		
-	$('.move').on('click',function(e){
-		e.preventDefault();
-		$("#actionForm").append("<input type='hidden' name='bno' value='"+ $(this).attr("href") + "'>");
-		$("#actionForm").attr("action","/board/${pageMaker.cri.b_name}/content");
-		$("#actionForm").submit();
-	});//$('.move').on('click',function(e){
+		$('.page-item a').on('click',function(e){
+			e.preventDefault();
+			$("#actionForm").find("input[name='pageNum']").val( $(this).attr("href") );
+			$("#actionForm").submit();
+		});//$('.page_button a').on('click',function(e){
 		
-		
-});//$(document).ready(function(){
-</script>
+			
+		$('.move').on('click',function(e){
+			e.preventDefault();
+			$("#actionForm").append("<input type='hidden' name='bno' value='"+ $(this).attr("href") + "'>");
+			$("#actionForm").attr("action","/board/${pageMaker.cri.b_name}/content");
+			$("#actionForm").submit();
+		});//$('.move').on('click',function(e){
+			
+			
+	});//$(document).ready(function(){
+	</script>
+	<!-- =================================================================================================  -->
+    <!-- end list 페이지 이동 -->
+    <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
