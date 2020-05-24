@@ -139,7 +139,7 @@
 		$('.move').on('click',function(e){
 			e.preventDefault();
 			$("#actionForm").append("<input type='hidden' name='bno' value='"+ $(this).attr("href") + "'>");
-			$("#actionForm").attr("action","/board/${pageMaker.cri.b_name}/content");
+			$("#actionForm").attr("action","/board/content");
 			$("#actionForm").submit();
 		});//$('.move').on('click',function(e){
 			
