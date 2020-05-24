@@ -82,6 +82,11 @@ public class BoardController {
 		
 		//log.info("////////////////////test : " + cri.toString());
 		cri.setB_name2(makeKorean(cri.getB_name())); //b_name2 생성
+		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
+		
+		int total = service.getTotal(cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("board", service.content(cri));
 		return "board/content";
 	}
