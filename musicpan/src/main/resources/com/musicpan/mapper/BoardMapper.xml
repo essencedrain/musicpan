@@ -34,4 +34,11 @@
 		insert into board_${b_name} (title, content, regdate, updatedate, hit, id)
 		values (#{title}, #{content},now(),now(),0,#{id})
 	</insert>
+	
+	<select id="getRank" resultType="int">
+		SELECT t.rank
+		FROM (SELECT bno, rank() over(ORDER BY bno ASC) AS rank
+				FROM board_${b_name}) t
+		WHERE t.bno= #{bno}
+	</select>
 </mapper>

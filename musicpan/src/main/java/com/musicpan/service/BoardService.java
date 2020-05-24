@@ -15,7 +15,7 @@ public interface BoardService {
 	
 	public BoardVO content(Criteria cri);
 	
-	
+	public int getRank(Criteria cri);
 	
 	//public BoardVO get(Long bno);
 	

@@ -37,9 +37,10 @@
 				                    </tr>
 			                    </thead>
                     			<tbody class="text-center">
+                    				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board">
 		                    			<tr>
-		                    				<td style="width: 5%;">${board.bno}</td>
+		                    				<td style="width: 5%;">${rowNum}</td>
 	                    					<td style="width: 60%;" class="text-left">
 	                    						<a class="move" href="${board.bno}">
 					                        		${board.title}
@@ -49,6 +50,7 @@
 					                        <td style="width: 10%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
 					                        <td style="width: 5%;">${board.hit}</td>
 		                    			</tr>
+		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>
@@ -111,7 +113,7 @@
 <!-- =================================================================================================  -->
 <form id='actionForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
 	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+	<!-- <input type='hidden' name='amount' value='${pageMaker.cri.amount}'> -->
 	<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
 	<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
 	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>

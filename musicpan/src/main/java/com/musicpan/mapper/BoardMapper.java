@@ -18,4 +18,6 @@ public interface BoardMapper {
 	public int increaseHit(Criteria cri);
 	
 	public void insert(BoardVO board);
+	
+	public int getRank(Criteria cri);
 }

@@ -66,6 +66,8 @@ public class BoardController {
 		
 		int total = service.getTotal(cri);
 		
+		if( (cri.getPageNum()*cri.getAmount()) > total ) {throw new Exception();}
+		
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
@@ -122,24 +124,27 @@ public class BoardController {
 		// sqlinjection 대응
 		if(isSqlInjection(boardName)) {throw new Exception();}
 		
-		/*
 		Criteria cri = new Criteria();
 		cri.setBno(Long.parseLong(bno)); //bno삽입
 		cri.setB_name(boardName);//게시판명 삽입
 		cri.setB_name2(makeKorean(cri.getB_name())); //한글 게시판명 생성
 		
 		int total = service.getTotal(cri);
+		int rank = service.getRank(cri);
 		
-		cri.setPageNum( (int) Math.ceil( (total-Long.parseLong(bno))/(cri.getAmount()*1.0) ) );
+		//(total - startRow + Amount)/amount= PageNum
+		//4866-4453
+		
+		cri.setPageNum( (int) Math.floor( (total-rank+cri.getAmount()) /(cri.getAmount()*1.0) ) );
 		
 		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
 		
+		model.addAttribute("cri",cri);
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("board", service.content(cri));
 		
 		
-		 */
 		return "board/content";
 	}
 	//=========================================================================================	

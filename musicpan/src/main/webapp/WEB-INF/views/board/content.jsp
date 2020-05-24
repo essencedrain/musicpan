@@ -74,18 +74,20 @@
 				                    </tr>
 			                    </thead>
                     			<tbody class="text-center">
-                    				<c:forEach items="${list}" var="board">
+                    				<c:set var="rowNum" value="${pageMaker.startRow}"/>
+                    				<c:forEach items="${list}" var="board2">
 		                    			<tr>
-		                    				<td style="width: 5%;">${board.bno}</td>
-	                    					<td style="width: 60%;" class="text-left">
-	                    						<a class="move" href="${board.bno}">
-					                        		${board.title}
+		                    				<td class="${board.bno==board2.bno?"text-primary":""}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
+	                    					<td style="width: 60%;" class="text-left ${board.bno==board2.bno?"text-primary":"" }">
+	                    						<a class="move" href="${board2.bno}">
+					                        		${board2.title}
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 20%;">${board.name}</td>
-					                        <td style="width: 10%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
-					                        <td style="width: 5%;">${board.hit}</td>
+					                        <td style="width: 20%;">${board2.name}</td>
+					                        <td style="width: 10%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board2.regdate}" /></td>
+					                        <td style="width: 5%;">${board2.hit}</td>
 		                    			</tr>
+		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>
@@ -148,14 +150,14 @@
 <form id='operForm' action="/board/" method="get">
   <input type='hidden' id='bno' name='bno' value='${board.bno}'>
   <input type='hidden' name='pageNum' value='${cri.pageNum}'>
-  <input type='hidden' name='amount' value='${cri.amount}'>
+  <!--  <input type='hidden' name='amount' value='${cri.amount}'>-->
   <input type='hidden' name='keyword' value='${cri.keyword}'>
   <input type='hidden' name='type' value='${cri.type}'>  
   <input type='hidden' name='b_name' value='${cri.b_name}'>  
 </form>
 <form id='actionForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
 	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+	<!--<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>-->
 	<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
 	<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
 	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
