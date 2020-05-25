@@ -48,12 +48,18 @@
 		                            </div>
 		                            <input type="text" class="form-control" placeholder="닉네임" name="name" id="name">
 		                        </div>
+		                        
+		                        <div class="mb-3 d-none" id="name_len"><h6>닉네임은 2글자 ~ 8글자로 사용해야 합니다.</h6></div>
+		                        <div class="mb-3 d-none" id="name_fir"><h6>닉네임에 사용할 수 없는 단어가 있습니다.</h6></div>
+		                        
+		                        
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
 		                              <span class="input-group-text"><i class="far fa-envelope"></i></span>
 		                            </div>
 		                            <input type="text" class="form-control" placeholder="이메일" name="email" id="email">
 		                        </div>
+		                        <div class="mb-3 d-none" id="email_fir"><h6>이메일 형식이 바르지 않습니다.</h6></div>
 		                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		                        <button type="submit" class="btn btn-lg btn-primary w-100">가입하기</button>
 		                    </form>
@@ -95,6 +101,9 @@
     	
 	  		
 		var validation = 0;
+		var nameValidation = 0;
+		var emailValidation = 0;
+		
 		$('#id').focus();
 		
 		//버튼에 자동으로 포커스 잡히는걸 막음
@@ -239,12 +248,161 @@
 		                            //$("#id_ok").removeClass("d-none");
 		                        	swa("success",'사용가능한 아이디 입니다.');
 		                            validation = -1;
+		                            $('#pwd').focus();
 		                        }//else---
            						}
 
 				});//$.ajax
 			}//if
 		});
+	 	//======================================================================
+	 	
+	 		
+	 	
+	 		
+	 	//======================================================================
+	    // $("#name").keyup
+	 	//======================================================================
+	 	$("#name").keyup(function(){
+		var strName = "123"+$("#name").val();
+		var lenName = $("#name").val().length;
+		var forbidName = 0;
+		var wordItems = ["관리자","admin","운영자"];
+		if(lenName < 2 || lenName > 8){ //2글자 이하 8글자 초과
+       	
+    		// 1 -> 오류
+        	nameValidation = 1;
+        	
+        	//보이기
+        	//"닉네임은 2글자 ~ 8글자로 사용해야 합니다."
+            if($("#name_len").hasClass("d-none")){$("#name_len").removeClass("d-none");}
+            
+           
+       	}else{// 2글자 이상 8글자 이하
+       		
+       		wordItems.forEach(function(item){
+       			if(strName.indexOf(item)>0){
+       				forbidName = 1;
+       			}
+       		});
+       	
+       		if(forbidName>0){
+       			//보이기
+       			//닉네임에 사용할 수 없는 단어가 있습니다.
+       			if($("#name_fir").hasClass("d-none")){$("#name_fir").removeClass("d-none");}
+       			
+       			// 1 -> 오류
+            	nameValidation = 1;
+       			
+       		}else{
+       			
+       			//-1 -> 정상
+	       		nameValidation = -1;
+	        	
+	        	//가리기
+	    		//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
+	    		if(!$("#name_len").hasClass("d-none")){$("#name_len").addClass("d-none");}
+	    		if(!$("#name_fir").hasClass("d-none")){$("#name_fir").addClass("d-none");}
+       		}
+        }//if
+	        
+	    });
+	 	//======================================================================	
+	 	
+	 		
+	 	
+ 		//======================================================================
+	    // $("#name").blur
+	 	//======================================================================
+ 		$("#name").blur(function(){
+ 			if(nameValidation == -1){
+ 				
+	 			//Ajax사용
+				$.ajax({
+	                type : 'POST',
+	                url : '/member/checkName/' +$('#name').val() ,
+	                //data : "id="+$('#id').val(), //서버로 보내는 파라미터 값
+	                dataType:'text', //서버가 보내주는 자료 형태
+	                //cache : false,
+	                //async : true,
+	                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
+	                       		//alert(data);
+		                        if(data==="true"){
+		                        	$('#name').val("");
+		                        	swa("error","중복된 닉네임 입니다.");
+		                        	nameValidation = 1;
+		                            $('#name').focus();
+		                            
+		                        }else{
+		                            //alert("사용가능한 id" );
+		                            //$("#id_ok").removeClass("d-none");
+		                        	swa("success",'사용가능한 닉네임 입니다.');
+		                        	nameValidation = -1;
+		                        	$('#email').focus();
+		                        }//else---
+	       						}
+	
+				});//$.ajax
+			}else{
+				$('#name').focus();
+			}
+ 		});
+	 	//======================================================================
+	 	
+	 		
+	 	//======================================================================
+	    // $("#email").keyup
+	 	//======================================================================
+	 	$("#email").keyup(function(){
+	 		if( !isEmail2(document.signUpForm.email) ){
+	 			//에러
+	 			emailValidation = 1;
+	 			//보이기
+	 			if($("#email_fir").hasClass("d-none")){$("#email_fir").removeClass("d-none");}
+	 		}else{
+	 			//정상
+	 			emailValidation = -1;
+	 			//가리기
+	 			if(!$("#email_fir").hasClass("d-none")){$("#email_fir").addClass("d-none");}
+	 		}
+	 	});
+	 	//======================================================================	
+	 	
+	 		
+	 	//======================================================================
+	    // $("#email").blur
+	 	//======================================================================
+ 		$("#email").blur(function(){
+ 			if(emailValidation>-1){
+ 				$('#email').focus();
+ 			}else{
+	 			//Ajax사용
+				$.ajax({
+	                type : 'POST',
+	                url : '/member/checkEmail/',
+	                data : "email="+$('#email').val(), //서버로 보내는 파라미터 값
+	                dataType:'text', //서버가 보내주는 자료 형태
+	                //cache : false,
+	                //async : true,
+	                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
+	                       		//alert(data);
+		                        if(data==="true"){
+		                        	$('#email').val("");
+		                        	swa("error","중복된 이메일 입니다.");
+		                        	emailValidation = 1;
+		                            $('#email').focus();
+		                            
+		                        }else{
+		                            //alert("사용가능한 id" );
+		                            //$("#id_ok").removeClass("d-none");
+		                        	swa("success",'사용가능한 이메일 입니다.');
+		                        	emailValidation = -1;
+		                        }//else---
+	       						}
+	
+				});//$.ajax
+ 			}
+ 		});
 	 	//======================================================================
 	 		
     });//$(document).ready(function()
@@ -332,6 +490,25 @@
 	 	    }//for
 	 	    return true;
 	 	}//isID
+	 	
+	 	function isEmail2(obj){
+			var str=obj.value;
+	 	    
+	 	    if(str==""){
+	 	        return false;
+	 	    }//if
+	 	    
+	 	    var i=str.indexOf("@");
+	 	    if(i<0){
+	 	        return false;
+	 	    }
+	 	    
+	 	    i=str.indexOf(".");
+	 	    if(i<0){
+	 	        return false;
+	 	    }
+	 	    return true;
+	 	}//isEmai2l() end
 	 	
 	 	function isEmail(obj){
 	 	    var str=obj.value;

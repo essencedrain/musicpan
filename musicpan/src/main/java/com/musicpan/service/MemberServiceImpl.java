@@ -20,10 +20,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public boolean member_validation(String id) {
-		log.info("MemberServiceImpl 아이디 확인 : " + id);
 		
-		return mapper.read(id)==null ?
-				false : true;
+		return mapper.checkId(id)==1 ?
+				true : false;
 	}
 	
 	
@@ -50,6 +49,20 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		}
 		
+	}
+
+
+	@Override
+	public boolean member_Name_validation(String name) {
+		return mapper.checkName(name)==1 ?
+				true : false;
+	}
+
+
+	@Override
+	public boolean member_Email_validation(String email) {
+		return mapper.checkEmail(email)==1 ?
+				true : false;
 	}
 
 	
