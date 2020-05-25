@@ -6,14 +6,17 @@
 */
 body {
     background: #fff;
+    
 }
 
+/*
 p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
 }
+*/
 
 a,
 a:hover,
@@ -21,6 +24,12 @@ a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
+}
+
+.nav_heading{
+	font-size:24px;
+	line-height: 33.6px;
+    font-weight: 900;
 }
 
 .navbar {
@@ -189,6 +198,44 @@ a.article:hover {
     right: 0;
 }
 /* ---------------------------------------------------
+    Banner STYLE
+----------------------------------------------------- */
+/*
+.floatdiv_right{
+    position:fixed; _position:absolute; _z-index:-1;
+    width:160px;
+    right:45%;
+    top:24%;
+    background-color: transparent;
+    margin-right: -520px;
+    padding:0;
+}
+.floatdiv_left{
+    position:fixed; _position:absolute; _z-index:-1;
+    width:160px;
+    right:45%;
+    top:24%;
+    background-color: transparent;
+    margin-right: 590px;
+    padding:0;
+}
+
+.floatdiv ul  { list-style: none; }
+.floatdiv li  { margin-bottom: 2px; text-align: center; }
+.floatdiv a   { color: #5D5D5D; border: 0; text-decoration: none; display: block; }
+.floatdiv a:hover, #floatdiv .menu  { background-color: #5D5D5D; color: #fff; }
+.floatdiv .menu, #floatdiv .last    { margin-bottom: 0px; }
+*/
+
+/* ---------------------------------------------------
+    color STYLE
+----------------------------------------------------- */
+.tdcolor_1{
+	background-color:#f1f7ff;
+}
+
+
+/* ---------------------------------------------------
     BOARD STYLE
 ----------------------------------------------------- */
 .table_gtx tbody td, .table_gtx thead th {
@@ -198,3 +245,77 @@ a.article:hover {
   white-space: nowrap;
 }
 
+.table_gtx thead th{
+	font-size:14px;
+	line-height: 21px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.table_gtx .list_rowNum{
+	font-size: 10px;
+	line-height: 15px;
+    font-weight: 500;
+    color: #999;
+    vertical-align: middle;
+}
+
+.table_gtx .list_else{
+	font-size:14px;
+	line-height: 21px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+.table_gtx .list_grade img{
+	vertical-align:middle;
+	margin-bottom: 4px;
+}
+
+.board_heading{
+	color: #3493ff;
+	font-weight: 900;
+}
+
+.content_area{
+	font-size:14px;
+	line-height: 21px;
+	font-weight: 500;
+}
+.content_area .hr1{
+	margin-top: 1rem;
+  	margin-bottom: 0rem;
+  	border: 0;
+  	border-top: 2px solid rgb(46, 67, 97);
+}
+.content_area .hr2{
+	margin-top: 1rem;
+  	margin-bottom: 1rem;
+  	border: 0;
+  	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.content_area .content_heading{
+	font-size:20px;
+	line-height: 28px;
+	font-weight: 700;
+}
+
+.content_area .table td{
+	padding-left: 8px;
+}
+.content_main_td{
+	min-height: 500px;
+}
+.content_area .table .tdcolor_1 img{
+	vertical-align:middle;
+	margin-bottom: 6px;
+}
+
+.content_area .content_gray{
+
+	color: #999;
+}
+.content_area .content_gray_small{
+	font-size:12px;
+	line-height: 18px;
+	color: #999;
+}

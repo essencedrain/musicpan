@@ -14,12 +14,12 @@
             <div class="container">
 	            <div class="row">
 	            
-	            	<div class="left_area col-lg-1 bg-info">
+	            	<div class="left_area col-lg-1 ">
 		            </div>
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		                	<h1>${b_name2} 게시판 글쓰기</h1>
+		            		<h3 class="board_heading"><a href="/board/${b_name}/list">${b_name2} 게시판</a></h3>
 		                </div>
 		                <form action="/board/register" method="post">
 			                <div class="form-group">
@@ -46,7 +46,7 @@
 		                </form>
 		            </div>
 		            
-		            <div class="right_area col-lg-1 bg-info">
+		            <div class="right_area col-lg-1 ">
 	           	 	</div>
 	            
 	            </div>

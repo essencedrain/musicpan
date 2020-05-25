@@ -13,44 +13,49 @@
             <div class="container">
 	            <div class="row">
 	            
-	            	<div class="left_area col-lg-1 bg-info">
+	            	<div class="left_area col-lg-1 ">
 		            </div>
 		            
 		            
-		            <div class="center_area col-lg-10" >
+		            <div class="center_area col-lg-10 content_area" >
 		            	<!-- =================================================================================================  -->
 						<!-- start 컨텐츠  -->
 						<!-- =================================================================================================  -->
-		            	<div class="heading pb-4">
-		                	<h1><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판</a></h1>
+		            	<div class="pb-3">
+		                	<h3 class="board_heading"><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판</a></h3>
 		                </div>
-		            	<div class="mt-4 pb-5">
-		            		<table class="table table-sm table-bordered">
+		            	<div class="mt-3 pb-5">
+		            		<div class="mb-2">
+		            			<span class="content_heading">${board.title}</span>
+		            		</div>
+		            		<table class="table table-sm table-borderless">
+			            		
+			            		<hr class="hr1"/>
 			            		<tr>
-			            			<td>${board.title}</td>
+			            			<td class="tdcolor_1">
+				            			<img src="/resources/level_icon/${board.grade}.gif">
+				            			&nbsp;${board.name}&nbsp;&nbsp;&nbsp;&nbsp;<span class="content_gray_small"><i class="far fa-clock"></i>&nbsp;<fmt:formatDate pattern="yyyy.MM.dd HH:MM:ss" value="${board.regdate}" /></span>
+			            			</td>
 			            		</tr>
 			            		
 			            		<tr>
-			            			<td>글쓴이 : ${board.name}</td>
+			            			<td class="content_main_td"><i class="fas fa-link content_gray"></i>&nbsp;<span class="content_gray_small"><a href="/board/${cri.b_name}/content/${board.bno}">/board/${cri.b_name}/content/${board.bno}</a></span></td>
 			            		</tr>
 			            		
 			            		<tr>
-			            			<td>등록일 : <fmt:formatDate pattern="yyyy.MM.dd HH:MM:ss" value="${board.regdate}" /> / 조회수 : ${board.hit}</td>
-			            		</tr>
-			            		
-			            		<tr>
-			            			<td>${board.content}</td>
+			            			<td class="py-5">${board.content}</td>
 			            		</tr>
 		            		</table>
+		            		<hr class="hr2"/>
 		            		<div class="float-right mt-2">
 		            			<sec:authentication property="principal" var="pinfo"/>
 		            			 <sec:authorize access="isAuthenticated()">
 			            			 <c:if test="${pinfo.username eq board.id}">
-				            			<button data-oper='delete' class="btn btn-outline-secondary text-center">삭제하기</button>
-										<button data-oper='modify' class="btn btn-outline-secondary text-center">수정하기</button>
+				            			<button data-oper='delete' class="btn btn-outline-secondary btn-sm text-center">삭제하기</button>
+										<button data-oper='modify' class="btn btn-outline-secondary btn-sm text-center">수정하기</button>
 			            			 </c:if>
 		            			 </sec:authorize>
-								<button data-oper='list' class="btn btn-primary text-center">목록으로</button>
+								<button data-oper='list' class="btn btn-outline-primary btn-sm text-center">목록으로</button>
 		            		</div>
 	            		</div>    
 		            	<!-- =================================================================================================  -->
@@ -59,16 +64,16 @@
 						<!-- =================================================================================================  -->
 						<!-- start 목록  -->
 						<!-- =================================================================================================  -->
-						<div class="mt-4 pb-4">
-		                	<h1><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h1>
+						<div class="mt-4 pb-3">
+		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
-		            	<div class="mt-4">
+		            	<div class="mt-3">
 		            		<table class="table table-sm table-hover table_gtx">
 		            			<thead class="text-center">
 			            			<tr>
 				                        <th style="width: 5%;">번호</td>
-				                        <th style="width: 60%;">제목</td>
-				                        <th style="width: 20%;">글쓴이</td>
+				                        <th style="width: 65%;">제목</td>
+				                        <th style="width: 15%;">글쓴이</td>
 				                        <th style="width: 10%;">등록일</td>
 				                        <th style="width: 5%;">조회수</td>
 				                    </tr>
@@ -77,21 +82,21 @@
                     				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board2">
 		                    			<tr>
-		                    				<td class="${board.bno==board2.bno?"text-primary":""}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
-	                    					<td style="width: 60%;" class="text-left ${board.bno==board2.bno?"text-primary":"" }">
+		                    				<td class="list_rowNum ${board.bno==board2.bno?"text-primary":"text-secondary"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
+	                    					<td style="width: 65%;" class="text-left list_else ${board.bno==board2.bno?"text-primary":"" }">
 	                    						<a class="move" href="${board2.bno}">
 					                        		${board2.title}
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 20%;">${board2.name}</td>
-					                        <td style="width: 10%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board2.regdate}" /></td>
-					                        <td style="width: 5%;">${board2.hit}</td>
+					                        <td style="width: 15%;" class="text-left list_else"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
+					                        <td style="width: 10%;" class="list_else"><fmt:formatDate pattern="yyyy.MM.dd" value="${board2.regdate}" /></td>
+					                        <td style="width: 5%;" class="list_else">${board2.hit}</td>
 		                    			</tr>
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>
-							<ul class="pagination justify-content-center">
+							<ul class="pagination justify-content-center pagination-sm">
 								
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
@@ -124,7 +129,7 @@
 		            </div>
 		            
 		            
-		            <div class="right_area col-lg-1 bg-info">
+		            <div class="right_area col-lg-1 ">
 	           	 	</div>
 	            
 	            </div>

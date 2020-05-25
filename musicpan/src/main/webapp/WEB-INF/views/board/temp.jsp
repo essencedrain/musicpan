@@ -13,7 +13,7 @@
             <div class="container">
 	            <div class="row">
 	            
-	            	<div class="left_area col-lg-1 bg-info">
+	            	<div class="left_area col-lg-1 bg-danger">
 		            </div>
 		            
 		            <div class="center_area col-lg-10" >
@@ -22,7 +22,7 @@
 		                </div>
 		            </div>
 		            
-		            <div class="right_area col-lg-1 bg-info">
+		            <div class="right_area col-lg-1 bg-danger">
 	           	 	</div>
 	            
 	            </div>

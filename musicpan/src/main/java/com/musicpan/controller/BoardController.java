@@ -26,18 +26,18 @@ public class BoardController {
 		
 	private BoardService service;
 	
-	//==============================================================================================
+	//==========================================================================================================
 	/*
-	 	NO			Task		Method	URL							Parameter		From		URL이동
-	 	--------------------------------------------------------------------------------------------
-	 	g000		리스트		GET		/board/{boardName}/list	
-	 	g001		내용		GET		/board/content
-	 	g002		내용2		GET		/board/{boardName}/content
-	 	g003		글쓰기		GET		/board/register
+	 	NO			Task		Method	URL									Parameter		From		URL이동
+	 	--------------------------------------------------------------------------------------------------------
+	 	g000		리스트		GET		/board/{boardName}/list				cri
+	 	g001		내용		GET		/board/content						cri
+	 	g002		내용2		GET		/board/{boardName}/content/{bno}	boardName, bno
+	 	g003		글쓰기		GET		/board/register						b_name
 	 					
-	 	p000		글쓰기		POST	/board/register				
+	 	p000		글쓰기		POST	/board/register						boardVO
 	 */
-	//==============================================================================================
+	//==========================================================================================================
 	
 	
 	
@@ -129,13 +129,10 @@ public class BoardController {
 		cri.setB_name(boardName);//게시판명 삽입
 		cri.setB_name2(makeKorean(cri.getB_name())); //한글 게시판명 생성
 		
-		int total = service.getTotal(cri);
-		int rank = service.getRank(cri);
+		int total = service.getTotal(cri); // 전체 글 갯수
+		int rank = service.getRank(cri); //이 글이 몇번째 글인지 
 		
-		//(total - startRow + Amount)/amount= PageNum
-		//4866-4453
-		
-		cri.setPageNum( (int) Math.floor( (total-rank+cri.getAmount()) /(cri.getAmount()*1.0) ) );
+		cri.setPageNum( (int) Math.floor( (total-rank+cri.getAmount()) /(cri.getAmount()*1.0) ) ); //total과 rank를 기반으로 pageNum 계산
 		
 		cri.setLimitNum( (cri.getPageNum()-1)*cri.getAmount() ); //limitNum 생성
 		

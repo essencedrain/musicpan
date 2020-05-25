@@ -10,7 +10,23 @@
             <!-- start  -->
             <!-- =================================================================================================  -->
             
-            <h1>Hi</h1>
+            <div class="container">
+	            <div class="row">
+	            
+	            	<div class="left_area col-lg-1 bg-danger">
+		            </div>
+		            
+		            <div class="center_area col-lg-10" >
+		            	<div class="heading pb-4">
+		                	<h1>페이지제목</h1>
+		                </div>
+		            </div>
+		            
+		            <div class="right_area col-lg-1 bg-danger">
+	           	 	</div>
+	            
+	            </div>
+            </div>
             
             <!-- =================================================================================================  -->
             <!-- end  -->

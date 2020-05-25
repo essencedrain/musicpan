@@ -12,15 +12,24 @@
             
             <div class="container">
 	            <div class="row">
-	            
-		            <div class="left_area col-lg-1 bg-info">
+	            	
+	            	
+		            <div class="left_area col-lg-1 ">
 		            </div>
+		            <!-- 배너
+		            <div class="floatdiv floatdiv_left">
+						<ul>
+							<a href='#' target='_blank'>
+							<img src='/resources/temp/banner.png' /></a>
+						</ul>
+					</div>
+					 -->
 		            
 		            <div class="center_area col-lg-10" >
-			            <div class="heading pb-4">
-		                	<h1><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h1>
+			            <div class="pb-3">
+		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
-		            	<div class="mt-4">
+		            	<div class="mt-3">
 		            		<sec:authorize access="isAuthenticated()">
 			            		<div class="py-2 d-flex justify-content-end">
 				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
@@ -30,8 +39,8 @@
 		            			<thead class="text-center">
 			            			<tr>
 				                        <th style="width: 5%;">번호</td>
-				                        <th style="width: 60%;">제목</td>
-				                        <th style="width: 20%;">글쓴이</td>
+				                        <th style="width: 65%;">제목</td>
+				                        <th style="width: 15%;">글쓴이</td>
 				                        <th style="width: 10%;">등록일</td>
 				                        <th style="width: 5%;">조회수</td>
 				                    </tr>
@@ -40,15 +49,15 @@
                     				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board">
 		                    			<tr>
-		                    				<td style="width: 5%;">${rowNum}</td>
-	                    					<td style="width: 60%;" class="text-left">
+		                    				<td style="width: 5%;" class="list_rowNum">${rowNum}</td>
+	                    					<td style="width: 65%;" class="text-left list_else">
 	                    						<a class="move" href="${board.bno}">
 					                        		${board.title}
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 20%;">${board.name}</td>
-					                        <td style="width: 10%;"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
-					                        <td style="width: 5%;">${board.hit}</td>
+					                        <td style="width: 15%;" class="text-left list_else list_grade"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
+					                        <td style="width: 10%;" class="list_else"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
+					                        <td style="width: 5%;" class="list_else">${board.hit}</td>
 		                    			</tr>
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
@@ -59,7 +68,7 @@
 				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
-							<ul class="pagination justify-content-center">
+							<ul class="pagination justify-content-center pagination-sm">
 								
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
@@ -89,9 +98,17 @@
 		            </div>
 		            
 		            
-		            <div class="right_area col-lg-1 bg-info">
+		            <div class="right_area col-lg-1 ">
 	           	 	</div>
 	           	 	
+	           	 	<!--배너 
+	           	 	<div class="floatdiv floatdiv_right">
+						<ul>
+							<a href='#' target='_blank'>
+							<img src='/resources/temp/banner.png' /></a>
+						</ul>
+					</div>
+					 -->
             	</div>
             </div>
             <!-- =================================================================================================  -->
