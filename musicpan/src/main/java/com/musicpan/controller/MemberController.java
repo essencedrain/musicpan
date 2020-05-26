@@ -84,4 +84,23 @@ public class MemberController {
 	}
 	//=========================================================================================
 	
+	
+	//=========================================================================================
+	// 기능 : 이메일 인증키 보내기
+	// 리턴 : "true" 성공 || "false" 실패
+	// 메서드 : POST
+	// URI : member/checkEmailKey
+	//=========================================================================================
+	@PostMapping(value = "/checkEmailKey", 
+			produces = "text/plain; charset=UTF-8")
+	public String checkEmailKey(@RequestParam String email) {
+		
+		//log.info("MemberController checkEmail: " + email);
+		
+		return service.member_Email_validation(email)==true ?
+				"true" : "false";
+		
+	}
+	//=========================================================================================
+	
 }//class
