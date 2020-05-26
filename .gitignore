@@ -3,6 +3,7 @@
 
 # MY CONF
 db.properties
+db2.properties
 
 ### Eclipse ###
 .metadata
