@@ -77,7 +77,7 @@
 		                              <span class="input-group-text">인증키</span>
 		                            </div>
 		                            <input type="text" class="form-control" placeholder="이메일로 받은 인증키를 입력하세요" name="emailKey" id="emailKey">
-		                            <div class="input-group-append">
+		                            <div id="emailKeyBtnDiv" class="input-group-append">
 										<button id="emailKeyBtn" type="button" class="btn btn-outline-primary">확인</button>
 									</div>
 		                        </div>
@@ -88,6 +88,7 @@
                         
 		                        <div class="mb-3 d-none" id="email_fir"><h6>이메일 형식이 바르지 않습니다.</h6></div>
 		                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                        <input type="hidden" id="emailValidation" name="emailValidation" value="" />
 		                        <button type="submit" class="btn btn-lg btn-primary w-100">가입하기</button>
 		                    </form>
 		                </div>
@@ -129,7 +130,6 @@
 		var validation = 0;
 		var nameValidation = 0;
 		var emailValidation = 0;
-		
 		$('#id').focus();
 		
 		//버튼에 자동으로 포커스 잡히는걸 막음
@@ -157,95 +157,97 @@
 	    // $("#id").keyup
 	 	//======================================================================
 	 	$("#id").keyup(function(){
-		var str = $("#id").val().toUpperCase();
-		var len = $("#id").val().length;
-		//특수문자플래그
-		var isSpe = false;
-		
-		if( str == "" ){//글자가 없으면
-    		
-    	}else if( len < 4 ){ //4글자 이하면
-        	
-	    		// 1 -> 오류
-	        	validation = 1;
+	 		
+	 	if(validation != 2){
+			var str = $("#id").val().toUpperCase();
+			var len = $("#id").val().length;
+			//특수문자플래그
+			var isSpe = false;
+			
+			if( str == "" ){//글자가 없으면
+	    		
+	    	}else if( len < 4 ){ //4글자 이하면
 	        	
-	        	//보이기
-	        	//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
-	            if($("#id_len").hasClass("d-none")){$("#id_len").removeClass("d-none");}
-	            
-	            
-	            //첫글자가 영문자가 아니면
-		    	if( !( 'A'<= str.charAt(0) && 'Z'>= str.charAt(0) ) ){
-		    		//보이기
-	            	//"아이디는 영어 소문자로 시작해야 합니다."
-	                if($("#id_fir").hasClass("d-none")){$("#id_fir").removeClass("d-none");}
-		    	}else{
-		    		//가리기
-		    		//"아이디는 영어 소문자로 시작해야 합니다."
-		    		if(!$("#id_fir").hasClass("d-none")){$("#id_fir").addClass("d-none");}
-		    	}//if
-		    	
-		    	//특수문자 존재 여부
-		    	for(var i=1; i<len; i++){
-        			if( ( 'A' <= str.charAt(i) && 'Z' >= str.charAt(i) ) || ( '0'<=str.charAt(i) && '9'>=str.charAt(i) ) ){
-        				// 가리기
-        				//"아이디에 특수문자는 사용할 수 없습니다."
-        		        if(!$("#id_spe").hasClass("d-none")){$("#id_spe").addClass("d-none");}
-        			}else{
-        				//보이기
-    	            	//"아이디에 특수문자는 사용할 수 없습니다."
-    	                if($("#id_spe").hasClass("d-none")){$("#id_spe").removeClass("d-none");}
-        			}//if
-        		}//for
-            
-    		}else if( len > 30 ){ //30글자 이상이면
-    			// 1 -> 오류
-	        	validation = 1;
-	        	
-	        	//보이기
-	        	//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
-	            if($("#id_len2").hasClass("d-none")){$("#id_len2").removeClass("d-none");}
-        	}else{// 4글자 이상이면 
-        	
-	        	//첫글자가 영문자이면
-	        	if( 'A' <= str.charAt(0) && 'Z' >= str.charAt(0) ){
-	        		
-	        		for(var i=1; i<len; i++){
-	        			//특수문자가 없다
+		    		// 1 -> 오류
+		        	validation = 1;
+		        	
+		        	//보이기
+		        	//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
+		            if($("#id_len").hasClass("d-none")){$("#id_len").removeClass("d-none");}
+		            
+		            
+		            //첫글자가 영문자가 아니면
+			    	if( !( 'A'<= str.charAt(0) && 'Z'>= str.charAt(0) ) ){
+			    		//보이기
+		            	//"아이디는 영어 소문자로 시작해야 합니다."
+		                if($("#id_fir").hasClass("d-none")){$("#id_fir").removeClass("d-none");}
+			    	}else{
+			    		//가리기
+			    		//"아이디는 영어 소문자로 시작해야 합니다."
+			    		if(!$("#id_fir").hasClass("d-none")){$("#id_fir").addClass("d-none");}
+			    	}//if
+			    	
+			    	//특수문자 존재 여부
+			    	for(var i=1; i<len; i++){
 	        			if( ( 'A' <= str.charAt(i) && 'Z' >= str.charAt(i) ) || ( '0'<=str.charAt(i) && '9'>=str.charAt(i) ) ){
-	        				// -1 -> 정상
-	    	        		validation = -1;
-	    	        		
-	    	        	//특수문자가 있다
+	        				// 가리기
+	        				//"아이디에 특수문자는 사용할 수 없습니다."
+	        		        if(!$("#id_spe").hasClass("d-none")){$("#id_spe").addClass("d-none");}
 	        			}else{
-	        				
-	        				isSpe = true;
-	    	                
+	        				//보이기
+	    	            	//"아이디에 특수문자는 사용할 수 없습니다."
+	    	                if($("#id_spe").hasClass("d-none")){$("#id_spe").removeClass("d-none");}
 	        			}//if
 	        		}//for
-	        		
-	        		if(isSpe){
-	        			validation = 1;
-	        			//보이기
-    	            	//"아이디에 특수문자는 사용할 수 없습니다."
-    	                if($("#id_spe").hasClass("d-none")){$("#id_spe").removeClass("d-none");}
-	        		}//if
-	        		
-	        		
-	        	}else{
-	        		//보이기
-	            	//"아이디는 영어 소문자로 시작해야 합니다."
-	                if($("#id_fir").hasClass("d-none")){$("#id_fir").removeClass("d-none");}
-	                
-	        	}//if
+	            
+	    		}else if( len > 30 ){ //30글자 이상이면
+	    			// 1 -> 오류
+		        	validation = 1;
+		        	
+		        	//보이기
+		        	//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
+		            if($("#id_len2").hasClass("d-none")){$("#id_len2").removeClass("d-none");}
+	        	}else{// 4글자 이상이면 
 	        	
-	        	//가리기
-	    		//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
-	    		if(!$("#id_len").hasClass("d-none")){$("#id_len").addClass("d-none");}
-	    		if(!$("#id_len2").hasClass("d-none")){$("#id_len2").addClass("d-none");}
-    		
+		        	//첫글자가 영문자이면
+		        	if( 'A' <= str.charAt(0) && 'Z' >= str.charAt(0) ){
+		        		
+		        		for(var i=1; i<len; i++){
+		        			//특수문자가 없다
+		        			if( ( 'A' <= str.charAt(i) && 'Z' >= str.charAt(i) ) || ( '0'<=str.charAt(i) && '9'>=str.charAt(i) ) ){
+		        				// -1 -> 정상
+		    	        		validation = -1;
+		    	        		
+		    	        	//특수문자가 있다
+		        			}else{
+		        				
+		        				isSpe = true;
+		    	                
+		        			}//if
+		        		}//for
+		        		
+		        		if(isSpe){
+		        			validation = 1;
+		        			//보이기
+	    	            	//"아이디에 특수문자는 사용할 수 없습니다."
+	    	                if($("#id_spe").hasClass("d-none")){$("#id_spe").removeClass("d-none");}
+		        		}//if
+		        		
+		        		
+		        	}else{
+		        		//보이기
+		            	//"아이디는 영어 소문자로 시작해야 합니다."
+		                if($("#id_fir").hasClass("d-none")){$("#id_fir").removeClass("d-none");}
+		                
+		        	}//if
+		        	
+		        	//가리기
+		    		//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
+		    		if(!$("#id_len").hasClass("d-none")){$("#id_len").addClass("d-none");}
+		    		if(!$("#id_len2").hasClass("d-none")){$("#id_len2").addClass("d-none");}
+	    		
 	        }//if
-	        
+	 	}//if    
 	    });
 	 	//======================================================================
 		
@@ -285,6 +287,18 @@
 	                dataType:'text', //서버가 보내주는 자료 형태
 	                //cache : false,
 	                //async : true,
+	                beforeSend: function(){
+	                	Swal.fire({
+	                        title: '잠시만 기다려주세요',
+	                        text: '작업중입니다.',
+	                        allowOutsideClick: false,
+	                        allowEscapeKey: false,
+	                        allowEnterKey: false,
+	                        onOpen: () => {
+	                            swal.showLoading();
+	                        }
+	                	});
+	                },
 	                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
 	                       		//alert(data);
 		                        if(data==="true"){
@@ -398,6 +412,18 @@
 	                dataType:'text', //서버가 보내주는 자료 형태
 	                //cache : false,
 	                //async : true,
+	                beforeSend: function(){
+	                	Swal.fire({
+	                        title: '잠시만 기다려주세요',
+	                        text: '작업중입니다.',
+	                        allowOutsideClick: false,
+	                        allowEscapeKey: false,
+	                        allowEnterKey: false,
+	                        onOpen: () => {
+	                            swal.showLoading();
+	                        }
+	                	});
+	                },
 	                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
 	                       		//alert(data);
 		                        if(data==="true"){
@@ -436,6 +462,8 @@
 	    // $("#email").keyup
 	 	//======================================================================
 	 	$("#email").keyup(function(){
+	 		
+	 	if(emailValidation != 2){
 	 		if( !isEmail2(document.signUpForm.email) ){
 	 			//에러
 	 			emailValidation = 1;
@@ -454,6 +482,7 @@
 	 			if($("#emailAuthdDiv").hasClass("d-none")){$("#emailAuthdDiv").removeClass("d-none");}
 	 			
 	 		}
+	 	}
 	 	});
 	 	//======================================================================	
 	 	
@@ -478,6 +507,18 @@
 	                dataType:'text', //서버가 보내주는 자료 형태
 	                //cache : false,
 	                //async : true,
+	                beforeSend: function(){
+	                	Swal.fire({
+	                        title: '잠시만 기다려주세요',
+	                        text: '작업중입니다.',
+	                        allowOutsideClick: false,
+	                        allowEscapeKey: false,
+	                        allowEnterKey: false,
+	                        onOpen: () => {
+	                            swal.showLoading();
+	                        }
+	                	});
+	                },
 	                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
 	                       		//alert(data);
 		                        if(data==="true"){
@@ -489,7 +530,7 @@
 		                            $('#email').focus();
 		                            
 		                        }else{
-		                            //alert("사용가능한 id" );
+		                            //alert("사용가능한 이메일" );
 		                            //$("#id_ok").removeClass("d-none");
 		                        	//swa("success",'사용가능한 이메일 입니다.');
 		                        	
@@ -507,15 +548,21 @@
 		                        	
 		                        	//프로그래스바 보이기
 		            	 			if($("#proBarDiv").hasClass("d-none")){$("#proBarDiv").removeClass("d-none");}
+		            	 			var authTime = + new Date();
+		            	 			var nowTime = + new Date();
 		                        	var probarV = 180000; //3분
 		                        	var probarWarn = 0;
 		                        	proValInter = setInterval(function(){
-		                    			    		probarV = probarV - 100;
+		                    			    		
+					                        		nowTime = + new Date();
+					                                takeTime = nowTime-authTime;
+					                                
+		                        					probarV = 180000 - takeTime;
 		                    			    		
 		                    			    		percentProbarV = (probarV/180000)*100
 		                    			    		//console.log(percentProbarV);
 		                    			    		
-		                    			    		if(probarV==0){
+		                    			    		if(probarV<0){
 		                    			    			clearInterval(proValInter);
 		                    			    			swa("error","제한시간이 초과되었습니다.");
 		                    			    			$("#emailFixBtn").trigger("click");
@@ -551,13 +598,13 @@
 	           			                dataType:'text', //서버가 보내주는 자료 형태
 	           			                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
 	           			                       		//alert(data);
+	           			                			//console.log(data);
 	           				                        if(data==="true"){
-	           				                        	$('#name').val("");
-	           				                        	swa("error","중복된 닉네임 입니다.");
-	           				                        	nameValidation = 1;
-	           				                            $('#name').focus();
-	           				                            
+	           				                        	swa("success","인증키를 발송했습니다.");
 	           				                        }else{
+	           				                        	swa("error","발송실패 다시 시도해주세요.");
+	           				                        	clearInterval(proValInter);
+		                    			    			$("#emailFixBtn").trigger("click");
 	           				                        }//if
    			       						}//success
 	           						});//$.ajax
@@ -574,8 +621,16 @@
 	 	$("#emailFixBtn").click(function(){
 	 		emailValidation = 0;
 	 		clearInterval(proValInter);
+	 		$('#proBar').css('width','100%');
+	 		if($("#proBar").hasClass("bg-warning")){$("#proBar").removeClass("bg-warning");}
+	 		if($("#proBar").hasClass("bg-danger")){$("#proBar").removeClass("bg-danger");}
+	 		if(!$("#proBar").hasClass("bg-info")){$("#proBar").addClass("bg-info");}
 	 		//인증키 삭제
 	 		$('#emailKey').val('');
+	 		//인증키 입력 열기
+	 		$("#emailKey").removeAttr("readonly");
+	 		//인증키 전송 버튼 보이기
+	 		if($("#emailKeyBtnDiv").hasClass("d-none")){$("#emailKeyBtnDiv").removeClass("d-none");}
 	 		//email인풋 열기
         	$('#email').removeAttr('readonly');
 	 		//email수정 가리기
@@ -586,9 +641,73 @@
         	if(!$("#proBarDiv").hasClass("d-none")){$("#proBarDiv").addClass("d-none");}
         	//이메일인풋 인증하기 버튼 보이기
         	if($("#emailAuthdDiv").hasClass("d-none")){$("#emailAuthdDiv").removeClass("d-none");}
+        	//emailValidation 변경
+	 		$('#emailValidation').val('');
         	$('#email').val("");
         	$('#email').focus();
 	 	});
+	 	//======================================================================		
+	 		
+	 		
+	 		
+	 	//======================================================================		
+	 	// $('#emailKeyBtn').click	
+	 	//======================================================================		
+	 	$('#emailKeyBtn').click(function(){
+	 		
+	 		if($("#emailKey").val()=="" || $("#emailKey").val().length ==0){
+	 			swa("error","인증키를 입력해주세요.");
+	 			$("#emailKey").val('');
+	 			$("#emailKey").focus();
+	 		}//if
+	 		
+	 		
+	 		//Ajax사용
+			$.ajax({
+                type : 'POST',
+                url : '/member/authEmailKey',
+                data : "email="+$('#email').val() + "&authEmailKey="+$("#emailKey").val(),
+                dataType:'text', //서버가 보내주는 자료 형태
+                beforeSend: function(){
+                	Swal.fire({
+                        title: '잠시만 기다려주세요',
+                        text: '작업중입니다.',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        onOpen: () => {
+                            swal.showLoading();
+                        }
+                	});
+                },
+                success : function(data){//서버가 보내준 데이터를 클라이언트 반영
+                       		//alert(data);
+	                        if(data==="true"){
+	                        	swa("success","인증되었습니다.");
+	                        	//키인풋 잠그기
+	                        	$('#emailKey').attr('readonly','readonly');
+	                        	//키인풋 확인 버튼 가리기
+	                        	if(!$("#emailKeyBtnDiv").hasClass("d-none")){$("#emailKeyBtnDiv").addClass("d-none");}
+	                        	//프로그레스바 숨기기
+	                        	if(!$("#proBarDiv").hasClass("d-none")){$("#proBarDiv").addClass("d-none");}
+	                        	clearInterval(proValInter);
+	                	 		$('#proBar').css('width','100%');
+	                	 		if($("#proBar").hasClass("bg-warning")){$("#proBar").removeClass("bg-warning");}
+	                	 		if($("#proBar").hasClass("bg-danger")){$("#proBar").removeClass("bg-danger");}
+	                	 		if(!$("#proBar").hasClass("bg-info")){$("#proBar").addClass("bg-info");}
+	                	 		
+	                	 		//emailValidation 변경
+	                	 		$('#emailValidation').val('ok');
+	                        	
+	                        }else{
+	                        	swa("error","잘못된 인증키입니다. 다시 입력해주세요.");
+	                        	$("#emailKey").val('');
+	            	 			$("#emailKey").focus();
+       						}//if
+               			}//success : function(data){
+			});//$.ajax
+	 	
+ 		});	
 	 	//======================================================================		
 	 	
     });//$(document).ready(function()
@@ -632,6 +751,12 @@
 	 			return false;
 	 		}//if
 	 		
+	 		if($('#emailValidation').val()=="" || $('#emailValidation').val().length ==0){
+	 			
+	 			swa("error","이메일 인증을 해주세요.");
+	 			return false;
+	 		}
+	 		
 	 	}//check9()
 	 	//======================================================================
 	 		
@@ -641,8 +766,7 @@
 	 	// 밀리초 변환
 	 	//======================================================================
 	 	function msToTime(duration) {
-	        var milliseconds = parseInt((duration%1000)/100)
-	            , seconds = parseInt((duration/1000)%60)
+	        var seconds = parseInt((duration/1000)%60)
 	            , minutes = parseInt((duration/(1000*60))%60);
 	
 	        minutes = minutes;

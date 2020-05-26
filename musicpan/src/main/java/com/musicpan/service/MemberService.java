@@ -9,4 +9,7 @@ public interface MemberService {
 	public boolean member_Email_validation(String email);
 	public boolean register(MemberVO vo);
 	
+	public boolean createEmailKey(String email);
+	public boolean authEmailKey(String email, String authEmailKey);
+	
 }//class

@@ -48,4 +48,21 @@
 	<select id="checkEmail" resultType="int">
 		select count(*) from member where email = #{email}
 	</select>
+	
+	
+	<select id="checkEmailFromKey" resultType="int">
+		select count(*) from emailkey where email = #{email}
+	</select>
+	<select id="getEmailKey" resultType="com.musicpan.domain.EmailAuthVO">
+		select * from emailkey where email = #{email}
+	</select>
+	<insert id="insertEmailKey">
+		INSERT INTO emailkey(email, authemailkey) VALUES(#{email}, #{authEmailKey});
+	</insert>
+	<delete id="deleteEmailKey">
+		delete from emailkey where email = #{email}
+	</delete>
+
+	
+	
 </mapper>

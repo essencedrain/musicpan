@@ -1,15 +1,16 @@
 package com.musicpan.mapper;
 
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import com.musicpan.domain.MemberVO;
+import com.musicpan.domain.EmailAuthVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -26,6 +27,22 @@ public class MemberMapperTests {
   @Setter(onMethod_ = @Autowired)
   private PasswordEncoder pwencoder;
   
+  
+  @Test
+  public void testEmailKey() {
+    
+    //int insertCount1 = mapper.insertEmailKey("adsf", "asdf");
+    //int insertCount2 = mapper.checkEmailKey("gth@kakao.com");
+    //int insertCount2 = mapper.deleteEmailKey("gth@kakao.com");
+    EmailAuthVO vo = mapper.getEmailKey("gth@kakao.com");
+    
+    Date today = new Date();
+    
+    //log.info(insertCount1);
+    log.info(vo.toString());
+    log.info("///////////////////////////////////test" + vo.getCreatedate().getTime() + " / " + today.getTime()+" /// " + (today.getTime()-vo.getCreatedate().getTime()));
+    
+  }
   /*
   @Test
   public void testRead() {

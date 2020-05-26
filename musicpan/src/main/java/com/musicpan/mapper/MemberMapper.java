@@ -1,5 +1,8 @@
 package com.musicpan.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.musicpan.domain.EmailAuthVO;
 import com.musicpan.domain.MemberVO;
 
 public interface MemberMapper {
@@ -10,4 +13,9 @@ public interface MemberMapper {
 	public int checkId(String id);
 	public int checkName(String name);
 	public int checkEmail(String email);
+	
+	public int insertEmailKey(@Param("authEmailKey") String authEmailKey, @Param("email") String email);
+	public EmailAuthVO getEmailKey(String email);
+	public int checkEmailFromKey(String email);
+	public int deleteEmailKey(String email);
 }
