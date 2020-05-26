@@ -1,6 +1,14 @@
 package com.musicpan.controller;
 
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +31,6 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
-	
 	
 	//=========================================================================================
 	// 기능 : 아이디 중복확인
@@ -83,5 +90,40 @@ public class MemberController {
 		
 	}
 	//=========================================================================================
+	
+	
+	//=========================================================================================
+	// 기능 : 이메일 인증키 보내기
+	// 리턴 : "true" 성공 || "false" 실패
+	// 메서드 : POST
+	// URI : member/checkEmailKey
+	//=========================================================================================
+	@PostMapping(value = "/checkEmailKey", 
+			produces = "text/plain; charset=UTF-8")
+	public String checkEmailKey(@RequestParam String email) {
+		
+		return service.createEmailKey(email)?"true":"false";
+	}
+	//=========================================================================================
+	
+	
+	
+	
+	//=========================================================================================
+	// 기능 : 이메일 인증키 확인
+	// 리턴 : "true" 성공 || "false" 실패
+	// 메서드 : POST
+	// URI : member/authEmailKey
+	//=========================================================================================
+	@PostMapping(value = "/authEmailKey", 
+			produces = "text/plain; charset=UTF-8")
+	public String authEmailKey(@RequestParam String email, @RequestParam String authEmailKey) {
+		
+		return service.authEmailKey(email, authEmailKey)?"true":"false";
+	}
+	//=========================================================================================
+	
+	
+	
 	
 }//class
