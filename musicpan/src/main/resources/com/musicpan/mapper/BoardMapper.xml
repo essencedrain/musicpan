@@ -41,4 +41,16 @@
 				FROM board_${b_name}) t
 		WHERE t.bno= #{bno}
 	</select>
+	
+	<update id="update">
+		update
+			board_${b_name}
+		set 
+			title = #{title}
+			,content = #{content}
+			,updatedate = now()
+		where 
+			bno = #{bno}
+	</update>
+	
 </mapper>

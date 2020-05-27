@@ -17,9 +17,11 @@ public interface BoardService {
 	
 	public int getRank(Criteria cri);
 	
-	//public BoardVO get(Long bno);
+	public boolean modify(BoardVO board);
 	
-	//public boolean modify(BoardVO board);
+	
+	
+	//public BoardVO get(Long bno);
 	
 	//public boolean remove(Long bno);
 	/*

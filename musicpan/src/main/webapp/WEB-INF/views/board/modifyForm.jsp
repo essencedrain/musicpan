@@ -19,11 +19,11 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		            		<h3 class="board_heading"><a href="/board/${b_name}/list">${b_name2} 게시판</a></h3>
+		            		<h3 class="board_heading"><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판</a></h3>
 		                </div>
-		                <form action="/board/register" method="post">
+		                <form action="/board/update" method="post">
 			                <div class="form-group">
-	                   			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요."/>
+	                   			<input type="text" class="form-control" id="title" name="title" value="${board.title}"/>
 	                		</div>
 	                		
 	                		<!-- 
@@ -31,18 +31,19 @@
 							  <textarea class="form-control" rows="10" id="content" placeholder="내용을 입력해주세요."></textarea>
 							</div>
 							 -->
-							<textarea class="form-control" id="ck_content" name="content"></textarea>
+							<textarea class="form-control" id="ck_content" name="content">${board.content}</textarea>
 							
 
 
 	                		<div class="text-right mt-2">
-				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="javascript:window.history.back();">돌아가기</button>
+				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="location.href='/board/${cri.b_name}/content/${board.bno}'">돌아가기</button>
 				                <button type="submit" class="btn btn-primary text-center mx-1">등록</button>
 			                </div>
 			                
 			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			                <input type="hidden" name="id" value='<sec:authentication property="principal.username"/>' />
-			                <input type="hidden" name="b_name" value="${b_name}" />
+			                <input type="hidden" name="b_name" value="${cri.b_name}" />
+			                <input type="hidden" name="bno" value="${board.bno}" />
 		                </form>
 		            </div>
 		            
