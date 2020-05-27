@@ -337,9 +337,9 @@ a.article:hover {
 	margin-right: 5px;
 }
 .reply_area .card_area .card-text{
-	font-size:14px; !important;
-	line-height: 21px; !important;
-	font-weight: 500; !important;
+	font-size:14px; 
+	line-height: 21px; 
+	font-weight: 500;
 }
 .reply_area .card_area .card-header .card-user-time{
 	font-size: 12px;
@@ -348,4 +348,23 @@ a.article:hover {
     color: #999;
     vertical-align: middle;
     margin-top: 1px;
+}
+.card-body-under{
+	font-size:14px;
+	line-height: 21px; 
+	font-weight: 500;
+	color: #999; !important;
+}
+.card-body-under .span_class{
+	margin-right: 15px;
+	display: inline-block;
+}
+.card-body-under .span_class2{
+	margin-right: 5px;
+	display: inline-block;
+}
+.card-body-under .span_class3{
+	margin-right: 15px;
+	margin-left: 15px;
+	display: inline-block;
 }
