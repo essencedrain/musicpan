@@ -164,6 +164,7 @@
   <input type='hidden' name='keyword' value='${cri.keyword}'>
   <input type='hidden' name='type' value='${cri.type}'>  
   <input type='hidden' name='b_name' value='${cri.b_name}'>  
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <form id='actionForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
 	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
@@ -197,6 +198,26 @@
 		    operForm.attr("action","/board/${cri.b_name}/list")
 		    operForm.submit();
 		}); 
+		
+		$("button[data-oper='delete']").on("click", function(e){
+			Swal.fire({
+				  title: '정말 삭제하시겠습니까?',
+				  text: "삭제된 글은 복구가 어렵습니다.",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#007bff',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소'
+				}).then((result) => {
+				  if (result.value) {
+				    //삭제처리시작
+				  	operForm.attr("action","/board/delete");
+				  	operForm.attr("method","post");
+					operForm.submit();
+				  }
+				})
+		});
 		
 	});//$(document).ready(function(){
 	</script>
