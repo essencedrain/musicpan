@@ -36,9 +36,9 @@ public class BoardController {
 	 	g003		글쓰기		GET		/board/register						b_name			list,content	board/writeForm		isAuthenticated()
 	 	g004		수정하기	GET		/board/update						cri				content			board/modifyForm	isAuthenticated()
 	 					
-	 	p000		글쓰기		POST	/board/register						boardVO
-	 	p001		수정하기	POST	/board/update						boardVO			modifyForm		
-	 	p002		삭제하기	POST	/board/delete						boardVO			content
+	 	p000		글쓰기		POST	/board/register						boardVO												principal.username == #boardVO.id
+	 	p001		수정하기	POST	/board/update						boardVO			modifyForm							principal.username == #boardVO.id
+	 	p002		삭제하기	POST	/board/delete						boardVO			content								principal.username == #boardVO.id
 	 */
 	//===========================================================================================================================================
 	
@@ -204,7 +204,7 @@ public class BoardController {
 	// URI		:	/board/register
 	//=========================================================================================
 	@PostMapping("/register")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("principal.username == #boardVO.id")
 	public String writePro(BoardVO boardVO) throws Exception{
 		
 		//log.info("//////////////////test : " + boardVO.toString());
@@ -228,7 +228,7 @@ public class BoardController {
 	// URI		:	/board/update
 	//=========================================================================================
 	@PostMapping("/update")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("principal.username == #boardVO.id")
 	public String modifyPro(BoardVO boardVO) throws Exception{
 		
 		//log.info("//////////////////test : " + boardVO.toString());
@@ -254,7 +254,7 @@ public class BoardController {
 	// URI		: 	/board/delete
 	//=========================================================================================
 	@PostMapping("/delete")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("principal.username == #boardVO.id")
 	public String deletePro(BoardVO boardVO) throws Exception{
 		
 		//log.info("//////////////////test1 : " + boardVO.toString());
