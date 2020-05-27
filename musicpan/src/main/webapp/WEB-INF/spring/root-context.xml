@@ -13,6 +13,9 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- 방문자수체커 -->
+	<bean id="visitServiceImpl" class="com.musicpan.service.VisitServiceImpl"/>
+	
 	<!-- Mail 인증 관련 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com" />
