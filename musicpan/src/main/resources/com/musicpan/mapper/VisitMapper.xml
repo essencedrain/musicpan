@@ -23,4 +23,23 @@
 		)
 	</insert>
 	
+	<select id="countAll" resultType="int">
+		select
+			count(*)
+		from
+			visitor
+	</select>
+	
+	<select id="countToday" resultType="int">
+	<![CDATA[
+		select
+			count(*)
+		from
+			visitor
+		where
+			visit_time > STR_TO_DATE(#{todate},'%Y-%m-%d')
+			AND
+			visit_time < STR_TO_DATE(#{todate},'%Y-%m-%d')+1
+	]]>
+	</select>
 </mapper>

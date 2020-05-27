@@ -5,5 +5,5 @@ import com.musicpan.domain.VisitVO;
 public interface VisitService {
 
 	
-	public int insertVisitor(VisitVO vo);
+	public int[] insertVisitor(VisitVO vo);
 }//interface

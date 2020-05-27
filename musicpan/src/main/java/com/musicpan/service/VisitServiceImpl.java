@@ -1,5 +1,8 @@
 package com.musicpan.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +20,23 @@ public class VisitServiceImpl implements VisitService{
 	private VisitMapper mapper;
 	
 	@Override
-	public int insertVisitor(VisitVO vo) {
+	public int[] insertVisitor(VisitVO vo) {
 		
-		return mapper.insert(vo);
+		mapper.insert(vo);
+		
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();
+		String todate = format.format(time);
+		
+		
+		
+		int[] countArray = new int[2];
+		
+		countArray[0] =  mapper.countAll();
+		countArray[1] =  mapper.countToday(todate);
+		
+		
+		return countArray;
 	}
 
 	
