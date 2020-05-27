@@ -98,14 +98,21 @@ public class CommonController {
 		
 		RequestCache requestCache = new HttpSessionRequestCache();
 		SavedRequest savedRequest = requestCache.getRequest(request, response); 
-		
+
 		try {
 			//여러가지 이유로 이전페이지 정보가 없는 경우가 있음.
 			//https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty
 			request.getSession().setAttribute("prevPage", savedRequest.getRedirectUrl());
 		} catch(NullPointerException e) {
-			request.getSession().setAttribute("prevPage", "/");
+			try {
+				String referrer = request.getHeader("Referer");
+				request.getSession().setAttribute("prevPage", referrer);
+			} catch (Exception e2) {
+				request.getSession().setAttribute("prevPage", "/");
+			}
 		}
+		
+		//log.info("//////////////////test1 : " + request.getSession().getAttribute("prevPage"));
 		
 		return "member/customLogin";
 	}
