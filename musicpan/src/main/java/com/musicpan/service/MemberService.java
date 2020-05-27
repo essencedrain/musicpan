@@ -12,4 +12,4 @@ public interface MemberService {
 	public boolean createEmailKey(String email);
 	public boolean authEmailKey(String email, String authEmailKey);
 	
-}//class
+}//interface
