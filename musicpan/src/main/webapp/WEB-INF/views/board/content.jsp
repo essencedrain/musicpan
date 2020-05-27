@@ -46,7 +46,6 @@
 			            			<td class="py-5">${board.content}</td>
 			            		</tr>
 		            		</table>
-		            		<hr class="hr2"/>
 		            		<div class="float-right mt-2">
 		            			<sec:authentication property="principal" var="pinfo"/>
 		            			 <sec:authorize access="isAuthenticated()">
@@ -57,10 +56,55 @@
 		            			 </sec:authorize>
 								<button data-oper='list' class="btn btn-outline-primary btn-sm text-center">목록으로</button>
 		            		</div>
-	            		</div>    
+	            		</div>
+	            		<hr class="hr2"/> 
 		            	<!-- =================================================================================================  -->
 						<!-- end 컨텐츠  -->
 						<!-- =================================================================================================  -->
+						
+						<!-- =================================================================================================  -->
+						<!-- start 댓글  -->
+						<!-- =================================================================================================  -->
+						<div class="reply_area">
+							<div class="card_area">
+								<div class="card mb-2">
+									<div class="card-header py-1 pl-3">
+										<div class="d-flex justify-content-end">
+											<img src="/resources/level_icon/${board.grade}.gif">
+											<span class="card-user-name">야돈</span>
+											<span class="card-user-time ml-auto">2020-05-27 12:12:12</span>
+										</div>
+									</div>
+									<div class="card-body pt-1 pb-3 pl-3">
+									    <p class="card-text">With supporting text below as a natural lead-in to additional content. 신종금융사기! 스미싱 주의바랍니다!!</p>
+									</div>
+								</div>
+								
+								<div class="card mb-2 ml-4">
+									<div class="card-header py-1 pl-3">
+										<div class="d-flex justify-content-end">
+											<img src="/resources/level_icon/${board.grade}.gif">
+											<span class="card-user-name">야돈</span>
+											<span class="card-user-time ml-auto">2020-05-27 12:12:12</span>
+										</div>
+									</div>
+									<div class="card-body pt-1 pb-3 pl-3">
+									    <p class="card-text">With supporting text below as a natural lead-in to additional content. 신종금융사기! 스미싱 주의바랍니다!!</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group mb-2">
+								<textarea class="form-control" id="reply_textarea"></textarea>
+							</div>
+							<div class="d-flex justify-content-end">
+								<button class="btn btn-outline-secondary btn-sm text-center">등록</button>
+								<button class="btn btn-outline-secondary btn-sm text-center ml-2">등록+추천</button>
+							</div>
+						</div>
+						<!-- =================================================================================================  -->
+						<!-- end 댓글  -->
+						<!-- =================================================================================================  -->
+						
 						<!-- =================================================================================================  -->
 						<!-- start 목록  -->
 						<!-- =================================================================================================  -->

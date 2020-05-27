@@ -288,8 +288,8 @@ a.article:hover {
   	border-top: 2px solid rgb(46, 67, 97);
 }
 .content_area .hr2{
-	margin-top: 1rem;
-  	margin-bottom: 1rem;
+	margin-top: 0rem;
+  	margin-bottom: 0.8rem;
   	border: 0;
   	border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -318,4 +318,34 @@ a.article:hover {
 	font-size:12px;
 	line-height: 18px;
 	color: #999;
+}
+/* ---------------------------------------------------
+    REPLY STYLE
+----------------------------------------------------- */
+#reply_textarea{
+	resize: none;
+	overflow: hidden;
+	overflow-wrap: break-word;
+	height:58px;
+}
+.reply_area .card_area .card{
+	border: none;
+}
+.reply_area .card_area .card-header img{
+	vertical-align:middle;
+	margin-bottom: 3px;
+	margin-right: 5px;
+}
+.reply_area .card_area .card-text{
+	font-size:14px; !important;
+	line-height: 21px; !important;
+	font-weight: 500; !important;
+}
+.reply_area .card_area .card-header .card-user-time{
+	font-size: 12px;
+	line-height: 18px;
+    font-weight: 500;
+    color: #999;
+    vertical-align: middle;
+    margin-top: 1px;
 }
