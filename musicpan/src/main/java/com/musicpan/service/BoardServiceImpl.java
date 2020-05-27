@@ -61,4 +61,12 @@ public class BoardServiceImpl implements BoardService{
 		return modifyResult;
 	}
 
+
+	@Override
+	public boolean remove(BoardVO board) {
+		boolean deleteResult = mapper.updateFlag(board) == 1;
+		
+		return deleteResult;
+	}
+
 }//class

@@ -37,7 +37,8 @@ public class BoardController {
 	 	g004		수정하기	GET		/board/update						cri				content			board/modifyForm	isAuthenticated()
 	 					
 	 	p000		글쓰기		POST	/board/register						boardVO
-	 	p001		수정하기	POST	/board/update						boardVO
+	 	p001		수정하기	POST	/board/update						boardVO			modifyForm		
+	 	p002		삭제하기	POST	/board/delete						boardVO			content
 	 */
 	//===========================================================================================================================================
 	
@@ -242,6 +243,31 @@ public class BoardController {
 		return "redirect:/board/"+boardVO.getB_name()+"/content/"+boardVO.getBno();
 	}
 	//=========================================================================================	
+	
+	
+	
+	
+	//=========================================================================================
+	// p002
+	// 기능		:	삭제처리
+	// 메서드	:	POST
+	// URI		: 	/board/delete
+	//=========================================================================================
+	@PostMapping("/delete")
+	@PreAuthorize("isAuthenticated()")
+	public String deletePro(BoardVO boardVO) throws Exception{
+		
+		//log.info("//////////////////test1 : " + boardVO.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
+		
+		service.remove(boardVO);
+		return "redirect:/board/"+boardVO.getB_name()+"/list";
+	}
+	//=========================================================================================	
+	
+	
 	
 	
 	
