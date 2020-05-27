@@ -20,4 +20,6 @@ public interface BoardMapper {
 	public void insert(BoardVO board);
 	
 	public int getRank(Criteria cri);
+	
+	public int update(BoardVO board);
 }

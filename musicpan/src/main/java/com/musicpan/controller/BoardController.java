@@ -26,19 +26,20 @@ public class BoardController {
 		
 	private BoardService service;
 	
-	//=======================================================================================================================
+	//===========================================================================================================================================
 	/*
-	 	NO			Task		Method	URL									Parameter		From			URL이동
-	 	---------------------------------------------------------------------------------------------------------------------
+	 	NO			Task		Method	URL									Parameter		From			URL이동				권한
+	 	-----------------------------------------------------------------------------------------------------------------------------------------
 	 	g000		리스트		GET		/board/{boardName}/list				cri				/				board/list
 	 	g001		내용		GET		/board/content						cri				list			board/content
 	 	g002		내용2		GET		/board/{boardName}/content/{bno}	boardName, bno	list			board/content
-	 	g003		글쓰기		GET		/board/register						b_name			list,content	board/writeForm
-	 	g004		수정하기	GET		/board/update						b_name			content			board/writeForm
+	 	g003		글쓰기		GET		/board/register						b_name			list,content	board/writeForm		isAuthenticated()
+	 	g004		수정하기	GET		/board/update						cri				content			board/modifyForm	isAuthenticated()
 	 					
 	 	p000		글쓰기		POST	/board/register						boardVO
+	 	p001		수정하기	POST	/board/update						boardVO
 	 */
-	//=======================================================================================================================
+	//===========================================================================================================================================
 	
 	
 	
@@ -173,6 +174,29 @@ public class BoardController {
 	
 	
 	//=========================================================================================
+	// g004
+	// 기능		:	수정폼 보여주기
+	// 메서드	:	GET
+	// URI		:	/board/update
+	//=========================================================================================
+	@GetMapping("/update")
+	@PreAuthorize("isAuthenticated()")
+	public String modifyForm(Model model, @ModelAttribute("cri") Criteria cri) throws Exception{
+		
+		// sqlinjection 대응
+		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
+		cri.setB_name2(makeKorean(cri.getB_name())); // 한글 게시판명 생성
+		
+		model.addAttribute("board", service.content(cri));
+		
+		return "board/modifyForm";
+	}
+	//=========================================================================================	
+	
+	
+	
+	
+	//=========================================================================================
 	// p000
 	// 기능		:	글쓰기 처리
 	// 메서드	:	POST
@@ -180,7 +204,7 @@ public class BoardController {
 	//=========================================================================================
 	@PostMapping("/register")
 	@PreAuthorize("isAuthenticated()")
-	public String writePro(Model model, BoardVO boardVO) throws Exception{
+	public String writePro(BoardVO boardVO) throws Exception{
 		
 		//log.info("//////////////////test : " + boardVO.toString());
 		
@@ -192,6 +216,34 @@ public class BoardController {
 		return "redirect:/board/"+boardVO.getB_name()+"/list";
 	}
 	//=========================================================================================
+	
+	
+	
+	
+	//=========================================================================================
+	// p001
+	// 기능		:	수정하기 처리
+	// 메서드	:	POST
+	// URI		:	/board/update
+	//=========================================================================================
+	@PostMapping("/update")
+	@PreAuthorize("isAuthenticated()")
+	public String modifyPro(BoardVO boardVO) throws Exception{
+		
+		//log.info("//////////////////test : " + boardVO.toString());
+		//log.info("//////////////////test1 : " + boardVO.toString());
+		
+		
+		
+		// sqlinjection 대응
+		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
+		
+		service.modify(boardVO);
+		return "redirect:/board/"+boardVO.getB_name()+"/content/"+boardVO.getBno();
+	}
+	//=========================================================================================	
+	
+	
 	
 	
 	//=========================================================================================

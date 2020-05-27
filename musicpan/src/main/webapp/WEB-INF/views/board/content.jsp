@@ -188,7 +188,7 @@
 		var operForm = $("#operForm");
 		
 		$("button[data-oper='modify']").on("click", function(e){
-			operForm.attr("action","/board/modify");
+			operForm.attr("action","/board/update");
 			operForm.submit();
 		});
 		  

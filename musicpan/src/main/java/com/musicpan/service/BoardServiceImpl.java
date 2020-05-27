@@ -52,4 +52,13 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getRank(cri);
 	}
 
+
+	@Override
+	public boolean modify(BoardVO board) {
+		
+		boolean modifyResult = mapper.update(board) == 1;
+		
+		return modifyResult;
+	}
+
 }//class
