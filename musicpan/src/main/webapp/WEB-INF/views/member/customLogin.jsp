@@ -37,7 +37,7 @@
 		                        <button type="submit" id="submitBtn" class="btn btn-lg btn-outline-secondary w-100">로그인</button>
 		                    </form>
 		                    <hr>
-		                    <button class="btn btn-lg btn-primary w-100" onclick="location.href='signup.jsp'">회원가입</button>
+		                    <button class="btn btn-lg btn-primary w-100" onclick="location.href='register'">회원가입</button>
 		                </div>
 		            </div>
 		        </div>
