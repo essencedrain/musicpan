@@ -26,18 +26,19 @@ public class BoardController {
 		
 	private BoardService service;
 	
-	//==========================================================================================================
+	//=======================================================================================================================
 	/*
-	 	NO			Task		Method	URL									Parameter		From		URL이동
-	 	--------------------------------------------------------------------------------------------------------
-	 	g000		리스트		GET		/board/{boardName}/list				cri
-	 	g001		내용		GET		/board/content						cri
-	 	g002		내용2		GET		/board/{boardName}/content/{bno}	boardName, bno
-	 	g003		글쓰기		GET		/board/register						b_name
+	 	NO			Task		Method	URL									Parameter		From			URL이동
+	 	---------------------------------------------------------------------------------------------------------------------
+	 	g000		리스트		GET		/board/{boardName}/list				cri				/				board/list
+	 	g001		내용		GET		/board/content						cri				list			board/content
+	 	g002		내용2		GET		/board/{boardName}/content/{bno}	boardName, bno	list			board/content
+	 	g003		글쓰기		GET		/board/register						b_name			list,content	board/writeForm
+	 	g004		수정하기	GET		/board/update						b_name			content			board/writeForm
 	 					
 	 	p000		글쓰기		POST	/board/register						boardVO
 	 */
-	//==========================================================================================================
+	//=======================================================================================================================
 	
 	
 	
