@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musicpan.mapper.ReplyMapper">
+
+	
+	<insert id="insert">
+		INSERT INTO
+			reply_${b_name}
+			(
+				reply
+				, regdate
+				, updatedate
+				, reply_step
+				, bno
+				, id
+			)
+		VALUES
+			(
+				#{reply}
+				, now()
+				, now()
+				, #{reply_step}
+				, #{bno}
+				, #{id}
+			)
+	</insert>
+	
+	<select id="read" resultType="com.musicpan.domain.ReplyVO">
+		SELECT
+			*
+		FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</select>
+	
+	
+	<delete id="delete">
+		DELETE FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</delete>
+	
+	
+	<update id="update">
+		UPDATE
+			reply_${b_name}
+		SET
+			reply = #{reply}
+			, updatedate = now()
+		WHERE
+			rno = #{rno}
+	</update>
+	
+	
+	<select id="getListWithPaging" resultType="com.musicpan.domain.ReplyVO">
+		SELECT
+			r.rno
+			,r.reply
+			,r.regdate
+			,r.updatedate
+			,r.reply_step
+			,r.bno
+			,r.id
+			,m.grade
+			,m.name
+		FROM
+			reply_${cri.b_name} r INNER JOIN member m
+			ON r.id = m.id
+		WHERE
+			bno = #{bno}
+		ORDER BY rno asc
+	</select>
+	
+</mapper>

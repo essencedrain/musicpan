@@ -1,5 +1,6 @@
 package com.musicpan.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,15 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
+		
+		List<BoardVO> resultList = mapper.getListWithPaging(cri);
+		
+		for(BoardVO temp : resultList) {
+			temp.setModiDate( convertDate(temp) );
+		}
+		
+		
+		return resultList;
 	}
 
 
@@ -69,4 +78,42 @@ public class BoardServiceImpl implements BoardService{
 		return deleteResult;
 	}
 
+	
+	
+	
+	//===============================================================
+	// 시간 변환 
+	//===============================================================
+	private String convertDate(BoardVO temp) {
+		
+		long mTime = temp.getRegdate().getTime();
+		Date today = new Date();
+		
+		long gap = today.getTime() - mTime;
+		
+		Date dateObj = new Date(mTime);
+		
+		if(gap < (1000*60*60*24)){
+
+            if(gap < (1000*60)){
+                return Math.floor(gap/1000) +" 초 전";
+            }else if(gap < (1000*60*60)){
+                return Math.floor(gap/60000) +" 분 전";
+            }else{
+                return Math.floor(gap/3600000) +" 시간 전";
+            }
+            
+        }else{
+            int yy = dateObj.getYear();
+            int mm = dateObj.getMonth() + 1;
+            int dd = dateObj.getDate();
+
+            if(gap < (1000*60*60*24*30)){
+                return Math.floor(gap/86400000) + " 일 전";
+            }
+
+            return yy+"."+ ((mm > 9 ? "" : "0") + mm) + "."+ ((dd > 9 ? "":"0") + dd);
+        }
+	}
+	//===============================================================
 }//class

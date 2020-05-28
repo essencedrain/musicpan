@@ -26,10 +26,10 @@ public class BoardController {
 		
 	private BoardService service;
 	
-	//===========================================================================================================================================
+	//============================================================================================================================================================
 	/*
 	 	NO			Task		Method	URL									Parameter		From			URL이동				권한
-	 	-----------------------------------------------------------------------------------------------------------------------------------------
+	 	----------------------------------------------------------------------------------------------------------------------------------------------------------
 	 	g000		리스트		GET		/board/{boardName}/list				cri				/				board/list
 	 	g001		내용		GET		/board/content						cri				list			board/content
 	 	g002		내용2		GET		/board/{boardName}/content/{bno}	boardName, bno	list			board/content
@@ -40,7 +40,7 @@ public class BoardController {
 	 	p001		수정하기	POST	/board/update						boardVO			modifyForm							principal.username == #boardVO.id
 	 	p002		삭제하기	POST	/board/delete						boardVO			content								principal.username == #boardVO.id
 	 */
-	//===========================================================================================================================================
+	//============================================================================================================================================================
 	
 	
 	
@@ -240,6 +240,7 @@ public class BoardController {
 		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
 		
 		service.modify(boardVO);
+		
 		return "redirect:/board/"+boardVO.getB_name()+"/content/"+boardVO.getBno();
 	}
 	//=========================================================================================	

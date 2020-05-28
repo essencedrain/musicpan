@@ -56,7 +56,7 @@
 					                        	</a>
 	                    					</td>
 					                        <td style="width: 15%;" class="text-left list_else list_grade"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
-					                        <td style="width: 10%;" class="list_else"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.regdate}" /></td>
+					                        <td style="width: 10%;" class="list_else list_regdate">${board.modiDate}</td>
 					                        <td style="width: 5%;" class="list_else">${board.hit}</td>
 		                    			</tr>
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>

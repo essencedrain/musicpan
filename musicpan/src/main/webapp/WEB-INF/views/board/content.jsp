@@ -309,6 +309,110 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
+
+	<!-- =================================================================================================  -->
+	<!-- 댓글처리 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript" src="/resources/js/reply.js"></script>
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+	    var bnoValue = '<c:out value="${board.bno}"/>';
+	    var b_name = '${cri.b_name}';
+	    var cardArea = $('.card_area');
+	    var replyer = "";
+	    <sec:authorize access="isAuthenticated()">
+	    	replyer = '<sec:authentication property="principal.username"/>';   
+	    </sec:authorize>
+	    
+	    
+	    
+	    //csrf ajaxSend
+    	var csrfHeaderName ="${_csrf.headerName}"; 
+        var csrfTokenValue="${_csrf.token}";
+    	$(document).ajaxSend(function(e, xhr, options) { 
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+        });
+    	
+	
+    	showList(1);
+    	
+    	function showList(page){
+
+    	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
+    	        var str="";
+    	        
+    	        if(list == null || list.length == 0){
+    	            cardArea.html("");
+    	            return;
+    	        }//if
+
+    	        for(var i =0, len=list.length || 0; i<len; i++){
+    	            str += '<div class="card mb-2"><div class="card-header py-1 pl-3"><div class="d-flex">';//처음 card에 ml4주면 대댓글
+    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
+    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
+    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
+    	            str += '</div></div><div class="card-body pt-1 pb-3 pl-3">';
+    	            str += '<div class="card-text">'+ list[i].reply +'</div>';
+    	            str += '<div class="card-body-under d-flex justify-content-end align-items-center"><span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
+    	            str += '<span class="span_class">0</span>';//좋아요
+    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
+    	            str += '<span class="span_class">0</span>';//싫어요
+    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span><span class="span_class3">댓글</span>';//대댓글
+    	            str += '<div class="dropleft"><button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
+    	            str += '<div class="dropdown-menu"><a class="dropdown-item" href="#">Normal</a><a class="dropdown-item active" href="#">Active</a><a class="dropdown-item disabled" href="#">Disabled</a>';
+    	            str += '</div></div></div></div></div>';
+    	        }//for
+
+    	        cardArea.html(str);
+
+    	    });//getList
+    	}//showList
+    	
+    	
+    	/*
+    	replyService.get(10, b_name, function(data){
+    		console.log(data);
+    	});
+    	
+    	replyService.update({
+    		rno : 10
+    		,bno : bnoValue
+    		,reply : "수정된 댓글"
+    		}
+	    	,b_name
+	    	,function(result){
+	    		alert("수정완료");
+    	});
+    	replyService.remove(16, b_name, function(count){
+    			console.log(count);
+    			if(count==="success"){
+    				alert("지움");
+    			}
+    	}, function(err){
+    		alert("에러");
+    	});
+    	
+    	replyService.getList({bno:bnoValue, page:1, b_name:b_name}, function(list){
+    		for(var i=0, len = list.length||0; i<len; i++){
+    			console.log(list[i]);
+    		}
+    	});
+    	
+	    replyService.add(
+	    		{reply: "ajax 삽입 테스트", id: replyer, bno: bnoValue}
+	    		,b_name
+	    		,function(result){
+	    			alert("결과 : " + result);
+	   			}
+	    );
+    	*/
+    });
+    </script>
+	<!-- =================================================================================================  -->
+	<!-- 댓글처리 -->
+    <!-- =================================================================================================  -->
+    
 	<!-- =================================================================================================  -->
     <!-- start content 페이지 이동 -->
     <!-- =================================================================================================  -->
