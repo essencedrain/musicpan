@@ -1,5 +1,6 @@
 package com.musicpan.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -90,29 +91,38 @@ public class BoardServiceImpl implements BoardService{
 		Date today = new Date();
 		
 		long gap = today.getTime() - mTime;
-		
 		Date dateObj = new Date(mTime);
 		
-		if(gap < (1000*60*60*24)){
+		
+		Calendar cal = Calendar.getInstance();
+	    cal.setTime(dateObj);
+		
+	    long monLong = 1000L*60L*60L*24L*30L;
+		long dayLong = 1000L*60L*60L*24L;
+		long hourLong = 1000L*60L*60L;
+		long minuteLong = 1000L*60L;
+	    
+		
+		if(gap < dayLong){
 
-            if(gap < (1000*60)){
-                return Math.floor(gap/1000) +" 초 전";
-            }else if(gap < (1000*60*60)){
-                return Math.floor(gap/60000) +" 분 전";
+            if(gap < (minuteLong)){
+                return (int) Math.floor(gap/1000L) +" 초 전";
+            }else if(gap < (hourLong)){
+                return (int) Math.floor(gap/60000L) +" 분 전";
             }else{
-                return Math.floor(gap/3600000) +" 시간 전";
+                return (int) Math.floor(gap/3600000L) +" 시간 전";
             }
             
         }else{
-            int yy = dateObj.getYear();
-            int mm = dateObj.getMonth() + 1;
-            int dd = dateObj.getDate();
+            int yy = cal.get(Calendar.YEAR);
+            int mm = cal.get(Calendar.MONTH)+1;
+            int dd = cal.get(Calendar.DATE);
 
-            if(gap < (1000*60*60*24*30)){
-                return Math.floor(gap/86400000) + " 일 전";
+            if(gap < monLong){
+                return (int) Math.floor(gap/86400000L) + " 일 전";
+            }else {
+            	return yy+"."+ ((mm > 9 ? "" : "0") + mm) + "."+ ((dd > 9 ? "":"0") + dd);
             }
-
-            return yy+"."+ ((mm > 9 ? "" : "0") + mm) + "."+ ((dd > 9 ? "":"0") + dd);
         }
 	}
 	//===============================================================

@@ -80,7 +80,7 @@
 								</c:choose>
 								
 								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-								  	<li class="page-item ${num==pageMaker.cri.pageNum ? "active" : ""}">
+								  	<li class="page-item ${num==pageMaker.cri.pageNum ? "active" : "" }">
 								  		<a class="page-link" href="${num}">${num}</a>
 							  		</li>
 								</c:forEach>

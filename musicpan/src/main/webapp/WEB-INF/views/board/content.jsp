@@ -67,114 +67,7 @@
 						<!-- =================================================================================================  -->
 						<div class="reply_area">
 							<div class="card_area">
-								<div class="card mb-2">
-									<div class="card-header py-1 pl-3">
-										<div class="d-flex">
-											<img src="/resources/level_icon/${board.grade}.gif">
-											<span class="card-user-name">야돈</span>
-											<span class="card-user-time ml-auto">2020-05-27 12:12:12</span>
-										</div>
-									</div>
-									<div class="card-body pt-1 pb-3 pl-3">
-									    <div class="card-text">ㅋㅋㅋㅋ 댓글들도 웃기넹. 저거 총쏴서 잘못맞으면 평생밥줄끊기는건 우리나라에서 당연한수순아니냐. 테이저건도 잘못쏘면 징계받는거 뻔하잖아.
-
-저거 내가알기론 허벅지아래 맞춰야하는건데 맞출수있는 친구가있을까? 다른데 맞추거나 잘못맞아 사망하면 구상권청구받아서 평생 돈물어주고살아야함
-
- </div>
-									    <div class="card-body-under d-flex justify-content-end align-items-center">
-									    	<span class="span_class2"><i class="far fa-thumbs-up"></i></span>
-									    	<span class="span_class">0</span>
-									    	<span class="span_class2"><i class="far fa-thumbs-down"></i></span>
-									    	<span class="span_class">0</span>
-									    	<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>
-									    	<span class="span_class3">댓글</span>
-											<div class="dropleft">
-												<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
-												<div class="dropdown-menu">
-													<a class="dropdown-item" href="#">Normal</a>
-													<a class="dropdown-item active" href="#">Active</a>
-											      	<a class="dropdown-item disabled" href="#">Disabled</a>
-										    	</div>
-											</div>
-									    </div>
-									</div>
-								</div>
 								
-								<div class="card mb-2 ml-4">
-									<div class="card-header py-1 pl-3">
-										<div class="d-flex">
-											<img src="/resources/level_icon/${board.grade}.gif">
-											<span class="card-user-name">야돈</span>
-											<span class="card-user-time ml-auto">2020-05-27 12:12:12</span>
-										</div>
-									</div>
-									<div class="card-body pt-1 pb-3 pl-3">
-									    <div class="card-text">인간이니까 칼빵쳐맞는건 무서워서 망설일 수 있다고 치자.
-
-시발 직업윤리도 생존본능에 우선할 수는 없으니까 쫄리면 주저할 수는 있지.
-
-근데 칼빵맞고 피흘리면서 누워있다던 피해자 냅두고 어슬렁어슬렁 걸어다닌건 어떻게 쉴드가 되냐.
-
-하다못해 100m 거리에 파출소 있으면 사람이라도 더 불러워서 그냥 서있기만해도 범인한테 최소한 심적인 압박은 가할 수 있을텐데 그것도 안하고.
-
-최소한 다급해 보이는 인상이라도 있었으면 여기서 먹을 욕 절반은 덜먹었을텐데
-
-무슨 시발 동네 산책나온것마냥 휘적거리면서 걷고 노니까 저딴 잡것이라고 욕박는거지.</div>
-									    <div class="card-body-under d-flex justify-content-end align-items-center mt-3">
-									    	<span class="span_class2"><i class="far fa-thumbs-up"></i></span>
-									    	<span class="span_class">0</span>
-									    	<span class="span_class2"><i class="far fa-thumbs-down"></i></span>
-									    	<span class="span_class">0</span>
-									    	<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>
-									    	<span class="span_class3">댓글</span>
-											<div class="dropleft">
-												<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
-												<div class="dropdown-menu">
-													<a class="dropdown-item" href="#">Normal</a>
-													<a class="dropdown-item active" href="#">Active</a>
-											      	<a class="dropdown-item disabled" href="#">Disabled</a>
-										    	</div>
-											</div>
-									    </div>
-									</div>
-								</div>
-								
-								<div class="card mb-2">
-									<div class="card-header py-1 pl-3">
-										<div class="d-flex">
-											<img src="/resources/level_icon/${board.grade}.gif">
-											<span class="card-user-name">야돈</span>
-											<span class="card-user-time ml-auto">2020-05-27 12:12:12</span>
-										</div>
-									</div>
-									<div class="card-body pt-1 pb-3 pl-3">
-									    <div class="card-text">
-									    	<p>인간이니까 칼빵쳐맞는건 무서워서 망설일 수 있다고 치자. </p>
-											<p>시발 직업윤리도 생존본능에 우선할 수는 없으니까 쫄리면 주저할 수는 있지.</p>
-											<p>근데 칼빵맞고 피흘리면서 누워있다던 피해자 냅두고 어슬렁어슬렁 걸어다닌건 어떻게 쉴드가 되냐.</p>
-											<p>하다못해 100m 거리에 파출소 있으면 사람이라도 더 불러워서 그냥 서있기만해도 범인한테 최소한 심적인 압박은 가할 수 있을텐데 그것도 안하고.</p>
-											<p> </p>
-											<p>최소한 다급해 보이는 인상이라도 있었으면 여기서 먹을 욕 절반은 덜먹었을텐데</p>
-											<p>무슨 시발 동네 산책나온것마냥 휘적거리면서 걷고 노니까 저딴 잡것이라고 욕박는거지.</p>
-									    </div>
-									    <div class="card-body-under d-flex justify-content-end align-items-center mt-3">
-									    	<span class="span_class2"><i class="far fa-thumbs-up"></i></span>
-									    	<span class="span_class">0</span>
-									    	<span class="span_class2"><i class="far fa-thumbs-down"></i></span>
-									    	<span class="span_class">0</span>
-									    	<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>
-									    	<span class="span_class3">댓글</span>
-											<div class="dropleft">
-												<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
-												<div class="dropdown-menu">
-													<a class="dropdown-item" href="#">Normal</a>
-													<a class="dropdown-item active" href="#">Active</a>
-											      	<a class="dropdown-item disabled" href="#">Disabled</a>
-										    	</div>
-											</div>
-									    </div>
-									</div>
-								</div>
 								
 							</div>
 							<div class="form-group mb-2">
@@ -217,7 +110,7 @@
 					                        	</a>
 	                    					</td>
 					                        <td style="width: 15%;" class="text-left list_else"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
-					                        <td style="width: 10%;" class="list_else"><fmt:formatDate pattern="yyyy.MM.dd" value="${board2.regdate}" /></td>
+					                        <td style="width: 10%;" class="list_else">${board2.modiDate}</td>
 					                        <td style="width: 5%;" class="list_else">${board2.hit}</td>
 		                    			</tr>
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>
