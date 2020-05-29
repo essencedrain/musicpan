@@ -331,6 +331,9 @@ a.article:hover {
 .reply_area .card_area .card{
 	border: none;
 }
+.reply_area .card_area .card_bg{
+	background-color: #f1f7ff;
+}
 .reply_area .card_area .card-header img{
 	vertical-align:middle;
 	margin-bottom: 3px;
@@ -356,7 +359,7 @@ a.article:hover {
 	color: #999; !important;
 }
 .card-body-under .span_class{
-	margin-right: 15px;
+	margin-right: 10px;
 	display: inline-block;
 }
 .card-body-under .span_class2{
@@ -366,10 +369,35 @@ a.article:hover {
 .card-body-under .span_class3{
 	margin-right: 5px;
 	display: inline-block;
+	color: #999; !important;
+}
+.card-body-under .span_class4{
+	margin-right: 10px;
+	display: inline-block;
 }
 .reply_area .hr2{
 	margin-top: 2rem;
   	margin-bottom: 0.8rem;
   	border: 0;
   	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.reply_area .dropdown-menu{
+	width: 70px; !important;
+    height: 141px; !important;
+    min-width: 50px;!important;
+    max-width: 70px;!important;
+
+}
+.reply_area .dropdown-menu .dropdown-item{
+	width: 50px; !important;
+	cursor: pointer;
+}
+.reply_area .dropdown-menu a{
+    font-size:14px;
+	line-height: 21px; 
+	font-weight: 500;
+	color: #000; !important;
+}
+.reply_area .dropdown-menu .i_size{
+	width: 15.75px; !important;
 }

@@ -371,7 +371,7 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     function showList(page, bnoValue, b_name){
-
+		
 	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
 	        var str="";
 	        
@@ -387,13 +387,17 @@
 	        	}else{
 		            str += '<div class="card mb-2">';//일반 댓글
 	        	}
-	            	str += '<div class="card-header py-1 pl-3">';
-	            		str += '<div class="d-flex">';
-		    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
-		    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
-		    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
-						str += '</div>';
-	            	str += '</div>';
+					if("${pinfo.username}"==list[i].id){
+						str += '<div class="card-header card_bg py-1 pl-3">';
+					}else{
+						str += '<div class="card-header py-1 pl-3">';
+					}
+		            		str += '<div class="d-flex">';
+			    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
+			    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
+			    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
+							str += '</div>';
+	            		str += '</div>';
 	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
 						str += '<div class="card-text">'+ list[i].reply +'</div>';
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
@@ -401,14 +405,14 @@
     	            		str += '<span class="span_class">0</span>';//좋아요
 		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
 		    	            str += '<span class="span_class">0</span>';//싫어요
-		    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>';
-		    	            if(list[i].reply_step == 0 ){str += '<button type="button" class="btn btn-link btn-sm span_class3" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';}
+		    	            str += '<span class="span_class4"><i class="fas fa-grip-lines-vertical"></i></span>';
+		    	            if(list[i].reply_step == 0 ){str += '<button type="button" class="btn btn-link btn-sm span_class3 pl-0 pr-2" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';}
     	            		str += '<div class="dropleft">';
     	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
     	            			str += '<div class="dropdown-menu">';
-				    	            str += '<a class="dropdown-item" href="#">Normal</a>';
-				    	            str += '<a class="dropdown-item active" href="#">Active</a>';
-				    	            str += '<a class="dropdown-item disabled" href="#">Disabled</a>';
+				    	            str += '<a class="dropdown-item px-2 w-100" onclick="replyUpdateBtn()"><i class="fas fa-file-signature i_size"></i>&nbsp;수정</a><div class="dropdown-divider"></div>';
+				    	            str += '<a class="dropdown-item px-2 w-100" onclick="replyUpdateBtn()"><i class="far fa-trash-alt i_size"></i>&nbsp;삭제</a><div class="dropdown-divider"></div>';
+				    	            str += '<a class="dropdown-item px-2 w-100 onclick="replyUpdateBtn()"><i class="far fa-angry i_size"></i>&nbsp;신고</a>';
     	            			str += '</div>';
    	            			str += '</div>';
             			str += '</div>';
@@ -471,11 +475,6 @@
 		
 		if( subReply.hasClass('selected') ){
 			subReply.removeClass('selected');
-			/*
-			subReply.html(openReReplyStr);
-			subReply.addClass('mb-3');
-			card.removeClass('mb-2');
-			*/
 			subReply.html('');
 			subReply.removeClass('mb-3');
 			card.addClass('mb-2');
@@ -524,6 +523,18 @@
     </script>
     <!-- =================================================================================================  -->
     <!-- end 대댓글 등록버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    
+    <!-- =================================================================================================  -->
+    <!-- start 댓글 수정버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    function replyUpdateBtn(){
+    	swa("success",'엌ㅋㅋ');
+    }
+    </script>
+    <!-- =================================================================================================  -->
+    <!-- end 댓글 수정버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
