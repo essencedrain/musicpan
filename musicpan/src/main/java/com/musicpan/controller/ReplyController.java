@@ -57,7 +57,7 @@ public class ReplyController {
 			)
 	public ResponseEntity<String> create(@PathVariable("b_name") String b_name, @RequestBody ReplyVO vo){
 		
-		log.info("들어옴 : " + b_name  + " // " + vo.toString());
+		//log.info("들어옴 : " + b_name  + " // " + vo.toString());
 		
 		vo.setB_name(b_name);
 		

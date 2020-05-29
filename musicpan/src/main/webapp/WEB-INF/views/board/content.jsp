@@ -70,12 +70,13 @@
 								
 								
 							</div>
+							<hr class="hr2"/> 
 							<div class="form-group mb-2">
-								<textarea class="form-control" id="reply_textarea"></textarea>
+								<textarea class="form-control reply_textarea" id="reply_textarea"></textarea>
 							</div>
 							<div class="d-flex justify-content-end">
-								<button class="btn btn-outline-secondary btn-sm text-center">등록</button>
-								<button class="btn btn-outline-secondary btn-sm text-center ml-2">등록+추천</button>
+								<button id="reply_registerBtn" class="btn btn-outline-secondary btn-sm text-center">등록</button>
+								<button id="reply_register_likeBtn" class="btn btn-outline-secondary btn-sm text-center ml-2">등록+추천</button>
 							</div>
 						</div>
 						<!-- =================================================================================================  -->
@@ -205,8 +206,8 @@
 
 	<!-- =================================================================================================  -->
 	<!-- 댓글처리 -->
-    <!-- =================================================================================================  -->
     <script type="text/javascript" src="/resources/js/reply.js"></script>
+    <!-- =================================================================================================  -->
     
     <script type="text/javascript">
     $(document).ready(function(){
@@ -230,6 +231,7 @@
 	
     	showList(1);
     	
+    	//리스트 갱신/보여주기 showList()
     	function showList(page){
 
     	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
@@ -241,26 +243,59 @@
     	        }//if
 
     	        for(var i =0, len=list.length || 0; i<len; i++){
-    	            str += '<div class="card mb-2"><div class="card-header py-1 pl-3"><div class="d-flex">';//처음 card에 ml4주면 대댓글
-    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
-    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
-    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
-    	            str += '</div></div><div class="card-body pt-1 pb-3 pl-3">';
-    	            str += '<div class="card-text">'+ list[i].reply +'</div>';
-    	            str += '<div class="card-body-under d-flex justify-content-end align-items-center"><span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
-    	            str += '<span class="span_class">0</span>';//좋아요
-    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
-    	            str += '<span class="span_class">0</span>';//싫어요
-    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span><span class="span_class3">댓글</span>';//대댓글
-    	            str += '<div class="dropleft"><button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
-    	            str += '<div class="dropdown-menu"><a class="dropdown-item" href="#">Normal</a><a class="dropdown-item active" href="#">Active</a><a class="dropdown-item disabled" href="#">Disabled</a>';
-    	            str += '</div></div></div></div></div>';
+    	            str += '<div class="card mb-2">';//처음 card에 ml4주면 대댓글
+    	            	str += '<div class="card-header py-1 pl-3">';
+    	            		str += '<div class="d-flex">';
+			    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
+			    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
+			    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
+							str += '</div>';
+    	            	str += '</div>';
+    	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
+							str += '<div class="card-text">'+ list[i].reply +'</div>';
+	    	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
+	    	            		str += '<span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
+	    	            		str += '<span class="span_class">0</span>';//좋아요
+			    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
+			    	            str += '<span class="span_class">0</span>';//싫어요
+			    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>';
+	    	            		str += '<button type="button" class="btn btn-link btn-sm span_class3 re_replyBtn" onclick="openReReply(this)">댓글</button>';//대댓글
+	    	            		str += '<div class="dropleft">';
+	    	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
+	    	            			str += '<div class="dropdown-menu">';
+					    	            str += '<a class="dropdown-item" href="#">Normal</a>';
+					    	            str += '<a class="dropdown-item active" href="#">Active</a>';
+					    	            str += '<a class="dropdown-item disabled" href="#">Disabled</a>';
+	    	            			str += '</div>';
+	   	            			str += '</div>';
+	            			str += '</div>';
+            			str += '</div>';
+    	            str += '</div>';
+    	            str += '<div class="subReply ml-5"></div>';
     	        }//for
 
     	        cardArea.html(str);
 
     	    });//getList
     	}//showList
+    	
+    	var reply_textarea = $('#reply_textarea'); //댓글등록textarea
+    	var reply_registerBtn = $('#reply_registerBtn'); //댓글등록버튼
+    	
+    	//게시물 등록
+    	reply_registerBtn.on("click", function(e){
+    		
+    		var reply = {
+    				reply : reply_textarea.val()
+    				,id : replyer
+    				,bno : bnoValue
+   			};
+    		replyService.add(reply, b_name, function(result){
+    			showList(1);
+   			});
+    		
+    	});//reply_registerBtn.on
+    	
     	
     	
     	/*
@@ -375,6 +410,69 @@
 	</script>
 	<!-- =================================================================================================  -->
     <!-- end list 페이지 이동 -->
+    <!-- =================================================================================================  -->
+    
+	<!-- =================================================================================================  -->
+    <!-- start 대댓글 버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+	function openReReply(item){
+		var openReReplyStr = '<div class="form-group mb-2">';
+				openReReplyStr += '<textarea class="form-control reply_textarea" id="subReply_textarea"></textarea>';
+			openReReplyStr += '</div>';
+			openReReplyStr += '<div class="d-flex justify-content-end">';
+				openReReplyStr += '<button id="subReply_registerBtn" class="btn btn-outline-secondary btn-sm text-center">등록</button>';
+				openReReplyStr += '<button id="subReply_cancelBtn" class="btn btn-outline-secondary btn-sm text-center ml-2">취소</button>';
+			openReReplyStr += '</div>';
+		
+		var subReply = $(item).parent().parent().parent().next();
+		var card = $(item).parent().parent().parent();
+		var subReplys = $('.subReply');
+		
+		if( subReply.hasClass('selected') ){
+			for(var i=0; i<subReplys.length; i++){
+				var temp = $(subReplys[i]);
+				if(temp.html() !="" || temp.html().length >0){
+					temp.html('');
+					temp.removeClass('mb-3');
+					temp.removeClass('selected');
+					temp.prev().addClass('mb-2');
+				}
+			}
+			subReply.addClass('selected');
+		}else{
+			for(var i=0; i<subReplys.length; i++){
+				var temp = $(subReplys[i]);
+				if(temp.html() !="" || temp.html().length >0){
+					temp.html('');
+					temp.removeClass('mb-3');
+					temp.removeClass('selected');
+					temp.prev().addClass('mb-2');
+				}
+			}
+		}
+		
+		
+		if( subReply.hasClass('selected') ){
+			subReply.removeClass('selected');
+			/*
+			subReply.html(openReReplyStr);
+			subReply.addClass('mb-3');
+			card.removeClass('mb-2');
+			*/
+			subReply.html('');
+			subReply.removeClass('mb-3');
+			card.addClass('mb-2');
+		}else if(subReply.html() =="" || subReply.html().length ==0){
+			subReply.html(openReReplyStr);
+			subReply.addClass('selected');
+			subReply.addClass('mb-3');
+			card.removeClass('mb-2');
+		}
+	}
+    </script>
+    <!-- =================================================================================================  -->
+    <!-- end 대댓글 버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
