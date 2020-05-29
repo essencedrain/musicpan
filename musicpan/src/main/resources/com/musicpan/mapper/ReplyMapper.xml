@@ -117,7 +117,7 @@
 			ON r.id = m.id
 		WHERE
 			r.bno = #{bno}
-		ORDER BY r.ref desc, r.reply_step asc
+		ORDER BY r.ref asc, r.reply_step asc
 	</select>
 	
 </mapper>

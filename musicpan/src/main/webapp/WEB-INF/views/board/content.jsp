@@ -70,14 +70,18 @@
 								
 								
 							</div>
-							<hr class="hr2"/> 
-							<div class="form-group mb-2">
-								<textarea class="form-control reply_textarea" id="reply_textarea"></textarea>
-							</div>
-							<div class="d-flex justify-content-end">
-								<button id="reply_registerBtn" class="btn btn-outline-secondary btn-sm text-center">등록</button>
-								<button id="reply_register_likeBtn" class="btn btn-outline-secondary btn-sm text-center ml-2">등록+추천</button>
-							</div>
+							
+							<hr class="hr2"/>
+							
+							<sec:authorize access="isAuthenticated()">
+								<div class="form-group mb-2">
+									<textarea class="form-control reply_textarea" id="reply_textarea"></textarea>
+								</div>
+								<div class="d-flex justify-content-end">
+									<button id="reply_registerBtn" class="btn btn-outline-secondary btn-sm text-center">등록</button>
+									<button id="reply_register_likeBtn" class="btn btn-outline-secondary btn-sm text-center ml-2">등록+추천</button>
+								</div>
+							</sec:authorize>
 						</div>
 						<!-- =================================================================================================  -->
 						<!-- end 댓글  -->
@@ -86,7 +90,7 @@
 						<!-- =================================================================================================  -->
 						<!-- start 목록  -->
 						<!-- =================================================================================================  -->
-						<div class="mt-4 pb-3">
+						<div class="mt-5 pt-3 pb-3">
 		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
 		            	<div class="mt-3">
@@ -372,6 +376,12 @@
     <script type="text/javascript">
     function showList(page, bnoValue, b_name){
 		
+    	
+    	var authId = "";
+    	<sec:authorize access="isAuthenticated()">
+    		authId = "${pinfo.username}";
+    	</sec:authorize>
+    	
 	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
 	        var str="";
 	        
@@ -383,11 +393,11 @@
 	        for(var i =0, len=list.length || 0; i<len; i++){
 	        	
 	        	if(list[i].reply_step > 0 ){
-	        		str += '<div class="card mb-2 ml-4">';//대댓글
+	        		str += '<div class="card mb-2 ml-5">';//대댓글
 	        	}else{
 		            str += '<div class="card mb-2">';//일반 댓글
-	        	}
-					if("${pinfo.username}"==list[i].id){
+	        	}	
+					if(authId==list[i].id){
 						str += '<div class="card-header card_bg py-1 pl-3">';
 					}else{
 						str += '<div class="card-header py-1 pl-3">';
@@ -396,8 +406,8 @@
 			    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
 			    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
 			    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
-							str += '</div>';
-	            		str += '</div>';
+							str += '</div>';//'<div class="d-flex">
+	            		str += '</div>';//<div class="card-header py-1 pl-3">'
 	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
 						str += '<div class="card-text">'+ list[i].reply +'</div>';
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
@@ -405,19 +415,21 @@
     	            		str += '<span class="span_class">0</span>';//좋아요
 		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
 		    	            str += '<span class="span_class">0</span>';//싫어요
+							if(authId==list[i].id){
 		    	            str += '<span class="span_class4"><i class="fas fa-grip-lines-vertical"></i></span>';
 		    	            if(list[i].reply_step == 0 ){str += '<button type="button" class="btn btn-link btn-sm span_class3 pl-0 pr-2" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';}
     	            		str += '<div class="dropleft">';
     	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
     	            			str += '<div class="dropdown-menu">';
-				    	            str += '<a class="dropdown-item px-2 w-100" onclick="replyUpdateBtn()"><i class="fas fa-file-signature i_size"></i>&nbsp;수정</a><div class="dropdown-divider"></div>';
-				    	            str += '<a class="dropdown-item px-2 w-100" onclick="replyUpdateBtn()"><i class="far fa-trash-alt i_size"></i>&nbsp;삭제</a><div class="dropdown-divider"></div>';
-				    	            str += '<a class="dropdown-item px-2 w-100 onclick="replyUpdateBtn()"><i class="far fa-angry i_size"></i>&nbsp;신고</a>';
-    	            			str += '</div>';
-   	            			str += '</div>';
-            			str += '</div>';
-        			str += '</div>';
-	            str += '</div>';
+    	            					str += '<a class="dropdown-item px-2 w-100" onclick="replyUpdateBtn('+list[i].rno+')"><i class="fas fa-file-signature i_size"></i>&nbsp;수정</a><div class="dropdown-divider"></div>';
+    				    	            str += '<a class="dropdown-item px-2 w-100" onclick="replyDeleteBtn('+list[i].rno+')"><i class="far fa-trash-alt i_size"></i>&nbsp;삭제</a><div class="dropdown-divider"></div>';
+    				    	            str += '<a class="dropdown-item px-2 w-100 onclick=""><i class="far fa-angry i_size"></i>&nbsp;신고</a>';	
+    	            			str += '</div>';//div class="dropdown-menu
+							}//if
+   	            			str += '</div>';//<div class="dropleft">
+            			str += '</div>';//div class="card-body-under
+        			str += '</div>';//<div class="card-body pt-1 pb-1 pl-3 pr-1">
+	            str += '</div>';//<div class="card mb-2 ml-5">
 	            str += '<div class="subReply ml-5"></div>';
 	        }//for
 
@@ -442,7 +454,7 @@
 			openReReplyStr += '</div>';
 			openReReplyStr += '<div class="d-flex justify-content-end">';
 				openReReplyStr += '<button id="subReply_registerBtn" class="btn btn-outline-secondary btn-sm text-center" onclick="registerReReply('+rno+')">등록</button>';
-				openReReplyStr += '<button id="subReply_cancelBtn" class="btn btn-outline-secondary btn-sm text-center ml-2" onclick="">취소</button>';
+				openReReplyStr += '<button id="subReply_cancelBtn" class="btn btn-outline-secondary btn-sm text-center ml-2" onclick="reReplyCancelBtn(this)">취소</button>';
 			openReReplyStr += '</div>';
 		
 		var subReply = $(item).parent().parent().parent().next();
@@ -493,6 +505,24 @@
     
     
     <!-- =================================================================================================  -->
+    <!-- start 대댓글 취소버튼 펑션 -->
+    <!-- =================================================================================================  -->
+	<script type="text/javascript">
+	function reReplyCancelBtn(item){
+		var subReply = $(item).parent().parent();
+		var card = $(item).parent().parent().prev();
+		subReply.removeClass('selected');
+		subReply.html('');
+		subReply.removeClass('mb-3');
+		card.addClass('mb-2');
+	}
+	</script>    
+    <!-- =================================================================================================  -->
+    <!-- end 대댓글 취소버튼 펑션 -->
+    <!-- =================================================================================================  -->
+    
+    
+    <!-- =================================================================================================  -->
     <!-- start 대댓글 등록버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
@@ -529,8 +559,21 @@
     <!-- start 댓글 수정버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
-    function replyUpdateBtn(){
-    	swa("success",'엌ㅋㅋ');
+    function replyUpdateBtn(rno){
+    	swa("success",'엌ㅋㅋ수정ㅋㅋ'+rno);
+    }
+    </script>
+    <!-- =================================================================================================  -->
+    <!-- end 댓글 수정버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    
+    
+    <!-- =================================================================================================  -->
+    <!-- start 댓글 수정버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    function replyDeleteBtn(rno){
+    	swa("success",'엌ㅋㅋ삭제ㅋㅋ'+rno);
     }
     </script>
     <!-- =================================================================================================  -->
