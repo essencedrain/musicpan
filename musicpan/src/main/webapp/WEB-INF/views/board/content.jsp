@@ -70,7 +70,9 @@
 								
 								
 							</div>
+							<div class="reply_page">
 							
+							</div>
 							<hr class="hr2"/>
 							
 							<sec:authorize access="isAuthenticated()">
@@ -127,7 +129,7 @@
 				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
-							<ul class="pagination justify-content-center pagination-sm">
+							<ul class="pagination justify-content-center">
 								
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
@@ -186,7 +188,6 @@
 <form id='operForm' action="/board/" method="get">
   <input type='hidden' id='bno' name='bno' value='${board.bno}'>
   <input type='hidden' name='pageNum' value='${cri.pageNum}'>
-  <!--  <input type='hidden' name='amount' value='${cri.amount}'>-->
   <input type='hidden' name='keyword' value='${cri.keyword}'>
   <input type='hidden' name='type' value='${cri.type}'>  
   <input type='hidden' name='b_name' value='${cri.b_name}'>
@@ -199,6 +200,16 @@
 	<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
 	<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
 	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
+</form>
+<form id='replyForm' action="/board/reply" method="post">
+  <input type='hidden' id='bno' name='bno' value='${board.bno}'>
+  <input type='hidden' name='pageNum' value='${cri.pageNum}'>
+  <input type='hidden' name='keyword' value='${cri.keyword}'>
+  <input type='hidden' name='type' value='${cri.type}'>  
+  <input type='hidden' name='b_name' value='${cri.b_name}'>
+  <input type='hidden' name='id' value="">
+  <input type='hidden' name='reply' value="">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
@@ -232,15 +243,15 @@
         });
     	
 	
-    	showList(1, bnoValue, b_name);
-    	
     	//리스트 갱신/보여주기 showList()
+    	showList(1, bnoValue, b_name, 0);
+    	
     	
     	
     	var reply_textarea = $('#reply_textarea'); //댓글등록textarea
     	var reply_registerBtn = $('#reply_registerBtn'); //댓글등록버튼
     	
-    	//게시물 등록
+    	//댓글 등록
     	reply_registerBtn.on("click", function(e){
     		
     		var reply = {
@@ -249,13 +260,25 @@
     				,bno : bnoValue
    			};
     		replyService.add(reply, b_name, function(result){
-    			showList(1, bnoValue, b_name);
+    			showList(-1, bnoValue, b_name, 2);
    			});
     		
     	});//reply_registerBtn.on
     	
     	
     	
+    	$('.reply_page').on("click","li a", function(e){
+            e.preventDefault();
+            console.log("page click");
+            
+            var targetPageNum = $(this).attr("href");
+            
+            console.log("targetPageNum: " + targetPageNum);
+            
+            pageNum = targetPageNum;
+            
+            showList(pageNum,bnoValue, b_name, 1);
+          });     
     	/*
     	replyService.get(10, b_name, function(data){
     		console.log(data);
@@ -374,7 +397,7 @@
     <!-- start 댓글 리스트 보여주기 showList -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
-    function showList(page, bnoValue, b_name){
+    function showList(page, bnoValue, b_name, scrollFlag){
 		
     	
     	var authId = "";
@@ -382,8 +405,15 @@
     		authId = "${pinfo.username}";
     	</sec:authorize>
     	
-	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
+	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(replyCnt, list){
 	        var str="";
+	        var scroll1st = "";
+	        var scrollLast = "";
+	        if(page == -1){
+	        	pageNum = Math.ceil(replyCnt/50.0);
+	        	showList(pageNum, bnoValue, b_name, scrollFlag);
+	        	return;
+	        }
 	        
 	        if(list == null || list.length == 0){
 	        	$('.card_area').html("");
@@ -391,11 +421,13 @@
 	        }//if
 
 	        for(var i =0, len=list.length || 0; i<len; i++){
+	        	if(i==0){scroll1st=list[i].rno}
+	        	if(i+1==len){scrollLast=list[i].rno}
 	        	
 	        	if(list[i].reply_step > 0 ){
-	        		str += '<div class="card mb-2 ml-5">';//대댓글
+	        		str += '<div class="card mb-2 ml-5" id="spy_'+list[i].rno+'">';//대댓글
 	        	}else{
-		            str += '<div class="card mb-2">';//일반 댓글
+		            str += '<div class="card mb-2" id="spy_'+list[i].rno+'">';//일반 댓글
 	        	}	
 					if(authId==list[i].id){
 						str += '<div class="card-header card_bg py-1 pl-3">';
@@ -412,21 +444,21 @@
 	            		if(list[i].del_flag == -1){
 	            			str += '<div class="card-text">[-- 삭제된 댓글입니다 --]</div>';	            			
 	            		}else{
-	            			str += '<div class="card-text">'+ list[i].reply +'</div>';	
+	            			str += '<div id="reply_'+list[i].rno+'" class="card-text">'+ list[i].reply +'</div>';	
 	            		}
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
     	            		str += '<span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
     	            		str += '<span class="span_class">0</span>';//좋아요
 		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
 		    	            str += '<span class="span_class">0</span>';//싫어요
-		    	            <sec:authorize access="isAuthenticated()">
 		    	            
+		    	            <sec:authorize access="isAuthenticated()">
 		    	            if(list[i].reply_step == 0 ){
 		    	            str += '<span class="span_class4"><i class="fas fa-grip-lines-vertical"></i></span>';
 		    	            	str += '<button type="button" class="btn btn-link btn-sm span_class3 pl-0 pr-2" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';
 		    	            }
-		    	            
 		    	            </sec:authorize>
+		    	            
 							if(authId==list[i].id){
 							if(list[i].del_flag == 0){							
     	            		str += '<div class="dropleft">';
@@ -442,16 +474,76 @@
             			str += '</div>';//div class="card-body-under
         			str += '</div>';//<div class="card-body pt-1 pb-1 pl-3 pr-1">
 	            str += '</div>';//<div class="card mb-2 ml-5">
-	            str += '<div class="subReply ml-5"></div>';
+	            str += '<div class="subReply ml-5" data-page="'+page+'" data-bno="'+bnoValue+'" data-rno="'+list[i].rno+'"></div>';
 	        }//for
 
 	        $('.card_area').html(str);
+	        showReplyPage(replyCnt, page);
 
+	        
+	        //자동스크롤링
+	        
+	        if(scrollFlag==1){//최상단
+		        var position = $("#spy_"+scroll1st).offset();
+		        $('html, body').animate({scrollTop : position.top}, 500);
+	        }else if(scrollFlag==2){//최하단
+	        	var position = $("#spy_"+scrollLast).offset();
+		        $('html, body').animate({scrollTop : position.top}, 500);
+	        }
 	    });//getList
 	}//showList
     </script>
 	<!-- =================================================================================================  -->
     <!-- end 댓글 리스트 보여주기 showList -->
+    <!-- =================================================================================================  -->
+    
+	<!-- =================================================================================================  -->
+    <!-- start 댓글 페이지 보여주기  -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    function showReplyPage(replyCnt,page){
+    	var pageNum = page;
+	      var endNum = Math.ceil(pageNum / 5.0) * 5;  
+	      var startNum = endNum - 4; 
+	      
+	      var prev = startNum != 1;
+	      var next = false;
+	      
+	      if(endNum * 50 >= replyCnt){
+	        endNum = Math.ceil(replyCnt/50.0);
+	      }//if
+	      
+	      if(endNum * 50 < replyCnt){
+	        next = true;
+	      }//if
+	      
+	      var str = "<ul class='pagination justify-content-center'>";
+	      
+	      if(prev){
+	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>이전</a></li>";
+	      }//if
+	      
+	       
+	      
+	      for(var i = startNum ; i <= endNum; i++){
+	        
+	        var active = pageNum == i? "active":"";
+	        
+	        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+	      }//for
+	      
+	      if(next){
+	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>다음</a></li>";
+	      }//if
+	      
+	      str += "</ul></div>";
+	      
+	      $(".reply_page").html(str);
+	      
+    }//showReplyPage
+    </script>
+	<!-- =================================================================================================  -->
+    <!-- end 댓글 페이지 보여주기  -->
     <!-- =================================================================================================  -->
     
     
@@ -465,7 +557,7 @@
 				openReReplyStr += '<textarea class="form-control reply_textarea" id="subReply_textarea"></textarea>';
 			openReReplyStr += '</div>';
 			openReReplyStr += '<div class="d-flex justify-content-end">';
-				openReReplyStr += '<button id="subReply_registerBtn" class="btn btn-outline-secondary btn-sm text-center" onclick="registerReReply('+rno+')">등록</button>';
+				openReReplyStr += '<button id="subReply_registerBtn" class="btn btn-outline-secondary btn-sm text-center" onclick="registerReReply('+rno+',this)">등록</button>';
 				openReReplyStr += '<button id="subReply_cancelBtn" class="btn btn-outline-secondary btn-sm text-center ml-2" onclick="reReplyCancelBtn(this)">취소</button>';
 			openReReplyStr += '</div>';
 		
@@ -538,17 +630,23 @@
     <!-- start 대댓글 등록버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
-    function registerReReply(rno){
+    function registerReReply(rno, item){
     	var bnoValue2 = '<c:out value="${board.bno}"/>';
 	    var b_name2 = '${cri.b_name}';
 	    var replyTemp2 = $('#subReply_textarea').val();
+	    
+	    var subReply = $(item).parent().parent()
+	    
+	    console.log("이거1 :"+ subReply.data('bno'));
+	    console.log("이거2 :"+subReply.data('page'));
+	    console.log("이거3 :"+subReply.data('rno'));
 	    
 	    var replyer2 = "";
 	    <sec:authorize access="isAuthenticated()">
 	    	replyer2 = '<sec:authentication property="principal.username"/>';   
 	    </sec:authorize>
     
-    	console.log(bnoValue2 + " // " + b_name2 + " // " + replyer2 + "//" + rno);
+    	//console.log(bnoValue2 + " // " + b_name2 + " // " + replyer2 + "//" + rno);
     	
    		var reply2 = {
    				reply : replyTemp2
@@ -558,7 +656,7 @@
 		};
    		
    		replyService.addRe(reply2, b_name2, function(result){
-   			showList(1, bnoValue2, b_name2);
+   			showList(1, bnoValue2, b_name2,0);
 		});
     		
     }
@@ -572,7 +670,24 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     function replyUpdateBtn(rno){
-    	swa("success",'엌ㅋㅋ수정ㅋㅋ'+rno);
+    	
+		var b_name = '${cri.b_name}';
+	    
+	    Swal.fire({
+			  title: '댓글을 수정 하시겠습니까?',
+			  icon: 'info',
+			  showCancelButton: true,
+			  confirmButtonColor: '#007bff',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '수정',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.value) {
+			    //수정처리시작
+			    console.log($('#reply_'+rno).html());
+			    $("#replyForm").submit();
+			  }//if
+			});
     }
     </script>
     <!-- =================================================================================================  -->
@@ -609,7 +724,7 @@
 						swa("error",'에러 발생');
 					});
 			  }
-			})
+			});
     }
     </script>
     <!-- =================================================================================================  -->

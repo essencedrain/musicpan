@@ -39,6 +39,7 @@ public class BoardController {
 	 	p000		글쓰기		POST	/board/register						boardVO												principal.username == #boardVO.id
 	 	p001		수정하기	POST	/board/update						boardVO			modifyForm							principal.username == #boardVO.id
 	 	p002		삭제하기	POST	/board/delete						boardVO			content								principal.username == #boardVO.id
+	 	p003		댓글수정	POST	/board/reply						boardVO			content								principal.username == #boardVO.id
 	 */
 	//============================================================================================================================================================
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.musicpan.domain.Criteria;
+import com.musicpan.domain.ReplyPageDTO;
 import com.musicpan.domain.ReplyVO;
 import com.musicpan.mapper.ReplyMapper;
 
@@ -74,11 +75,24 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int registerRe(ReplyVO vo) {
 		
-		long maxRef = mapper.getMaxStep(vo);
+		int ref = mapper.getRef(vo);
+		vo.setRef(ref);
 		
-		vo.setRef(maxRef+1);
+		int maxStep = mapper.getMaxStep(vo);
+		
+		vo.setReply_step(maxStep+1);
 		
 		return mapper.insertRe(vo);
+	}
+
+
+
+	@Override
+	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+		return new ReplyPageDTO(
+				mapper.getCountByBno(bno, cri.getB_name())
+				,mapper.getListWithPaging(cri, bno)
+				);
 	}
 
 }//class

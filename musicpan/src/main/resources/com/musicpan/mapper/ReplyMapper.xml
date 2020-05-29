@@ -46,8 +46,8 @@
 				#{reply}
 				, now()
 				, now()
-				, #{rno}
 				, #{ref}
+				, #{reply_step}
 				, #{bno}
 				, #{id}
 			)
@@ -68,7 +68,7 @@
 		FROM
 			reply_${b_name}
 		WHERE
-			ref = #{rno}
+			ref = #{ref}
 	</select>
 	
 	<select id="getRef" resultType="int">
@@ -145,8 +145,20 @@
 			ON r.id = m.id
 		WHERE
 			r.bno = #{bno} AND r.del_flag < 1
-		ORDER BY r.ref asc, r.reply_step asc
+		ORDER BY
+			r.ref asc, r.reply_step asc
+		LIMIT
+			#{cri.limitNum}, #{cri.amount}
 	]]>
 	</select>
-	
+	<select id="getCountByBno" resultType="int">
+	<![CDATA[
+		SELECT
+			count(rno)
+		FROM
+			reply_${b_name}
+		WHERE
+			bno = #{bno} AND del_flag < 1
+	]]>
+	</select>
 </mapper>

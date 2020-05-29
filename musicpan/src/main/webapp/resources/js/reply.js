@@ -25,11 +25,12 @@ var replyService = (function(){
         var bno = param.bno;
         var page = param.page || 1;
         var b_name = param.b_name;
-
+        //console.log("reply.js : "+bno+"//"+page+"//"+b_name);
         $.getJSON("/replies/pages/"+b_name+"/"+bno+"/"+page+".json",
             function (data) {
                 if(callback){
-                    callback(data);
+                    //callback(data);
+                    callback(data.replyCnt, data.list);
                 }
             }).fail(function(xhr,status,err) {
                if(error){
@@ -130,7 +131,7 @@ var replyService = (function(){
 
     function addRe(reply, b_name, callback, error){
         //console.log("add Re_reply............");
-
+        console.log("reply.js addRe : "+reply+"//"+b_name);
         $.ajax({
             type: "post",
             url: "/replies/"+b_name+"/re",

@@ -68,7 +68,7 @@
 				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
-							<ul class="pagination justify-content-center pagination-sm">
+							<ul class="pagination justify-content-center">
 								
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
