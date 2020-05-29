@@ -228,55 +228,10 @@
         });
     	
 	
-    	showList(1);
+    	showList(1, bnoValue, b_name);
     	
     	//리스트 갱신/보여주기 showList()
-    	function showList(page){
-
-    	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
-    	        var str="";
-    	        
-    	        if(list == null || list.length == 0){
-    	        	$('.card_area').html("");
-    	            return;
-    	        }//if
-
-    	        for(var i =0, len=list.length || 0; i<len; i++){
-    	            str += '<div class="card mb-2">';//처음 card에 ml4주면 대댓글
-    	            	str += '<div class="card-header py-1 pl-3">';
-    	            		str += '<div class="d-flex">';
-			    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
-			    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
-			    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
-							str += '</div>';
-    	            	str += '</div>';
-    	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
-							str += '<div class="card-text">'+ list[i].reply +'</div>';
-	    	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
-	    	            		str += '<span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
-	    	            		str += '<span class="span_class">0</span>';//좋아요
-			    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
-			    	            str += '<span class="span_class">0</span>';//싫어요
-			    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>';
-	    	            		str += '<button type="button" class="btn btn-link btn-sm span_class3" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';//대댓글
-	    	            		str += '<div class="dropleft">';
-	    	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
-	    	            			str += '<div class="dropdown-menu">';
-					    	            str += '<a class="dropdown-item" href="#">Normal</a>';
-					    	            str += '<a class="dropdown-item active" href="#">Active</a>';
-					    	            str += '<a class="dropdown-item disabled" href="#">Disabled</a>';
-	    	            			str += '</div>';
-	   	            			str += '</div>';
-	            			str += '</div>';
-            			str += '</div>';
-    	            str += '</div>';
-    	            str += '<div class="subReply ml-5"></div>';
-    	        }//for
-
-    	        $('.card_area').html(str);
-
-    	    });//getList
-    	}//showList
+    	
     	
     	var reply_textarea = $('#reply_textarea'); //댓글등록textarea
     	var reply_registerBtn = $('#reply_registerBtn'); //댓글등록버튼
@@ -290,7 +245,7 @@
     				,bno : bnoValue
    			};
     		replyService.add(reply, b_name, function(result){
-    			showList(1);
+    			showList(1, bnoValue, b_name);
    			});
     		
     	});//reply_registerBtn.on
@@ -415,7 +370,52 @@
     <!-- start 댓글 리스트 보여주기 showList -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
-    
+    function showList(page, bnoValue, b_name){
+
+	    replyService.getList({bno:bnoValue, page:page||1, b_name:b_name}, function(list){
+	        var str="";
+	        
+	        if(list == null || list.length == 0){
+	        	$('.card_area').html("");
+	            return;
+	        }//if
+
+	        for(var i =0, len=list.length || 0; i<len; i++){
+	            str += '<div class="card mb-2">';//처음 card에 ml4주면 대댓글
+	            	str += '<div class="card-header py-1 pl-3">';
+	            		str += '<div class="d-flex">';
+		    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
+		    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
+		    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';
+						str += '</div>';
+	            	str += '</div>';
+	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
+						str += '<div class="card-text">'+ list[i].reply +'</div>';
+    	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
+    	            		str += '<span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
+    	            		str += '<span class="span_class">0</span>';//좋아요
+		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
+		    	            str += '<span class="span_class">0</span>';//싫어요
+		    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>';
+    	            		str += '<button type="button" class="btn btn-link btn-sm span_class3" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';//대댓글
+    	            		str += '<div class="dropleft">';
+    	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
+    	            			str += '<div class="dropdown-menu">';
+				    	            str += '<a class="dropdown-item" href="#">Normal</a>';
+				    	            str += '<a class="dropdown-item active" href="#">Active</a>';
+				    	            str += '<a class="dropdown-item disabled" href="#">Disabled</a>';
+    	            			str += '</div>';
+   	            			str += '</div>';
+            			str += '</div>';
+        			str += '</div>';
+	            str += '</div>';
+	            str += '<div class="subReply ml-5"></div>';
+	        }//for
+
+	        $('.card_area').html(str);
+
+	    });//getList
+	}//showList
     </script>
 	<!-- =================================================================================================  -->
     <!-- end 댓글 리스트 보여주기 showList -->
@@ -512,7 +512,7 @@
 		};
    		
    		replyService.addRe(reply2, b_name2, function(result){
-   			showList(1);
+   			showList(1, bnoValue2, b_name2);
 		});
     		
     }
