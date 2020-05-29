@@ -9,6 +9,8 @@ public interface ReplyService {
 
 	public int register(ReplyVO vo);
 	
+	public int registerRe(ReplyVO vo);
+	
 	public ReplyVO get(Long rno, String b_name);
 	
 	public int modify(ReplyVO vo);

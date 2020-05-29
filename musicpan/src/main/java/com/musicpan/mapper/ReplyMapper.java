@@ -10,6 +10,10 @@ import com.musicpan.domain.ReplyVO;
 public interface ReplyMapper {
 
 	public int insert(ReplyVO vo);
+	public int updateRef(ReplyVO vo);
+	
+	public int insertRe(ReplyVO vo);
+	public int getMaxStep(ReplyVO vo);
 	
 	public ReplyVO read(@Param("rno") Long rno, @Param("b_name") String b_name);
 	

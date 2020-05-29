@@ -5,13 +5,14 @@
 <mapper namespace="com.musicpan.mapper.ReplyMapper">
 
 	
-	<insert id="insert">
+	<insert id="insert" parameterType="com.musicpan.domain.ReplyVO" useGeneratedKeys="true" keyProperty="ref">
 		INSERT INTO
 			reply_${b_name}
 			(
 				reply
 				, regdate
 				, updatedate
+				, ref
 				, reply_step
 				, bno
 				, id
@@ -21,7 +22,32 @@
 				#{reply}
 				, now()
 				, now()
-				, #{reply_step}
+				, 0
+				, 0
+				, #{bno}
+				, #{id}
+			)
+	</insert>
+	
+	<insert id="insertRe">
+		INSERT INTO
+			reply_${b_name}
+			(
+				reply
+				, regdate
+				, updatedate
+				, ref
+				, reply_step
+				, bno
+				, id
+			)
+		VALUES
+			(
+				#{reply}
+				, now()
+				, now()
+				, #{rno}
+				, #{ref}
 				, #{bno}
 				, #{id}
 			)
@@ -34,6 +60,15 @@
 			reply_${b_name}
 		WHERE
 			rno = #{rno}
+	</select>
+	
+	<select id="getMaxStep" resultType="int">
+		SELECT
+			max(reply_step)
+		FROM
+			reply_${b_name}
+		WHERE
+			ref = #{rno}
 	</select>
 	
 	
@@ -55,6 +90,15 @@
 			rno = #{rno}
 	</update>
 	
+	<update id="updateRef">
+		UPDATE
+			reply_${b_name}
+		SET
+			ref = #{ref}
+		WHERE
+			rno = #{ref}
+	</update>
+	
 	
 	<select id="getListWithPaging" resultType="com.musicpan.domain.ReplyVO">
 		SELECT
@@ -62,6 +106,7 @@
 			,r.reply
 			,r.regdate
 			,r.updatedate
+			,r.ref
 			,r.reply_step
 			,r.bno
 			,r.id

@@ -36,6 +36,7 @@ import lombok.extern.log4j.Log4j;
  	002			삭제		DELETE	/replies/:b_name/:rno
  	003			수정		PUT		/replies/:b_name/:rno
  	004			페이지		GET		/replies/pages/:b_name/:bno/:page
+ 	005			대댓글등록	POST	/replies/:b_name/re
  */
 //============================================================================================================================================================
 
@@ -66,6 +67,30 @@ public class ReplyController {
 		return insertCount == 1
 				? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	//====================================================================================================
+	
+	
+	
+	
+	//====================================================================================================
+	// 005	대댓글등록	POST	/replies/:b_name/re
+	//====================================================================================================
+	@PostMapping(value = "/{b_name}/re"
+			,consumes = "application/json"
+			,produces = { MediaType.TEXT_PLAIN_VALUE }
+			)
+	public ResponseEntity<String> create2(@PathVariable("b_name") String b_name, @RequestBody ReplyVO vo){
+		
+		//log.info("들어옴 : " + b_name  + " // " + vo.toString());
+		
+		vo.setB_name(b_name);
+		
+		int insertCount = service.registerRe(vo);
+		
+		return insertCount == 1
+				? new ResponseEntity<>("success",HttpStatus.OK)
+						: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	//====================================================================================================
 	

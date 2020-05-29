@@ -1,7 +1,7 @@
 var replyService = (function(){
 
     function add(reply, b_name, callback, error){
-        console.log("add reply............");
+        //console.log("add reply............");
 
         $.ajax({
             type: "post",
@@ -59,7 +59,7 @@ var replyService = (function(){
 
 
     function update(reply, b_name, callback, error) {
-        console.log("rno:" + reply.rno);
+        //console.log("rno:" + reply.rno);
 
         $.ajax({
             type: "put",
@@ -128,6 +128,28 @@ var replyService = (function(){
         }
     }//displayTime
 
+    function addRe(reply, b_name, callback, error){
+        //console.log("add Re_reply............");
+
+        $.ajax({
+            type: "post",
+            url: "/replies/"+b_name+"/re",
+            data: JSON.stringify(reply),
+            contentType: "application/json; charset=utf-8",
+            success: function (result, status, xhr) {
+                if(callback){
+                    callback(result);
+                }
+            },
+            error: function(xhr, status, er){
+                if(error){
+                    error(er);
+                }
+            }
+        });
+    }//addRe
+
+
     return {
         add:add
         ,getList:getList
@@ -135,5 +157,6 @@ var replyService = (function(){
         ,update:update
         ,get:get
         ,displayTime:displayTime
+        ,addRe:addRe
     };
 })();

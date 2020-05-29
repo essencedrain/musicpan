@@ -21,7 +21,9 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	public int register(ReplyVO vo) {
-		return mapper.insert(vo);
+		
+		mapper.insert(vo);
+		return mapper.updateRef(vo);
 	}
 
 	
@@ -50,6 +52,18 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public List<ReplyVO> getList(Criteria cri, Long bno) {
 		return mapper.getListWithPaging(cri, bno);
+	}
+
+
+
+	@Override
+	public int registerRe(ReplyVO vo) {
+		
+		long maxRef = mapper.getMaxStep(vo);
+		
+		vo.setRef(maxRef+1);
+		
+		return mapper.insertRe(vo);
 	}
 
 }//class

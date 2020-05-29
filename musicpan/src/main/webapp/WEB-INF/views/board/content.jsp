@@ -213,7 +213,6 @@
     $(document).ready(function(){
 	    var bnoValue = '<c:out value="${board.bno}"/>';
 	    var b_name = '${cri.b_name}';
-	    var cardArea = $('.card_area');
 	    var replyer = "";
 	    <sec:authorize access="isAuthenticated()">
 	    	replyer = '<sec:authentication property="principal.username"/>';   
@@ -238,7 +237,7 @@
     	        var str="";
     	        
     	        if(list == null || list.length == 0){
-    	            cardArea.html("");
+    	        	$('.card_area').html("");
     	            return;
     	        }//if
 
@@ -259,7 +258,7 @@
 			    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
 			    	            str += '<span class="span_class">0</span>';//싫어요
 			    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>';
-	    	            		str += '<button type="button" class="btn btn-link btn-sm span_class3 re_replyBtn" onclick="openReReply(this)">댓글</button>';//대댓글
+	    	            		str += '<button type="button" class="btn btn-link btn-sm span_class3" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';//대댓글
 	    	            		str += '<div class="dropleft">';
 	    	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
 	    	            			str += '<div class="dropdown-menu">';
@@ -274,7 +273,7 @@
     	            str += '<div class="subReply ml-5"></div>';
     	        }//for
 
-    	        cardArea.html(str);
+    	        $('.card_area').html(str);
 
     	    });//getList
     	}//showList
@@ -413,16 +412,28 @@
     <!-- =================================================================================================  -->
     
 	<!-- =================================================================================================  -->
+    <!-- start 댓글 리스트 보여주기 showList -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    
+    </script>
+	<!-- =================================================================================================  -->
+    <!-- end 댓글 리스트 보여주기 showList -->
+    <!-- =================================================================================================  -->
+    
+    
+	<!-- =================================================================================================  -->
     <!-- start 대댓글 버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
-	function openReReply(item){
+	function openReReply(item, rno){
+		
 		var openReReplyStr = '<div class="form-group mb-2">';
 				openReReplyStr += '<textarea class="form-control reply_textarea" id="subReply_textarea"></textarea>';
 			openReReplyStr += '</div>';
 			openReReplyStr += '<div class="d-flex justify-content-end">';
-				openReReplyStr += '<button id="subReply_registerBtn" class="btn btn-outline-secondary btn-sm text-center">등록</button>';
-				openReReplyStr += '<button id="subReply_cancelBtn" class="btn btn-outline-secondary btn-sm text-center ml-2">취소</button>';
+				openReReplyStr += '<button id="subReply_registerBtn" class="btn btn-outline-secondary btn-sm text-center" onclick="registerReReply('+rno+')">등록</button>';
+				openReReplyStr += '<button id="subReply_cancelBtn" class="btn btn-outline-secondary btn-sm text-center ml-2" onclick="">취소</button>';
 			openReReplyStr += '</div>';
 		
 		var subReply = $(item).parent().parent().parent().next();
@@ -473,6 +484,41 @@
     </script>
     <!-- =================================================================================================  -->
     <!-- end 대댓글 버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    
+    
+    
+    <!-- =================================================================================================  -->
+    <!-- start 대댓글 등록버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    function registerReReply(rno){
+    	var bnoValue2 = '<c:out value="${board.bno}"/>';
+	    var b_name2 = '${cri.b_name}';
+	    var replyTemp2 = 'test';
+	    
+	    var replyer2 = "";
+	    <sec:authorize access="isAuthenticated()">
+	    	replyer2 = '<sec:authentication property="principal.username"/>';   
+	    </sec:authorize>
+    
+    	console.log(bnoValue2 + " // " + b_name2 + " // " + replyer2 + "//" + rno);
+    	
+   		var reply2 = {
+   				reply : replyTemp2
+   				,id : replyer2
+   				,bno : bnoValue2
+   				,rno : rno
+		};
+   		
+   		replyService.addRe(reply2, b_name2, function(result){
+   			showList(1);
+		});
+    		
+    }
+    </script>
+    <!-- =================================================================================================  -->
+    <!-- end 대댓글 등록버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

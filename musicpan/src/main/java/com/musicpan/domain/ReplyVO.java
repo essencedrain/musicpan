@@ -10,6 +10,7 @@ public class ReplyVO {
 	
 	private long rno;
 	private long bno;
+	private long ref;
 	
 	private String reply;
 	private String id;
