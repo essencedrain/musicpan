@@ -409,7 +409,11 @@
 							str += '</div>';//'<div class="d-flex">
 	            		str += '</div>';//<div class="card-header py-1 pl-3">'
 	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
-						str += '<div class="card-text">'+ list[i].reply +'</div>';
+	            		if(list[i].del_flag == -1){
+	            			str += '<div class="card-text">[-- 삭제된 댓글입니다 --]</div>';	            			
+	            		}else{
+	            			str += '<div class="card-text">'+ list[i].reply +'</div>';	
+	            		}
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
     	            		str += '<span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
     	            		str += '<span class="span_class">0</span>';//좋아요
@@ -424,6 +428,7 @@
 		    	            
 		    	            </sec:authorize>
 							if(authId==list[i].id){
+							if(list[i].del_flag == 0){							
     	            		str += '<div class="dropleft">';
     	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
     	            			str += '<div class="dropdown-menu">';
@@ -431,6 +436,7 @@
     				    	            str += '<a class="dropdown-item px-2 w-100" onclick="replyDeleteBtn('+list[i].rno+')"><i class="far fa-trash-alt i_size"></i>&nbsp;삭제</a><div class="dropdown-divider"></div>';
     				    	            str += '<a class="dropdown-item px-2 w-100 onclick=""><i class="far fa-angry i_size"></i>&nbsp;신고</a>';	
     	            			str += '</div>';//div class="dropdown-menu
+							}//if
 							}//if
    	            			str += '</div>';//<div class="dropleft">
             			str += '</div>';//div class="card-body-under
@@ -582,15 +588,28 @@
     	
 	    var b_name = '${cri.b_name}';
 	    
-    	replyService.remove(rno, b_name, function(count){
-			console.log(count);
-			if(count==="success"){
-				swa("success",'삭제되었습니다.');
-			}
-		}, function(err){
-			swa("error",'에러 발생');
-		});
-    	
+	    Swal.fire({
+			  title: '정말 삭제하시겠습니까?',
+			  text: "삭제된 댓글은 복구가 어렵습니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#007bff',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.value) {
+			    //삭제처리시작
+				  replyService.remove(rno, b_name, function(count){
+						console.log(count);
+						if(count==="success"){
+							swa("success",'삭제되었습니다.');
+						}
+					}, function(err){
+						swa("error",'에러 발생');
+					});
+			  }
+			})
     }
     </script>
     <!-- =================================================================================================  -->

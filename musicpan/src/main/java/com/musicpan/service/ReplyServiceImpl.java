@@ -44,6 +44,21 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	public int remove(Long rno, String b_name) {
+		
+		ReplyVO vo = new ReplyVO();
+		vo.setRno(rno);
+		vo.setB_name(b_name);
+		
+		int ref = mapper.getRef(vo);
+		
+		if(rno==ref) {
+			if(mapper.getMaxStep(vo) > 0) {
+				//-1로 수정
+				return mapper.deleteFlag2(rno, b_name);
+			}	
+		}
+		
+		//1로 수정
 		return mapper.deleteFlag(rno, b_name);
 	}
 

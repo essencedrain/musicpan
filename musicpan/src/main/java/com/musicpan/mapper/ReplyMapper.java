@@ -24,5 +24,6 @@ public interface ReplyMapper {
 	public List<ReplyVO> getListWithPaging(@Param("cri") Criteria cri, @Param("bno") Long bno);
 	
 	public int deleteFlag(@Param("rno") Long rno, @Param("b_name") String b_name);
-	
+	public int deleteFlag2(@Param("rno") Long rno, @Param("b_name") String b_name);
+	public int getRef(ReplyVO vo);
 }//class

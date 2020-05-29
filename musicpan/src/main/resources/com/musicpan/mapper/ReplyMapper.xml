@@ -71,6 +71,15 @@
 			ref = #{rno}
 	</select>
 	
+	<select id="getRef" resultType="int">
+		SELECT
+			ref
+		FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</select>
+	
 	
 	<delete id="delete">
 		DELETE FROM
@@ -104,6 +113,14 @@
 			reply_${b_name}
 		SET
 			del_flag = 1
+		WHERE
+			rno = #{rno}
+	</update>
+	<update id="deleteFlag2">
+		UPDATE
+			reply_${b_name}
+		SET
+			del_flag = -1
 		WHERE
 			rno = #{rno}
 	</update>
