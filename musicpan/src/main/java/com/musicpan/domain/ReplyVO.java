@@ -19,6 +19,7 @@ public class ReplyVO {
 	
 	private int reply_step;
 	private int grade;
+	private int del_flag;
 	
 	private Date regdate;
 	private Date updatedate;

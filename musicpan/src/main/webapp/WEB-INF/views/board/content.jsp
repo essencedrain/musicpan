@@ -26,7 +26,7 @@
 		                </div>
 		            	<div class="mt-3 pb-5">
 		            		<div class="mb-2">
-		            			<span class="content_heading">${board.title}</span>
+		            			<span class="content_heading"><a href="/board/${cri.b_name}/content/${board.bno}">${board.title}</a></span>
 		            		</div>
 		            		<table class="table table-sm table-borderless">
 			            		
@@ -415,9 +415,15 @@
     	            		str += '<span class="span_class">0</span>';//좋아요
 		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
 		    	            str += '<span class="span_class">0</span>';//싫어요
-							if(authId==list[i].id){
+		    	            <sec:authorize access="isAuthenticated()">
+		    	            
+		    	            if(list[i].reply_step == 0 ){
 		    	            str += '<span class="span_class4"><i class="fas fa-grip-lines-vertical"></i></span>';
-		    	            if(list[i].reply_step == 0 ){str += '<button type="button" class="btn btn-link btn-sm span_class3 pl-0 pr-2" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';}
+		    	            	str += '<button type="button" class="btn btn-link btn-sm span_class3 pl-0 pr-2" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';
+		    	            }
+		    	            
+		    	            </sec:authorize>
+							if(authId==list[i].id){
     	            		str += '<div class="dropleft">';
     	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
     	            			str += '<div class="dropdown-menu">';
@@ -569,15 +575,26 @@
     
     
     <!-- =================================================================================================  -->
-    <!-- start 댓글 수정버튼 클릭 펑션 -->
+    <!-- start 댓글 삭제버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     function replyDeleteBtn(rno){
-    	swa("success",'엌ㅋㅋ삭제ㅋㅋ'+rno);
+    	
+	    var b_name = '${cri.b_name}';
+	    
+    	replyService.remove(rno, b_name, function(count){
+			console.log(count);
+			if(count==="success"){
+				swa("success",'삭제되었습니다.');
+			}
+		}, function(err){
+			swa("error",'에러 발생');
+		});
+    	
     }
     </script>
     <!-- =================================================================================================  -->
-    <!-- end 댓글 수정버튼 클릭 펑션 -->
+    <!-- end 댓글 삭제버튼 클릭 펑션 -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

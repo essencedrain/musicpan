@@ -44,7 +44,7 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	public int remove(Long rno, String b_name) {
-		return mapper.delete(rno, b_name);
+		return mapper.deleteFlag(rno, b_name);
 	}
 
 	

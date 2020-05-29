@@ -99,8 +99,18 @@
 			rno = #{ref}
 	</update>
 	
+	<update id="deleteFlag">
+		UPDATE
+			reply_${b_name}
+		SET
+			del_flag = 1
+		WHERE
+			rno = #{rno}
+	</update>
+	
 	
 	<select id="getListWithPaging" resultType="com.musicpan.domain.ReplyVO">
+	<![CDATA[
 		SELECT
 			r.rno
 			,r.reply
@@ -108,6 +118,7 @@
 			,r.updatedate
 			,r.ref
 			,r.reply_step
+			,r.del_flag
 			,r.bno
 			,r.id
 			,m.grade
@@ -116,8 +127,9 @@
 			reply_${cri.b_name} r INNER JOIN member m
 			ON r.id = m.id
 		WHERE
-			r.bno = #{bno}
+			r.bno = #{bno} AND r.del_flag < 1
 		ORDER BY r.ref asc, r.reply_step asc
+	]]>
 	</select>
 	
 </mapper>

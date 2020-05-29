@@ -298,6 +298,9 @@ a.article:hover {
 	line-height: 28px;
 	font-weight: 700;
 }
+.content_area .content_heading a{
+	color: #000; !important;
+}
 
 .content_area .table td{
 	padding-left: 8px;
