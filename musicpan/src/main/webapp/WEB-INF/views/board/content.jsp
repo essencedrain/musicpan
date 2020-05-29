@@ -381,7 +381,12 @@
 	        }//if
 
 	        for(var i =0, len=list.length || 0; i<len; i++){
-	            str += '<div class="card mb-2">';//처음 card에 ml4주면 대댓글
+	        	
+	        	if(list[i].reply_step > 0 ){
+	        		str += '<div class="card mb-2 ml-4">';//대댓글
+	        	}else{
+		            str += '<div class="card mb-2">';//일반 댓글
+	        	}
 	            	str += '<div class="card-header py-1 pl-3">';
 	            		str += '<div class="d-flex">';
 		    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
@@ -397,7 +402,7 @@
 		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
 		    	            str += '<span class="span_class">0</span>';//싫어요
 		    	            str += '<span class="span_class2"><i class="fas fa-grip-lines-vertical"></i></span>';
-    	            		str += '<button type="button" class="btn btn-link btn-sm span_class3" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';//대댓글
+		    	            if(list[i].reply_step == 0 ){str += '<button type="button" class="btn btn-link btn-sm span_class3" onclick="openReReply(this,'+list[i].rno+')">댓글</button>';}
     	            		str += '<div class="dropleft">';
     	            			str += '<button type="button" class="btn btn-light btn-sm dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>';
     	            			str += '<div class="dropdown-menu">';
@@ -495,7 +500,7 @@
     function registerReReply(rno){
     	var bnoValue2 = '<c:out value="${board.bno}"/>';
 	    var b_name2 = '${cri.b_name}';
-	    var replyTemp2 = 'test';
+	    var replyTemp2 = $('#subReply_textarea').val();
 	    
 	    var replyer2 = "";
 	    <sec:authorize access="isAuthenticated()">

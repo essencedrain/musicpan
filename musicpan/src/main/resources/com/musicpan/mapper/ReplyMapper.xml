@@ -116,8 +116,8 @@
 			reply_${cri.b_name} r INNER JOIN member m
 			ON r.id = m.id
 		WHERE
-			bno = #{bno}
-		ORDER BY rno asc
+			r.bno = #{bno}
+		ORDER BY r.ref desc, r.reply_step asc
 	</select>
 	
 </mapper>
