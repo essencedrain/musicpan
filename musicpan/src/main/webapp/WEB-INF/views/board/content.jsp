@@ -244,7 +244,7 @@
     	
 	
     	//리스트 갱신/보여주기 showList()
-    	showList(1, bnoValue, b_name, 0);
+    	showList(1, bnoValue, b_name, 0, 0);
     	
     	
     	
@@ -260,7 +260,7 @@
     				,bno : bnoValue
    			};
     		replyService.add(reply, b_name, function(result){
-    			showList(-1, bnoValue, b_name, 2);
+    			showList(-1, bnoValue, b_name, 2, 0);
    			});
     		
     	});//reply_registerBtn.on
@@ -277,7 +277,7 @@
             
             pageNum = targetPageNum;
             
-            showList(pageNum,bnoValue, b_name, 1);
+            showList(pageNum,bnoValue, b_name, 1, 0);
           });     
     	/*
     	replyService.get(10, b_name, function(data){
@@ -397,7 +397,7 @@
     <!-- start 댓글 리스트 보여주기 showList -->
     <!-- =================================================================================================  -->
     <script type="text/javascript">
-    function showList(page, bnoValue, b_name, scrollFlag){
+    function showList(page, bnoValue, b_name, scrollFlag, rnoReply){
 		
     	
     	var authId = "";
@@ -409,11 +409,14 @@
 	        var str="";
 	        var scroll1st = "";
 	        var scrollLast = "";
+	        var scrollReply = "";
+	        
 	        if(page == -1){
 	        	pageNum = Math.ceil(replyCnt/50.0);
-	        	showList(pageNum, bnoValue, b_name, scrollFlag);
+	        	showList(pageNum, bnoValue, b_name, scrollFlag, 0);
 	        	return;
 	        }
+	        
 	        
 	        if(list == null || list.length == 0){
 	        	$('.card_area').html("");
@@ -423,6 +426,7 @@
 	        for(var i =0, len=list.length || 0; i<len; i++){
 	        	if(i==0){scroll1st=list[i].rno}
 	        	if(i+1==len){scrollLast=list[i].rno}
+	        	if(list[i].rno==rnoReply){scrollReply=list[i].rno}
 	        	
 	        	if(list[i].reply_step > 0 ){
 	        		str += '<div class="card mb-2 ml-5" id="spy_'+list[i].rno+'">';//대댓글
@@ -488,6 +492,9 @@
 		        $('html, body').animate({scrollTop : position.top}, 500);
 	        }else if(scrollFlag==2){//최하단
 	        	var position = $("#spy_"+scrollLast).offset();
+		        $('html, body').animate({scrollTop : position.top}, 500);
+	        }else if(scrollFlag==3){//대댓글
+	        	var position = $("#spy_"+scrollReply).offset();
 		        $('html, body').animate({scrollTop : position.top}, 500);
 	        }
 	    });//getList
@@ -636,10 +643,11 @@
 	    var replyTemp2 = $('#subReply_textarea').val();
 	    
 	    var subReply = $(item).parent().parent()
-	    
-	    console.log("이거1 :"+ subReply.data('bno'));
-	    console.log("이거2 :"+subReply.data('page'));
-	    console.log("이거3 :"+subReply.data('rno'));
+	    var rnoReply = subReply.data('rno');
+	    var page = subReply.data('page');
+	    //console.log("이거1 :"+ subReply.data('bno'));
+	    //console.log("이거2 :"+subReply.data('page'));
+	    //console.log("이거3 :"+subReply.data('rno'));
 	    
 	    var replyer2 = "";
 	    <sec:authorize access="isAuthenticated()">
@@ -656,7 +664,7 @@
 		};
    		
    		replyService.addRe(reply2, b_name2, function(result){
-   			showList(1, bnoValue2, b_name2,0);
+   			showList(page, bnoValue2, b_name2, 3, rnoReply);
 		});
     		
     }
