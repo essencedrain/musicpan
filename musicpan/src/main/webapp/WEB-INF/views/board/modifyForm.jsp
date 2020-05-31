@@ -44,6 +44,7 @@
 			                <input type="hidden" name="id" value='<sec:authentication property="principal.username"/>' />
 			                <input type="hidden" name="b_name" value="${cri.b_name}" />
 			                <input type="hidden" name="bno" value="${board.bno}" />
+			                
 		                </form>
 		            </div>
 		            

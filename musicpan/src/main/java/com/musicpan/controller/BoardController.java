@@ -79,7 +79,7 @@ public class BoardController {
 		
 		int total = service.getTotal(cri);
 		
-		if( (cri.getPageNum()*cri.getAmount()) > total ) {throw new Exception();}
+		//if( (cri.getPageNum()*cri.getAmount()) > total ) {throw new Exception();}
 		
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));

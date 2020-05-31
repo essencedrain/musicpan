@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.musicpan.domain.Criteria;
 import com.musicpan.domain.ReplyPageDTO;
 import com.musicpan.domain.ReplyVO;
+import com.musicpan.mapper.BoardMapper;
 import com.musicpan.mapper.ReplyMapper;
 
 import lombok.Setter;
@@ -20,10 +22,15 @@ public class ReplyServiceImpl implements ReplyService {
 	@Setter(onMethod_ = @Autowired)
 	private ReplyMapper mapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private BoardMapper boardMapper;
+	
+	@Transactional
 	@Override
 	public int register(ReplyVO vo) {
 		
 		mapper.insert(vo);
+		boardMapper.updateReplyCnt(vo.getBno(), 1, vo.getB_name());
 		return mapper.updateRef(vo);
 	}
 
@@ -42,24 +49,25 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	
-	
+	@Transactional
 	@Override
 	public int remove(Long rno, String b_name) {
 		
-		ReplyVO vo = new ReplyVO();
-		vo.setRno(rno);
+		ReplyVO vo = mapper.read(rno, b_name);
 		vo.setB_name(b_name);
 		
 		int ref = mapper.getRef(vo);
 		vo.setRef(ref);
 		if(rno==ref) {
 			if(mapper.getMaxStep(vo) > 0) {
-				//-1로 수정
+				//-1로 수정 자식딸린 댓글
+				boardMapper.updateReplyCnt(vo.getBno(), -1, vo.getB_name());
 				return mapper.deleteFlag2(rno, b_name);
 			}	
 		}
 		
-		//1로 수정
+		//1로 수정, 그냥 댓글 삭제
+		boardMapper.updateReplyCnt(vo.getBno(), -1, vo.getB_name());
 		return mapper.deleteFlag(rno, b_name);
 	}
 
@@ -71,7 +79,7 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 
-
+	@Transactional
 	@Override
 	public int registerRe(ReplyVO vo) {
 		
@@ -82,6 +90,7 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		vo.setReply_step(maxStep+1);
 		
+		boardMapper.updateReplyCnt(vo.getBno(), 1, vo.getB_name());
 		return mapper.insertRe(vo);
 	}
 

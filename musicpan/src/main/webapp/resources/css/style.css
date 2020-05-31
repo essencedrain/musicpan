@@ -259,6 +259,10 @@ a.article:hover {
     color: #999;
     vertical-align: middle;
 }
+.table_gtx .list_replyCnt{
+    color: #3493ff;
+    font-weight: 100;
+}
 
 .table_gtx .list_else{
 	font-size:14px;

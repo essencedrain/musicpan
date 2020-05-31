@@ -15,7 +15,7 @@
     <!-- Bootstrap 4.1 -->
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <!-- google font -->
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,500,700,900&display=swap&subset=korean" rel="stylesheet">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="/resources/css/jquery.mCustomScrollbar.min.css">
 	

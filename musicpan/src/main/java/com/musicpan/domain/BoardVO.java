@@ -22,6 +22,6 @@ public class BoardVO {
 	
 	
 	private String modiDate;
-	//private int replyCnt;
+	private int replyCnt;
 	//private List<BoardAttachVO> attachList;
 }

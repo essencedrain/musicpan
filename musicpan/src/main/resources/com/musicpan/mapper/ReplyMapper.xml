@@ -116,6 +116,7 @@
 		WHERE
 			rno = #{rno}
 	</update>
+	
 	<update id="deleteFlag2">
 		UPDATE
 			reply_${b_name}
@@ -151,6 +152,8 @@
 			#{cri.limitNum}, #{cri.amount}
 	]]>
 	</select>
+	
+	
 	<select id="getCountByBno" resultType="int">
 	<![CDATA[
 		SELECT

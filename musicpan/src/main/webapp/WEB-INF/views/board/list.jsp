@@ -31,7 +31,8 @@
 		                </div>
 		            	<div class="mt-3">
 		            		<sec:authorize access="isAuthenticated()">
-			            		<div class="py-2 d-flex justify-content-end">
+			            		<div class="py-2 d-flex justify-content-between">
+			            			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></button>
 				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
@@ -52,7 +53,8 @@
 		                    				<td style="width: 5%;" class="list_rowNum">${rowNum}</td>
 	                    					<td style="width: 65%;" class="text-left list_else">
 	                    						<a class="move" href="${board.bno}">
-					                        		${board.title}
+					                        		<span>${board.title}</span>
+					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board.replyCnt>0?board.replyCnt:""}</span>
 					                        	</a>
 	                    					</td>
 					                        <td style="width: 15%;" class="text-left list_else list_grade"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
@@ -63,11 +65,7 @@
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>
-		            		<sec:authorize access="isAuthenticated()">
-			            		<div class="py-2 d-flex justify-content-end">
-				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
-			            		</div>
-		            		</sec:authorize>
+		            		
 							<ul class="pagination justify-content-center">
 								
 								<c:choose>
@@ -100,6 +98,56 @@
 		            
 		            <div class="right_area col-lg-1 ">
 	           	 	</div>
+	           	 	
+	           	 	<!-- =================================================================================================  -->
+	            	<!-- start 모달 -->
+	            	<!-- =================================================================================================  -->
+					<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="searchModalLabel">검색</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <form id='searchForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
+					          <div class="form-group">
+					            <select name="type" class="custom-select mb-3">
+							      <option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+									<option value="T"
+										<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+									<option value="C"
+										<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+									<option value="W"
+										<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+									<option value="TC"
+										<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 + 내용</option>
+									<option value="TW"
+										<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 + 작성자</option>
+									<option value="TWC"
+										<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 + 내용 + 작성자</option>
+							    </select>
+					          </div>
+					          <div class="form-group">
+					            <input type='text' class="form-control" name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
+					            <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' />
+					            <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
+					          </div>
+					        </form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" id="searchFormBtn" class="btn btn-primary">검색</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+	            	<!-- =================================================================================================  -->
+	            	<!-- end 모달 -->
+	            	<!-- =================================================================================================  -->
 	           	 	
 	           	 	<!--배너 
 	           	 	<div class="floatdiv floatdiv_right">
@@ -142,6 +190,38 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
+
+	
+	<!-- =================================================================================================  -->
+   	<!-- start 모달 -->
+   	<!-- =================================================================================================  -->
+   	<script type="text/javascript">
+   	$(document).ready(function(){
+   		$('#searchFormBtn').on("click", function(e){
+   			
+   			var searchForm = $("#searchForm");
+   			
+   			if (!searchForm.find("option:selected").val()) {
+				swa("error","검색종류를 선택하세요");
+				return false;
+			}
+
+			if (!searchForm.find("input[name='keyword']").val()) {
+				swa("error","키워드를 입력하세요");
+				return false;
+			}
+
+			searchForm.find("input[name='pageNum']").val("1");
+			e.preventDefault();
+
+			searchForm.submit();
+		});
+   	});
+   	</script>
+	<!-- =================================================================================================  -->
+   	<!-- end 모달 -->
+   	<!-- =================================================================================================  -->
+	
 	<!-- =================================================================================================  -->
     <!-- start list 페이지 이동 -->
     <!-- =================================================================================================  -->
