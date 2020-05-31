@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musicpan.mapper.ReplyMapper">
+
+	
+	<insert id="insert" parameterType="com.musicpan.domain.ReplyVO" useGeneratedKeys="true" keyProperty="ref">
+		INSERT INTO
+			reply_${b_name}
+			(
+				reply
+				, regdate
+				, updatedate
+				, ref
+				, reply_step
+				, bno
+				, id
+			)
+		VALUES
+			(
+				#{reply}
+				, now()
+				, now()
+				, 0
+				, 0
+				, #{bno}
+				, #{id}
+			)
+	</insert>
+	
+	<insert id="insertRe">
+		INSERT INTO
+			reply_${b_name}
+			(
+				reply
+				, regdate
+				, updatedate
+				, ref
+				, reply_step
+				, bno
+				, id
+			)
+		VALUES
+			(
+				#{reply}
+				, now()
+				, now()
+				, #{ref}
+				, #{reply_step}
+				, #{bno}
+				, #{id}
+			)
+	</insert>
+	
+	<select id="read" resultType="com.musicpan.domain.ReplyVO">
+		SELECT
+			*
+		FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</select>
+	
+	<select id="getMaxStep" resultType="int">
+		SELECT
+			max(reply_step)
+		FROM
+			reply_${b_name}
+		WHERE
+			ref = #{ref}
+	</select>
+	
+	<select id="getRef" resultType="int">
+		SELECT
+			ref
+		FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</select>
+	
+	
+	<delete id="delete">
+		DELETE FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</delete>
+	
+	
+	<update id="update">
+		UPDATE
+			reply_${b_name}
+		SET
+			reply = #{reply}
+			, updatedate = now()
+		WHERE
+			rno = #{rno}
+	</update>
+	
+	<update id="updateRef">
+		UPDATE
+			reply_${b_name}
+		SET
+			ref = #{ref}
+		WHERE
+			rno = #{ref}
+	</update>
+	
+	<update id="deleteFlag">
+		UPDATE
+			reply_${b_name}
+		SET
+			del_flag = 1
+		WHERE
+			rno = #{rno}
+	</update>
+	
+	<update id="deleteFlag2">
+		UPDATE
+			reply_${b_name}
+		SET
+			del_flag = -1
+		WHERE
+			rno = #{rno}
+	</update>
+	
+	
+	<select id="getListWithPaging" resultType="com.musicpan.domain.ReplyVO">
+	<![CDATA[
+		SELECT
+			r.rno
+			,r.reply
+			,r.regdate
+			,r.updatedate
+			,r.ref
+			,r.reply_step
+			,r.del_flag
+			,r.bno
+			,r.id
+			,m.grade
+			,m.name
+		FROM
+			reply_${cri.b_name} r INNER JOIN member m
+			ON r.id = m.id
+		WHERE
+			r.bno = #{bno} AND r.del_flag < 1
+		ORDER BY
+			r.ref asc, r.reply_step asc
+		LIMIT
+			#{cri.limitNum}, #{cri.amount}
+	]]>
+	</select>
+	
+	
+	<select id="getCountByBno" resultType="int">
+	<![CDATA[
+		SELECT
+			count(rno)
+		FROM
+			reply_${b_name}
+		WHERE
+			bno = #{bno} AND del_flag < 1
+	]]>
+	</select>
+</mapper>

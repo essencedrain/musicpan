@@ -19,7 +19,9 @@ public class BoardVO {
 	private String id;
 	private String name;
 	private int grade;
-
-	//private int replyCnt;
+	
+	
+	private String modiDate;
+	private int replyCnt;
 	//private List<BoardAttachVO> attachList;
 }

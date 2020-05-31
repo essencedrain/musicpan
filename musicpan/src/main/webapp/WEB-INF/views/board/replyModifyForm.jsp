@@ -6,7 +6,6 @@
 
 <%@include file="../includes/header.jsp"%>
 
-<script src="/resources/ckeditor/ckeditor.js"></script>
             <!-- =================================================================================================  -->
             <!-- start  -->
             <!-- =================================================================================================  -->
@@ -19,32 +18,28 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		            		<h3 class="board_heading"><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판</a></h3>
+		            		<h3 class="board_heading"><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판 [댓글수정]</a></h3>
 		                </div>
-		                <form action="/board/update" method="post">
-			                <div class="form-group">
-	                   			<input type="text" class="form-control" id="title" name="title" value="${board.title}"/>
-	                		</div>
+		                <form action="/board/replyPro" method="post">
 	                		
-	                		<!-- 
 	                		<div class="form-group">
-							  <textarea class="form-control" rows="10" id="content" placeholder="내용을 입력해주세요."></textarea>
+							  <textarea id="replyModifyTextarea" class="form-control" rows="5" name="reply">${reply}</textarea>
 							</div>
-							 -->
-							<textarea class="form-control" id="ck_content" name="content">${board.content}</textarea>
-							
 
 
 	                		<div class="text-right mt-2">
-				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="location.href='/board/${cri.b_name}/content/${board.bno}'">돌아가기</button>
-				                <button type="submit" class="btn btn-primary text-center mx-1">등록</button>
+				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="location.href='/board/${cri.b_name}/content/${cri.bno}'">돌아가기</button>
+				                <button type="submit" id="replyModifySubmitBtn" class="btn btn-primary text-center mx-1">등록</button>
 			                </div>
-			                
-			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			                <input type='hidden' name='pageNum' value='${cri.pageNum}'>
 			                <input type="hidden" name="id" value='<sec:authentication property="principal.username"/>' />
 			                <input type="hidden" name="b_name" value="${cri.b_name}" />
-			                <input type="hidden" name="bno" value="${board.bno}" />
-			                
+			                <input type="hidden" name="bno" value="${cri.bno}" />
+			                <input type="hidden" name="rno" value="${rno}" />
+			                <input type="hidden" name="replyPage" value="${replyPage}" />
+							<input type='hidden' name='keyword' value='${cri.keyword}'>
+							<input type='hidden' name='type' value='${cri.type}'>  
+			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		                </form>
 		            </div>
 		            
@@ -79,11 +74,20 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-<script type="text/javascript">
-CKEDITOR.replace('ck_content', {
-				height: 500
-				});
-</script>
+
+	<!-- =================================================================================================  -->
+	<!-- 수정처리 -->
+    <!-- =================================================================================================  -->
+    <script>
+    $(document).ready(function(){
+	    
+    });
+    </script>
+	<!-- =================================================================================================  -->
+	<!-- 수정처리 -->
+    <!-- =================================================================================================  -->
+    
+    
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->

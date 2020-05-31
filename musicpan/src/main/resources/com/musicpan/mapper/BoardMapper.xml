@@ -4,18 +4,45 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicpan.mapper.BoardMapper">
 
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							b.title like CONCAT('%',#{keyword},'%')
+						</when>
+						<when test="type == 'C'.toString()">
+							b.content like CONCAT('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							m.name like CONCAT('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	
 	<select id="getListWithPaging" resultType="com.musicpan.domain.BoardVO">
-		SELECT b.bno, b.title, b.regdate, b.hit, b.id, m.name, m.grade
+		SELECT b.bno, b.title, b.regdate, b.hit, b.id, m.name, m.grade, b.replycnt
 		from board_${b_name} b INNER JOIN member m
 			ON b.id=m.id
-		where b.del_flag = 0
+		where 
+		<include refid="criteria"></include>
+		b.del_flag = 0 
 		order BY b.bno desc
 		LIMIT #{limitNum}, #{amount}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
-		select count(*) from board_${b_name}
+		select count(*)
+		from board_${b_name} b INNER JOIN member m
+			ON b.id=m.id
+		where
+		<include refid="criteria"></include>
+		del_flag = 0
 	</select>
 	
 	<select id="read" resultType="com.musicpan.domain.BoardVO">
@@ -64,4 +91,11 @@
 			bno = #{bno}
 	</update>
 	
+	<update id="updateReplyCnt">
+    	update board_${b_name}
+    	set
+    		replycnt = replycnt + #{amount}
+    	where
+    		bno = #{bno}
+	</update> 
 </mapper>

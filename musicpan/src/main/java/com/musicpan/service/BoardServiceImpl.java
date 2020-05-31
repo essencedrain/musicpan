@@ -1,5 +1,7 @@
 package com.musicpan.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,15 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
-		return mapper.getListWithPaging(cri);
+		
+		List<BoardVO> resultList = mapper.getListWithPaging(cri);
+		
+		for(BoardVO temp : resultList) {
+			temp.setModiDate( convertDate(temp) );
+		}
+		
+		
+		return resultList;
 	}
 
 
@@ -69,4 +79,51 @@ public class BoardServiceImpl implements BoardService{
 		return deleteResult;
 	}
 
+	
+	
+	
+	//===============================================================
+	// 시간 변환 
+	//===============================================================
+	private String convertDate(BoardVO temp) {
+		
+		long mTime = temp.getRegdate().getTime();
+		Date today = new Date();
+		
+		long gap = today.getTime() - mTime;
+		Date dateObj = new Date(mTime);
+		
+		
+		Calendar cal = Calendar.getInstance();
+	    cal.setTime(dateObj);
+		
+	    long monLong = 1000L*60L*60L*24L*30L;
+		long dayLong = 1000L*60L*60L*24L;
+		long hourLong = 1000L*60L*60L;
+		long minuteLong = 1000L*60L;
+	    
+		
+		if(gap < dayLong){
+
+            if(gap < (minuteLong)){
+                return (int) Math.floor(gap/1000L) +" 초 전";
+            }else if(gap < (hourLong)){
+                return (int) Math.floor(gap/60000L) +" 분 전";
+            }else{
+                return (int) Math.floor(gap/3600000L) +" 시간 전";
+            }
+            
+        }else{
+            int yy = cal.get(Calendar.YEAR);
+            int mm = cal.get(Calendar.MONTH)+1;
+            int dd = cal.get(Calendar.DATE);
+
+            if(gap < monLong){
+                return (int) Math.floor(gap/86400000L) + " 일 전";
+            }else {
+            	return yy+"."+ ((mm > 9 ? "" : "0") + mm) + "."+ ((dd > 9 ? "":"0") + dd);
+            }
+        }
+	}
+	//===============================================================
 }//class

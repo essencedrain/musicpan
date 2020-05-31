@@ -259,6 +259,10 @@ a.article:hover {
     color: #999;
     vertical-align: middle;
 }
+.table_gtx .list_replyCnt{
+    color: #3493ff;
+    font-weight: 100;
+}
 
 .table_gtx .list_else{
 	font-size:14px;
@@ -288,8 +292,8 @@ a.article:hover {
   	border-top: 2px solid rgb(46, 67, 97);
 }
 .content_area .hr2{
-	margin-top: 1rem;
-  	margin-bottom: 1rem;
+	margin-top: 0rem;
+  	margin-bottom: 0.8rem;
   	border: 0;
   	border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -297,6 +301,9 @@ a.article:hover {
 	font-size:20px;
 	line-height: 28px;
 	font-weight: 700;
+}
+.content_area .content_heading a{
+	color: #000; !important;
 }
 
 .content_area .table td{
@@ -318,4 +325,86 @@ a.article:hover {
 	font-size:12px;
 	line-height: 18px;
 	color: #999;
+}
+/* ---------------------------------------------------
+    REPLY STYLE
+----------------------------------------------------- */
+.reply_area .reply_textarea{
+	resize: none;
+	overflow: hidden;
+	overflow-wrap: break-word;
+	height:58px;
+}
+.reply_area .card_area .card{
+	border: none;
+}
+.reply_area .card_area .card_bg{
+	background-color: #f1f7ff;
+}
+.reply_area .card_area .card-header img{
+	vertical-align:middle;
+	margin-bottom: 3px;
+	margin-right: 5px;
+}
+.reply_area .card_area .card-text{
+	font-size:14px; 
+	line-height: 21px; 
+	font-weight: 500;
+}
+.reply_area .card_area .card-header .card-user-time{
+	font-size: 12px;
+	line-height: 18px;
+    font-weight: 500;
+    color: #999;
+    vertical-align: middle;
+    margin-top: 1px;
+}
+.card-body-under{
+	font-size:14px;
+	line-height: 21px; 
+	font-weight: 500;
+	color: #999; !important;
+}
+.card-body-under .span_class{
+	margin-right: 10px;
+	display: inline-block;
+}
+.card-body-under .span_class2{
+	margin-right: 5px;
+	display: inline-block;
+}
+.card-body-under .span_class3{
+	margin-right: 5px;
+	display: inline-block;
+	color: #999; !important;
+}
+.card-body-under .span_class4{
+	margin-right: 10px;
+	display: inline-block;
+}
+.reply_area .hr2{
+	margin-top: 2rem;
+  	margin-bottom: 0.8rem;
+  	border: 0;
+  	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.reply_area .dropdown-menu{
+	width: 70px; !important;
+    height: 141px; !important;
+    min-width: 50px;!important;
+    max-width: 70px;!important;
+
+}
+.reply_area .dropdown-menu .dropdown-item{
+	width: 50px; !important;
+	cursor: pointer;
+}
+.reply_area .dropdown-menu a{
+    font-size:14px;
+	line-height: 21px; 
+	font-weight: 500;
+	color: #000; !important;
+}
+.reply_area .dropdown-menu .i_size{
+	width: 15.75px; !important;
 }
