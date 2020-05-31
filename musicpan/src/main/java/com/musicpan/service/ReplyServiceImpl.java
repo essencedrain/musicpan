@@ -51,7 +51,7 @@ public class ReplyServiceImpl implements ReplyService {
 		vo.setB_name(b_name);
 		
 		int ref = mapper.getRef(vo);
-		
+		vo.setRef(ref);
 		if(rno==ref) {
 			if(mapper.getMaxStep(vo) > 0) {
 				//-1로 수정

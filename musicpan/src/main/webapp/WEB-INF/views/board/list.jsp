@@ -72,10 +72,10 @@
 								
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
-										<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">이전</a></li>
+										<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">&lt;</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+										<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
 									</c:otherwise>
 								</c:choose>
 								
@@ -87,10 +87,10 @@
 								
 								<c:choose>
 									<c:when test="${pageMaker.next}">
-										<li class="page-item"><a class="page-link" href="${pageMaker.endPage+1}">다음</a></li>
+										<li class="page-item"><a class="page-link" href="${pageMaker.endPage+1}">&gt;</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+										<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
 									</c:otherwise>
 								</c:choose>
 							</ul>

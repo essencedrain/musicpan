@@ -131,7 +131,7 @@ var replyService = (function(){
 
     function addRe(reply, b_name, callback, error){
         //console.log("add Re_reply............");
-        console.log("reply.js addRe : "+reply+"//"+b_name);
+        //console.log("reply.js addRe : "+reply+"//"+b_name);
         $.ajax({
             type: "post",
             url: "/replies/"+b_name+"/re",

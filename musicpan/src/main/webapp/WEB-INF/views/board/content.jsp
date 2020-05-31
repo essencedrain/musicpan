@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp"%>
-    
+
  <!-- =================================================================================================  -->
  <!-- start  -->
  <!-- =================================================================================================  -->
@@ -133,10 +133,10 @@
 								
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
-										<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">이전</a></li>
+										<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">&lt;</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+										<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
 									</c:otherwise>
 								</c:choose>
 								
@@ -148,10 +148,10 @@
 								
 								<c:choose>
 									<c:when test="${pageMaker.next}">
-										<li class="page-item"><a class="page-link" href="${pageMaker.endPage+1}">다음</a></li>
+										<li class="page-item"><a class="page-link" href="${pageMaker.endPage+1}">&gt;</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+										<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
 									</c:otherwise>
 								</c:choose>
 							</ul>
@@ -202,13 +202,14 @@
 	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
 </form>
 <form id='replyForm' action="/board/reply" method="post">
-  <input type='hidden' id='bno' name='bno' value='${board.bno}'>
+  <input type='hidden' name='bno' value='${board.bno}'>
+  <input type='hidden' name='rno' value="">
   <input type='hidden' name='pageNum' value='${cri.pageNum}'>
   <input type='hidden' name='keyword' value='${cri.keyword}'>
-  <input type='hidden' name='type' value='${cri.type}'>  
+  <input type='hidden' name='type' value='${cri.type}'>
   <input type='hidden' name='b_name' value='${cri.b_name}'>
-  <input type='hidden' name='id' value="">
   <input type='hidden' name='reply' value="">
+  <input type='hidden' name='replyPage' value="">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <!-- =================================================================================================  -->
@@ -244,7 +245,16 @@
     	
 	
     	//리스트 갱신/보여주기 showList()
-    	showList(1, bnoValue, b_name, 0, 0);
+		<c:choose>
+			<c:when test="${replyUpdateFlag!=null}">
+				//댓글 수정하고 왔을 경우 그 댓글 위치로 보냄(자동스크롤링)
+				showList(${replyUpdate_page}, bnoValue, b_name, 3, ${replyUpdate_rno});
+			</c:when>
+			<c:otherwise>
+				showList(1, bnoValue, b_name, 0, 0);
+			</c:otherwise>
+		</c:choose>
+    	
     	
     	
     	
@@ -269,11 +279,11 @@
     	
     	$('.reply_page').on("click","li a", function(e){
             e.preventDefault();
-            console.log("page click");
+            //console.log("page click");
             
             var targetPageNum = $(this).attr("href");
             
-            console.log("targetPageNum: " + targetPageNum);
+            //console.log("targetPageNum: " + targetPageNum);
             
             pageNum = targetPageNum;
             
@@ -429,9 +439,9 @@
 	        	if(list[i].rno==rnoReply){scrollReply=list[i].rno}
 	        	
 	        	if(list[i].reply_step > 0 ){
-	        		str += '<div class="card mb-2 ml-5" id="spy_'+list[i].rno+'">';//대댓글
+	        		str += '<div class="card mb-2 ml-5" id="spy_'+list[i].rno+'" data-page="'+page+'">';//대댓글
 	        	}else{
-		            str += '<div class="card mb-2" id="spy_'+list[i].rno+'">';//일반 댓글
+		            str += '<div class="card mb-2" id="spy_'+list[i].rno+'" data-page="'+page+'">';//일반 댓글
 	        	}	
 					if(authId==list[i].id){
 						str += '<div class="card-header card_bg py-1 pl-3">';
@@ -489,13 +499,13 @@
 	        
 	        if(scrollFlag==1){//최상단
 		        var position = $("#spy_"+scroll1st).offset();
-		        $('html, body').animate({scrollTop : position.top}, 500);
+		        $('html, body').animate({scrollTop : position.top-150}, 500);
 	        }else if(scrollFlag==2){//최하단
 	        	var position = $("#spy_"+scrollLast).offset();
-		        $('html, body').animate({scrollTop : position.top}, 500);
-	        }else if(scrollFlag==3){//대댓글
+		        $('html, body').animate({scrollTop : position.top-150}, 500);
+	        }else if(scrollFlag==3){//댓글 찾아가기
 	        	var position = $("#spy_"+scrollReply).offset();
-		        $('html, body').animate({scrollTop : position.top}, 500);
+		        $('html, body').animate({scrollTop : position.top-150}, 500);
 	        }
 	    });//getList
 	}//showList
@@ -527,7 +537,8 @@
 	      var str = "<ul class='pagination justify-content-center'>";
 	      
 	      if(prev){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>이전</a></li>";
+	        str+= "<li class='page-item'><a class='page-link' href='1'>&lt;&lt;</a></li>";//처음
+	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>&lt;</a></li>";//이전
 	      }//if
 	      
 	       
@@ -540,7 +551,8 @@
 	      }//for
 	      
 	      if(next){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>다음</a></li>";
+	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>&gt;</a></li>";//다음
+	        str+= "<li class='page-item'><a class='page-link' href='"+(Math.ceil(replyCnt/50.0))+"'>&gt;&gt;</a></li>";//마지막
 	      }//if
 	      
 	      str += "</ul></div>";
@@ -692,7 +704,9 @@
 			}).then((result) => {
 			  if (result.value) {
 			    //수정처리시작
-			    console.log($('#reply_'+rno).html());
+			    $("#replyForm").find("input[name='rno']").val( rno );
+			    $("#replyForm").find("input[name='reply']").val( $('#reply_'+rno).text() );
+			    $("#replyForm").find("input[name='replyPage']").val( $('#spy_'+rno).data('page') );
 			    $("#replyForm").submit();
 			  }//if
 			});
@@ -727,6 +741,7 @@
 						console.log(count);
 						if(count==="success"){
 							swa("success",'삭제되었습니다.');
+							showList(1, ${board.bno}, '${cri.b_name}', 0, 0);
 						}
 					}, function(err){
 						swa("error",'에러 발생');

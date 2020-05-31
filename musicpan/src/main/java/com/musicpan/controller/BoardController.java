@@ -1,5 +1,6 @@
 package com.musicpan.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
 import com.musicpan.domain.PageDTO;
+import com.musicpan.domain.ReplyVO;
 import com.musicpan.service.BoardService;
+import com.musicpan.service.ReplyService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -23,8 +27,12 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/board/")
 @AllArgsConstructor
 public class BoardController {
-		
+	
+	@Autowired
 	private BoardService service;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	//============================================================================================================================================================
 	/*
@@ -39,7 +47,8 @@ public class BoardController {
 	 	p000		글쓰기		POST	/board/register						boardVO												principal.username == #boardVO.id
 	 	p001		수정하기	POST	/board/update						boardVO			modifyForm							principal.username == #boardVO.id
 	 	p002		삭제하기	POST	/board/delete						boardVO			content								principal.username == #boardVO.id
-	 	p003		댓글수정	POST	/board/reply						boardVO			content								principal.username == #boardVO.id
+	 	p003		댓글수정폼	POST	/board/reply						cri,rno...		content								
+	 	p004		댓글수정처리POST	/board/replyPro						cri,rno...		content								
 	 */
 	//============================================================================================================================================================
 	
@@ -271,7 +280,78 @@ public class BoardController {
 	
 	
 	
+	//=========================================================================================
+	// p003
+	// 기능		:	댓글 수정 폼 보여주기
+	// 메서드	:	POST
+	// URI		: 	/board/reply
+	//=========================================================================================
+	@PostMapping("/reply")
+	@PreAuthorize("isAuthenticated()")
+	public String replyModifyForm(
+			Model model
+			, @ModelAttribute("cri") Criteria cri
+			,@RequestParam("rno") String rno
+			,@RequestParam("replyPage") String replyPage
+			,@RequestParam("reply") String reply) throws Exception{
+		
+		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
+		cri.setB_name2(makeKorean(cri.getB_name())); // 한글 게시판명 생성
+		
+		model.addAttribute("rno", rno);
+		model.addAttribute("reply", reply);
+		model.addAttribute("replyPage", replyPage);
+		
+		//log.info("////////////////////////////////////////////////////test1 : "+cri.toString());
+		//log.info("////////////////////////////////////////////////////test2 : "+rno);
+		//log.info("////////////////////////////////////////////////////test3 : "+reply);
+		//log.info("////////////////////////////////////////////////////test3 : "+replyPage);
+		
+		return "board/replyModifyForm";
+	}
+	//=========================================================================================
 	
+	
+	
+	//=========================================================================================
+	// p004
+	// 기능		:	댓글 수정처리
+	// 메서드	:	POST
+	// URI		: 	/board/replyPro
+	//=========================================================================================
+	@PostMapping("/replyPro")
+	public String replyPro(
+			Model model
+			, @ModelAttribute("cri") Criteria cri
+			,@RequestParam("rno") String rno
+			,@RequestParam("replyPage") String replyPage
+			,@RequestParam("reply") String reply
+			,RedirectAttributes rttr
+			) throws Exception{
+		
+		//log.info("////////////////////////////////////////////////////test1 : "+cri.toString());
+		//log.info("////////////////////////////////////////////////////test2 : "+rno);
+		//log.info("////////////////////////////////////////////////////test3 : "+reply);
+		//log.info("////////////////////////////////////////////////////test3 : "+replyPage);
+		
+		// sqlinjection 대응
+		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
+		cri.setB_name2(makeKorean(cri.getB_name())); // 한글 게시판명 생성
+		
+		ReplyVO vo = new ReplyVO();
+		
+		vo.setRno(Long.parseLong(rno));
+		vo.setB_name(cri.getB_name());
+		vo.setReply(reply);
+		replyService.modify(vo);
+		
+		//수정한 댓글로 자동 스크롤링 하도록
+		rttr.addFlashAttribute("replyUpdateFlag", 1);
+		rttr.addFlashAttribute("replyUpdate_rno", rno);
+		rttr.addFlashAttribute("replyUpdate_page", replyPage);
+		return "redirect:/board/"+cri.getB_name()+"/content/"+cri.getBno();
+	}
+	//=========================================================================================	
 	
 	
 	//=========================================================================================
