@@ -119,7 +119,7 @@
 		                    				<td class = 'list_rowNum td_pc ${board.bno==board2.bno?"text-primary":""}' style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
 	                    					<td style="width: 65%;" class="text-left list_else td_pc ${board.bno==board2.bno?"text-primary":"text-secondary" }">
 	                    						<a class="move" href="${board2.bno}">
-					                        		<span>${board2.title}</span>
+					                        		<span class="main_title">${board2.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
 					                        	</a>
 	                    					</td>
@@ -361,24 +361,32 @@
     	
     	reply_registerBtn.on("click", function(e){
     		
+    		var oriStr = $('#reply_textarea').val();
+    		console.log(oriStr.length);
     		//유효성 체크
-    		if($.trim($('#reply_textarea').val()) =="" || $.trim($('#reply_textarea').val()).length ==0){
+    		if($.trim(oriStr) =="" || $.trim(oriStr).length ==0){
     			swa("error","댓글 내용을 작성해주세요");
     			return;
     		}
     		
-    		//쿠키 체크
+    		//쿠키 체크, 댓글은 1분에 1개
 			if(getCookie('mplrck'+b_name+bnoValue)!=null){
 				swa("error","한 게시물에 댓글은 1분에 1개만 작성가능합니다");
 				return;
 			}
     		
+    		//댓글내용에 html 제거
+    		oriStr = oriStr.replace(/(<([^>]+)>)/ig,"");
     		
+    		if(oriStr.length > 1500){
+    			swa("error","댓글은 1500자까지 입력가능합니다 (현재 : "+oriStr.length+"자)");
+				return;
+    		}
     		
     		//json생성
     		//줄바꿈 <br>변환
     		var reply = {
-    				reply : $('#reply_textarea').val().replace(/(?:\r\n|\r|\n)/g, '<br />')
+    				reply : oriStr.replace(/(?:\r\n|\r|\n)/g, '<br />')
     				,id : replyer
     				,bno : bnoValue
    			};
@@ -751,7 +759,6 @@
     function registerReReply(rno, item){
     	var bnoValue2 = '<c:out value="${board.bno}"/>';
 	    var b_name2 = '${cri.b_name}';
-	    var replyTemp2 = $('#subReply_textarea').val();
 	    
 	    var subReply = $(item).parent().parent()
 	    var rnoReply = subReply.data('rno');
@@ -760,6 +767,28 @@
 	    //console.log("이거2 :"+subReply.data('page'));
 	    //console.log("이거3 :"+subReply.data('rno'));
 	    
+	    var oriStr = $('#subReply_textarea').val();
+	    
+	  	//유효성 체크
+		if($.trim(oriStr) =="" || $.trim(oriStr).length ==0){
+			swa("error","댓글 내용을 작성해주세요");
+			return;
+		}
+		
+		//쿠키 체크, 댓글은 1분에 1개
+		if(getCookie('mplrck'+b_name2+bnoValue2)!=null){
+			swa("error","한 게시물에 댓글은 1분에 1개만 작성가능합니다");
+			return;
+		}
+	    
+	  	//댓글내용에 html 제거
+		oriStr = oriStr.replace(/(<([^>]+)>)/ig,"");
+		
+		if(oriStr.length > 1500){
+			swa("error","댓글은 1500자까지 입력가능합니다 (현재 : "+oriStr.length+"자)");
+			return;
+		}
+		
 	    var replyer2 = "";
 	    <sec:authorize access="isAuthenticated()">
 	    	replyer2 = '<sec:authentication property="principal.username"/>';   
@@ -768,7 +797,7 @@
     	//console.log(bnoValue2 + " // " + b_name2 + " // " + replyer2 + "//" + rno);
     	
    		var reply2 = {
-   				reply : replyTemp2
+   				reply : oriStr.replace(/(?:\r\n|\r|\n)/g, '<br />')
    				,id : replyer2
    				,bno : bnoValue2
    				,rno : rno
@@ -877,7 +906,7 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     //모바일
-    	console.log(window.innerWidth);
+    	//console.log(window.innerWidth);
     
 	    if(window.innerWidth<768){
 	    	

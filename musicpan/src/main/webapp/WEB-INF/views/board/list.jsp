@@ -286,7 +286,7 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
     //모바일
-    	console.log(window.innerWidth);
+    	//console.log(window.innerWidth);
     
 	    if(window.innerWidth<768){
 	    	
