@@ -287,13 +287,15 @@ public class BoardController {
 	// URI		: 	/board/reply
 	//=========================================================================================
 	@PostMapping("/reply")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("principal.username == #id")
 	public String replyModifyForm(
 			Model model
 			, @ModelAttribute("cri") Criteria cri
 			,@RequestParam("rno") String rno
 			,@RequestParam("replyPage") String replyPage
-			,@RequestParam("reply") String reply) throws Exception{
+			,@RequestParam("reply") String reply
+			,@RequestParam("id") String id
+			) throws Exception{
 		
 		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
 		cri.setB_name2(makeKorean(cri.getB_name())); // 한글 게시판명 생성
@@ -320,12 +322,14 @@ public class BoardController {
 	// URI		: 	/board/replyPro
 	//=========================================================================================
 	@PostMapping("/replyPro")
+	@PreAuthorize("principal.username == #id")
 	public String replyPro(
 			Model model
 			, @ModelAttribute("cri") Criteria cri
 			,@RequestParam("rno") String rno
 			,@RequestParam("replyPage") String replyPage
 			,@RequestParam("reply") String reply
+			,@RequestParam("id") String id
 			,RedirectAttributes rttr
 			) throws Exception{
 		

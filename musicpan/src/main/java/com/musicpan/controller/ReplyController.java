@@ -3,6 +3,7 @@ package com.musicpan.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ import lombok.extern.log4j.Log4j;
  	----------------------------------------------------------------------------------------------------------------------------------------------------------
  	000			등록		POST	/replies/:b_name/new
  	001			조회		GET		/replies/:b_name/:rno
- 	002			삭제		DELETE	/replies/:b_name/:rno
+ 	002			삭제		DELETE	/replies/:b_name/:rno/:id
  	003			수정		PUT		/replies/:b_name/:rno
  	004			페이지		GET		/replies/pages/:b_name/:bno/:page
  	005			대댓글등록	POST	/replies/:b_name/re
@@ -51,6 +52,7 @@ public class ReplyController {
 	//====================================================================================================
 	// 000	등록	POST	/replies/:b_name/new
 	//====================================================================================================
+	@PreAuthorize("principal.username == #vo.id")
 	@PostMapping(value = "/{b_name}/new"
 			,consumes = "application/json"
 			,produces = { MediaType.TEXT_PLAIN_VALUE }
@@ -75,6 +77,7 @@ public class ReplyController {
 	//====================================================================================================
 	// 005	대댓글등록	POST	/replies/:b_name/re
 	//====================================================================================================
+	@PreAuthorize("principal.username == #vo.id")
 	@PostMapping(value = "/{b_name}/re"
 			,consumes = "application/json"
 			,produces = { MediaType.TEXT_PLAIN_VALUE }
@@ -137,10 +140,11 @@ public class ReplyController {
 	
 	
 	//====================================================================================================
-	// 002	삭제	DELETE	/replies/:b_name/:rno
+	// 002	삭제	DELETE	/replies/:b_name/:rno/:id
 	//====================================================================================================
-	@DeleteMapping(value = "/{b_name}/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("b_name") String b_name, @PathVariable("rno") Long rno){
+	@PreAuthorize("principal.username == #id")
+	@DeleteMapping(value = "/{b_name}/{rno}/{id}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("b_name") String b_name, @PathVariable("rno") Long rno, @PathVariable("id") String id){
 		
 		return service.remove(rno, b_name) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
@@ -153,6 +157,7 @@ public class ReplyController {
 	//====================================================================================================
 	// 003	수정	PUT	/replies/:b_name/:rno
 	//====================================================================================================
+	@PreAuthorize("principal.username == #vo.id")
 	@RequestMapping(value = "/{b_name}/{rno}"
 				,method = { RequestMethod.PUT, RequestMethod.PATCH }
 				,consumes = "application/json"

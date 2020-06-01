@@ -276,6 +276,7 @@
   <input type='hidden' name='b_name' value='${cri.b_name}'>
   <input type='hidden' name='reply' value="">
   <input type='hidden' name='replyPage' value="">
+  <input type='hidden' name='id' value="">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <!-- =================================================================================================  -->
@@ -541,6 +542,8 @@
 	        }//if
 
 	        for(var i =0, len=list.length || 0; i<len; i++){
+	        	
+	        	console.log(list[i].regdate + " // " + list[i].updatedate);
 	        	if(i==0){scroll1st=list[i].rno}
 	        	if(i+1==len){scrollLast=list[i].rno}
 	        	if(list[i].rno==rnoReply){scrollReply=list[i].rno}
@@ -564,6 +567,8 @@
 	            	str += '<div class="card-body pt-1 pb-1 pl-3 pr-1">';
 	            		if(list[i].del_flag == -1){
 	            			str += '<div class="card-text">[-- 삭제된 댓글입니다 --]</div>';	            			
+	            		}else if(list[i].regdate != list[i].updatedate){
+	            			str += '<div id="reply_'+list[i].rno+'" class="card-text"><span class="text-secondary">[-- 수정된 댓글 --]</span><br>'+ list[i].reply +'</div>';	
 	            		}else{
 	            			str += '<div id="reply_'+list[i].rno+'" class="card-text">'+ list[i].reply +'</div>';	
 	            		}
@@ -820,7 +825,11 @@
     function replyUpdateBtn(rno){
     	
 		var b_name = '${cri.b_name}';
-	    
+		 var replyer = "";
+	    <sec:authorize access="isAuthenticated()">
+    		replyer = '<sec:authentication property="principal.username"/>';   
+    	</sec:authorize>
+	    	
 	    Swal.fire({
 			  title: '댓글을 수정 하시겠습니까?',
 			  icon: 'info',
@@ -833,6 +842,7 @@
 			  if (result.value) {
 			    //수정처리시작
 			    $("#replyForm").find("input[name='rno']").val( rno );
+			    $("#replyForm").find("input[name='id']").val( replyer );
 			    $("#replyForm").find("input[name='reply']").val( $('#reply_'+rno).text() );
 			    $("#replyForm").find("input[name='replyPage']").val( $('#spy_'+rno).data('page') );
 			    $("#replyForm").submit();
@@ -853,6 +863,11 @@
     	
 	    var b_name = '${cri.b_name}';
 	    
+	    var replyer = "";
+	    <sec:authorize access="isAuthenticated()">
+    	replyer = '<sec:authentication property="principal.username"/>';   
+    	</sec:authorize>
+	    
 	    Swal.fire({
 			  title: '정말 삭제하시겠습니까?',
 			  text: "삭제된 댓글은 복구가 어렵습니다.",
@@ -865,8 +880,8 @@
 			}).then((result) => {
 			  if (result.value) {
 			    //삭제처리시작
-				  replyService.remove(rno, b_name, function(count){
-						console.log(count);
+				  replyService.remove(rno, b_name, replyer, function(count){
+						//console.log(count);
 						if(count==="success"){
 							swa("success",'삭제되었습니다.');
 							showList(1, ${board.bno}, '${cri.b_name}', 0, 0);

@@ -41,10 +41,10 @@ var replyService = (function(){
     }//getList
 
 
-    function remove(rno,b_name,callback,error) {
+    function remove(rno,b_name, id, callback,error) {
         $.ajax({
             type: "delete",
-            url: "/replies/"+b_name+"/"+rno,
+            url: "/replies/"+b_name+"/"+rno +"/" + id,
             success: function (deleteResult, status, xhr) {
                 if(callback){
                     callback(deleteResult);
