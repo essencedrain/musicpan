@@ -99,7 +99,7 @@
 		            		<sec:authorize access="isAuthenticated()">
 			            		<div class="py-2 d-flex justify-content-between">
 			            			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></button>
-				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
+				            		<button type="button" class="btn btn-outline-primary btn-sm text-center writeBtn">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
 		            		<table class="table table-sm table-hover table_gtx">
@@ -348,11 +348,19 @@
     	//댓글 등록
     	reply_registerBtn.on("click", function(e){
     		
+    		//유효성 체크
     		if($('#reply_textarea').val() =="" || $('#reply_textarea').val().length ==0){
     			swa("error","댓글 내용을 작성해주세요");
     			return;
     		}
     		
+    		//쿠키 체크
+			if(getCookie('mplrck'+b_name+bnoValue)!=null){
+				swa("error","한 게시물에 댓글은 1분에 1개만 작성가능합니다");
+				return;
+			}
+    		
+    		//json생성
     		var reply = {
     				reply : reply_textarea.val()
     				,id : replyer
@@ -362,6 +370,8 @@
     		
     		replyService.add(reply, b_name, function(result){
     			$('#reply_textarea').val('');
+    			//쿠키생성
+    			setCookie('mplrck'+b_name+bnoValue, 'yes', 60);
     			showList(-1, bnoValue, b_name, 2, 0);
    			});
     		
@@ -381,7 +391,18 @@
             
             showList(pageNum,bnoValue, b_name, 1, 0);
           });     
-    });
+    
+    	
+    	//글쓰기 1분에 한개 제한
+        $(".writeBtn").on("click", function(e){
+            e.preventDefault();
+            if( getCookie('mplwck'+b_name)!=null){
+            	swa("error","글은 1분에 1개만 작성가능합니다");
+    			return;
+            }//if
+            location.href='/board/register?b_name=${pageMaker.cri.b_name}';
+        });
+    });//$(document).ready(function(){
     </script>
 	<!-- =================================================================================================  -->
 	<!-- 댓글처리 -->
@@ -464,7 +485,13 @@
     <script type="text/javascript">
     function showList(page, bnoValue, b_name, scrollFlag, rnoReply){
 		
-    	
+    	/*
+    		page : 댓글 페이지
+    		bnoValue : 글번호
+    		b_name : 게시판 이름
+    		scrollFlag : 1=최상단, 2=최하단, 3=댓글위치로 찾아가기
+    		rnoReply : 댓글번호 (scrollFlag 3에 사용, 1,2는 안씀)
+    	*/
     	var authId = "";
     	<sec:authorize access="isAuthenticated()">
     		authId = "${pinfo.username}";
@@ -807,6 +834,26 @@
     </script>
     <!-- =================================================================================================  -->
     <!-- end 댓글 삭제버튼 클릭 펑션 -->
+    <!-- =================================================================================================  -->
+    
+    
+    <!-- =================================================================================================  -->
+    <!-- start 쿠키 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    function getCookie(name) {
+  	  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  	  return value? value[2] : null;
+  	}
+    
+    function setCookie(name, value, exp) {
+    	  var date = new Date();
+    	  date.setTime(date.getTime() + exp*1000);
+    	  document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+   	}
+    </script>
+    <!-- =================================================================================================  -->
+    <!-- end 쿠키 -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

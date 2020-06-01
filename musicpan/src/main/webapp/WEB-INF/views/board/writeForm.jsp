@@ -21,7 +21,7 @@
 		            	<div class="heading pb-4">
 		            		<h3 class="board_heading"><a href="/board/${b_name}/list">${b_name2} 게시판</a></h3>
 		                </div>
-		                <form action="/board/register" method="post">
+		                <form name="writeForm" action="/board/register" method="post" id="writeForm">
 			                <div class="form-group">
 	                   			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요."/>
 	                		</div>
@@ -37,7 +37,7 @@
 
 	                		<div class="text-right mt-2">
 				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="javascript:window.history.back();">돌아가기</button>
-				                <button type="submit" class="btn btn-primary text-center mx-1">등록</button>
+				                <button type="submit" id="writeFormSubmit" class="btn btn-primary text-center mx-1">등록</button>
 			                </div>
 			                
 			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -81,6 +81,19 @@
 CKEDITOR.replace('ck_content', {
 				height: 500
 				});
+
+$("#writeFormSubmit").on("click", function(e){
+    e.preventDefault();
+    setCookie("mplwck${b_name}","yes",60);
+    $("#writeForm").submit();
+});
+
+
+function setCookie(name, value, exp) {
+	  var date = new Date();
+	  date.setTime(date.getTime() + exp*1000);
+	  document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+}
 </script>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

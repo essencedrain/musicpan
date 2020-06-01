@@ -33,7 +33,7 @@
 		            		<sec:authorize access="isAuthenticated()">
 			            		<div class="py-2 d-flex justify-content-between">
 			            			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></button>
-				            		<button type="button" class="btn btn-outline-primary btn-sm text-center" onclick="location.href='/board/register?b_name=${pageMaker.cri.b_name}'">글쓰기</button>
+				            		<button type="button" class="btn btn-outline-primary btn-sm text-center writeBtn">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
 		            		<table class="table table-sm table-hover table_gtx">
@@ -179,7 +179,7 @@
 <form id='actionForm' action="/board/${pageMaker.cri.b_name}/list" method='get'>
 	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 	<!-- <input type='hidden' name='amount' value='${pageMaker.cri.amount}'> -->
-	<input type='hidden' name='b_name' value='${pageMaker.cri.b_name}'>
+	<input type='hidden' id="actionFormB_name" name='b_name' value='${pageMaker.cri.b_name}'>
 	<input type='hidden' name='type' value='${ pageMaker.cri.type }'>
 	<input type='hidden' name='keyword' value='${ pageMaker.cri.keyword }'>
 </form>
@@ -247,6 +247,31 @@
 	</script>
 	<!-- =================================================================================================  -->
     <!-- end list 페이지 이동 -->
+    <!-- =================================================================================================  -->
+    <!-- =================================================================================================  -->
+    <!-- start 쿠키 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    
+    $(".writeBtn").on("click", function(e){
+        e.preventDefault();
+        
+        if( getCookie('mplwck'+$('#actionFormB_name').val())!=null){
+        	swa("error","글은 1분에 1개만 작성가능합니다");
+			return;
+        }
+        
+        location.href='/board/register?b_name=${pageMaker.cri.b_name}';
+    });
+
+    
+    function getCookie(name) {
+  	  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  	  return value? value[2] : null;
+  	}
+    </script>
+    <!-- =================================================================================================  -->
+    <!-- end 쿠키 -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
