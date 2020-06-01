@@ -9,6 +9,22 @@ body {
     
 }
 
+/* ==========================scroll to top============================== */
+.back-to-top {
+    position: fixed !important;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+    z-index : 999 !important;
+}
+.back-to-top .btn-sm{
+	margin-bottom: 5px;
+}
+#back-to-top1 .back-to-top_i{
+	width: 14px;
+}
+/* ==========================scroll to top============================== */
+
 /*
 p {
     font-size: 1.1em;
@@ -328,6 +344,9 @@ a.article:hover {
 }
 .content_main_td{
 	min-height: 500px;
+}
+.content_area .content_content{
+	word-break: break-all;
 }
 .content_area .table .tdcolor_1 img{
 	vertical-align:middle;

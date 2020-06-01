@@ -43,7 +43,7 @@
 			            		</tr>
 			            		
 			            		<tr>
-			            			<td class="py-5">${board.content}</td>
+			            			<td class="py-5 content_content">${board.content}</td>
 			            		</tr>
 		            		</table>
 		            		<div class="float-right mt-2">
@@ -92,7 +92,7 @@
 						<!-- =================================================================================================  -->
 						<!-- start 목록  -->
 						<!-- =================================================================================================  -->
-						<div class="mt-5 pt-3 pb-3">
+						<div class="mt-5 pt-3 pb-3 spy_table">
 		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
 		            	<div class="mt-3">
@@ -146,7 +146,7 @@
                     			</tbody>
 		            		</table>
 							
-							<ul class="pagination justify-content-end">
+							<ul class="pagination justify-content-center">
 								<c:choose>
 									<c:when test="${pageMaker.prev}">
 										<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">&lt;</a></li>
@@ -231,8 +231,8 @@
 	            	<!-- =================================================================================================  -->
 	            	<!-- end 모달 -->
 	            	<!-- =================================================================================================  -->
-	            </div>
-            </div>
+	            </div><!-- row -->
+            </div><!-- container -->
             
 <!-- =================================================================================================  -->
 <!-- end  -->
@@ -543,7 +543,7 @@
 
 	        for(var i =0, len=list.length || 0; i<len; i++){
 	        	
-	        	console.log(list[i].regdate + " // " + list[i].updatedate);
+	        	//console.log(list[i].regdate + " // " + list[i].updatedate);
 	        	if(i==0){scroll1st=list[i].rno}
 	        	if(i+1==len){scrollLast=list[i].rno}
 	        	if(list[i].rno==rnoReply){scrollReply=list[i].rno}
@@ -945,6 +945,48 @@
 	</script>
 	<!-- =================================================================================================  -->
     <!-- end 모바일전환 / 타이틀 ellipsis -->
+	<!-- =================================================================================================  -->
+	
+	
+	<!-- =================================================================================================  -->
+    <!-- 스크롤 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	$('.back-to-top').fadeIn();
+    	
+   		// 최상단
+   		$('#back-to-top1').click(function () {
+   			$('body,html').animate({
+   				scrollTop: 0
+   			}, 500);
+   			return false;
+   		});
+   		
+   		// 댓글창
+   		$('#back-to-top2').click(function () {
+   			
+   			var position = $(".reply_area").offset();
+   			$('body,html').animate({
+   				scrollTop: position.top-20
+   			}, 500);
+   			return false;
+   		});
+   	
+   		// 목록창
+   		$('#back-to-top3').click(function () {
+   			
+   			var position = $(".spy_table").offset();
+   			$('body,html').animate({
+   				scrollTop: position.top
+   			}, 500);
+   			return false;
+   		});
+    });
+    </script>
+    <!-- =================================================================================================  -->
+	
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->

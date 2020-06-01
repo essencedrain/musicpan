@@ -1,6 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+
+<!-- scroll to top -->
+<div class="utilBtns back-to-top">
+	<div>
+		<a id="back-to-top1" href="#" class="btn btn-outline-dark btn-sm" role="button"><i class="fas fa-chevron-up back-to-top_i"></i></a>
+	</div>
+	<div>
+		<a id="back-to-top2" href="#" class="btn btn-outline-dark btn-sm" role="button"><i class="far fa-comment-dots"></i></a>
+	</div>
+	<div>
+		<a id="back-to-top3" href="#" class="btn btn-outline-dark btn-sm" role="button"><i class="fas fa-list-ul"></i></a>
+	</div>
+</div>
+<!-- scroll to top -->
+
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
@@ -121,9 +136,14 @@
             	e.preventDefault();
                 $("#logoutForm").submit();
             });
+            $('#logoutBtn2').on('click', function(e){
+            	e.preventDefault();
+                $("#logoutForm").submit();
+            });
         });
     </script>
     <!-- =================================================================================================  -->
+    
     
     
 <!-- =================================================================================================  -->

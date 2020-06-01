@@ -56,27 +56,17 @@
             </div>
 
             <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
+                <h3>킹봉아</h3>
+                <h3>이름지어줘</h3>
             </div>
 
             <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
+                <p>제작중</p>
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
+                    <a href="/">홈</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="/board/sample/list">샘플 게시판</a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
@@ -124,11 +114,18 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <span class="nav_heading"><a href="/">&nbsp;&nbsp;뮤직판</a></span>
+                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;뮤직판</a></span>
+                    <!-- 
                     <button class="btn btn-dark d-inline-block d-md-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
+ 					-->
+ 					<sec:authorize access="isAuthenticated()">
+                    	<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto" type="button" id="logoutBtn2"><i class="fas fa-sign-out-alt"></i></button>
+                    </sec:authorize>
+                    <sec:authorize access="isAnonymous()">
+	 					<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto" type="button" onclick="location.href='/customLogin';"><i class="fas fa-sign-in-alt"></i></button>
+                    </sec:authorize>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
