@@ -78,9 +78,9 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 <script type="text/javascript">
-CKEDITOR.replace('ck_content', {
-				height: 500
-				});
+//리사이징 제한
+CKEDITOR.config.resize_enabled = false
+CKEDITOR.replace('ck_content', {height: 500});
 
 $("#writeFormSubmit").on("click", function(e){
     e.preventDefault();
@@ -90,10 +90,24 @@ $("#writeFormSubmit").on("click", function(e){
     	return;
     }
     
-    if($.trim($('#ck_content').val())=="" || $.trim($('#ck_content').val()).length ==0){
+    if( $('#title').val().length > 100){
+    	swa("error", "제목이 너무 깁니다")
+    	return;
+    }
+    
+    var content = CKEDITOR.instances["ck_content"].getData();
+    var content_len = CKEDITOR.instances["ck_content"].getData().length;
+    
+    if( $.trim( content )=="" || $.trim( content ).length ==0){
     	swa("error", "내용을 입력해주세요")
     	return;
     }
+    
+    if( content_len > 21000 ){
+    	swa("error", "내용이 너무 깁니다")
+    	return;
+    }
+    
     //쿠키삽입
     setCookie("mplwck${b_name}","yes",60);
     $("#writeForm").submit();
