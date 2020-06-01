@@ -238,7 +238,24 @@ a.article:hover {
 /* ---------------------------------------------------
     BOARD STYLE
 ----------------------------------------------------- */
-.table_gtx tbody td, .table_gtx thead th {
+.table_gtx .mo_main{
+
+}
+.table_gtx .mo_sub{
+	font-size: 10px;
+	line-height: 15px;
+	color: #999;
+}
+.table_gtx .mo_sub img{
+	margin-bottom: 3px;
+}
+.table_gtx .td_mo{
+	font-size:14px;
+	line-height: 21px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+.table_gtx .td_pc {
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;

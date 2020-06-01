@@ -21,7 +21,7 @@
 		            	<div class="heading pb-4">
 		            		<h3 class="board_heading"><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판</a></h3>
 		                </div>
-		                <form action="/board/update" method="post">
+		                <form action="/board/update" method="post" id="writeForm">
 			                <div class="form-group">
 	                   			<input type="text" class="form-control" id="title" name="title" value="${board.title}"/>
 	                		</div>
@@ -37,7 +37,7 @@
 
 	                		<div class="text-right mt-2">
 				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="location.href='/board/${cri.b_name}/content/${board.bno}'">돌아가기</button>
-				                <button type="submit" class="btn btn-primary text-center mx-1">등록</button>
+				                <button type="submit" class="btn btn-primary text-center mx-1" id="writeFormSubmit">등록</button>
 			                </div>
 			                
 			                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -83,6 +83,22 @@
 CKEDITOR.replace('ck_content', {
 				height: 500
 				});
+			
+$("#writeFormSubmit").on("click", function(e){
+    e.preventDefault();
+    
+    if($.trim($('#title').val())=="" || $.trim($('#title').val()).length ==0){
+    	swa("error", "제목을 입력해주세요")
+    	return;
+    }
+    
+    if($.trim($('#ck_content').val())=="" || $.trim($('#ck_content').val()).length ==0){
+    	swa("error", "내용을 입력해주세요")
+    	return;
+    }
+    
+    $("#writeForm").submit();
+});
 </script>
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

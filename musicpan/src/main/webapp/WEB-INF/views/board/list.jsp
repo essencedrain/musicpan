@@ -13,8 +13,7 @@
             <div class="container">
 	            <div class="row">
 	            	
-	            	
-		            <div class="left_area col-lg-1 ">
+		            <div class="left_area col-lg-1">
 		            </div>
 		            <!-- 배너
 		            <div class="floatdiv floatdiv_left">
@@ -36,30 +35,41 @@
 				            		<button type="button" class="btn btn-outline-primary btn-sm text-center writeBtn">글쓰기</button>
 			            		</div>
 		            		</sec:authorize>
-		            		<table class="table table-sm table-hover table_gtx">
+		            		<table class="table table-sm table-hover table_gtx" >
 		            			<thead class="text-center">
 			            			<tr>
-				                        <th style="width: 5%;">번호</td>
-				                        <th style="width: 65%;">제목</td>
-				                        <th style="width: 15%;">글쓴이</td>
-				                        <th style="width: 10%;">등록일</td>
-				                        <th style="width: 5%;">조회수</td>
+				                        <th class="td_pc" style="width: 5%;">번호</td>
+				                        <th class="td_pc" style="width: 65%;">제목</td>
+				                        <th class="td_pc" style="width: 15%;">글쓴이</td>
+				                        <th class="td_pc" style="width: 10%;">등록일</td>
+				                        <th class="td_pc" style="width: 5%;">조회수</td>
 				                    </tr>
 			                    </thead>
                     			<tbody class="text-center">
                     				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board">
 		                    			<tr>
-		                    				<td style="width: 5%;" class="list_rowNum">${rowNum}</td>
-	                    					<td style="width: 65%;" class="text-left list_else">
+		                    				<td style="width: 5%;" class="list_rowNum td_pc">${rowNum}</td>
+	                    					<td style="width: 65%;" class="text-left list_else td_pc">
 	                    						<a class="move" href="${board.bno}">
-					                        		<span>${board.title}</span>
+					                        		<span class="main_title">${board.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board.replyCnt>0?board.replyCnt:""}</span>
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 15%;" class="text-left list_else list_grade"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
-					                        <td style="width: 10%;" class="list_else list_regdate">${board.modiDate}</td>
-					                        <td style="width: 5%;" class="list_else">${board.hit}</td>
+					                        <td style="width: 15%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
+					                        <td style="width: 10%;" class="list_else list_regdate td_pc">${board.modiDate}</td>
+					                        <td style="width: 5%;" class="list_else td_pc">${board.hit}</td>
+					                        
+					                        <td class="td_mo py-2 d-none" style="width: 100%;">
+					                        	<a class="move" href="${board.bno}">
+						                        	<div class="mo_main py-1 d-flex justify-content-start">
+							                        	<div class="text-left"><span class="main_title">${board.title}</span><span class="list_replyCnt">&nbsp;&nbsp;${board.replyCnt>0?board.replyCnt:""}</span></div>
+						                        	</div>
+					                        	</a>
+					                        	<div class="mo_sub d-flex justify-content-between">
+					                        		<div><i class="far fa-clock"></i> ${board.modiDate}</div>  <div><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</div>
+					                        	</div>
+					                        </td>
 		                    			</tr>
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
@@ -95,10 +105,8 @@
 		            	</div>
 		            </div>
 		            
-		            
-		            <div class="right_area col-lg-1 ">
+		            <div class="right_area col-lg-1">
 	           	 	</div>
-	           	 	
 	           	 	<!-- =================================================================================================  -->
 	            	<!-- start 모달 -->
 	            	<!-- =================================================================================================  -->
@@ -264,7 +272,6 @@
         location.href='/board/register?b_name=${pageMaker.cri.b_name}';
     });
 
-    
     function getCookie(name) {
   	  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
   	  return value? value[2] : null;
@@ -272,6 +279,37 @@
     </script>
     <!-- =================================================================================================  -->
     <!-- end 쿠키 -->
+    <!-- =================================================================================================  -->
+    
+    <!-- =================================================================================================  -->
+    <!-- start 모바일전환 / 타이틀 ellipsis -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    //모바일
+    	console.log(window.innerWidth);
+    
+	    if(window.innerWidth<768){
+	    	
+			$('.td_pc').each(function(){
+				$(this).toggleClass('d-none');
+			});
+			
+			
+			$('.td_mo').each(function(){
+				$(this).toggleClass('d-none');
+			});
+			
+	    }
+	    
+	  	//35글자 이상 ellipsis
+		$('.main_title').each(function(){
+			if($(this).text().length>35){
+				$(this).text($(this).text().substring(0,35)+"...");
+			}
+		});
+	</script>
+	<!-- =================================================================================================  -->
+    <!-- end 모바일전환 / 타이틀 ellipsis -->
     <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

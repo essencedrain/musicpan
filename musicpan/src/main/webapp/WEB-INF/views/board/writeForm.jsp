@@ -84,6 +84,17 @@ CKEDITOR.replace('ck_content', {
 
 $("#writeFormSubmit").on("click", function(e){
     e.preventDefault();
+    
+    if($.trim($('#title').val())=="" || $.trim($('#title').val()).length ==0){
+    	swa("error", "제목을 입력해주세요")
+    	return;
+    }
+    
+    if($.trim($('#ck_content').val())=="" || $.trim($('#ck_content').val()).length ==0){
+    	swa("error", "내용을 입력해주세요")
+    	return;
+    }
+    //쿠키삽입
     setCookie("mplwck${b_name}","yes",60);
     $("#writeForm").submit();
 });

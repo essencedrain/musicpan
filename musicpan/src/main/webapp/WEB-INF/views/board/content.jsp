@@ -105,27 +105,41 @@
 		            		<table class="table table-sm table-hover table_gtx">
 		            			<thead class="text-center">
 			            			<tr>
-				                        <th style="width: 5%;">번호</td>
-				                        <th style="width: 65%;">제목</td>
-				                        <th style="width: 15%;">글쓴이</td>
-				                        <th style="width: 10%;">등록일</td>
-				                        <th style="width: 5%;">조회수</td>
+				                        <th class="td_pc" style="width: 5%;">번호</td>
+				                        <th class="td_pc" style="width: 65%;">제목</td>
+				                        <th class="td_pc" style="width: 15%;">글쓴이</td>
+				                        <th class="td_pc" style="width: 10%;">등록일</td>
+				                        <th class="td_pc" style="width: 5%;">조회수</td>
 				                    </tr>
 			                    </thead>
                     			<tbody class="text-center">
                     				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board2">
 		                    			<tr>
-		                    				<td class="list_rowNum ${board.bno==board2.bno?"text-primary":"text-secondary"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
-	                    					<td style="width: 65%;" class="text-left list_else ${board.bno==board2.bno?"text-primary":"" }">
+		                    				<td class = 'list_rowNum td_pc ${board.bno==board2.bno?"text-primary":""}' style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
+	                    					<td style="width: 65%;" class="text-left list_else td_pc ${board.bno==board2.bno?"text-primary":"text-secondary" }">
 	                    						<a class="move" href="${board2.bno}">
 					                        		<span>${board2.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 15%;" class="text-left list_else"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
-					                        <td style="width: 10%;" class="list_else">${board2.modiDate}</td>
-					                        <td style="width: 5%;" class="list_else">${board2.hit}</td>
+					                        <td style="width: 15%;" class="text-left list_else td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
+					                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
+					                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
+					                        
+					                        <td class="td_mo py-2 d-none" style="width: 100%;">
+					                        	<div class="mo_main py-1 d-flex justify-content-start">
+					                        		<a class="move" href="${board2.bno}">
+							                        	<div class="text-left ${board.bno==board2.bno?"text-primary":"" }">
+							                        		<span class="main_title">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":""}&nbsp;${board2.title}</span>
+							                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
+						                        		</div>
+					                        		</a>
+					                        	</div>
+					                        	<div class="mo_sub d-flex justify-content-between">
+					                        		<div><i class="far fa-clock"></i> ${board2.modiDate}</div>  <div><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</div>
+					                        	</div>
+					                        </td>
 		                    			</tr>
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
@@ -340,16 +354,15 @@
 		</c:choose>
     	
     	
-    	
-    	
-    	var reply_textarea = $('#reply_textarea'); //댓글등록textarea
+    	//=====================================================================================================
+    	// 댓글 등록
+    	//=====================================================================================================
     	var reply_registerBtn = $('#reply_registerBtn'); //댓글등록버튼
     	
-    	//댓글 등록
     	reply_registerBtn.on("click", function(e){
     		
     		//유효성 체크
-    		if($('#reply_textarea').val() =="" || $('#reply_textarea').val().length ==0){
+    		if($.trim($('#reply_textarea').val()) =="" || $.trim($('#reply_textarea').val()).length ==0){
     			swa("error","댓글 내용을 작성해주세요");
     			return;
     		}
@@ -360,9 +373,12 @@
 				return;
 			}
     		
+    		
+    		
     		//json생성
+    		//줄바꿈 <br>변환
     		var reply = {
-    				reply : reply_textarea.val()
+    				reply : $('#reply_textarea').val().replace(/(?:\r\n|\r|\n)/g, '<br />')
     				,id : replyer
     				,bno : bnoValue
    			};
@@ -376,9 +392,10 @@
    			});
     		
     	});//reply_registerBtn.on
+    	//=====================================================================================================
     	
     	
-    	
+    	//댓글페이지 클릭
     	$('.reply_page').on("click","li a", function(e){
             e.preventDefault();
             //console.log("page click");
@@ -855,6 +872,35 @@
     <!-- =================================================================================================  -->
     <!-- end 쿠키 -->
     <!-- =================================================================================================  -->
+    <!-- =================================================================================================  -->
+    <!-- start 모바일전환 / 타이틀 ellipsis -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    //모바일
+    	console.log(window.innerWidth);
+    
+	    if(window.innerWidth<768){
+	    	
+			$('.td_pc').each(function(){
+				$(this).toggleClass('d-none');
+			});
+			
+			
+			$('.td_mo').each(function(){
+				$(this).toggleClass('d-none');
+			});
+			
+	    }
+	    
+	  	//35글자 이상 ellipsis
+		$('.main_title').each(function(){
+			if($(this).text().length>35){
+				$(this).text($(this).text().substring(0,35)+"...");
+			}
+		});
+	</script>
+	<!-- =================================================================================================  -->
+    <!-- end 모바일전환 / 타이틀 ellipsis -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
