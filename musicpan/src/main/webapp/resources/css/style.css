@@ -254,8 +254,8 @@ a.article:hover {
 /* ---------------------------------------------------
     BOARD STYLE
 ----------------------------------------------------- */
-.table_gtx .mo_main{
-
+.table_gtx .clickable-row a:hover{
+	color: #3493ff; !important;
 }
 .table_gtx .mo_sub{
 	font-size: 10px;

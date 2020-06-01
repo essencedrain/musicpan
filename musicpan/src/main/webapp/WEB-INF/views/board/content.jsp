@@ -117,7 +117,7 @@
                     				<c:forEach items="${list}" var="board2">
 		                    			<tr>
 		                    				<td class = 'list_rowNum td_pc ${board.bno==board2.bno?"text-primary":""}' style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
-	                    					<td style="width: 65%;" class="text-left list_else td_pc ${board.bno==board2.bno?"text-primary":"text-secondary" }">
+	                    					<td style="width: 65%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"text-primary":"" }">
 	                    						<a class="move" href="${board2.bno}">
 					                        		<span class="main_title">${board2.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
@@ -127,7 +127,8 @@
 					                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
 					                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
 					                        
-					                        <td class="td_mo py-2 d-none" style="width: 100%;">
+					                        
+					                        <td class="td_mo py-2 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
 					                        	<div class="mo_main py-1 d-flex justify-content-start">
 					                        		<a class="move" href="${board2.bno}">
 							                        	<div class="text-left ${board.bno==board2.bno?"text-primary":"" }">
@@ -288,6 +289,24 @@
 <!-- =================================================================================================  -->
 
 
+	<!-- =================================================================================================  -->
+   	<!-- start td행 전체에 링크 -->
+   	<!-- =================================================================================================  -->
+   	<script type="text/javascript">
+   	$(document).ready(function(){
+   		$(".clickable-row").click(function() {
+			$("#actionForm").append("<input type='hidden' name='bno' value='"+ $(this).data("href") + "'>");
+			$("#actionForm").attr("action","/board/content");
+			$("#actionForm").submit();
+   	    });
+   	});
+   	</script>
+	<!-- =================================================================================================  -->
+   	<!-- end td행 전체에 링크 -->
+   	<!-- =================================================================================================  -->
+   	
+   	
+   	
 	<!-- =================================================================================================  -->
    	<!-- start 모달 -->
    	<!-- =================================================================================================  -->
