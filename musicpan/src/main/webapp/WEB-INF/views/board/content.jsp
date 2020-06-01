@@ -348,11 +348,18 @@
     	//댓글 등록
     	reply_registerBtn.on("click", function(e){
     		
+    		if($('#reply_textarea').val() =="" || $('#reply_textarea').val().length ==0){
+    			swa("error","댓글 내용을 작성해주세요");
+    			return;
+    		}
+    		
     		var reply = {
     				reply : reply_textarea.val()
     				,id : replyer
     				,bno : bnoValue
    			};
+    		
+    		
     		replyService.add(reply, b_name, function(result){
     			$('#reply_textarea').val('');
     			showList(-1, bnoValue, b_name, 2, 0);
