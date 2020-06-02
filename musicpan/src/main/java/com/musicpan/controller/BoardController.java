@@ -392,8 +392,8 @@ public class BoardController {
 	private boolean isSqlInjection(String b_name) {
 		
 		switch(b_name) {
-		case "sample": return false;
-		default : return true;
+			case "sample": return false;
+			default : return true;
 		}
 		
 	}//b_name2

@@ -57,9 +57,12 @@ public class ReplyController {
 			,consumes = "application/json"
 			,produces = { MediaType.TEXT_PLAIN_VALUE }
 			)
-	public ResponseEntity<String> create(@PathVariable("b_name") String b_name, @RequestBody ReplyVO vo){
+	public ResponseEntity<String> create(@PathVariable("b_name") String b_name, @RequestBody ReplyVO vo) throws Exception{
 		
 		//log.info("들어옴 : " + b_name  + " // " + vo.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
 		
 		vo.setB_name(b_name);
 		
@@ -82,9 +85,12 @@ public class ReplyController {
 			,consumes = "application/json"
 			,produces = { MediaType.TEXT_PLAIN_VALUE }
 			)
-	public ResponseEntity<String> create2(@PathVariable("b_name") String b_name, @RequestBody ReplyVO vo){
+	public ResponseEntity<String> create2(@PathVariable("b_name") String b_name, @RequestBody ReplyVO vo) throws Exception{
 		
 		//log.info("들어옴 : " + b_name  + " // " + vo.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
 		
 		vo.setB_name(b_name);
 		
@@ -110,9 +116,13 @@ public class ReplyController {
 				@PathVariable("b_name") String b_name
 				,@PathVariable("page") int page
 				,@PathVariable("bno") Long bno				
-	){
+	) throws Exception{
+		
 		Criteria cri = new Criteria(page<0?1:page,50);
 		cri.setB_name(b_name);
+		
+		// sqlinjection 대응
+		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
 		
 		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
 	}
@@ -130,7 +140,10 @@ public class ReplyController {
 						,MediaType.APPLICATION_JSON_UTF8_VALUE
 				}
 			)
-	public ResponseEntity<ReplyVO> get(@PathVariable("b_name") String b_name, @PathVariable("rno") Long rno){
+	public ResponseEntity<ReplyVO> get(@PathVariable("b_name") String b_name, @PathVariable("rno") Long rno) throws Exception{
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
 		
 		return new ResponseEntity<>(service.get(rno, b_name), HttpStatus.OK);
 	}
@@ -144,7 +157,10 @@ public class ReplyController {
 	//====================================================================================================
 	@PreAuthorize("principal.username == #id")
 	@DeleteMapping(value = "/{b_name}/{rno}/{id}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("b_name") String b_name, @PathVariable("rno") Long rno, @PathVariable("id") String id){
+	public ResponseEntity<String> remove(@PathVariable("b_name") String b_name, @PathVariable("rno") Long rno, @PathVariable("id") String id) throws Exception{
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
 		
 		return service.remove(rno, b_name) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
@@ -167,9 +183,12 @@ public class ReplyController {
 				@PathVariable("b_name") String b_name
 				,@PathVariable("rno") Long rno
 				,@RequestBody ReplyVO vo
-	){
+	) throws Exception{
 		vo.setB_name(b_name);
 		vo.setRno(rno);
+		
+		// sqlinjection 대응
+		if(isSqlInjection(vo.getB_name())) {throw new Exception();}
 		
 		return service.modify(vo) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
@@ -185,4 +204,21 @@ public class ReplyController {
 	// 003	수정	PUT	/replies/:b_name/:rno
 	//====================================================================================================
 	//====================================================================================================
+	
+	
+	
+	//=========================================================================================
+	// 메서드1
+	// SqlInjection 대응 함수
+	// 정해진 값만 들어와짐
+	//=========================================================================================
+	private boolean isSqlInjection(String b_name) {
+		
+		switch(b_name) {
+			case "sample": return false;
+			default : return true;
+		}
+		
+	}//b_name2
+	//=========================================================================================
 }//class
