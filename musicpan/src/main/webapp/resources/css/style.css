@@ -246,17 +246,109 @@ a.article:hover {
 /* ---------------------------------------------------
     color STYLE
 ----------------------------------------------------- */
+/* 컨텐츠 제목 아래 */
 .tdcolor_1{
-	background-color:#f1f7ff;
+	background-color:#e8f3fc; !important;
+}
+/* 자기가 쓴 댓글 */
+.reply_area .card_area .card_bg{
+	background-color: #e8f3fc; !important;
 }
 
+
+/* 제목 td 호버 */
+.table_gtx .clickable-row a:hover{
+	color: #3292e7; !important;
+}
+
+/* 댓글카운트 */
+.table_gtx .list_replyCnt{
+    color: #3292e7; !important;
+    font-weight: 100;
+}
+
+/* 컨텐츠 목록에서 제목 호버링 */
+.table_gtx .hover_color{
+	color: #3292e7; !important;
+}
+
+/* pc 컨텐츠 목록에서 화살표 색 */
+.table_gtx .hover_color2{
+	color: #3292e7; !important;
+}
+
+
+
+/* 게시판이름 */
+.board_heading{
+	color: #0F4C81; !important;
+	font-weight: 900;
+}
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #0F4C81; !important;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #0F4C81; !important;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+
+.page-item.active .page-link
+{
+    color: white;
+    background-color: #0F4C81; !important;
+    border: solid 1px #0F4C81; !important;
+}
+
+
+/* 컨텐츠 위에 두꺼운 hr */
+.content_area .hr1{
+	margin-top: 1rem;
+  	margin-bottom: 0rem;
+  	border: 0;
+  	border-top: 2px solid rgb(0, 102, 80);
+}
+
+
+
+/* ==========================버튼============================== */
+.btn-outline-primary{
+    background-color: transparent !important;
+    border-color: #0F4C81 !important;
+    color: #0F4C81 !important;
+    border-radius: 0;
+    position: relative;
+}
+
+.btn-outline-secondary{
+    background-color: transparent !important;
+    border-color: #011627 !important;
+    color: #011627 !important;
+    border-radius: 0;
+    position: relative;
+}
+
+.btn-primary{
+    background-color: #0F4C81 !important;
+    border-radius: 0;
+    border-color: #0F4C81 !important;
+    color: #f6f5ef !important;
+}
+
+/* ==========================버튼============================== */
 
 /* ---------------------------------------------------
     BOARD STYLE
 ----------------------------------------------------- */
-.table_gtx .clickable-row a:hover{
-	color: #3493ff; !important;
-}
 .table_gtx .mo_sub{
 	font-size: 10px;
 	line-height: 15px;
@@ -292,10 +384,6 @@ a.article:hover {
     color: #999;
     vertical-align: middle;
 }
-.table_gtx .list_replyCnt{
-    color: #3493ff;
-    font-weight: 100;
-}
 
 .table_gtx .list_else{
 	font-size:14px;
@@ -308,22 +396,12 @@ a.article:hover {
 	margin-bottom: 5px;
 }
 
-.board_heading{
-	color: #3493ff;
-	font-weight: 900;
-}
-
 .content_area{
 	font-size:14px;
 	line-height: 21px;
 	font-weight: 500;
 }
-.content_area .hr1{
-	margin-top: 1rem;
-  	margin-bottom: 0rem;
-  	border: 0;
-  	border-top: 2px solid rgb(46, 67, 97);
-}
+
 .content_area .hr2{
 	margin-top: 0rem;
   	margin-bottom: 0.8rem;
@@ -374,9 +452,7 @@ a.article:hover {
 .reply_area .card_area .card{
 	border: none;
 }
-.reply_area .card_area .card_bg{
-	background-color: #f1f7ff;
-}
+
 .reply_area .card_area .card-header img{
 	vertical-align:middle;
 	margin-bottom: 3px;
@@ -444,3 +520,5 @@ a.article:hover {
 .reply_area .dropdown-menu .i_size{
 	width: 15.75px; !important;
 }
+
+

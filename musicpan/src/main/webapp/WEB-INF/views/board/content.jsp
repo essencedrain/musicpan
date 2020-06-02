@@ -54,7 +54,7 @@
 										<button data-oper='modify' class="btn btn-outline-secondary btn-sm text-center">수정하기</button>
 			            			 </c:if>
 		            			 </sec:authorize>
-								<button data-oper='list' class="btn btn-outline-primary btn-sm text-center">목록으로</button>
+								<button data-oper='list' class="btn btn-primary btn-sm text-center">목록으로</button>
 		            		</div>
 	            		</div>
 	            		<hr class="hr2"/> 
@@ -116,8 +116,8 @@
                     				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board2">
 		                    			<tr>
-		                    				<td class = 'list_rowNum td_pc ${board.bno==board2.bno?"text-primary":""}' style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
-	                    					<td style="width: 65%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"text-primary":"" }">
+		                    				<td class = "td_pc ${board.bno==board2.bno ? "hover_color2":"list_rowNum"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
+	                    					<td style="width: 65%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"hover_color":"" }">
 	                    						<a class="move" href="${board2.bno}">
 					                        		<span class="main_title">${board2.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
@@ -131,7 +131,7 @@
 					                        <td class="td_mo py-2 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
 					                        	<div class="mo_main py-1 d-flex justify-content-start">
 					                        		<a class="move" href="${board2.bno}">
-							                        	<div class="text-left ${board.bno==board2.bno?"text-primary":"" }">
+							                        	<div class='text-left ${board.bno==board2.bno ? "hover_color":"" }'>
 							                        		<span class="main_title">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":""}&nbsp;${board2.title}</span>
 							                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
 						                        		</div>
@@ -478,8 +478,8 @@
 				  text: "삭제된 글은 복구가 어렵습니다.",
 				  icon: 'warning',
 				  showCancelButton: true,
-				  confirmButtonColor: '#007bff',
-				  cancelButtonColor: '#d33',
+				  confirmButtonColor: '#0F4C81',
+				  cancelButtonColor: '#b71515',
 				  confirmButtonText: '삭제',
 				  cancelButtonText: '취소'
 				}).then((result) => {
@@ -853,8 +853,8 @@
 			  title: '댓글을 수정 하시겠습니까?',
 			  icon: 'info',
 			  showCancelButton: true,
-			  confirmButtonColor: '#007bff',
-			  cancelButtonColor: '#d33',
+			  confirmButtonColor: '#0F4C81',
+			  cancelButtonColor: '#b71515',
 			  confirmButtonText: '수정',
 			  cancelButtonText: '취소'
 			}).then((result) => {
@@ -892,8 +892,8 @@
 			  text: "삭제된 댓글은 복구가 어렵습니다.",
 			  icon: 'warning',
 			  showCancelButton: true,
-			  confirmButtonColor: '#007bff',
-			  cancelButtonColor: '#d33',
+			  confirmButtonColor: '#0F4C81',
+			  cancelButtonColor: '#b71515',
 			  confirmButtonText: '삭제',
 			  cancelButtonText: '취소'
 			}).then((result) => {
