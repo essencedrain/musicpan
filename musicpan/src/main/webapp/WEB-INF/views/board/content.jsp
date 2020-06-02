@@ -613,9 +613,9 @@
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
     	            	
    	            			str += '<span class="span_class2 reply_likeBtn" data-rno="'+list[i].rno+'"><i id="rt_up'+list[i].rno+'" class="far fa-thumbs-up"></i></span>';
-    	            		str += '<span class="span_class" id="reply_likeCount'+list[i].rno+'">'+list[i].likeCnt+'</span>';//좋아요
+    	            		str += '<span class="span_class reply_likeBtn2" id="reply_likeCount'+list[i].rno+'">'+list[i].likeCnt+'</span>';//좋아요
    	            			str += '<span class="span_class2 reply_dislikeBtn" data-rno="'+list[i].rno+'"><i id="rt_down'+list[i].rno+'" class="far fa-thumbs-down"></i></span>';
-		    	            str += '<span class="span_class" id="reply_dislikeCount'+list[i].rno+'">'+list[i].dislikeCnt+'</span>';//싫어요
+		    	            str += '<span class="span_class reply_dislikeBtn2" id="reply_dislikeCount'+list[i].rno+'">'+list[i].dislikeCnt+'</span>';//싫어요
 		    	            
 		    	            <sec:authorize access="isAuthenticated()">
 		    	            if(list[i].reply_step == 0 ){
@@ -1083,7 +1083,6 @@
 	    
 	    
 <sec:authorize access="isAuthenticated()">
-    	
    		$("#content_likeBtn").click(function() {
    			//쿠키 체크, 좋아요는 5초에 1번
 			if(getCookie('mpllck'+b_name+bnoValue)!=null){
@@ -1298,6 +1297,13 @@
 	    </sec:authorize>
    		
 	    
+	    $(document).on('click','.reply_likeBtn2',function(){
+	    	$(".reply_likeBtn").trigger("click");
+	    });
+	    
+	    $(document).on('click','.reply_dislikeBtn2',function(){
+	    	$(".reply_dislikeBtn").trigger("click");
+	    });
 	    
    		$(document).on('click','.reply_likeBtn',function(){
    			

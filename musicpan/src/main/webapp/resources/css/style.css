@@ -511,6 +511,12 @@ a.article:hover {
 	width: 50px; !important;
 	cursor: pointer;
 }
+.reply_area .reply_likeBtn,
+.reply_area .reply_dislikeBtn,
+.reply_area .reply_likeBtn2,
+.reply_area .reply_dislikeBtn2{
+	cursor: pointer;
+}
 .reply_area .dropdown-menu a{
     font-size:14px;
 	line-height: 21px; 
