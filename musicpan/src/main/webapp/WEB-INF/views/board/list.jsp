@@ -29,12 +29,12 @@
 		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
 		            	<div class="mt-3">
-		            		<sec:authorize access="isAuthenticated()">
 			            		<div class="py-2 d-flex justify-content-between">
 			            			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></button>
-				            		<button type="button" class="btn btn-outline-primary btn-sm text-center writeBtn">글쓰기</button>
+				            		<sec:authorize access="isAuthenticated()">
+					            		<button type="button" class="btn btn-outline-primary btn-sm text-center writeBtn">글쓰기</button>
+				            		</sec:authorize>
 			            		</div>
-		            		</sec:authorize>
 		            		<table class="table table-sm table-hover table_gtx" >
 		            			<thead class="text-center">
 			            			<tr>
@@ -148,7 +148,7 @@
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" id="searchFormBtn" class="btn btn-primary">검색</button>
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
 					      </div>
 					    </div>
 					  </div>
