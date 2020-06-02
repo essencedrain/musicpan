@@ -7,6 +7,11 @@
 	<insert id="insert">
 		INSERT INTO
 			like_${b_name}
+			(
+				bno
+				, id
+				, flag
+			)
 		VALUES
 			(
 				#{bno}
