@@ -46,6 +46,12 @@
 			            			<td class="py-5 content_content">${board.content}</td>
 			            		</tr>
 		            		</table>
+		            		
+		            		<div class="content_like text-center">
+                               	<button type="button" id="content_likeBtn" class="btn btn-primary btn-sm mr-2"><i id="t_up" class="far fa-thumbs-up"></i>&nbsp;:&nbsp;<span id="content_likeCount">0</span></button>
+					        	<button type="button" id="content_dislikeBtn" class="btn btn-outline-secondary btn-sm"><i id="t_down" class="far fa-thumbs-down"></i>&nbsp;:&nbsp;<span id="content_dislikeCount">0</span></button>
+					      	</div>
+		            		
 		            		<div class="float-right mt-2">
 		            			<sec:authentication property="principal" var="pinfo"/>
 		            			 <sec:authorize access="isAuthenticated()">
@@ -106,8 +112,8 @@
 		            			<thead class="text-center">
 			            			<tr>
 				                        <th class="td_pc" style="width: 5%;">번호</td>
-				                        <th class="td_pc" style="width: 65%;">제목</td>
-				                        <th class="td_pc" style="width: 15%;">글쓴이</td>
+				                        <th class="td_pc" style="width: 63%;">제목</td>
+				                        <th class="td_pc" style="width: 17%;">글쓴이</td>
 				                        <th class="td_pc" style="width: 10%;">등록일</td>
 				                        <th class="td_pc" style="width: 5%;">조회수</td>
 				                    </tr>
@@ -117,13 +123,13 @@
                     				<c:forEach items="${list}" var="board2">
 		                    			<tr>
 		                    				<td class = "td_pc ${board.bno==board2.bno ? "hover_color2":"list_rowNum"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
-	                    					<td style="width: 65%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"hover_color":"" }">
+	                    					<td style="width: 63%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"hover_color":"" }">
 	                    						<a class="move" href="${board2.bno}">
 					                        		<span class="main_title">${board2.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 15%;" class="text-left list_else td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
+					                        <td style="width: 17%;" class="text-left list_else td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
 					                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
 					                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
 					                        
@@ -288,7 +294,7 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
-
+   	
 	<!-- =================================================================================================  -->
    	<!-- start td행 전체에 링크 -->
    	<!-- =================================================================================================  -->
@@ -1017,7 +1023,201 @@
 
 	</script>
     <!-- =================================================================================================  -->
-	
+		
+		
+		
+		
+	<!-- =================================================================================================  -->
+   	<!-- start 좋아요 -->
+   	<!-- =================================================================================================  -->
+   	<script type="text/javascript">
+   	$(document).ready(function(){
+   		
+   		var bnoValue = '<c:out value="${board.bno}"/>';
+	    var b_name = '${cri.b_name}';
+	    var replyer = "";
+	    <sec:authorize access="isAuthenticated()">
+	    	replyer = '<sec:authentication property="principal.username"/>';   
+	    </sec:authorize>
+	    
+	    
+	    //좋아요 싫어요 읽기
+		$.getJSON("/like/read/"+b_name+"/"+ bnoValue + "/" + replyer +".json",
+            function (data) {
+               	$('#content_likeCount').text(data.like);
+                $('#content_dislikeCount').text(data.dislike);
+                
+                //내가 체크했으면
+                if(data.check==1){
+                	if(data.value==1){
+                		//좋아요
+                		$('#t_up').toggleClass('far');
+                		$('#t_up').toggleClass('fas');
+                	}else{
+                		//싫어요
+                		$('#t_down').toggleClass('far');
+                		$('#t_down').toggleClass('fas');
+                	}//if
+                }//if
+                
+            }).fail(function(xhr,status,err) {
+            	console.log("좋아요 에러1");
+		});//$.getJSON(
+	    
+	    
+<sec:authorize access="isAuthenticated()">
+    	
+   		$("#content_likeBtn").click(function() {
+   			//쿠키 체크, 좋아요는 5초에 1번
+			if(getCookie('mpllck'+b_name+bnoValue)!=null){
+				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
+				return;
+			}
+   			var like_info = {
+    				id : replyer
+    				,bno : bnoValue
+    				,b_name : b_name
+    				,flag : 1
+   			};
+   			
+   			$.ajax({
+	            type: "post",
+	            url: "/like/check",
+	            data: JSON.stringify(like_info),
+	            contentType: "application/json; charset=utf-8",
+	            success: function (data) {
+	            	if(data.check==0){
+	            		//추가
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/insert",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data2) {
+		    	                $('#content_likeCount').text(data2.like);
+		    	                $('#content_dislikeCount').text(data2.dislike);
+		    	                
+		    	                $('#t_up').toggleClass('far');
+		                		$('#t_up').toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("좋아요 에러2");
+		    	            }
+		    	        });//$.ajax({
+	            	}else if(data.check==1 && data.value == 1){
+	            		//삭제
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/delete",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data3) {
+		    	                $('#content_likeCount').text(data3.like);
+		    	                $('#content_dislikeCount').text(data3.dislike);
+		    	                
+		    	                $('#t_up').toggleClass('far');
+		                		$('#t_up').toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("좋아요 에러3");
+		    	            }
+		            	});//$.ajax({
+	            	}//if(data.check==0){
+	            },
+	            error: function(xhr, status, er){
+	            	console.log("좋아요 에러4");
+	            }
+	        });//$.ajax({
+   			
+	        
+   	    });//$(".content_likeBtn").click(function() {
+   	    	
+   	    	
+   		$("#content_dislikeBtn").click(function() {
+   			//쿠키 체크, 좋아요는 5초에 1번
+			if(getCookie('mpllck'+b_name+bnoValue)!=null){
+				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
+				return;
+			}
+   		
+   			var like_info = {
+    				id : replyer
+    				,bno : bnoValue
+    				,b_name : b_name
+    				,flag : -1
+   			};
+   			
+   			$.ajax({
+	            type: "post",
+	            url: "/like/check",
+	            data: JSON.stringify(like_info),
+	            contentType: "application/json; charset=utf-8",
+	            success: function (data) {
+	            	if(data.check==0){
+	            		//추가
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/insert",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data2) {
+		    	                $('#content_likeCount').text(data2.like);
+		    	                $('#content_dislikeCount').text(data2.dislike);
+		    	                
+		    	                $('#t_down').toggleClass('far');
+		                		$('#t_down').toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("좋아요 에러5");
+		    	            }
+		    	        });//$.ajax({
+	            	}else if(data.check==1 && data.value == -1){
+	            		//삭제
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/delete",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data3) {
+		    	                $('#content_likeCount').text(data3.like);
+		    	                $('#content_dislikeCount').text(data3.dislike);
+		    	                
+		    	                $('#t_down').toggleClass('far');
+		                		$('#t_down').toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("좋아요 에러6");
+		    	            }
+		            	});//$.ajax({
+	            	}//if(data.check==0){
+	            },
+	            error: function(xhr, status, er){
+	            	console.log("좋아요 에러7");
+	            }
+	        });//$.ajax({
+   	    });//$(".content_dislikeBtn").click(function() {
+ </sec:authorize>
+   	});//$(document).ready(function(){
+   	</script>
+	<!-- =================================================================================================  -->
+   	<!-- end 좋아요 -->
+   	<!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->

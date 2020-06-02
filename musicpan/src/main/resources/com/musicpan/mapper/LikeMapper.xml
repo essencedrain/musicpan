@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musicpan.mapper.LikeMapper">
+
+	<insert id="insert">
+		INSERT INTO
+			like_${b_name}
+		VALUES
+			(
+				#{bno}
+				, #{id}
+				, #{flag}
+			)
+	</insert>
+	
+	<select id="checkDuplication" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			like_${b_name}
+		WHERE
+			id = #{id}
+			AND bno = #{bno}
+	</select>
+	
+	<select id="checkDuplicationValue" resultType="int">
+		SELECT
+			flag
+		FROM
+			like_${b_name}
+		WHERE
+			id = #{id}
+			AND bno = #{bno}
+	</select>
+	
+	<select id="readLike" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			like_${b_name}
+		WHERE
+			bno = #{bno}
+			AND flag = 1
+	</select>
+	
+	<select id="readDislike" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			like_${b_name}
+		WHERE
+			bno = #{bno}
+			AND flag = -1
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM
+			like_${b_name}
+		WHERE
+			bno = #{bno}
+			AND id = #{id}
+	</delete>
+</mapper>
