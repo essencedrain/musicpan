@@ -25,18 +25,6 @@ import lombok.extern.log4j.Log4j;
 //REST 컨트롤러
 //=========================================================================================
 
-//============================================================================================================================================================
-/*
- 	NO			Task		Method	URL									Parameter		From			URL이동				권한
- 	----------------------------------------------------------------------------------------------------------------------------------------------------------
- 	000			등록		POST	/replies/:b_name/new
- 	001			조회		GET		/replies/:b_name/:rno
- 	002			삭제		DELETE	/replies/:b_name/:rno/:id
- 	003			수정		PUT		/replies/:b_name/:rno
- 	004			페이지		GET		/replies/pages/:b_name/:bno/:page
- 	005			대댓글등록	POST	/replies/:b_name/re
- */
-//============================================================================================================================================================
 
 @RequestMapping("/like/")
 @RestController
@@ -124,7 +112,7 @@ public class LikeController {
 	
 	
 	//====================================================================================================
-	// 004	좋아요읽기	POST	/like/read/:b_name/:bno/:id
+	// 003	좋아요읽기	POST	/like/read/:b_name/:bno/:id
 	//====================================================================================================
 	@GetMapping(value = "/read/{b_name}/{bno}/{id}"
 				,produces = {
@@ -156,12 +144,117 @@ public class LikeController {
 	//====================================================================================================
 	
 	
+	
+	
 	//====================================================================================================
-	// 003	수정	PUT	/replies/:b_name/:rno
+	// 004	댓글좋아요등록	POST	/like/insert_reply
 	//====================================================================================================
+	@PreAuthorize("principal.username == #vo.id")
+	@PostMapping(value = "/insert_reply"
+			,consumes = "application/json"
+			,produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
+			)
+	public ResponseEntity<Map<String, Integer>> create_reply(@RequestBody LikeVO vo) throws Exception{
+		
+		//log.info("like 들어옴 : " + vo.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(vo.getB_name())) {throw new Exception();}
+		
+		
+		Map<String, Integer> result = service.insertLike_reply(vo);
+		
+		return result.get("status") == 1
+				? new ResponseEntity<>(result,HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	//====================================================================================================
 	
 	
+	//====================================================================================================
+	// 005 댓글좋아요체크	POST	/like/check_reply
+	//====================================================================================================
+	@PreAuthorize("principal.username == #vo.id")
+	@PostMapping(value = "/check_reply"
+				,consumes = "application/json"
+				,produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
+			)
+	public ResponseEntity<Map<String, Integer>> checkDuplication_reply(@RequestBody LikeVO vo) throws Exception{
+		
+		//log.info("check 들어옴 : " + vo.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(vo.getB_name())) {throw new Exception();}
+		
+		
+		Map<String, Integer> result = service.checkDuplication_reply(vo);
+		
+		return result != null
+				? new ResponseEntity<>(result,HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	//====================================================================================================
+	
+	
+	
+	//====================================================================================================
+	// 006	댓글좋아요삭제	POST	/like/delete_reply
+	//====================================================================================================
+	@PreAuthorize("principal.username == #vo.id")
+	@PostMapping(value = "/delete_reply"
+				,consumes = "application/json"
+				,produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
+			)
+	public ResponseEntity<Map<String, Integer>> deleteLike_reply(@RequestBody LikeVO vo) throws Exception{
+		
+		//log.info("delete 들어옴 : " + vo.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(vo.getB_name())) {throw new Exception();}
+		
+		
+		Map<String, Integer> result = service.deleteLike_reply(vo);
+		
+		return result.get("status") == 1
+				? new ResponseEntity<>(result,HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	//====================================================================================================
+	
+	
+	//====================================================================================================
+	// 003	좋아요읽기	POST	/like/read_reply/:b_name/:rno/:id
+	//====================================================================================================
+	@GetMapping(value = "/read_reply/{b_name}/{rno}/{id}"
+				,produces = {
+						MediaType.APPLICATION_XML_VALUE
+						,MediaType.APPLICATION_JSON_UTF8_VALUE
+				}
+			)
+	public ResponseEntity<Map<String, Integer>> readLike_reply(
+							@PathVariable("b_name") String b_name
+							, @PathVariable("rno") Long rno
+							, @PathVariable("id") String id
+							) throws Exception{
+		
+		//log.info("check 들어옴 : " + vo.toString());
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
+		
+		LikeVO vo = new LikeVO();
+		vo.setB_name(b_name);
+		vo.setRno(rno);
+		vo.setId(id);
+		Map<String, Integer> result = service.readLike_reply(vo);
+		
+		//log.info("///////////////////test: "+result.get("check") + "//" +result.get("value"));
+		
+		return result != null
+				? new ResponseEntity<>(result,HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	//====================================================================================================
 	
 	//=========================================================================================
 	// 메서드1

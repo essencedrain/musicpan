@@ -20,6 +20,22 @@
 			)
 	</insert>
 	
+	<insert id="insert_reply">
+		INSERT INTO
+			like_${b_name}
+			(
+				rno
+				, id
+				, flag
+			)
+		VALUES
+			(
+				#{rno}
+				, #{id}
+				, #{flag}
+			)
+	</insert>
+	
 	<select id="checkDuplication" resultType="int">
 		SELECT
 			count(*)
@@ -38,6 +54,26 @@
 		WHERE
 			id = #{id}
 			AND bno = #{bno}
+	</select>
+	
+	<select id="checkDuplication_reply" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			like_${b_name}
+		WHERE
+			id = #{id}
+			AND rno = #{rno}
+	</select>
+	
+	<select id="checkDuplicationValue_reply" resultType="int">
+		SELECT
+			flag
+		FROM
+			like_${b_name}
+		WHERE
+			id = #{id}
+			AND rno = #{rno}
 	</select>
 	
 	<select id="readLike" resultType="int">
@@ -60,11 +96,39 @@
 			AND flag = -1
 	</select>
 	
+	<select id="readLike_reply" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			like_${b_name}
+		WHERE
+			rno = #{rno}
+			AND flag = 1
+	</select>
+	
+	<select id="readDislike_reply" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			like_${b_name}
+		WHERE
+			rno = #{rno}
+			AND flag = -1
+	</select>
+	
 	<delete id="delete">
 		DELETE FROM
 			like_${b_name}
 		WHERE
 			bno = #{bno}
+			AND id = #{id}
+	</delete>
+	
+	<delete id="delete_reply">
+		DELETE FROM
+			like_${b_name}
+		WHERE
+			rno = #{rno}
 			AND id = #{id}
 	</delete>
 </mapper>

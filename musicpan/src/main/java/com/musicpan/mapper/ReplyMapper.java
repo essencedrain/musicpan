@@ -27,4 +27,7 @@ public interface ReplyMapper {
 	public int deleteFlag(@Param("rno") Long rno, @Param("b_name") String b_name);
 	public int deleteFlag2(@Param("rno") Long rno, @Param("b_name") String b_name);
 	public int getRef(ReplyVO vo);
+	
+	public void updateLike(@Param("rno") Long rno, @Param("b_name") String b_name, @Param("amount") int amount);
+	public void updatedisLike(@Param("rno") Long rno, @Param("b_name") String b_name, @Param("amount") int amount);
 }//class

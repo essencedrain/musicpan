@@ -611,10 +611,11 @@
 	            			str += '<div id="reply_'+list[i].rno+'" class="card-text">'+ list[i].reply +'</div>';	
 	            		}
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
-    	            		str += '<span class="span_class2"><i class="far fa-thumbs-up"></i></span>';
-    	            		str += '<span class="span_class">0</span>';//좋아요
-		    	            str += '<span class="span_class2"><i class="far fa-thumbs-down"></i></span>';
-		    	            str += '<span class="span_class">0</span>';//싫어요
+    	            	
+   	            			str += '<span class="span_class2 reply_likeBtn" data-rno="'+list[i].rno+'"><i id="rt_up'+list[i].rno+'" class="far fa-thumbs-up"></i></span>';
+    	            		str += '<span class="span_class" id="reply_likeCount'+list[i].rno+'">'+list[i].likeCnt+'</span>';//좋아요
+   	            			str += '<span class="span_class2 reply_dislikeBtn" data-rno="'+list[i].rno+'"><i id="rt_down'+list[i].rno+'" class="far fa-thumbs-down"></i></span>';
+		    	            str += '<span class="span_class" id="reply_dislikeCount'+list[i].rno+'">'+list[i].dislikeCnt+'</span>';//싫어요
 		    	            
 		    	            <sec:authorize access="isAuthenticated()">
 		    	            if(list[i].reply_step == 0 ){
@@ -643,10 +644,13 @@
 
 	        $('.card_area').html(str);
 	        showReplyPage(replyCnt, page);
-
+	        
+	        //댓글에 좋아요 자기가 한건지 체크
+	        <sec:authorize access="isAuthenticated()">
+		        readReplyLike();
+		    </sec:authorize>
 	        
 	        //자동스크롤링
-	        
 	        if(scrollFlag==1){//최상단
 		        var position = $("#spy_"+scroll1st).offset();
 		        $('html, body').animate({scrollTop : position.top-150}, 500);
@@ -1231,6 +1235,231 @@
 	<!-- =================================================================================================  -->
    	<!-- end 게시글 좋아요 -->
    	<!-- =================================================================================================  -->
+   	
+   	
+   	
+	<!-- =================================================================================================  -->
+   	<!-- start 댓글 좋아요 읽기 -->
+   	<!-- =================================================================================================  -->
+   	<script type="text/javascript">
+   	function readReplyLike(){
+   		
+   		var bnoValue = '<c:out value="${board.bno}"/>';
+	    var b_name = '${cri.b_name}';
+	    var replyer = "";
+	    <sec:authorize access="isAuthenticated()">
+	    	replyer = '<sec:authentication property="principal.username"/>';   
+	    </sec:authorize>
+	    
+	  	//좋아요 싫어요 읽기, 지금 로그인한 사람이 누른건지, 누른거면 엄지 색칠
+	    $('.reply_likeBtn').each(function(){
+	    	
+	    	var rnoValueTemp = $(this).data('rno');
+	    	//console.log("rnoValueTemp"+rnoValueTemp);
+	    	//console.log("//////"+b_name+"//"+rnoValueTemp+"//"+replyer);
+	    	$.getJSON("/like/read_reply/"+b_name+"/"+ rnoValueTemp + "/" + replyer +".json",
+	                function (data) {
+	                    //내가 체크했으면
+	                    if(data.check==1){
+	                    	if(data.value==1){
+	                    		//좋아요
+	                    		$('#rt_up'+rnoValueTemp).toggleClass('far');
+	                    		$('#rt_up'+rnoValueTemp).toggleClass('fas');
+	                    	}else{
+	                    		//싫어요
+	                    		$('#rt_down'+rnoValueTemp).toggleClass('far');
+	                    		$('#rt_down'+rnoValueTemp).toggleClass('fas');
+	                    	}//if
+	                    }//if
+	                    
+	                }).fail(function(xhr,status,err) {
+	                	console.log("댓글 좋아요 에러1");
+			});//$.getJSON(
+		});// $('.reply_likeBtn').each(function(){
+	}//function
+   	</script>
+	<!-- =================================================================================================  -->
+   	<!-- end 댓글 좋아요 읽기 -->
+   	<!-- =================================================================================================  -->
+   	
+   	
+   	
+	<!-- =================================================================================================  -->
+   	<!-- start 댓글 좋아요 -->
+   	<!-- =================================================================================================  -->
+   	<sec:authorize access="isAuthenticated()">
+   	<script type="text/javascript">
+   	$(document).ready(function(){
+   		var bnoValue = '<c:out value="${board.bno}"/>';
+	    var b_name = '${cri.b_name}';
+	    var replyer = "";
+	    <sec:authorize access="isAuthenticated()">
+	    	replyer = '<sec:authentication property="principal.username"/>';   
+	    </sec:authorize>
+   		
+	    
+	    
+   		$(document).on('click','.reply_likeBtn',function(){
+   			
+   			var rnoValue = $(this).data('rno');
+   			
+   			//쿠키 체크, 좋아요는 5초에 1번
+			if(getCookie('mpllck'+b_name+bnoValue)!=null){
+				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
+				return;
+			}
+   			
+   			var like_info = {
+    				id : replyer
+    				,rno : rnoValue 
+    				,b_name : b_name
+    				,flag : 1
+   			};
+   			
+   			
+   			$.ajax({
+	            type: "post",
+	            url: "/like/check_reply",
+	            data: JSON.stringify(like_info),
+	            contentType: "application/json; charset=utf-8",
+	            success: function (data) {
+	            	if(data.check==0){
+	            		//추가
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/insert_reply",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data2) {
+		    	                $('#reply_likeCount'+rnoValue).text(data2.like);
+		    	                $('#reply_dislikeCount'+rnoValue).text(data2.dislike);
+		    	                
+		    	                $('#rt_up'+rnoValue).toggleClass('far');
+		                		$('#rt_up'+rnoValue).toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("댓글 좋아요 에러2");
+		    	            }
+		    	        });//$.ajax({
+	            	}else if(data.check==1 && data.value == 1){
+	            		//삭제
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/delete_reply",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data3) {
+		    	                $('#reply_likeCount'+rnoValue).text(data3.like);
+		    	                $('#reply_dislikeCount'+rnoValue).text(data3.dislike);
+		    	                
+		    	                $('#rt_up'+rnoValue).toggleClass('far');
+		                		$('#rt_up'+rnoValue).toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("댓글 좋아요 에러3");
+		    	            }
+		            	});//$.ajax({
+	            	}//if(data.check==0){
+	            },
+	            error: function(xhr, status, er){
+	            	console.log("댓글 좋아요 에러4");
+	            }
+	        });//$.ajax({
+   			
+   		});//$(document).on('click','.reply_likeBtn',function(){
+   		
+   			
+   		$(document).on('click','.reply_dislikeBtn',function(){
+			var rnoValue = $(this).data('rno');
+   			
+   			//쿠키 체크, 좋아요는 5초에 1번
+			if(getCookie('mpllck'+b_name+bnoValue)!=null){
+				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
+				return;
+			}
+   			
+   			var like_info = {
+    				id : replyer
+    				,rno : rnoValue 
+    				,b_name : b_name
+    				,flag : -1
+   			};
+   			
+   			
+   			$.ajax({
+	            type: "post",
+	            url: "/like/check_reply",
+	            data: JSON.stringify(like_info),
+	            contentType: "application/json; charset=utf-8",
+	            success: function (data) {
+	            	if(data.check==0){
+	            		//추가
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/insert_reply",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data2) {
+		    	                $('#reply_likeCount'+rnoValue).text(data2.like);
+		    	                $('#reply_dislikeCount'+rnoValue).text(data2.dislike);
+		    	                
+		    	                $('#rt_down'+rnoValue).toggleClass('far');
+		                		$('#rt_down'+rnoValue).toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("댓글 좋아요 에러5");
+		    	            }
+		    	        });//$.ajax({
+	            	}else if(data.check==1 && data.value == -1){
+	            		//삭제
+		            	$.ajax({
+		    	            type: "post",
+		    	            url: "/like/delete_reply",
+		    	            data: JSON.stringify(like_info),
+		    	            contentType: "application/json; charset=utf-8",
+		    	            dataType : 'json',
+		    	            success: function (data3) {
+		    	                $('#reply_likeCount'+rnoValue).text(data3.like);
+		    	                $('#reply_dislikeCount'+rnoValue).text(data3.dislike);
+		    	                
+		    	                $('#rt_down'+rnoValue).toggleClass('far');
+		                		$('#rt_down'+rnoValue).toggleClass('fas');
+		                		
+		                		//쿠키생성
+		            			setCookie('mpllck'+b_name+bnoValue, 'yes', 5);
+		    	            },
+		    	            error: function(xhr2, status2, er2){
+		    	            	console.log("댓글 좋아요 에러6");
+		    	            }
+		            	});//$.ajax({
+	            	}//if(data.check==0){
+	            },
+	            error: function(xhr, status, er){
+	            	console.log("댓글 좋아요 에러7");
+	            }
+	        });//$.ajax({
+   		});//$(document).on('click','.reply_dislikeBtn',function(){
+   	});//$(document).ready(function(){
+   	</script>
+   	</sec:authorize>
+	<!-- =================================================================================================  -->
+   	<!-- end 댓글 좋아요 -->
+   	<!-- =================================================================================================  -->
+   	
+   	
+   	
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
