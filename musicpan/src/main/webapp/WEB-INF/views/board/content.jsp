@@ -47,7 +47,7 @@
 			            		</tr>
 		            		</table>
 		            		
-		            		<div class="content_like text-center">
+		            		<div class="content_like text-center pb-4">
                                	<button type="button" id="content_likeBtn" class="btn btn-primary btn-sm mr-2"><i id="t_up" class="far fa-thumbs-up"></i>&nbsp;:&nbsp;<span id="content_likeCount">0</span></button>
 					        	<button type="button" id="content_dislikeBtn" class="btn btn-outline-secondary btn-sm"><i id="t_down" class="far fa-thumbs-down"></i>&nbsp;:&nbsp;<span id="content_dislikeCount">0</span></button>
 					      	</div>
@@ -612,9 +612,9 @@
 	            		}
     	            	str += '<div class="card-body-under d-flex justify-content-end align-items-center">';
     	            	
-   	            			str += '<span class="span_class2 reply_likeBtn" data-rno="'+list[i].rno+'"><i id="rt_up'+list[i].rno+'" class="far fa-thumbs-up"></i></span>';
+   	            			str += '<span class="span_class2 reply_likeBtn" data-id="'+list[i].id+'" data-rno="'+list[i].rno+'"><i id="rt_up'+list[i].rno+'" class="far fa-thumbs-up"></i></span>';
     	            		str += '<span class="span_class reply_likeBtn2" id="reply_likeCount'+list[i].rno+'">'+list[i].likeCnt+'</span>';//좋아요
-   	            			str += '<span class="span_class2 reply_dislikeBtn" data-rno="'+list[i].rno+'"><i id="rt_down'+list[i].rno+'" class="far fa-thumbs-down"></i></span>';
+   	            			str += '<span class="span_class2 reply_dislikeBtn" data-id="'+list[i].id+'" data-rno="'+list[i].rno+'"><i id="rt_down'+list[i].rno+'" class="far fa-thumbs-down"></i></span>';
 		    	            str += '<span class="span_class reply_dislikeBtn2" id="reply_dislikeCount'+list[i].rno+'">'+list[i].dislikeCnt+'</span>';//싫어요
 		    	            
 		    	            <sec:authorize access="isAuthenticated()">
@@ -1084,6 +1084,12 @@
 	    
 <sec:authorize access="isAuthenticated()">
    		$("#content_likeBtn").click(function() {
+   			
+			if(replyer=='${board.id}'){
+				swa("error","본인 게시글에는 사용 불가능합니다.");
+				return;
+			}
+   			
    			//쿠키 체크, 좋아요는 5초에 1번
 			if(getCookie('mpllck'+b_name+bnoValue)!=null){
 				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
@@ -1158,6 +1164,12 @@
    	    	
    	    	
    		$("#content_dislikeBtn").click(function() {
+   			
+   			if(replyer=='${board.id}'){
+				swa("error","본인 게시글에는 사용 불가능합니다.");
+				return;
+			}
+   			
    			//쿠키 체크, 좋아요는 5초에 1번
 			if(getCookie('mpllck'+b_name+bnoValue)!=null){
 				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
@@ -1309,6 +1321,10 @@
    			
    			var rnoValue = $(this).data('rno');
    			
+   			if(replyer==$(this).data('id')){
+				swa("error","본인 댓글에는 사용 불가능합니다.");
+				return;
+			}
    			//쿠키 체크, 좋아요는 5초에 1번
 			if(getCookie('mpllck'+b_name+bnoValue)!=null){
 				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
@@ -1385,7 +1401,12 @@
    			
    		$(document).on('click','.reply_dislikeBtn',function(){
 			var rnoValue = $(this).data('rno');
-   			
+			
+			if(replyer==$(this).data('id')){
+				swa("error","본인 댓글에는 사용 불가능합니다.");
+				return;
+			}
+			
    			//쿠키 체크, 좋아요는 5초에 1번
 			if(getCookie('mpllck'+b_name+bnoValue)!=null){
 				swa("error","좋아요/싫어요는 5초에 1번만 수정 가능합니다");
