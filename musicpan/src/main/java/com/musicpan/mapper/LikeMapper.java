@@ -13,4 +13,13 @@ public interface LikeMapper {
 	
 	public int delete(LikeVO vo);
 	
+	public int insert_reply(LikeVO vo);
+	public int checkDuplication_reply(LikeVO vo);
+	public int checkDuplicationValue_reply(LikeVO vo);
+	
+	public int readLike_reply(LikeVO vo);
+	public int readDislike_reply(LikeVO vo);
+	
+	public int delete_reply(LikeVO vo);
+	
 }//class

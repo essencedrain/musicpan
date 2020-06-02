@@ -139,6 +139,8 @@
 			,r.del_flag
 			,r.bno
 			,r.id
+			,r.likecnt
+			,r.dislikecnt
 			,m.grade
 			,m.name
 		FROM
@@ -164,4 +166,20 @@
 			bno = #{bno} AND del_flag < 1
 	]]>
 	</select>
+	
+	
+	<update id="updateLike">
+    	update reply_${b_name}
+    	set
+    		likecnt = likecnt + #{amount}
+    	where
+    		rno = #{rno}
+	</update> 
+	<update id="updatedisLike">
+    	update reply_${b_name}
+    	set
+    		dislikecnt = dislikecnt + #{amount}
+    	where
+    		rno = #{rno}
+	</update> 
 </mapper>

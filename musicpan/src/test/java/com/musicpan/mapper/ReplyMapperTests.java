@@ -46,18 +46,18 @@ public class ReplyMapperTests {
 		});
 		
 	}
-	
+	*/
 	
 	@Test
 	public void testRead() {
 		
-		Long targetRno = 5L;
+		Long targetRno = 4197L;
 		
 		ReplyVO vo = mapper.read(targetRno, "sample");
 		
 		log.info(vo);
 	}
-	
+	/*
 	@Test
 	public void testDelete() {
 		
