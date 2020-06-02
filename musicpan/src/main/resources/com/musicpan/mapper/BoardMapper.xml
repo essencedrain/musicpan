@@ -26,7 +26,7 @@
 	
 	
 	<select id="getListWithPaging" resultType="com.musicpan.domain.BoardVO">
-		SELECT b.bno, b.title, b.regdate, b.hit, b.id, m.name, m.grade, b.replycnt
+		SELECT b.bno, b.title, b.regdate, b.hit, b.id, b.likecnt, b.dislikecnt, m.name, m.grade, b.replycnt
 		from board_${b_name} b INNER JOIN member m
 			ON b.id=m.id
 		where 
@@ -46,7 +46,7 @@
 	</select>
 	
 	<select id="read" resultType="com.musicpan.domain.BoardVO">
-		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, b.id, m.name, m.grade
+		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, b.id, b.likecnt, b.dislikecnt, m.name, m.grade
 		from board_${b_name} b INNER JOIN member m
 				ON b.id=m.id
 		where bno = #{bno}
@@ -95,6 +95,21 @@
     	update board_${b_name}
     	set
     		replycnt = replycnt + #{amount}
+    	where
+    		bno = #{bno}
+	</update> 
+	
+	<update id="updateLike">
+    	update board_${b_name}
+    	set
+    		likecnt = likecnt + #{amount}
+    	where
+    		bno = #{bno}
+	</update> 
+	<update id="updatedisLike">
+    	update board_${b_name}
+    	set
+    		dislikecnt = dislikecnt + #{amount}
     	where
     		bno = #{bno}
 	</update> 

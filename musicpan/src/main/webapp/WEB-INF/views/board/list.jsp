@@ -39,8 +39,8 @@
 		            			<thead class="text-center">
 			            			<tr>
 				                        <th class="td_pc" style="width: 5%;">번호</td>
-				                        <th class="td_pc" style="width: 65%;">제목</td>
-				                        <th class="td_pc" style="width: 15%;">글쓴이</td>
+				                        <th class="td_pc" style="width: 63%;">제목</td>
+				                        <th class="td_pc" style="width: 17%;">글쓴이</td>
 				                        <th class="td_pc" style="width: 10%;">등록일</td>
 				                        <th class="td_pc" style="width: 5%;">조회수</td>
 				                    </tr>
@@ -50,13 +50,13 @@
                     				<c:forEach items="${list}" var="board">
 		                    			<tr>
 		                    				<td style="width: 5%;" class="list_rowNum td_pc">${rowNum}</td>
-	                    					<td style="width: 65%;" class="text-left list_else td_pc clickable-row" data-href="${board.bno}">
+	                    					<td style="width: 63%;" class="text-left list_else td_pc clickable-row" data-href="${board.bno}">
 	                    						<a class="move" href="${board.bno}">
 					                        		<span class="main_title">${board.title}</span>
 					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board.replyCnt>0?board.replyCnt:""}</span>
 					                        	</a>
 	                    					</td>
-					                        <td style="width: 15%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
+					                        <td style="width: 17%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board.grade}.gif"> ${board.name}</td>
 					                        <td style="width: 10%;" class="list_else list_regdate td_pc">${board.modiDate}</td>
 					                        <td style="width: 5%;" class="list_else td_pc">${board.hit}</td>
 					                        

@@ -23,5 +23,7 @@ public class BoardVO {
 	
 	private String modiDate;
 	private int replyCnt;
+	private int likeCnt;
+	private int dislikeCnt;
 	//private List<BoardAttachVO> attachList;
 }
