@@ -266,7 +266,8 @@ function showUploadedFile(uploadResultArr) {
 	    	var fileCallPath2 =  encodeURIComponent( obj.uploadPath + "/" + obj.uuid +"_"+obj.fileName);
 	    	
 	    	//삭제하면 본문에서 삭제하기 위해 만드는 id용 이름
-	    	var fileCallPath3 =  fileCallPath2.substring( fileCallPath2.indexOf("_")+1, fileCallPath2.indexOf(".") );
+	    	//var fileCallPath3 =  fileCallPath2.substring( fileCallPath2.indexOf("_")+1, fileCallPath2.indexOf(".") );
+	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,7);
 	        
 	        str += "<li><a href=\"javascript:;\" onclick='showImage(this)'>"
 	        		+"<img src='/display?fileName="+fileCallPath+"'></a>"
@@ -319,14 +320,12 @@ $(document).ready(function(){
 		    	swa("success", "삭제 성공");
 		    	
 		         if(type=='image'){
-		        	 //CKEDITOR.instances['ck_content'].document.getById(idPath).remove();
 		        	 var st = CKEDITOR.instances['ck_content'].document.find("."+idPath)
-		        	 console.log($(st)[0]);
+
+		        	 st.$.forEach(function(v,i,o){
+						v.remove();
+		        	 });
 		        	 
-		        	 $.each(st, function(){
-		        	 	console.log(this);
-		        		 $(this).remove();
-	        		 });
 		         	removeItem.parent().remove();
 		         }else{
 		        	 removeItem.parent().remove();
