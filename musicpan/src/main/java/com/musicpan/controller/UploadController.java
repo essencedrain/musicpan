@@ -19,15 +19,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.musicpan.domain.AttachFileDTO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -85,17 +85,21 @@ public class UploadController {
 
 	
 	
-	
-	 @PostMapping("/uploadAjaxAction")
-	 public void uploadAjaxPost(MultipartFile[] uploadFile) {
+	//=========================================================================================
+	// uploadAjaxAction
+	//=========================================================================================
+	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 	
 	 	log.info("update ajax post.........");
-		
+	 	List<AttachFileDTO> list = new ArrayList<>();
 		 
 	 	//----------------- 연월일폴더 생성 ---------------------------
 	 	String uploadFolder = "C:\\upload";
+	 	String uploadFolderPath = getFolder();
 	 	
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		
 		log.info("upload path: " + uploadPath);
 		
@@ -105,7 +109,9 @@ public class UploadController {
 		//----------------- 연월일폴더 생성 ----------------
 		
 		for (MultipartFile multipartFile : uploadFile) {
-		
+			
+			AttachFileDTO attachDTO = new AttachFileDTO();
+			
 			log.info("-------------------------------------");
 			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
 			log.info("Upload File Size: " + multipartFile.getSize());
@@ -116,21 +122,150 @@ public class UploadController {
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			log.info("only file name: " + uploadFileName);
 			
+			attachDTO.setFileName(uploadFileName);
 			
 			//uuid
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 			
-			File saveFile = new File(uploadPath, uploadFileName);
 			
 			try {
+				File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
+				
+				attachDTO.setUuid(uuid.toString());
+				attachDTO.setUploadPath(uploadFolderPath);
+				
+				// check image type file
+				if (checkImageType(saveFile)) {
+					attachDTO.setImage(true);
+					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 150, 150);
+					thumbnail.close();
+				}//if
+				
+				// add to List
+				list.add(attachDTO);
+				
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			} // end catch
 		} // end for
-	 }
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	//=========================================================================================
+	
+	
+	//=========================================================================================
+	// 특정 파일 이름을 받아서 이미지 데이터 전송
+	//=========================================================================================
+	@GetMapping("/display")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFile(String fileName) {
 
+		log.info("fileName: " + fileName);
+
+		File file = new File("c:\\upload\\" + fileName);
+
+		log.info("file: " + file);
+
+		ResponseEntity<byte[]> result = null;
+
+		try {
+			HttpHeaders header = new HttpHeaders();
+
+			header.add("Content-Type", Files.probeContentType(file.toPath())); //적절한 MIME 타입 찾기
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//=========================================================================================
+	
+	
+	
+	//=========================================================================================
+	// 다운로드처리
+	//=========================================================================================
+	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
+
+		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+
+		if (resource.exists() == false) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		String resourceName = resource.getFilename();
+
+		// remove UUID
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
+
+		HttpHeaders headers = new HttpHeaders();
+		try {
+
+			boolean checkIE = (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1);
+
+			String downloadName = null;
+
+			if (checkIE) {
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF8").replaceAll("\\+", " ");
+			} else {
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+			}
+
+			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+	}
+	//=========================================================================================
+	
+	//=========================================================================================
+	// 삭제
+	//=========================================================================================
+	//@PreAuthorize("isAuthenticated()")
+	@PostMapping("/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName, String type) {
+
+		log.info("deleteFile: " + fileName);
+
+		File file;
+
+		try {
+			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+
+			file.delete();
+
+			if (type.equals("image")) {
+
+				String largeFileName = file.getAbsolutePath().replace("s_", "");
+
+				log.info("largeFileName: " + largeFileName);
+
+				file = new File(largeFileName);
+
+				file.delete();
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<String>("deleted", HttpStatus.OK);
+
+	}
+	//=========================================================================================
+	
+	
+	
 	
 	//=========================================================================================
 	// 메서드1
@@ -142,6 +277,24 @@ public class UploadController {
 		Date date = new Date();
 		String str = sdf.format(date);
 		return str.replace("-", File.separator);
+	}
+	//=========================================================================================
+	
+	
+	//=========================================================================================
+	// 메서드2
+	// 이미지파일인지 확인
+	//=========================================================================================
+	private boolean checkImageType(File file) {
+
+		try {
+			String contentType = Files.probeContentType(file.toPath());
+			return contentType.startsWith("image");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 	//=========================================================================================
 	
@@ -392,21 +545,8 @@ public class UploadController {
 		return result;
 	}
 
-	 */
-	// @GetMapping(value = "/download", produces =
-	// MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	// @ResponseBody
-	// public ResponseEntity<Resource> downloadFile(String fileName) {
-	//
-	// log.info("download file: " + fileName);
-	//
-	// Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
-	//
-	// log.info("resource: " + resource);
-	//
-	// return null;
-	// }
 
+	 */
 	// @GetMapping(value = "/download", produces =
 	// MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	// @ResponseBody

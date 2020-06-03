@@ -1,6 +1,7 @@
 package com.musicpan.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -25,5 +26,5 @@ public class BoardVO {
 	private int replyCnt;
 	private int likeCnt;
 	private int dislikeCnt;
-	//private List<BoardAttachVO> attachList;
+	private List<BoardAttachVO> attachList;
 }

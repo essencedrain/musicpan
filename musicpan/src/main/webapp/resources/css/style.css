@@ -527,4 +527,9 @@ a.article:hover {
 	width: 15.75px; !important;
 }
 
-
+/* ---------------------------------------------------
+    파일업로드 STYLE
+----------------------------------------------------- */
+.file_upload_main #uploadBtn{
+	display: inline-block;
+}

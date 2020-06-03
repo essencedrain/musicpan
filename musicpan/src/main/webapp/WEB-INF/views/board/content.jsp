@@ -978,10 +978,10 @@
 			
 	    }
 	    
-	  	//35글자 이상 ellipsis
+	  	//24글자 이상 ellipsis, 글자수 제한
 		$('.main_title').each(function(){
-			if($(this).text().length>35){
-				$(this).text($(this).text().substring(0,35)+"...");
+			if($(this).text().length>24){
+				$(this).text($(this).text().substring(0,24)+"...");
 			}
 		});
 	</script>
