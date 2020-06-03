@@ -67,6 +67,9 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
         $(document).ready(function(){
+        	
+        	$('#username_temp').focus();
+        	
             $('#submitBtn').on('click', function(e){
             	e.preventDefault();
             	

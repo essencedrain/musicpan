@@ -10,22 +10,10 @@
 	width: 100%;
 }
 
-.uploadResult ul {
-	display: flex;
-	flex-flow: row;
-	justify-content: center;
-	align-items: center;
-}
 
-.uploadResult ul li {
-	list-style: none;
-	padding: 10px;
-	align-content: center;
-	text-align: center;
-}
-
-.uploadResult ul li img {
-	width: 150px;
+.uploadResult .wrapResult img {
+	width: 100px;
+	height: 100px;
 }
 
 </style>
@@ -61,7 +49,7 @@
 								<button type="button" id='uploadBtn' class="btn btn-outline-secondary text-center mx-1" onclick="uploadBtnClick()">파일 업로드</button>
 							</div>
 							<div class='uploadResult'>
-								<ul></ul>
+								<div class="wrapResult d-flex flex-wrap align-content-start bg-light"></div>
 							</div>
 						</div>
 						
@@ -244,7 +232,7 @@ function uploadBtnClick(){
 function showUploadedFile(uploadResultArr) {
 	
 	//파일이름 출력
-	var uploadResult = $(".uploadResult ul");
+	var uploadResult = $(".uploadResult .wrapResult");
 	 var str = "";
 	 
 	 $(uploadResultArr).each(function(i, obj) {
@@ -255,8 +243,8 @@ function showUploadedFile(uploadResultArr) {
 	        
 	        var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 	        
-	        str += "<li><div><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a>"+
-	            "<span data-file=\'"+fileCallPath+"\' data-type='file'> X </span><div></li>"
+	        str += "<div class='p-2 border'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a>"+
+	            "<span data-file=\'"+fileCallPath+"\' data-type='file'>&nbsp;<i class=\"fas fa-times-circle fa-2x text-danger\"></i></span></div>"
 	            
 	      }else{
 	    	//encodeURIComponent() URI호출에 적합한 문자열로 인코딩처리(공백, 한글 등 처리)
@@ -267,11 +255,11 @@ function showUploadedFile(uploadResultArr) {
 	    	
 	    	//삭제하면 본문에서 삭제하기 위해 만드는 id용 이름
 	    	//var fileCallPath3 =  fileCallPath2.substring( fileCallPath2.indexOf("_")+1, fileCallPath2.indexOf(".") );
-	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,7);
+	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,6);
 	        
-	        str += "<li><a href=\"javascript:;\" onclick='showImage(this)'>"
+	        str += "<div class='p-2 border'><a href=\"javascript:;\" onclick='showImage(this)'>"
 	        		+"<img src='/display?fileName="+fileCallPath+"'></a>"
-	        		+ "<span data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'> X </span><li>";
+	        		+ "<span data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'>&nbsp;<i class=\"fas fa-times-circle fa-2x text-danger\"></i></span></div>";
 	        
 	        var imgHtml = CKEDITOR.dom.element.createFromHtml( "<img class='"+fileCallPath3+"' src='/display?fileName="+fileCallPath2+"' /><br />" );
 	        CKEDITOR.instances['ck_content'].insertElement(imgHtml);
