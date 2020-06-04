@@ -4,6 +4,8 @@
 /*
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 */
+img {width: inherit; max-width:100%; height: auto;}
+
 body {
     background: #fff;
     
@@ -574,4 +576,10 @@ a.article:hover {
 .uploadResult .wrapResult img {
 	width: 100px;
 	height: 100px;
+}
+.file_info{
+	font-size: 12px;
+	line-height: 18px;
+    font-weight: 500;
+    color: #999;
 }

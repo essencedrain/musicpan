@@ -35,6 +35,11 @@
 		                	<div class="file_upload_main">
 								<input id="input_uploadFile" type='file' name='uploadFile' multiple>
 								<button type="button" id='uploadBtn' class="btn btn-outline-secondary btn-sm text-center mx-1" onclick="uploadBtnClick()">파일 업로드</button>
+								 <span class="file_info">파일 크기 제한 : 10.00MB (<span class="file_size_status">0</span>KB / 40.00MB)</span>
+								 <br><span class="file_info">(허용 확장자 : *.jpg, *.jpeg, *.gif, *.png, *.doc, *.hwp, *.xls, *.ppt, *.pdf)</span>
+								 <div id="proBarDiv" class="progress mb-2 d-none" style="height:10px">
+							    	<div id="proBar" class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:20%;height:10px"></div>
+							  	 </div>
 							</div>
 							<div class='uploadResult mt-2 p-2'>
 								<div class="wrapResult d-flex flex-wrap align-content-start bg-light"></div>
@@ -78,7 +83,9 @@
 <!-- =================================================================================================  -->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
-
+<script type="text/javascript">
+var totalFileSize = 0;
+</script>
 
 	<!-- =================================================================================================  -->
 	<!-- Start 글쓰기 폼 기본 처리 -->
@@ -128,6 +135,7 @@
 	        str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
 	        str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
 	        str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+	        str += "<input type='hidden' name='attachList["+i+"].fileSize' value='"+ jobj.data("size")+"'>";
 	    	
 	    });
 	    
@@ -167,7 +175,8 @@ function showImage(item){
 
 function checkExtension(fileName, fileSize) {
 		
-		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		//var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png|doc|hwp|xls|xlsx|ppt|pptx|pdf)$");
 		var maxSize = 10485760; //10MB	
 	
 		if (fileSize >= maxSize) {
@@ -175,7 +184,8 @@ function checkExtension(fileName, fileSize) {
 			return false;
 		}//if
 
-		if (regex.test(fileName)) {
+		//if (regex.test(fileName)) {
+		if (!regex.test(fileName)) {
 			swa("error", "해당 종류의 파일은 업로드할 수 없습니다.");
 			return false;
 		}//if
@@ -196,18 +206,32 @@ function uploadBtnClick(){
 		return;
 	}
 	
-	console.log(files);
+	//console.log(files);
 	 
+	//임시업로드총용량
+	var totalFileSizeTemp = 0;
+	
 	//add filedate to formdata
 	 for(var i = 0; i < files.length; i++){
 		
 		if (!checkExtension(files[i].name, files[i].size)) {
 			return false;
 		}
-	 
+	 	
+		totalFileSizeTemp += files[i].size;
+		
 	 	formData.append("uploadFile", files[i]);
 	 }//for
-	
+	 
+	 
+	 if( (totalFileSize + totalFileSizeTemp) > 41943040){
+		swa("error", "업로드 가능 용량 초과");
+		return;
+	 }
+		
+	 //업로드총용량 + 임시총용량
+	 totalFileSize += totalFileSizeTemp;
+	 
 	 $.ajax({
 		 url: '/uploadAjaxAction',
 		 processData: false,
@@ -230,11 +254,37 @@ function uploadBtnClick(){
 		 success: function(result){
 		 	swa("success", "업로드 성공");
 			showUploadedFile(result);
+			
 			//파일폼은 readonly라서 수정안됨, 복제해서 ajax에 다시 뿌려줌 (초기화 작업)
 		 	$(".file_upload_main").html( cloneObj.html() );
+		 	$('.file_size_status').text( (totalFileSize/1024).toFixed(1) );
+		 	
+			//테두리 on
+			if(!$('.uploadResult').hasClass('borderToggle')){
+				$('.uploadResult').addClass('borderToggle');
+			}//if
+				
+			//프로그레스바 on
+			var percentBar = (totalFileSize/41943040)*100;
+			$('#proBar').css('width',percentBar+'%');
+			$('#proBar').text( percentBar.toFixed(1)+"%" );
 			
-			//테두리 토글
-			$('.uploadResult').toggleClass('borderToggle');
+			//프로그레스바 색상
+			$('#proBar').removeClass('bg-info');
+			$('#proBar').removeClass('bg-warning');
+			$('#proBar').removeClass('bg-danger');
+			if(percentBar < 50){
+				$('#proBar').addClass('bg-info');
+			}else if(percentBar < 80){
+				$('#proBar').addClass('bg-warning');			
+			}else if(percentBar < 100){
+				$('#proBar').addClass('bg-danger');
+			}
+			
+			if($('#proBarDiv').hasClass('d-none')){
+				$('#proBarDiv').removeClass('d-none');
+			}//if
+			
 		 },
          error: function(xhr2, status2, er2){
          	swa("error", "파일 업로드 에러");
@@ -258,10 +308,10 @@ function showUploadedFile(uploadResultArr) {
 	        
 	        var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 	        
-	        str += "<div class='pb-2 pt-3 px-2 resultItems border justify-content-center d-flex align-items-center border' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
+	        str += "<div class='pb-2 pt-3 px-2 resultItems border justify-content-center d-flex align-items-center border' data-size='"+ obj.fileSize +"' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
 	        	+"<div class='fileNameSize'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a></div>"+
-	            "<span data-file=\'"+fileCallPath+"\' data-type='file'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>"
-	            
+	            "<span data-size='"+ obj.fileSize +"' data-file=\'"+fileCallPath+"\' data-type='file'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>"
+	        
 	      }else{//이미지
 	    	  
 	    	//encodeURIComponent() URI호출에 적합한 문자열로 인코딩처리(공백, 한글 등 처리)
@@ -273,10 +323,10 @@ function showUploadedFile(uploadResultArr) {
 	    	//삭제하면 본문에서 삭제하기 위해 만드는 id용 이름
 	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,6);
 	        
-	        str += "<div class='pb-2 pt-3 px-2 resultItems border' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
-	        		+ "<a href=\"javascript:;\" onclick='showImage(this)'>"
-	        		+ "<img src='/display?fileName="+fileCallPath+"'></a>"
-	        		+ "<span data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>";
+	        str += "<div class='pb-2 pt-3 px-2 resultItems border' data-size='"+ obj.fileSize +"' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
+        		+ "<a href=\"javascript:;\" onclick='showImage(this)'>"
+        		+ "<img src='/display?fileName="+fileCallPath+"'></a>"
+        		+ "<span data-size='"+ obj.fileSize +"' data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>";
 	        
 	        var imgHtml = CKEDITOR.dom.element.createFromHtml( "<img class='"+fileCallPath3+"' src='/display?fileName="+fileCallPath2+"' /><br />" );
 	        CKEDITOR.instances['ck_content'].insertElement(imgHtml);
@@ -299,9 +349,11 @@ $(document).ready(function(){
 		  var targetFile = $(this).data("file");
 		  var type = $(this).data("type");
 		  //console.log(targetFile);
-		  
 		  var idPath = $(this).data("file2");
 		  var removeItem = $(this);
+		  var sizeFile = $(this).data("size"); 
+		  var sizeSpan = $('.file_size_status');
+		  
 		  
 		  $.ajax({
 		    url: '/deleteFile',
@@ -330,16 +382,69 @@ $(document).ready(function(){
 		        	st.$.forEach(function(v,i,o){
 						v.remove();
 		        	});
-		        	 
+		        	
+		        	 //화면에서 삭제
 		         	 removeItem.parent().remove();
-		         	
+		         	 
+		        	 
+		         	totalFileSize -= sizeFile;
+		        	 
+		        	 //전체 파일사이즈 수정
+		         	 sizeSpan.text( ( totalFileSize/1024).toFixed(1) );
+		        	 
+		         	//프로그레스바
+		 			var percentBar = (totalFileSize/41943040)*100;
+		 			
+		         	//프로그레스바 색상
+					$('#proBar').removeClass('bg-info');
+					$('#proBar').removeClass('bg-warning');
+					$('#proBar').removeClass('bg-danger');
+					if(percentBar < 50){
+						$('#proBar').addClass('bg-info');
+					}else if(percentBar < 80){
+						$('#proBar').addClass('bg-warning');			
+					}else if(percentBar < 100){
+						$('#proBar').addClass('bg-danger');
+					}//if
+					
+		 			$('#proBar').css('width',percentBar+'%');
+		 			$('#proBar').text( percentBar.toFixed(1)+"%" );
+		        	 
 		         }else{
 		        	 removeItem.parent().remove();
+					 
+		        	 totalFileSize -= sizeFile;
+		        	 
+		        	//전체 파일사이즈 수정
+		         	 sizeSpan.text( ( totalFileSize/1024).toFixed(1) );
+		        	
+		         	//프로그레스바
+		 			var percentBar = (totalFileSize/41943040)*100;
+		         	
+		         	//프로그레스바 색상
+		 			$('#proBar').removeClass('bg-info');
+		 			$('#proBar').removeClass('bg-warning');
+		 			$('#proBar').removeClass('bg-danger');
+		 			if(percentBar < 50){
+		 				$('#proBar').addClass('bg-info');
+		 			}else if(percentBar < 80){
+		 				$('#proBar').addClass('bg-warning');			
+		 			}else if(percentBar < 100){
+		 				$('#proBar').addClass('bg-danger');
+		 			}//if
+		 			$('#proBar').css('width',percentBar+'%');
+		 			$('#proBar').text( percentBar.toFixed(1)+"%" );
+		        	
 		         }//if
 		         
-		         //resultItems 가 0개면 $('.uploadResult').toggleClass('borderToggle'); 해줘야함
+		         //테두리, 프로그레스바 off
 		         if( $('.resultItems').length == 0 ){
-		        	 $('.uploadResult').toggleClass('borderToggle');
+		        	 if($('.uploadResult').hasClass('borderToggle')){
+		 				$('.uploadResult').removeClass('borderToggle');
+		 			 }//if
+		        	 if(!$('#proBarDiv').hasClass('d-none')){
+		 				$('#proBarDiv').addClass('d-none');
+		 			 }//if
 		         }//if
 		         
 			},
