@@ -44,7 +44,7 @@
 
 	<delete id="deleteAll">
 
-		delete
+		delete from
 			file_${b_name}
 		where
 			bno = #{bno}

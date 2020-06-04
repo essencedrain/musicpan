@@ -197,7 +197,7 @@
 //=================================================================
 function showImage(item){
 	  
-	var imgHtml = CKEDITOR.dom.element.createFromHtml( "<img class='"+$(item).next().data('file2')+"' src='/display?fileName="+$(item).next().data('file3')+"' /><br />" );
+	var imgHtml = CKEDITOR.dom.element.createFromHtml( "<img class='"+$(item).next().data('file2')+"' src='/display?fileName="+$(item).next().data('file3')+"' /><br /><br />" );
     CKEDITOR.instances['ck_content'].insertElement(imgHtml);
 }//showImage()	
 

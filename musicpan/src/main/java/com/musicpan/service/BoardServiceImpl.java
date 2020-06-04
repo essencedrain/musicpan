@@ -58,12 +58,12 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Transactional
 	@Override
-	public void register(BoardVO board) {
+	public long register(BoardVO board) {
 		
 		mapper.insert(board);
 		
 		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
-			return;
+			return board.getBno();
 		}//if
 		
 		board.getAttachList().forEach(attach -> {
@@ -72,6 +72,7 @@ public class BoardServiceImpl implements BoardService{
 			attachMapper.insert(attach);
 		});
 		
+		return board.getBno();
 	}
 
 
@@ -89,10 +90,13 @@ public class BoardServiceImpl implements BoardService{
 		return modifyResult;
 	}
 
-
+	@Transactional
 	@Override
 	public boolean remove(BoardVO board) {
+		
 		boolean deleteResult = mapper.updateFlag(board) == 1;
+		
+		attachMapper.deleteAll(board);
 		
 		return deleteResult;
 	}

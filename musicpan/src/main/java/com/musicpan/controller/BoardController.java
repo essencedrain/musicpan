@@ -1,5 +1,8 @@
 package com.musicpan.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -259,13 +262,13 @@ public class BoardController {
 //		if(boardVO.getAttachList() != null) {
 //			boardVO.getAttachList().forEach(attach -> log.info(attach));
 //		}
-//		
+//		/board/{boardName}/content/{bno}	
 //		log.info("====================================================");
 		
 		
-		service.register(boardVO);
+		long result = service.register(boardVO);
 		
-		return "redirect:/board/"+boardVO.getB_name()+"/list";
+		return "redirect:/board/"+boardVO.getB_name()+"/content/" + result;
 	}
 	//=========================================================================================
 	
@@ -314,7 +317,13 @@ public class BoardController {
 		// sqlinjection 대응
 		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
 		
-		service.remove(boardVO);
+		
+		List<BoardAttachVO> attachList = service.getAttachList(boardVO.getBno(), boardVO.getB_name());
+		
+		if(service.remove(boardVO)) {
+			//파일삭제
+			deleteFiles(attachList);
+		}
 		return "redirect:/board/"+boardVO.getB_name()+"/list";
 	}
 	//=========================================================================================	
@@ -425,6 +434,8 @@ public class BoardController {
 	}//b_name2
 	//=========================================================================================
 	
+	
+	
 	//=========================================================================================
 	// 메서드2
 	// SqlInjection 대응 함수
@@ -438,6 +449,41 @@ public class BoardController {
 		}
 		
 	}//b_name2
+	//=========================================================================================
+	
+	
+	
+	//=========================================================================================
+	// 메서드3
+	// 파일삭제 메서드
+	//=========================================================================================
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+	    
+	    if(attachList == null || attachList.size() == 0) {
+	      return;
+	    }
+	    
+	    log.info("delete attach files...................");
+	    log.info(attachList);
+	    
+	    attachList.forEach(attach -> {
+	      try {        
+	        Path file  = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
+	        
+	        Files.deleteIfExists(file);
+	        
+	        if(Files.probeContentType(file).startsWith("image")) {
+	        
+	          Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
+	          
+	          Files.delete(thumbNail);
+	        }
+	
+	      }catch(Exception e) {
+	        log.error("delete file error" + e.getMessage());
+	      }//end catch
+	    });//end foreachd
+	  }
 	//=========================================================================================
 	
 }//class
