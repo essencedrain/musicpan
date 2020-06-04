@@ -10,6 +10,30 @@
 	width: 100%;
 }
 
+.borderToggle{
+	border: 1px solid #0F4C81;
+}
+
+.uploadResult .deleteFileBtn{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	z-index: 999;
+}
+
+.uploadResult .resultItems {
+	position: relative;
+	width: 120px;
+	height: 129px;
+}
+.uploadResult .resultItems .fileNameSize, #input_uploadFile{
+	font-size:14px;
+	line-height: 21px;
+	color: #999;
+}
+#input_uploadFile{
+	width: 210px;
+}
 
 .uploadResult .wrapResult img {
 	width: 100px;
@@ -46,9 +70,9 @@
 		                <div class="file_upload mt-3 p-2 bg-light">
 		                	<div class="file_upload_main">
 								<input id="input_uploadFile" type='file' name='uploadFile' multiple>
-								<button type="button" id='uploadBtn' class="btn btn-outline-secondary text-center mx-1" onclick="uploadBtnClick()">파일 업로드</button>
+								<button type="button" id='uploadBtn' class="btn btn-outline-secondary btn-sm text-center mx-1" onclick="uploadBtnClick()">파일 업로드</button>
 							</div>
-							<div class='uploadResult'>
+							<div class='uploadResult mt-2 p-2'>
 								<div class="wrapResult d-flex flex-wrap align-content-start bg-light"></div>
 							</div>
 						</div>
@@ -161,15 +185,15 @@ function showImage(item){
 function checkExtension(fileName, fileSize) {
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-		var maxSize = 5242880; //5MB	
+		var maxSize = 10485760; //10MB	
 	
 		if (fileSize >= maxSize) {
-			alert("파일 사이즈 초과");
+			swa("error", "파일 사이즈 초과 (최대 10MB)");
 			return false;
 		}//if
 
 		if (regex.test(fileName)) {
-			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			swa("error", "해당 종류의 파일은 업로드할 수 없습니다.");
 			return false;
 		}//if
 		
@@ -183,6 +207,11 @@ function uploadBtnClick(){
 	var formData = new FormData();
 	var inputFile = $("input[name='uploadFile']");
 	var files = inputFile[0].files;
+	
+	if( files.length == 0 ){
+		swa("error", "파일을 선택해주십시오");
+		return;
+	}
 	
 	console.log(files);
 	 
@@ -220,6 +249,9 @@ function uploadBtnClick(){
 			showUploadedFile(result);
 			//파일폼은 readonly라서 수정안됨, 복제해서 ajax에 다시 뿌려줌 (초기화 작업)
 		 	$(".file_upload_main").html( cloneObj.html() );
+			
+			//테두리 토글
+			$('.uploadResult').toggleClass('borderToggle');
 		 },
          error: function(xhr2, status2, er2){
          	swa("error", "파일 업로드 에러");
@@ -243,8 +275,8 @@ function showUploadedFile(uploadResultArr) {
 	        
 	        var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 	        
-	        str += "<div class='p-2 border'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a>"+
-	            "<span data-file=\'"+fileCallPath+"\' data-type='file'>&nbsp;<i class=\"fas fa-times-circle fa-2x text-danger\"></i></span></div>"
+	        str += "<div class='pb-2 pt-3 px-2 resultItems border justify-content-center d-flex align-items-center'><div class='fileNameSize'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a></div>"+
+	            "<span data-file=\'"+fileCallPath+"\' data-type='file'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>"
 	            
 	      }else{
 	    	//encodeURIComponent() URI호출에 적합한 문자열로 인코딩처리(공백, 한글 등 처리)
@@ -257,9 +289,9 @@ function showUploadedFile(uploadResultArr) {
 	    	//var fileCallPath3 =  fileCallPath2.substring( fileCallPath2.indexOf("_")+1, fileCallPath2.indexOf(".") );
 	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,6);
 	        
-	        str += "<div class='p-2 border'><a href=\"javascript:;\" onclick='showImage(this)'>"
+	        str += "<div class='pb-2 pt-3 px-2 resultItems border'><a href=\"javascript:;\" onclick='showImage(this)'>"
 	        		+"<img src='/display?fileName="+fileCallPath+"'></a>"
-	        		+ "<span data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'>&nbsp;<i class=\"fas fa-times-circle fa-2x text-danger\"></i></span></div>";
+	        		+ "<span data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>";
 	        
 	        var imgHtml = CKEDITOR.dom.element.createFromHtml( "<img class='"+fileCallPath3+"' src='/display?fileName="+fileCallPath2+"' /><br />" );
 	        CKEDITOR.instances['ck_content'].insertElement(imgHtml);
@@ -305,19 +337,26 @@ $(document).ready(function(){
             },
 		    success: function(result){
 		    	
-		    	swa("success", "삭제 성공");
+				swa("success", "삭제 성공");
 		    	
-		         if(type=='image'){
-		        	 var st = CKEDITOR.instances['ck_content'].document.find("."+idPath)
+		        if(type=='image'){
+		        	var st = CKEDITOR.instances['ck_content'].document.find("."+idPath)
 
-		        	 st.$.forEach(function(v,i,o){
+		        	st.$.forEach(function(v,i,o){
 						v.remove();
-		        	 });
+		        	});
 		        	 
-		         	removeItem.parent().remove();
+		         	 removeItem.parent().remove();
+		         	
 		         }else{
 		        	 removeItem.parent().remove();
 		         }//if
+		         
+		         //resultItems 가 0개면 $('.uploadResult').toggleClass('borderToggle'); 해줘야함
+		         if( $('.resultItems').length == 0 ){
+		        	 $('.uploadResult').toggleClass('borderToggle');
+		         }//if
+		         
 			},
             error: function(xhr2, status2, er2){
             	swa("error", "파일 삭제 에러");
