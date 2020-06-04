@@ -81,11 +81,21 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getRank(cri);
 	}
 
-
+	@Transactional
 	@Override
 	public boolean modify(BoardVO board) {
 		
+		attachMapper.deleteAll(board);
+		
 		boolean modifyResult = mapper.update(board) == 1;
+		
+		if(modifyResult && board.getAttachList() != null && board.getAttachList().size() > 0) {
+			board.getAttachList().forEach(attach -> {
+				attach.setBno(board.getBno());
+				attach.setB_name(board.getB_name());
+				attachMapper.insert(attach);
+			});
+		}//if
 		
 		return modifyResult;
 	}

@@ -539,3 +539,39 @@ a.article:hover {
 	line-height: 15px;
 	color: #999;
 }
+/* ---------------------------------------------------
+    글쓰기폼 STYLE
+----------------------------------------------------- */
+.uploadResult {
+	width: 100%;
+}
+
+.borderToggle{
+	border: 1px solid #0F4C81;
+}
+
+.uploadResult .deleteFileBtn{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	z-index: 999;
+}
+
+.uploadResult .resultItems {
+	position: relative;
+	width: 120px;
+	height: 129px;
+}
+.uploadResult .resultItems .fileNameSize, #input_uploadFile{
+	font-size:14px;
+	line-height: 21px;
+	color: #999;
+}
+#input_uploadFile{
+	width: 210px;
+}
+
+.uploadResult .wrapResult img {
+	width: 100px;
+	height: 100px;
+}

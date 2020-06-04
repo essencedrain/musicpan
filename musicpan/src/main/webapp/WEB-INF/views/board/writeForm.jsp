@@ -5,42 +5,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp"%>
-<style>
-.uploadResult {
-	width: 100%;
-}
-
-.borderToggle{
-	border: 1px solid #0F4C81;
-}
-
-.uploadResult .deleteFileBtn{
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	z-index: 999;
-}
-
-.uploadResult .resultItems {
-	position: relative;
-	width: 120px;
-	height: 129px;
-}
-.uploadResult .resultItems .fileNameSize, #input_uploadFile{
-	font-size:14px;
-	line-height: 21px;
-	color: #999;
-}
-#input_uploadFile{
-	width: 210px;
-}
-
-.uploadResult .wrapResult img {
-	width: 100px;
-	height: 100px;
-}
-
-</style>
 <script src="/resources/ckeditor/ckeditor.js"></script>
             <!-- =================================================================================================  -->
             <!-- start  -->
@@ -116,7 +80,7 @@
 <!-- =================================================================================================  -->
 
 
-<!-- =================================================================================================  -->
+	<!-- =================================================================================================  -->
 	<!-- Start 글쓰기 폼 기본 처리 -->
 	<!-- =================================================================================================  -->
 	<script type="text/javascript">
@@ -288,7 +252,7 @@ function showUploadedFile(uploadResultArr) {
 	 
 	 $(uploadResultArr).each(function(i, obj) {
 
-	 	if(!obj.image){
+	 	if(!obj.image){//파일
 	        
 	        var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);
 	        
@@ -298,7 +262,8 @@ function showUploadedFile(uploadResultArr) {
 	        	+"<div class='fileNameSize'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a></div>"+
 	            "<span data-file=\'"+fileCallPath+"\' data-type='file'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>"
 	            
-	      }else{
+	      }else{//이미지
+	    	  
 	    	//encodeURIComponent() URI호출에 적합한 문자열로 인코딩처리(공백, 한글 등 처리)
 	        var fileCallPath =  encodeURIComponent( obj.uploadPath + "/s_" + obj.uuid +"_"+obj.fileName);
 			
@@ -306,7 +271,6 @@ function showUploadedFile(uploadResultArr) {
 	    	var fileCallPath2 =  encodeURIComponent( obj.uploadPath + "/" + obj.uuid +"_"+obj.fileName);
 	    	
 	    	//삭제하면 본문에서 삭제하기 위해 만드는 id용 이름
-	    	//var fileCallPath3 =  fileCallPath2.substring( fileCallPath2.indexOf("_")+1, fileCallPath2.indexOf(".") );
 	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,6);
 	        
 	        str += "<div class='pb-2 pt-3 px-2 resultItems border' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
