@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.musicpan.domain.BoardAttachVO;
 import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
+import com.musicpan.mapper.BoardAttachMapper;
 import com.musicpan.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -22,6 +24,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private BoardAttachMapper attachMapper;
 	
 
 	@Override
@@ -43,17 +48,31 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getTotalCount(cri);
 	}
 
-	@Transactional
+	
 	@Override
 	public BoardVO content(Criteria cri) {
 		mapper.increaseHit(cri);
 		BoardVO vo = mapper.read(cri); 
 		return vo;
 	}
-
+	
+	@Transactional
 	@Override
-	public void register(BoardVO board) {
+	public long register(BoardVO board) {
+		
 		mapper.insert(board);
+		
+		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
+			return board.getBno();
+		}//if
+		
+		board.getAttachList().forEach(attach -> {
+			attach.setBno(board.getBno());
+			attach.setB_name(board.getB_name());
+			attachMapper.insert(attach);
+		});
+		
+		return board.getBno();
 	}
 
 
@@ -62,19 +81,32 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getRank(cri);
 	}
 
-
+	@Transactional
 	@Override
 	public boolean modify(BoardVO board) {
 		
+		attachMapper.deleteAll(board);
+		
 		boolean modifyResult = mapper.update(board) == 1;
+		
+		if(modifyResult && board.getAttachList() != null && board.getAttachList().size() > 0) {
+			board.getAttachList().forEach(attach -> {
+				attach.setBno(board.getBno());
+				attach.setB_name(board.getB_name());
+				attachMapper.insert(attach);
+			});
+		}//if
 		
 		return modifyResult;
 	}
 
-
+	@Transactional
 	@Override
 	public boolean remove(BoardVO board) {
+		
 		boolean deleteResult = mapper.updateFlag(board) == 1;
+		
+		attachMapper.deleteAll(board);
 		
 		return deleteResult;
 	}
@@ -124,6 +156,20 @@ public class BoardServiceImpl implements BoardService{
             	return yy+"."+ ((mm > 9 ? "" : "0") + mm) + "."+ ((dd > 9 ? "":"0") + dd);
             }
         }
+	}
+
+
+	@Override
+	public List<BoardAttachVO> getAttachList(Long bno, String b_name) {
+		
+		return attachMapper.findByBno(bno, b_name);
+	}
+
+
+	@Override
+	public void removeAttach(Long bno, String b_name) {
+		// TODO Auto-generated method stub
+		
 	}
 	//===============================================================
 }//class

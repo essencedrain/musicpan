@@ -1,6 +1,14 @@
 package com.musicpan.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.musicpan.domain.BoardAttachVO;
 import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
 import com.musicpan.domain.PageDTO;
@@ -43,6 +53,7 @@ public class BoardController {
 	 	g002		내용2		GET		/board/{boardName}/content/{bno}	boardName, bno	list			board/content
 	 	g003		글쓰기		GET		/board/register						b_name			list,content	board/writeForm		isAuthenticated()
 	 	g004		수정하기	GET		/board/update						cri				content			board/modifyForm	isAuthenticated()
+	 	g005		첨부조회	GET		/board/getAttachList				b_name, bno		content			
 	 					
 	 	p000		글쓰기		POST	/board/register						boardVO												principal.username == #boardVO.id
 	 	p001		수정하기	POST	/board/update						boardVO			modifyForm							principal.username == #boardVO.id
@@ -206,6 +217,27 @@ public class BoardController {
 	
 	
 	
+	//=========================================================================================
+	// g005
+	// 기능		:	첨부파일 조회
+	// 메서드	:	GET
+	// URI		:	/board/getAttachList
+	//=========================================================================================
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(String b_name, Long bno) throws Exception{
+		
+		//log.info("getAttachList : " + b_name + " // " + bno);
+		
+		// sqlinjection 대응
+		if(isSqlInjection(b_name)) {throw new Exception();}
+		
+		return new ResponseEntity<>(service.getAttachList(bno, b_name), HttpStatus.OK);
+	}
+	//=========================================================================================	
+	
+	
+	
 	
 	//=========================================================================================
 	// p000
@@ -222,9 +254,21 @@ public class BoardController {
 		// sqlinjection 대응
 		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
 		
-		service.register(boardVO);
 		
-		return "redirect:/board/"+boardVO.getB_name()+"/list";
+//		log.info("====================================================");
+//		log.info("register : " + boardVO);
+//		log.info("====================================================");
+//		
+//		if(boardVO.getAttachList() != null) {
+//			boardVO.getAttachList().forEach(attach -> log.info(attach));
+//		}
+//		/board/{boardName}/content/{bno}	
+//		log.info("====================================================");
+		
+		
+		long result = service.register(boardVO);
+		
+		return "redirect:/board/"+boardVO.getB_name()+"/content/" + result;
 	}
 	//=========================================================================================
 	
@@ -273,7 +317,13 @@ public class BoardController {
 		// sqlinjection 대응
 		if(isSqlInjection(boardVO.getB_name())) {throw new Exception();}
 		
-		service.remove(boardVO);
+		
+		List<BoardAttachVO> attachList = service.getAttachList(boardVO.getBno(), boardVO.getB_name());
+		
+		if(service.remove(boardVO)) {
+			//파일삭제
+			deleteFiles(attachList);
+		}
 		return "redirect:/board/"+boardVO.getB_name()+"/list";
 	}
 	//=========================================================================================	
@@ -384,6 +434,8 @@ public class BoardController {
 	}//b_name2
 	//=========================================================================================
 	
+	
+	
 	//=========================================================================================
 	// 메서드2
 	// SqlInjection 대응 함수
@@ -397,6 +449,41 @@ public class BoardController {
 		}
 		
 	}//b_name2
+	//=========================================================================================
+	
+	
+	
+	//=========================================================================================
+	// 메서드3
+	// 파일삭제 메서드
+	//=========================================================================================
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+	    
+	    if(attachList == null || attachList.size() == 0) {
+	      return;
+	    }
+	    
+	    log.info("delete attach files...................");
+	    log.info(attachList);
+	    
+	    attachList.forEach(attach -> {
+	      try {        
+	        Path file  = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
+	        
+	        Files.deleteIfExists(file);
+	        
+	        if(Files.probeContentType(file).startsWith("image")) {
+	        
+	          Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
+	          
+	          Files.delete(thumbNail);
+	        }
+	
+	      }catch(Exception e) {
+	        log.error("delete file error" + e.getMessage());
+	      }//end catch
+	    });//end foreachd
+	  }
 	//=========================================================================================
 	
 }//class

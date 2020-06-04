@@ -42,6 +42,11 @@
 			            			<td class="content_main_td"><i class="fas fa-link content_gray"></i>&nbsp;<span class="content_gray_small"><a href="/board/${cri.b_name}/content/${board.bno}">/board/${cri.b_name}/content/${board.bno}</a></span></td>
 			            		</tr>
 			            		
+			            		<tr class="content_file_place_parent">
+			            			<td class="content_file_place">
+			            			</td>
+			            		</tr>
+			            		
 			            		<tr>
 			            			<td class="py-5 content_content">${board.content}</td>
 			            		</tr>
@@ -53,7 +58,7 @@
 					      	</div>
 		            		
 		            		<div class="float-right mt-2">
-		            			<sec:authentication property="principal" var="pinfo"/>
+		            			 <sec:authentication property="principal" var="pinfo"/>
 		            			 <sec:authorize access="isAuthenticated()">
 			            			 <c:if test="${pinfo.username eq board.id}">
 				            			<button data-oper='delete' class="btn btn-outline-secondary btn-sm text-center">삭제하기</button>
@@ -294,6 +299,53 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
+   	
+	<!-- =================================================================================================  -->
+   	<!-- start 첨부파일 관련 -->
+   	<!-- =================================================================================================  -->
+   	<script type="text/javascript">
+   	$(document).ready(function(){
+   		
+   		(function(){
+   			
+   			var bno = '${board.bno}';
+   			var b_name = '${cri.b_name}';
+   			$.getJSON("/board/getAttachList", {bno: bno, b_name: b_name}, function(arr){
+   				
+   				//console.log(arr.length);
+   				
+   				if(arr.length < 1){
+   					$(".content_file_place_parent").remove();
+   					return;
+   				}//if
+   				
+   				var str0 = '<div class="content_file text-right"><div class="dropdown dropleft"><button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="dropdown"><i class="far fa-file-alt"></i>&nbsp;첨부파일</button><div class="dropdown-menu">';
+   				var str = "";
+   				var str1 = "</div></div></div>";
+   				
+   				$(arr).each(function(i, attach){
+   					var path = encodeURIComponent(attach.uploadPath + "/" + attach.uuid + "_" + attach.fileName);
+   					
+   					if(attach.fileType){
+   						
+   						var imgPath = path.replace( new RegExp(/\\/g), "/");
+   						
+   						str += "<a class='dropdown-item' target='_blank' href='/display?fileName="+imgPath+"'>" + attach.fileName + "</a>";
+   					}else{
+	   					str += "<a class='dropdown-item' href='/download?fileName="+path+"'>" + attach.fileName + "</a>";
+   					}
+   				});//$(arr).each(function(){
+   				$(".content_file_place").html(str0 + str + str1);
+   			});//getJSON
+   			
+   		})(); //end function
+   		
+   	});//$(document).ready(function(){
+   	</script>
+	<!-- =================================================================================================  -->
+   	<!-- end 첨부파일 관련 -->
+   	<!-- =================================================================================================  -->
+   	
    	
 	<!-- =================================================================================================  -->
    	<!-- start td행 전체에 링크 -->
@@ -978,10 +1030,10 @@
 			
 	    }
 	    
-	  	//35글자 이상 ellipsis
+	  	//24글자 이상 ellipsis, 글자수 제한
 		$('.main_title').each(function(){
-			if($(this).text().length>35){
-				$(this).text($(this).text().substring(0,35)+"...");
+			if($(this).text().length>24){
+				$(this).text($(this).text().substring(0,24)+"...");
 			}
 		});
 	</script>

@@ -58,7 +58,7 @@
 		where bno = #{bno}
 	</update>
 	
-	<insert id="insert">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="bno">
 		insert into board_${b_name} (title, content, regdate, updatedate, hit, id)
 		values (#{title}, #{content},now(),now(),0,#{id})
 	</insert>
