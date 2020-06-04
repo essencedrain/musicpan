@@ -312,7 +312,7 @@
    			var b_name = '${cri.b_name}';
    			$.getJSON("/board/getAttachList", {bno: bno, b_name: b_name}, function(arr){
    				
-   				console.log(arr.length);
+   				//console.log(arr.length);
    				
    				if(arr.length < 1){
    					$(".content_file_place_parent").remove();
@@ -324,9 +324,17 @@
    				var str1 = "</div></div></div>";
    				
    				$(arr).each(function(i, attach){
-   					str += "<a class='dropdown-item' href='#' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'>" + attach.fileName + "</a>";
+   					var path = encodeURIComponent(attach.uploadPath + "/" + attach.uuid + "_" + attach.fileName);
+   					
+   					if(attach.fileType){
+   						
+   						var imgPath = path.replace( new RegExp(/\\/g), "/");
+   						
+   						str += "<a class='dropdown-item' target='_blank' href='/display?fileName="+imgPath+"'>" + attach.fileName + "</a>";
+   					}else{
+	   					str += "<a class='dropdown-item' href='/download?fileName="+path+"'>" + attach.fileName + "</a>";
+   					}
    				});//$(arr).each(function(){
-   				//$(".content_file .dropdown-menu").html(str);
    				$(".content_file_place").html(str0 + str + str1);
    			});//getJSON
    			
