@@ -50,7 +50,7 @@ public class UploadController {
 	 	List<AttachFileDTO> list = new ArrayList<>();
 		 
 	 	//----------------- 연월일폴더 생성 ---------------------------
-	 	String uploadFolder = "C:\\upload";
+	 	String uploadFolder = "/home/upload";
 	 	String uploadFolderPath = getFolder();
 	 	
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
@@ -121,7 +121,7 @@ public class UploadController {
 
 		//log.info("fileName: " + fileName);
 
-		File file = new File("c:\\upload\\" + fileName);
+		File file = new File("/home/upload/" + fileName);
 
 		//log.info("file: " + file);
 
@@ -148,7 +148,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 
-		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		Resource resource = new FileSystemResource("/home/upload/" + fileName);
 
 		if (resource.exists() == false) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
