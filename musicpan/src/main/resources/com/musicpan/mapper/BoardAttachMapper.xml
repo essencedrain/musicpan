@@ -58,7 +58,7 @@
 		from
 			file_${b_name}
 		where
-			uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
+			uploadpath = DATE_FORMAT(subdate(current_date, 1), '%Y\%m\%d')
 
 	</select>
 
