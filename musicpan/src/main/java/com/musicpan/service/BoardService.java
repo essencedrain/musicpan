@@ -2,6 +2,7 @@ package com.musicpan.service;
 
 import java.util.List;
 
+import com.musicpan.domain.BoardAttachVO;
 import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
 
@@ -21,17 +22,8 @@ public interface BoardService {
 	
 	public boolean remove(BoardVO board);
 	
+	public List<BoardAttachVO> getAttachList(Long bno, String b_name);
 	
-	//public BoardVO get(Long bno);
+	public void removeAttach(Long bno, String b_name);
 	
-	/*
-	public List<BoardVO> getList(String b_name);
-	
-
-	//추가
-	
-	public List<BoardAttachVO> getAttachList(Long bno);
-	
-	public void removeAttach(Long bno);
-	*/
 }//interface

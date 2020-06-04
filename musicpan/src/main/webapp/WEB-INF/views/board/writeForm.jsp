@@ -151,9 +151,28 @@
 	    	return;
 	    }
 	    
-	    //쿠키삽입
+	    
+	    var str = "";
+	    $('.uploadResult .resultItems').each(function(i, obj){
+	    	
+	    	var jobj = $(obj);
+	    	//console.dir(jobj);
+	    	//console.log("-------------------------");
+	        //console.log(jobj.data("filename"));
+	        
+	        str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+	        str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+	        str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+	        str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+	    	
+	    });
+	    
+	  	//쿠키삽입
 	    setCookie("mplwck${b_name}","yes",60);
-	    $("#writeForm").submit();
+	  	
+	  	//전송
+	    $("#writeForm").append(str).submit();
+	    
 	});
 	
 	
@@ -275,7 +294,8 @@ function showUploadedFile(uploadResultArr) {
 	        
 	        var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 	        
-	        str += "<div class='pb-2 pt-3 px-2 resultItems border justify-content-center d-flex align-items-center'><div class='fileNameSize'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a></div>"+
+	        str += "<div class='pb-2 pt-3 px-2 resultItems border justify-content-center d-flex align-items-center border' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
+	        	+"<div class='fileNameSize'><a href='/download?fileName="+fileCallPath+"'>"+ obj.fileName+"</a></div>"+
 	            "<span data-file=\'"+fileCallPath+"\' data-type='file'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>"
 	            
 	      }else{
@@ -289,8 +309,9 @@ function showUploadedFile(uploadResultArr) {
 	    	//var fileCallPath3 =  fileCallPath2.substring( fileCallPath2.indexOf("_")+1, fileCallPath2.indexOf(".") );
 	    	var fileCallPath3 =  "z"+obj.uuid.substring(0,6);
 	        
-	        str += "<div class='pb-2 pt-3 px-2 resultItems border'><a href=\"javascript:;\" onclick='showImage(this)'>"
-	        		+"<img src='/display?fileName="+fileCallPath+"'></a>"
+	        str += "<div class='pb-2 pt-3 px-2 resultItems border' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
+	        		+ "<a href=\"javascript:;\" onclick='showImage(this)'>"
+	        		+ "<img src='/display?fileName="+fileCallPath+"'></a>"
 	        		+ "<span data-file=\'"+fileCallPath+"\' data-type='image' data-file2=\'"+fileCallPath3+"\' data-file3=\'"+fileCallPath2+"\'><i class=\"fas fa-times-circle text-danger deleteFileBtn\"></i></span></div>";
 	        
 	        var imgHtml = CKEDITOR.dom.element.createFromHtml( "<img class='"+fileCallPath3+"' src='/display?fileName="+fileCallPath2+"' /><br />" );

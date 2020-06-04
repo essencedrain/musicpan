@@ -11,7 +11,7 @@
 				uuid
 				, uploadpath
 				, filename
-				,filetype
+				, filetype
 				, bno
 			)
 		values

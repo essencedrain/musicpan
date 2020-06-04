@@ -92,7 +92,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 	
-	 	log.info("update ajax post.........");
+	 	//log.info("update ajax post.........");
 	 	List<AttachFileDTO> list = new ArrayList<>();
 		 
 	 	//----------------- 연월일폴더 생성 ---------------------------
@@ -101,7 +101,7 @@ public class UploadController {
 	 	
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		
-		log.info("upload path: " + uploadPath);
+		//log.info("upload path: " + uploadPath);
 		
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
@@ -112,15 +112,15 @@ public class UploadController {
 			
 			AttachFileDTO attachDTO = new AttachFileDTO();
 			
-			log.info("-------------------------------------");
-			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
+			//log.info("-------------------------------------");
+			//log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+			//log.info("Upload File Size: " + multipartFile.getSize());
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
 			// IE용 파일이름
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			log.info("only file name: " + uploadFileName);
+			//log.info("only file name: " + uploadFileName);
 			
 			attachDTO.setFileName(uploadFileName);
 			
@@ -163,11 +163,11 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName) {
 
-		log.info("fileName: " + fileName);
+		//log.info("fileName: " + fileName);
 
 		File file = new File("c:\\upload\\" + fileName);
 
-		log.info("file: " + file);
+		//log.info("file: " + file);
 
 		ResponseEntity<byte[]> result = null;
 
@@ -234,7 +234,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type) {
 
-		log.info("deleteFile: " + fileName);
+		//log.info("deleteFile: " + fileName);
 
 		File file;
 
@@ -247,7 +247,7 @@ public class UploadController {
 
 				String largeFileName = file.getAbsolutePath().replace("s_", "");
 
-				log.info("largeFileName: " + largeFileName);
+				//log.info("largeFileName: " + largeFileName);
 
 				file = new File(largeFileName);
 

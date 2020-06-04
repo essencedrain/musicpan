@@ -533,3 +533,9 @@ a.article:hover {
 .file_upload_main #uploadBtn{
 	display: inline-block;
 }
+
+.attachFileFont{
+	font-size: 10px;
+	line-height: 15px;
+	color: #999;
+}
