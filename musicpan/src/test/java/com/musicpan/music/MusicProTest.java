@@ -11,7 +11,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,10 +22,8 @@ import com.google.gson.JsonPrimitive;
 import lombok.extern.log4j.Log4j;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class MusicPro {
+public class MusicProTest {
 
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,7 +154,7 @@ public class MusicPro {
 			//----------------------------------------------
 			String[] feeCompo = new String[7];
 			for(int i=1; i<7; i++) {
-				releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.sec_similar > div > div:nth-child(2) > div > div > div.tbl_flex > dl:nth-child("+i+") > dd");
+				releaseTemp = doc.select(".tbl_flex > dl:nth-child("+i+") > dd");
 				feeCompo[i] = releaseTemp.text();
 				feeCompo[i] = feeCompo[i].substring(0,feeCompo[i].indexOf("원")).replaceAll(",", "");
 			}//for
@@ -200,6 +197,47 @@ public class MusicPro {
 			return feeList;
 		}
 		//----------------------------------------------------------------------------------------------------------------------------------------------
+		
+		
+		
+		//----------------------------------------------------------------------------------------------------------------------------------------------
+		// getRecentInfo(String idx) : 시세
+		// List<String> result
+		// 20-06-05 20:50:30,23500,2
+		//----------------------------------------------------------------------------------------------------------------------------------------------
+		public List<String> getRecentInfo(String idx) {
+			Document doc= null;
+			String url="https://www.musicow.com/song/";
+			List<String> result = new ArrayList<>();
+			try {
+				doc = Jsoup.connect(url+idx+"?tab=price").get();
+			} catch (Exception e) {
+				log.info("GetSongNums.getSongInfo().doc 에러 : " + e);
+			}//try
+			
+			
+			//최근 거래내역 갯수 max15
+			//doc.select("tbody tr").size()
+			int recentSize = doc.select("tbody tr").size();
+			
+			
+			for(int i=0; i<recentSize; i++) {
+				String temp = "";
+				for(int j=0; j<3; j++) {
+					//System.out.println(doc.select("tbody tr:nth-child("+(i+1)+") td:nth-child("+(j+1)+")").text().trim().replaceAll(",", ""));
+					if(temp.length()==0) {
+						temp += doc.select("tbody tr:nth-child("+(i+1)+") td:nth-child("+(j+1)+")").text().trim().replaceAll(",", "");
+					}else {
+						temp += ","+doc.select("tbody tr:nth-child("+(i+1)+") td:nth-child("+(j+1)+")").text().trim().replaceAll(",", "");
+					}
+				}
+				result.add(temp);
+			}//for
+			
+			return result;
+		}
+		//----------------------------------------------------------------------------------------------------------------------------------------------
+		
 		
 		
 		
@@ -389,17 +427,21 @@ public class MusicPro {
 			//팔자 스프레드
 			//List<String[갯수, 가격]>
 			//----------------------------------------------
-			JsonObject sellSpread = object.get("market_order").getAsJsonObject().get("type").getAsJsonObject().get("1").getAsJsonObject();
 			List<String[]> sellSpreadData = new ArrayList<>();
 			
-			if(sellSpread.size() > 0 ) {//0개 방지
-				for(String k : sellSpread.keySet()) {
-					String[] temp = new String[2];
-					temp[0] = sellSpread.get(k).getAsJsonObject().getAsJsonPrimitive("amount").getAsString();
-					temp[1] = sellSpread.get(k).getAsJsonObject().getAsJsonPrimitive("cnt_units_market").getAsString();
-					sellSpreadData.add(temp);
-				}//for
-				
+			if(!object.get("market_order").getAsJsonObject().get("type").getAsJsonObject().get("1").isJsonArray()){
+				JsonObject sellSpread = object.get("market_order").getAsJsonObject().get("type").getAsJsonObject().get("1").getAsJsonObject();
+				if(sellSpread.size() > 0 ) {//0개 방지
+					for(String k : sellSpread.keySet()) {
+						String[] temp = new String[2];
+						temp[0] = sellSpread.get(k).getAsJsonObject().getAsJsonPrimitive("amount").getAsString();
+						temp[1] = sellSpread.get(k).getAsJsonObject().getAsJsonPrimitive("cnt_units_market").getAsString();
+						sellSpreadData.add(temp);
+					}//for
+					
+				}else {
+					sellSpreadData = null;
+				}//if
 			}else {
 				sellSpreadData = null;
 			}//if
@@ -410,17 +452,21 @@ public class MusicPro {
 			//사자 스프레드
 			//List<String[갯수, 가격]>
 			//----------------------------------------------
-			JsonObject buySpread = object.get("market_order").getAsJsonObject().get("type").getAsJsonObject().get("2").getAsJsonObject();
 			List<String[]> buySpreadData = new ArrayList<>();
 			
-			if(buySpread.size() > 0 ) {//0개 방지
-				for(String k : buySpread.keySet()) {
-					String[] temp = new String[2];
-					temp[0] = buySpread.get(k).getAsJsonObject().getAsJsonPrimitive("amount").getAsString();
-					temp[1] = buySpread.get(k).getAsJsonObject().getAsJsonPrimitive("cnt_units_market").getAsString();
-					buySpreadData.add(temp);
-				}//for
-				
+			if(!object.get("market_order").getAsJsonObject().get("type").getAsJsonObject().get("2").isJsonArray()){
+				JsonObject buySpread = object.get("market_order").getAsJsonObject().get("type").getAsJsonObject().get("2").getAsJsonObject();
+				if(buySpread.size() > 0 ) {//0개 방지
+					for(String k : buySpread.keySet()) {
+						String[] temp = new String[2];
+						temp[0] = buySpread.get(k).getAsJsonObject().getAsJsonPrimitive("amount").getAsString();
+						temp[1] = buySpread.get(k).getAsJsonObject().getAsJsonPrimitive("cnt_units_market").getAsString();
+						buySpreadData.add(temp);
+					}//for
+					
+				}else {
+					buySpreadData = null;
+				}//if
 			}else {
 				buySpreadData = null;
 			}//if

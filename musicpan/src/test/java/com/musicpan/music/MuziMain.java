@@ -1,6 +1,8 @@
 package com.musicpan.music;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -28,12 +30,63 @@ public class MuziMain {
 	@Test
 	public void mainTest() {
 		
-		Map<String,String> result2 = null;
-
-		MusicPro test = new MusicPro();
+		/*
+		//getSpreadInfo
+		MusicProTest test = new MusicProTest();
+		HashSet<String> list = test.getList();
+		
+		List<Map<String, Object>> result = new ArrayList<>();
+		for(String temp : list) {			
+			result.add(test.getSpreadInfo(temp));
+		}
+		for(Map<String, Object> temp : result) {
+			log.info(temp.size());
+		}
+		*/
+		
+		/*
+		//getRecentInfo
+		List<List<String>> result = new ArrayList<>();
+		for(String temp : list) {			
+			result.add(test.getRecentInfo(temp));
+		}
+		for(List<String> temp : result) {
+			log.info(temp.size());
+		}
+		*/
+		
+		/*
+		//getFeeInfo
+		List<List<String[]>> result = new ArrayList<>();
+		for(String temp : list) {			
+			result.add(test.getFeeInfo(temp));
+		}
+		for(List<String[]> temp : result) {
+			log.info(temp.size());
+		}
+		*/
+		
+		
+		
+		/*
+		//getAuctionInfo Test
+		List<String[]> result = new ArrayList<>();
+		HashSet<String> list = test.getList();
+		
+		for(String temp : list) {			
+			result.add(test.getAuctionInfo(temp));
+		}
+		for(String[] temp : result) {
+			for(String temp2 : temp) {
+				log.info(temp2);
+			}
+		}
+		*/
+		
+		
+		/*
+		//basicInfo test
 		HashSet<String> result = test.getList();
-		
-		
 		for(String temp : result) {
 			result2 = test.getBasicInfo(temp);
 			String temp2 = "";
@@ -42,6 +95,9 @@ public class MuziMain {
 			}
 			System.out.println(temp2);
 		}
+		*/
+		
+		
 		
 		/*
 		String sql = "insert into test_songs values(?,?,?,?,?,?,?,?,?,?,?,?,now(),?,?,?,?) ON DUPLICATE KEY UPDATE price=?, auctionPrice=?, profit3=?, profit6=?, profit12=?, profitAll=?, feeMonths=?, spa=?, lastUpdate=now(), price_buy=?, units_buy=?, price_sell=?, units_sell=?";
