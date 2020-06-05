@@ -10,7 +10,10 @@ body {
     background: #fff;
     
 }
-
+.center_area{
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
 /* ==========================scroll to top============================== */
 .back-to-top {
     position: fixed !important;
@@ -208,7 +211,6 @@ a.article:hover {
 
 #content {
     width: 100%;
-    padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
@@ -250,47 +252,47 @@ a.article:hover {
 ----------------------------------------------------- */
 /* 컨텐츠 제목 아래 */
 .tdcolor_1{
-	background-color:#e8f3fc; !important;
+	background-color:#e8f3fc !important;
 }
 /* 자기가 쓴 댓글 */
 .reply_area .card_area .card_bg{
-	background-color: #e8f3fc; !important;
+	background-color: #e8f3fc !important;
 }
 
 
 /* 제목 td 호버 */
 .table_gtx .clickable-row a:hover{
-	color: #3292e7; !important;
+	color: #3292e7 !important;
 }
 
 /* 댓글카운트 */
 .table_gtx .list_replyCnt{
-    color: #3292e7; !important;
+    color: #3292e7 !important;
     font-weight: 100;
 }
 
 /* 컨텐츠 목록에서 제목 호버링 */
 .table_gtx .hover_color{
-	color: #3292e7; !important;
+	color: #3292e7 !important;
 }
 
 /* pc 컨텐츠 목록에서 화살표 색 */
 .table_gtx .hover_color2{
-	color: #3292e7; !important;
+	color: #3292e7 !important;
 }
 
 
 
 /* 게시판이름 */
 .board_heading{
-	color: #0F4C81; !important;
+	color: #0F4C81 !important;
 	font-weight: 900;
 }
 
 .pagination > li > a
 {
     background-color: white;
-    color: #0F4C81; !important;
+    color: #0F4C81;
 }
 
 .pagination > li > a:focus,
@@ -298,7 +300,7 @@ a.article:hover {
 .pagination > li > span:focus,
 .pagination > li > span:hover
 {
-    color: #0F4C81; !important;
+    color: #0F4C81;
     background-color: #eee;
     border-color: #ddd;
 }
@@ -307,8 +309,8 @@ a.article:hover {
 .page-item.active .page-link
 {
     color: white;
-    background-color: #0F4C81; !important;
-    border: solid 1px #0F4C81; !important;
+    background-color: #0F4C81 !important;
+    border: solid 1px #0F4C81 !important;
 }
 
 
@@ -416,7 +418,7 @@ a.article:hover {
 	font-weight: 700;
 }
 .content_area .content_heading a{
-	color: #000; !important;
+	color: #000 !important;
 }
 
 .content_area .table td{
@@ -477,7 +479,7 @@ a.article:hover {
 	font-size:14px;
 	line-height: 21px; 
 	font-weight: 500;
-	color: #999; !important;
+	color: #999 !important;
 }
 .card-body-under .span_class{
 	margin-right: 10px;
@@ -490,7 +492,7 @@ a.article:hover {
 .card-body-under .span_class3{
 	margin-right: 5px;
 	display: inline-block;
-	color: #999; !important;
+	color: #999 !important;
 }
 .card-body-under .span_class4{
 	margin-right: 10px;
@@ -503,14 +505,14 @@ a.article:hover {
   	border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 .reply_area .dropdown-menu{
-	width: 70px; !important;
-    height: 141px; !important;
+	width: 70px !important;
+    height: 141px !important;
     min-width: 50px;!important;
     max-width: 70px;!important;
 
 }
 .reply_area .dropdown-menu .dropdown-item{
-	width: 50px; !important;
+	width: 50px !important;
 	cursor: pointer;
 }
 .reply_area .reply_likeBtn,
@@ -523,10 +525,10 @@ a.article:hover {
     font-size:14px;
 	line-height: 21px; 
 	font-weight: 500;
-	color: #000; !important;
+	color: #000 !important;
 }
 .reply_area .dropdown-menu .i_size{
-	width: 15.75px; !important;
+	width: 15.75px !important;
 }
 
 /* ---------------------------------------------------
