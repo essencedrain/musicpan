@@ -258,6 +258,10 @@ a.article:hover {
 .reply_area .card_area .card_bg{
 	background-color: #e8f3fc !important;
 }
+/* 글쓴이가 쓴 댓글 */
+.reply_area .card_area .card_bg2{
+	background-color: #ebfaeb !important;
+}
 
 
 /* 제목 td 호버 */

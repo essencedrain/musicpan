@@ -644,7 +644,9 @@
 		            str += '<div class="card mb-2" id="spy_'+list[i].rno+'" data-page="'+page+'">';//일반 댓글
 	        	}	
 					if(authId==list[i].id){
-						str += '<div class="card-header card_bg py-1 pl-3">';
+						str += '<div class="card-header card_bg py-1 pl-3">'; //로그인한 사람이 쓴 댓글
+					}else if('${board.id}'==list[i].id){
+						str += '<div class="card-header card_bg2 py-1 pl-3">'; //글쓴 사람이 쓴 댓글
 					}else{
 						str += '<div class="card-header py-1 pl-3">';
 					}
