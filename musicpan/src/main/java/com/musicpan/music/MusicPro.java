@@ -65,8 +65,8 @@ public class MusicPro {
 			
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			// getAuctionInfo(String idx) : 기본 정보
-			// auctionInfo[i] = auctionUnits[i]+","+auctionStart[i]+","+auctionLowPrice[i]+","+auctionAvgPrice[i];
-			//  옥션정보[옥션횟수] = 수량,시작가,낙찰가,평균가
+			// auctionInfo[i] = auctionCnt[i]+","+auctionUnits[i]+","+auctionStart[i]+","+auctionLowPrice[i]+","+auctionAvgPrice[i];
+			// 옥션정보[옥션횟수] = 차수,수량,시작가,낙찰가,평균가
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			public String[] getAuctionInfo(String idx) {
 				Document doc= null;
@@ -85,6 +85,17 @@ public class MusicPro {
 				//옥션횟수
 				//int auctionCnt = doc.select(".detail_zone .lst_numb_card").size();
 				//2=1회 4=2회 6=3회
+				
+				//n차 옥션 마킹
+				//doc.select(".detail_zone h2").size()
+				//1차옥션 2개, 2차옥션3개, 3차옥션4개
+				//System.out.println(doc.select(".detail_zone h2").size());
+				String[] auctionCnt = new String[doc.select(".detail_zone h2").size()-1];
+				for(int i=1; i<doc.select(".detail_zone h2").size(); i++) {
+					//System.out.println( i+"//"+doc.select(".detail_zone:nth-child("+(i+2)+") h2").text().substring(0,1) );
+					auctionCnt[i-1] = doc.select(".detail_zone:nth-child("+(i+2)+") h2").text().substring(0,1);
+				}//for
+				
 				
 				//좌상 옥션 수량
 				releaseDateTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(2)");
@@ -109,7 +120,7 @@ public class MusicPro {
 				
 				String[] auctionInfo = new String[auctionUnits.length];
 				for(int i=0; i<auctionUnits.length;i++) {
-					auctionInfo[i] = auctionUnits[i]+","+auctionStart[i]+","+auctionLowPrice[i]+","+auctionAvgPrice[i];
+					auctionInfo[i] = auctionCnt[i]+","+auctionUnits[i]+","+auctionStart[i]+","+auctionLowPrice[i]+","+auctionAvgPrice[i];
 				}//for
 				
 				return auctionInfo;
@@ -124,17 +135,16 @@ public class MusicPro {
 			// getFeeInfo(String idx) : 저작권료 정보
 			/*
 			  
-			  feeList 는 과거 저작권료 정보
-			  String[연월, 저작권료] 로 가다가
-			  
-			  마지막은 최근12개월 저작권료 구성
-			  String[연월, 방송,전송,복제, 공연,해외,기타]
-			  
-			  으로 구성되어 있음
+			  	List<String>
+			  	...
+				n-3	2020-03-01,56   연월일, 발생저작권료
+				n-2	2020-04-01,55
+				n-1	2020-05-01,53
+				n	2020-05-01,370,345,2,523,0,0 연월일,방송,전송,복제, 공연,해외,기타
 			  
 			 */
 			//----------------------------------------------------------------------------------------------------------------------------------------------
-			public List<String[]> getFeeInfo(String idx) {
+			public List<String> getFeeInfo(String idx) {
 			
 				Document doc= null;
 				String url="https://www.musicow.com/song/";
@@ -146,17 +156,21 @@ public class MusicPro {
 					log.info("GetSongNums.getSongInfo().doc 에러 : " + e);
 				}//try
 				
-				
+				List<String> feeList = new ArrayList<>();
 				
 				//----------------------------------------------
 				//최근 12개월 저작권료 (1주 기준) 구성
 				//feeCompo[연월(아래추가),방송,전송,복제, 공연,해외,기타]
 				//----------------------------------------------
-				String[] feeCompo = new String[7];
+				String feeCompo = "";
 				for(int i=1; i<7; i++) {
 					releaseDateTemp = doc.select(".tbl_flex > dl:nth-child("+i+") > dd");
-					feeCompo[i] = releaseDateTemp.text();
-					feeCompo[i] = feeCompo[i].substring(0,feeCompo[i].indexOf("원")).replaceAll(",", "");
+					String temp = releaseDateTemp.text();
+					if(i==1) {
+						feeCompo += temp.substring(0,temp.indexOf("원")).replaceAll(",", "");
+					}else {
+						feeCompo += ","+temp.substring(0,temp.indexOf("원")).replaceAll(",", "");
+					}
 				}//for
 				//----------------------------------------------
 				
@@ -165,7 +179,7 @@ public class MusicPro {
 				// 저작권료 자료 획득
 				// List<String[연월, 저작권료]> feeList
 				//----------------------------------------------
-				List<String[]> feeList = new ArrayList<>();
+				
 				Elements script = doc.select("script");
 				Element script2 = script.get(10);
 				String jsonData = script2.html().substring(83,script2.html().length()-56);
@@ -180,9 +194,11 @@ public class MusicPro {
 					for(String j : temp.keySet()) {
 						JsonPrimitive jsonPrimitive = temp.getAsJsonPrimitive(j);
 						
-						String[] tempValue = new String[2];
-						tempValue[0] = k+""+j;
-						tempValue[1] = jsonPrimitive.getAsString();
+						String tempValue = k+"-"+j+"-01";
+						if(feeList.size()==0) {
+							feeList.add(tempValue+","+feeCompo);
+						}
+						tempValue += ","+jsonPrimitive.getAsString().trim().replaceAll(",", "");
 						feeList.add(tempValue);
 					}//for j
 				}//for k
@@ -190,9 +206,6 @@ public class MusicPro {
 				//뒤집음 옛날->최신
 				Collections.reverse(feeList);
 				//----------------------------------------------
-				feeCompo[0] = feeList.get(feeList.size()-1)[0];
-				feeList.add(feeCompo);
-				
 				
 				return feeList;
 			}

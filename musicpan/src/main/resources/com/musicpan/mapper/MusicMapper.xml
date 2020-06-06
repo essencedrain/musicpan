@@ -34,4 +34,52 @@
 			)
 	</insert>
 	
+	<insert id="insertAuction">
+		INSERT INTO
+			music_auction
+			(
+				idx
+				, auctioncnt
+				, auctionunits
+				, auctionstart
+				, auctionlowprice
+				, auctionavgprice
+			)
+		VALUES
+			(
+				#{idx}
+				, #{auctionCnt}
+				, #{auctionUnits}
+				, #{auctionStart}
+				, #{auctionLowPrice}
+				, #{auctionAvgPrice}
+			)
+	</insert>
+	
+	
+	<insert id="insertFee">
+		INSERT INTO
+			music_fee
+			(
+				idx
+				, feemonth
+				, fee
+			)
+		VALUES
+			(
+				#{idx}
+				, #{feeMonth}
+				, #{fee}
+			)
+	</insert>
+	
+	<select id="getIdx" resultType="int">
+	
+		SELECT
+			idx
+		FROM
+			music_basic
+	
+	</select>
+	
 </mapper>
