@@ -139,7 +139,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		long today = new Date().getTime();
 		
-		if(today - vo.getCreatedate().getTime() > 18000) {
+		if((today - vo.getCreatedate().getTime()) > 180000) {
 			return false;
 		}
 		
