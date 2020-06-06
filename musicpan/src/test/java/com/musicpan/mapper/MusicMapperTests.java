@@ -1,11 +1,9 @@
 package com.musicpan.mapper;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -14,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.musicpan.domain.BoardVO;
-import com.musicpan.domain.Criteria;
 import com.musicpan.domain.SongBasicVO;
-import com.musicpan.music.MusicProTest;
+import com.musicpan.music.MusicPro;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -35,7 +31,7 @@ public class MusicMapperTests {
 	@Test
 	public void test() {
 	
-		MusicProTest test = new MusicProTest();
+		MusicPro test = new MusicPro();
 		HashSet<String> list = test.getList();
 		Map<String, String> result = new HashMap<>();  
 		
