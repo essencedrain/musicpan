@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j;
 public class MusicPro {
 
 		
-	//----------------------------------------------------------------------------------------------------------------------------------------------
+			//----------------------------------------------------------------------------------------------------------------------------------------------
 			// getList() : 유저마켓에 있는 모든곡 idx 가져옴
 			// HashSet<String>
 			//----------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ public class MusicPro {
 			public String[] getAuctionInfo(String idx) {
 				Document doc= null;
 				String url="https://www.musicow.com/song/";
-				Elements releaseTemp = null;
+				Elements releaseDateTemp = null;
 				
 				try {
 					doc = Jsoup.connect(url+idx+"?tab=info").get();
@@ -87,25 +87,25 @@ public class MusicPro {
 				//2=1회 4=2회 6=3회
 				
 				//좌상 옥션 수량
-				releaseTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(2)");
-				String[] auctionUnits = releaseTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("주");
-				//log.info(releaseTemp.text());
+				releaseDateTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(2)");
+				String[] auctionUnits = releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("주");
+				//log.info(releaseDateTemp.text());
 				
 				//좌하 옥션 시작가
-				releaseTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(4)");
-				String[] auctionStart = releaseTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
-				//log.info(releaseTemp.text());
+				releaseDateTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(4)");
+				String[] auctionStart = releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
+				//log.info(releaseDateTemp.text());
 				
 				//우상 최저 낙찰가
-				releaseTemp = doc.select(".lst_numb_card:nth-child(2) dl dd:nth-child(2)");
-				String[] auctionLowPrice= releaseTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
-				//log.info(releaseTemp.text());
+				releaseDateTemp = doc.select(".lst_numb_card:nth-child(2) dl dd:nth-child(2)");
+				String[] auctionLowPrice= releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
+				//log.info(releaseDateTemp.text());
 				
 				
 				//우하 평균 낙찰가
-				releaseTemp = doc.select(".lst_numb_card:nth-child(2) dl dd:nth-child(4)");
-				String[] auctionAvgPrice= releaseTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
-				//log.info(releaseTemp.text());
+				releaseDateTemp = doc.select(".lst_numb_card:nth-child(2) dl dd:nth-child(4)");
+				String[] auctionAvgPrice= releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
+				//log.info(releaseDateTemp.text());
 				
 				String[] auctionInfo = new String[auctionUnits.length];
 				for(int i=0; i<auctionUnits.length;i++) {
@@ -138,7 +138,7 @@ public class MusicPro {
 			
 				Document doc= null;
 				String url="https://www.musicow.com/song/";
-				Elements releaseTemp = null;
+				Elements releaseDateTemp = null;
 				
 				try {
 					doc = Jsoup.connect(url+idx+"?tab=info").get();
@@ -154,8 +154,8 @@ public class MusicPro {
 				//----------------------------------------------
 				String[] feeCompo = new String[7];
 				for(int i=1; i<7; i++) {
-					releaseTemp = doc.select(".tbl_flex > dl:nth-child("+i+") > dd");
-					feeCompo[i] = releaseTemp.text();
+					releaseDateTemp = doc.select(".tbl_flex > dl:nth-child("+i+") > dd");
+					feeCompo[i] = releaseDateTemp.text();
 					feeCompo[i] = feeCompo[i].substring(0,feeCompo[i].indexOf("원")).replaceAll(",", "");
 				}//for
 				//----------------------------------------------
@@ -248,11 +248,11 @@ public class MusicPro {
 			/*
 			 	song		곡명
 			 	singer		가수
-			 	release		공표일
+			 	releaseDate		공표일
 			 	composer	작곡가
 			 	lyricist	작사가
 			 	arranger	편곡가(null가능)
-				copyright	저작권1, 인접권0
+				copyRight	저작권1, 인접권0
 				stockCnt	지분수
 				secRight	2차저작물작성권(1:있음, 0:없음)
 			 */
@@ -291,34 +291,34 @@ public class MusicPro {
 				
 				
 				int songFlag = doc.select(".lst_bul dl").size();
-				Elements releaseTemp = null;
-				String release =null;
+				Elements releaseDateTemp = null;
+				String releaseDate =null;
 				String singer =null;
 				String composer = null;
 				String lyricist = null;
 				String arranger = null;
-				String copyright = null;
+				String copyRight = null;
 				String stockCnt = null;
 				String secRight = null;
 				
 				//----------------------------------------------
 				//공표일
-				releaseTemp = doc.select(".lst_bul > dl:nth-child(1) > dd");
-				release = releaseTemp.text();
+				releaseDateTemp = doc.select(".lst_bul > dl:nth-child(1) > dd");
+				releaseDate = releaseDateTemp.text();
 				//----------------------------------------------
 				//가수
-				releaseTemp = doc.select(".lst_bul > dl:nth-child(2) > dd");
-				singer = releaseTemp.text();
+				releaseDateTemp = doc.select(".lst_bul > dl:nth-child(2) > dd");
+				singer = releaseDateTemp.text();
 				//----------------------------------------------
 				//작곡가
-				releaseTemp = doc.select(".lst_bul > dl:nth-child(3) > dd");
-				composer = releaseTemp.text();
+				releaseDateTemp = doc.select(".lst_bul > dl:nth-child(3) > dd");
+				composer = releaseDateTemp.text();
 				//----------------------------------------------
 				//작사가
-				releaseTemp = doc.select(".lst_bul > dl:nth-child(4) > dd");
-				lyricist =releaseTemp.text();
+				releaseDateTemp = doc.select(".lst_bul > dl:nth-child(4) > dd");
+				lyricist =releaseDateTemp.text();
 				//----------------------------------------------
-				result.put("release", release);
+				result.put("releaseDate", releaseDate);
 				result.put("singer", singer);
 				result.put("composer", composer);
 				result.put("lyricist", lyricist);
@@ -327,49 +327,59 @@ public class MusicPro {
 				
 				if(songFlag==11) {
 					//편곡가
-					releaseTemp = doc.select(".lst_bul > dl:nth-child(5) > dd");
-					arranger = releaseTemp.text();
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(5) > dd");
+					arranger = releaseDateTemp.text();
 				}else {
 					//저작권1 인접권0
-					releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.box_gray > div > dl:nth-child(5) > dd");
-					copyright = releaseTemp.text().trim();
-					copyright = copyright.substring(0,3);
-					copyright = copyright.equals("원작자") ? "1" : "0";
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(5) > dd");
+					copyRight = releaseDateTemp.text().trim();
+					
+					if(copyRight.length()>0) {//615 고유진 제자리걸음 정보 없음
+						copyRight = copyRight.substring(0,3);
+						copyRight = copyRight.equals("원작자") ? "1" : "0";
+					}else {
+						copyRight = "-1";
+					}
 				}
 				
 				if(songFlag==11) {
 					//저작권1 인접권0
-					releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.box_gray > div > dl:nth-child(6) > dd");
-					copyright = releaseTemp.text().trim();
-					copyright = copyright.substring(0,3);
-					copyright = copyright.equals("원작자") ? "1" : "0";
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(6) > dd");
+					copyRight = releaseDateTemp.text().trim();
+					
+					if(copyRight.length()>0) {//615 고유진 제자리걸음 정보 없음
+						copyRight = copyRight.substring(0,3);
+						copyRight = copyRight.equals("원작자") ? "1" : "0";
+					}else {
+						copyRight = "-1";
+					}
 				}
 				result.put("arranger", arranger);
-				result.put("copyright", copyright);
+				result.put("copyRight", copyRight);
 				
 				
 				
 				
 				if(songFlag==11) {
 					//지분수
-					releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.box_gray > div > dl:nth-child(10) > dd > p:nth-child(1)");
-					stockCnt = releaseTemp.text().trim();
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(10) > dd > p:nth-child(1)");
+					stockCnt = releaseDateTemp.text().trim();
 					stockCnt = stockCnt.substring(stockCnt.indexOf("/")+1).replaceAll(",", "");
 					//----------------------------------------------
 					//2차저작물작성권(1,0)
-					releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.box_gray > div > dl:nth-child(10) > dd > p:nth-child(2)");
-					secRight = releaseTemp.text().trim();
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(10) > dd > p:nth-child(2)");
+					secRight = releaseDateTemp.text().trim();
 					secRight = secRight.substring(secRight.indexOf("(")+1,secRight.indexOf("(")+2);
 					secRight = secRight.equals("O") ? "1" : "0";
 				}else{
 					//지분수
-					releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.box_gray > div > dl:nth-child(9) > dd > p:nth-child(1)");
-					stockCnt = releaseTemp.text().trim();
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(9) > dd > p:nth-child(1)");
+					stockCnt = releaseDateTemp.text().trim();
 					stockCnt = stockCnt.substring(stockCnt.indexOf("/")+1).replaceAll(",", "");
 					//----------------------------------------------
 					//2차저작물작성권(1,0)
-					releaseTemp = doc.select("#wrap > div.contans > div > div > div.div_half > section > div.box_gray > div > dl:nth-child(9) > dd > p:nth-child(2)");
-					secRight = releaseTemp.text().trim();
+					releaseDateTemp = doc.select(".lst_bul > dl:nth-child(9) > dd > p:nth-child(2)");
+					secRight = releaseDateTemp.text().trim();
 					secRight = secRight.substring(secRight.indexOf("(")+1,secRight.indexOf("(")+2);
 					secRight = secRight.equals("O") ? "1" : "0";
 				}

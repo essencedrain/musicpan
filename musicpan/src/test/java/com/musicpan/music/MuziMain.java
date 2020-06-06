@@ -30,10 +30,10 @@ public class MuziMain {
 	@Test
 	public void mainTest() {
 		
-		/*
-		//getSpreadInfo
 		MusicProTest test = new MusicProTest();
 		HashSet<String> list = test.getList();
+		/*
+		//getSpreadInfo
 		
 		List<Map<String, Object>> result = new ArrayList<>();
 		for(String temp : list) {			
