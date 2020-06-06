@@ -15,7 +15,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- 방문자수체커 -->
+	<!-- 방문자수 체커 -->
 	<bean id="visitServiceImpl" class="com.musicpan.service.VisitServiceImpl"/>
 	
 	<!-- Mail 인증 관련 -->
