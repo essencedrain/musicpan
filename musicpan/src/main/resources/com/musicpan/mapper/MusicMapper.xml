@@ -18,6 +18,7 @@
 				, copyright
 				, secright
 				, stockcnt
+				, updatedate
 			)
 		VALUES
 			(
@@ -31,6 +32,7 @@
 				, #{copyRight}
 				, #{secRight}
 				, #{stockCnt}
+				, now()
 			)
 	</insert>
 	
@@ -44,6 +46,7 @@
 			, buyprice = #{buyPrice}
 			, sellunit = #{sellUnit}
 			, sellprice = #{sellPrice}
+			, updatedate = now()
 		WHERE
 			idx = #{idx}
 	</update>
