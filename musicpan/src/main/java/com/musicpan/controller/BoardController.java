@@ -265,6 +265,7 @@ public class BoardController {
 //		/board/{boardName}/content/{bno}	
 //		log.info("====================================================");
 		
+		//log.info("notice_flag : " + boardVO.getNotice_flag());
 		
 		long result = service.register(boardVO);
 		

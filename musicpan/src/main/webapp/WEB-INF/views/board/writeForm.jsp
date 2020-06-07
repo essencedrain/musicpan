@@ -20,7 +20,16 @@
 		            	<div class="heading pb-4">
 		            		<h3 class="board_heading"><a href="/board/${b_name}/list">${b_name2} 게시판</a></h3>
 		                </div>
+		                
 		                <form name="writeForm" action="/board/register" method="post" id="writeForm">
+		                	
+		                	<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<div class="custom-control custom-checkbox mb-2">
+								  <input type="checkbox" class="custom-control-input" id="notice_flag" value="1" name="notice_flag">
+								  <label class="custom-control-label" for="notice_flag">공지사항</label>
+								</div>
+		                	</sec:authorize>
+		                	
 			                <div class="form-group">
 	                   			<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요."/>
 	                		</div>

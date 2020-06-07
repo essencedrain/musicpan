@@ -32,7 +32,7 @@ public class MusicMapperTests {
 	private MusicPro musicPro = new MusicPro();
 	
 	
-	
+	/*
 	//사이트와 DB idx 비교
 	@Test
 	public void testBasicInfo() {
@@ -68,7 +68,7 @@ public class MusicMapperTests {
 		
 		
 	}//public void testBasicInfo() {
-	
+	*/
 	
 	
 	

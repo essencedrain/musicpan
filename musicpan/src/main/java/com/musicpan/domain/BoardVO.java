@@ -27,4 +27,5 @@ public class BoardVO {
 	private int likeCnt;
 	private int dislikeCnt;
 	private List<BoardAttachVO> attachList;
+	private int notice_flag;
 }

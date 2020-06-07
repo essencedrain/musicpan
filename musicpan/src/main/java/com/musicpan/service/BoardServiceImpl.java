@@ -1,5 +1,6 @@
 package com.musicpan.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,13 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		
-		List<BoardVO> resultList = mapper.getListWithPaging(cri);
+		List<BoardVO> notice = mapper.getListNotice(cri);
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		List<BoardVO> resultList = new ArrayList<>();
+		
+		resultList.addAll(notice);
+		resultList.addAll(list);
 		
 		for(BoardVO temp : resultList) {
 			temp.setModiDate( convertDate(temp) );
@@ -60,7 +67,12 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public long register(BoardVO board) {
 		
-		mapper.insert(board);
+		if(board.getNotice_flag()==0) {
+			mapper.insert(board);
+		}else{
+			mapper.insertNotice(board);
+		}
+		
 		
 		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
 			return board.getBno();

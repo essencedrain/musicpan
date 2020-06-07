@@ -399,6 +399,14 @@ a.article:hover {
     font-weight: 500;
     vertical-align: middle;
 }
+.table_gtx .main_notice{
+	font-size:14px;
+	line-height: 21px;
+    font-weight: 900;
+}
+.table_gtx .notice_tr{
+	background-color: #f8f8f8;
+}
 .table_gtx .list_grade img{
 	vertical-align:middle;
 	margin-bottom: 5px;

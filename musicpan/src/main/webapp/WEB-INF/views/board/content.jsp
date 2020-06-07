@@ -52,10 +52,12 @@
 			            		</tr>
 		            		</table>
 		            		
-		            		<div class="content_like text-center pb-4">
-                               	<button type="button" id="content_likeBtn" class="btn btn-primary btn-sm mr-2"><i id="t_up" class="far fa-thumbs-up"></i>&nbsp;:&nbsp;<span id="content_likeCount">0</span></button>
-					        	<button type="button" id="content_dislikeBtn" class="btn btn-outline-secondary btn-sm"><i id="t_down" class="far fa-thumbs-down"></i>&nbsp;:&nbsp;<span id="content_dislikeCount">0</span></button>
-					      	</div>
+		            		<c:if test="${board.notice_flag==0}">
+			            		<div class="content_like text-center pb-4">
+	                               	<button type="button" id="content_likeBtn" class="btn btn-primary btn-sm mr-2"><i id="t_up" class="far fa-thumbs-up"></i>&nbsp;:&nbsp;<span id="content_likeCount">0</span></button>
+						        	<button type="button" id="content_dislikeBtn" class="btn btn-outline-secondary btn-sm"><i id="t_down" class="far fa-thumbs-down"></i>&nbsp;:&nbsp;<span id="content_dislikeCount">0</span></button>
+						      	</div>
+		            		</c:if>
 		            		
 		            		<div class="float-right mt-2">
 		            			 <sec:authentication property="principal" var="pinfo"/>
@@ -126,33 +128,69 @@
                     			<tbody class="text-center">
                     				<c:set var="rowNum" value="${pageMaker.startRow}"/>
                     				<c:forEach items="${list}" var="board2">
-		                    			<tr>
-		                    				<td class = "td_pc ${board.bno==board2.bno ? "hover_color2":"list_rowNum"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
-	                    					<td style="width: 63%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"hover_color":"" }">
-	                    						<a class="move" href="${board2.bno}">
-					                        		<span class="main_title">${board2.title}</span>
-					                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
-					                        	</a>
-	                    					</td>
-					                        <td style="width: 17%;" class="text-left list_else td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
-					                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
-					                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
-					                        
-					                        
-					                        <td class="td_mo py-2 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
-					                        	<div class="mo_main py-1 d-flex justify-content-start">
-					                        		<a class="move" href="${board2.bno}">
-							                        	<div class='text-left ${board.bno==board2.bno ? "hover_color":"" }'>
-							                        		<span class="main_title">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":""}&nbsp;${board2.title}</span>
-							                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
-						                        		</div>
-					                        		</a>
-					                        	</div>
-					                        	<div class="mo_sub d-flex justify-content-between">
-					                        		<div><i class="far fa-clock"></i> ${board2.modiDate}</div>  <div><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</div>
-					                        	</div>
-					                        </td>
-		                    			</tr>
+                    					<c:choose>
+                    						<c:when test="${board2.notice_flag==1}">
+                    						<!-- 공지 -->
+                    						<tr class="notice_tr">
+                    							<td class = "td_pc ${board.bno==board2.bno ? "hover_color2":"list_replyCnt"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":"공지"}</td>
+		                    					<td style="width: 63%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"hover_color":"" }">
+						                        	<a class="move" href="${board2.bno}">
+						                        		<span class="main_notice text-danger">${board2.title}</span>
+						                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
+						                        	</a>
+		                    					</td>
+						                        <td style="width: 17%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
+						                        <td style="width: 10%;" class="list_else list_regdate td_pc">${board2.modiDate}</td>
+						                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
+						                        
+						                        <td class="td_mo py-1 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
+						                        	<div class="mo_main py-1 d-flex justify-content-start">
+						                        		<a class="move" href="${board2.bno}">
+								                        	<div class='text-left ${board.bno==board2.bno ? "hover_color":"" }'>
+								                        		<span class="list_replyCnt">&nbsp;공지</span>
+								                        		&nbsp;&nbsp;
+								                        		<span class="main_notice text-danger">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":""}${board2.title}</span>
+								                        		&nbsp;
+								                        		<span class="list_replyCnt">${board2.replyCnt>0?board2.replyCnt:""}</span>
+							                        		</div>
+						                        		</a>
+						                        	</div>
+					                        	</td>
+                    						</tr>
+                    						</c:when>
+                    						
+                    						<c:otherwise>
+                    						<!-- 공지아님 -->
+                    						<tr>
+			                    				<td class = "td_pc ${board.bno==board2.bno ? "hover_color2":"list_rowNum"}" style="width: 5%;">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":rowNum}</td>
+		                    					<td style="width: 63%;" data-href="${board2.bno}" class="text-left list_else td_pc clickable-row ${board.bno==board2.bno?"hover_color":"" }">
+		                    						<a class="move" href="${board2.bno}">
+						                        		<span class="main_title">${board2.title}</span>
+						                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
+						                        	</a>
+		                    					</td>
+						                        <td style="width: 17%;" class="text-left list_else td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
+						                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
+						                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
+						                        
+						                        
+						                        <td class="td_mo py-2 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
+						                        	<div class="mo_main py-1 d-flex justify-content-start">
+						                        		<a class="move" href="${board2.bno}">
+								                        	<div class='text-left ${board.bno==board2.bno ? "hover_color":"" }'>
+								                        		<span class="main_title">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":""}&nbsp;${board2.title}</span>
+								                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
+							                        		</div>
+						                        		</a>
+						                        	</div>
+						                        	<div class="mo_sub d-flex justify-content-between">
+						                        		<div><i class="far fa-clock"></i> ${board2.modiDate}</div>  <div><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</div>
+						                        	</div>
+						                        </td>
+                    						</tr>
+                    						</c:otherwise>
+                    					</c:choose>
+		                    			
 		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
                     			</tbody>

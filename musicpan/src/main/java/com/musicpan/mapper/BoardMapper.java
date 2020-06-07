@@ -11,6 +11,8 @@ public interface BoardMapper {
 
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	
+	public List<BoardVO> getListNotice(Criteria cri);
+	
 	public int getTotalCount(Criteria cri);
 	
 	public BoardVO read(Criteria cri);
@@ -18,6 +20,8 @@ public interface BoardMapper {
 	public int increaseHit(Criteria cri);
 	
 	public int insert(BoardVO board);
+	
+	public int insertNotice(BoardVO board);
 	
 	public int getRank(Criteria cri);
 	

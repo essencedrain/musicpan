@@ -26,14 +26,25 @@
 	
 	
 	<select id="getListWithPaging" resultType="com.musicpan.domain.BoardVO">
-		SELECT b.bno, b.title, b.regdate, b.hit, b.id, b.likecnt, b.dislikecnt, m.name, m.grade, b.replycnt
+		SELECT b.bno, b.title, b.regdate, b.hit, b.id, b.likecnt, b.dislikecnt, b.notice_flag, m.name, m.grade, b.replycnt
 		from board_${b_name} b INNER JOIN member m
 			ON b.id=m.id
 		where 
 		<include refid="criteria"></include>
-		b.del_flag = 0 
+		b.del_flag = 0 and b.notice_flag = 0
 		order BY b.bno desc
 		LIMIT #{limitNum}, #{amount}
+	</select>
+	
+	<select id="getListNotice" resultType="com.musicpan.domain.BoardVO">
+		SELECT
+			b.bno, b.title, b.regdate, b.hit, b.id, b.likecnt, b.dislikecnt, b.notice_flag, m.name, m.grade, b.replycnt
+		from board_${b_name} b INNER JOIN member m
+			ON b.id=m.id
+		where 
+			b.del_flag = 0
+			and b.notice_flag = 1
+		order BY b.bno desc
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
@@ -46,7 +57,7 @@
 	</select>
 	
 	<select id="read" resultType="com.musicpan.domain.BoardVO">
-		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, b.id, b.likecnt, b.dislikecnt, m.name, m.grade
+		SELECT b.bno, b.title, b.content, b.regdate, b.updatedate, b.hit, b.id, b.likecnt, b.dislikecnt, b.notice_flag, m.name, m.grade
 		from board_${b_name} b INNER JOIN member m
 				ON b.id=m.id
 		where bno = #{bno}
@@ -61,6 +72,11 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="bno">
 		insert into board_${b_name} (title, content, regdate, updatedate, hit, id)
 		values (#{title}, #{content},now(),now(),0,#{id})
+	</insert>
+	
+	<insert id="insertNotice" useGeneratedKeys="true" keyProperty="bno">
+		insert into board_${b_name} (title, content, regdate, updatedate, hit, id, notice_flag)
+		values (#{title}, #{content},now(),now(),0,#{id},1)
 	</insert>
 	
 	<select id="getRank" resultType="int">
