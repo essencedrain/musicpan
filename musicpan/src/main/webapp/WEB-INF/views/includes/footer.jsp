@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
+<!-- 컨텐츠 페이지 전용 -->
 <!-- scroll to top -->
 <div class="utilBtns back-to-top">
 	<div>
@@ -12,6 +12,15 @@
 	</div>
 	<div>
 		<a id="back-to-top3" href="#" class="btn btn-outline-dark btn-sm" role="button"><i class="fas fa-list-ul"></i></a>
+	</div>
+</div>
+<!-- scroll to top -->
+
+<!-- 그외 페이지 -->
+<!-- scroll to top -->
+<div class="utilBtns back-to-top99">
+	<div>
+		<a id="back-to-top91" href="#" class="btn btn-outline-dark btn-sm" role="button"><i class="fas fa-chevron-up back-to-top_i"></i></a>
 	</div>
 </div>
 <!-- scroll to top -->

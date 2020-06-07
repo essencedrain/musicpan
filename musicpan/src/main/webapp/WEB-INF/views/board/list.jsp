@@ -13,7 +13,7 @@
             <div class="container">
 	            <div class="row">
 	            	
-		            <div class="left_area col-lg-1">
+		            <div class="left_area col-lg-1 pr-4">
 		            </div>
 		            <!-- 배너
 		            <div class="floatdiv floatdiv_left">
@@ -24,7 +24,7 @@
 					</div>
 					 -->
 		            
-		            <div class="center_area col-lg-10" >
+		            <div class="center_area col-lg-10 mb-5">
 			            <div class="pb-3">
 		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
@@ -137,7 +137,39 @@
 								</c:choose>
 							</ul>
 		            	</div>
-		            </div>
+		            	
+		            	<div class="mt-5 pt-5 board_1200banner_bot_930">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253342 });
+							</script>
+		            	</div>
+		            	<div class="mt-5 pt-5 board_993banner_bot_780">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253345 });
+							</script>
+		            	</div>
+		            	<div class="mt-5 pt-5 board_768banner_bot_700">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253348 });
+							</script>
+		            	</div>
+		            	<div class="mt-5 pt-5 board_551banner_bot_520">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253352 });
+							</script>
+		            	</div>
+		            	<div class="mt-5 pt-5 board_550banner_bot_320 text-center">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253356 });
+							</script>
+		            	</div>
+		            	
+		            </div><!-- div class="center_area col-lg-10 mb-5" -->
 		            
 		            <div class="right_area col-lg-1">
 	           	 	</div>
@@ -233,6 +265,27 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
+
+
+	<!-- =================================================================================================  -->
+    <!-- 스크롤 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	$('.back-to-top99').fadeIn();
+    	
+   		// 최상단
+   		$('#back-to-top91').click(function () {
+   			$('body,html').animate({
+   				scrollTop: 0
+   			}, 500);
+   			return false;
+   		});
+   		
+    });
+    </script>
+    <!-- =================================================================================================  -->
 
 	<!-- =================================================================================================  -->
    	<!-- start td행 전체에 링크 -->

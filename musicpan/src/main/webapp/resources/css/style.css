@@ -15,17 +15,17 @@ body {
 	padding-right: 10px !important;
 }
 /* ==========================scroll to top============================== */
-.back-to-top {
+.utilBtns {
     position: fixed !important;
     bottom: 25px;
     right: 25px;
     display: none;
     z-index : 999 !important;
 }
-.back-to-top .btn-sm{
+.utilBtns .btn-sm{
 	margin-bottom: 5px;
 }
-#back-to-top1 .back-to-top_i{
+.utilBtns .back-to-top_i{
 	width: 14px;
 }
 /* ==========================scroll to top============================== */
@@ -596,4 +596,54 @@ a.article:hover {
 	line-height: 18px;
     font-weight: 500;
     color: #999;
+}
+
+
+/* ---------------------------------------------------
+    배너 STYLE
+----------------------------------------------------- */
+@media only screen and (min-width: 1200px){
+	.board_993banner_bot_780
+	,.board_768banner_bot_700
+	,.board_551banner_bot_520
+	,.board_550banner_bot_320{
+		display: none;
+	}
+}
+
+
+@media only screen and (min-width:993px) and (max-width:1199px){
+	.board_1200banner_bot_930
+	,.board_768banner_bot_700
+	,.board_551banner_bot_520
+	,.board_550banner_bot_320{
+		display: none;
+	}
+}
+
+@media only screen and (min-width:768px) and (max-width:992px){
+	.board_1200banner_bot_930
+	,.board_993banner_bot_780
+	,.board_551banner_bot_520
+	,.board_550banner_bot_320{
+		display: none;
+	}
+}
+
+@media only screen and (min-width:551px) and (max-width: 767px){
+	.board_1200banner_bot_930
+	,.board_993banner_bot_780
+	,.board_768banner_bot_700
+	,.board_550banner_bot_320{
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 550px){
+	.board_1200banner_bot_930
+	,.board_993banner_bot_780
+	,.board_768banner_bot_700
+	,.board_551banner_bot_520{
+		display: none;
+	}
 }
