@@ -28,13 +28,17 @@ public class MusicTask {
 	private MusicPro musicPro = new MusicPro();
 	
 	//매일 5분마다
-	//@Scheduled(cron="0 */5 * * * *")
+	@Scheduled(cron="0 */5 * * * *")
 	public void routine5() throws Exception{
 		
 		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
 		HashSet<String> list = musicPro.getList();
 		//현재 DB에 있는 모든 곡 idx(int)획득
 		List<Integer> dbIdxs = mapper.getIdx();
+		
+		
+		//스프레드 및 최근거래내역 갱신
+		updateSpread(list);
 		
 		//log.info("list size : "+list.size());
 		//log.info("dbIdxs size : "+dbIdxs.size());
@@ -52,8 +56,7 @@ public class MusicTask {
 			insertBasic(list);
 		}//if(list.size()!=dbIdxs.size()) 사이트와 DB간 곡 갯수가 다를때 신곡 추가해주는 루틴
 		
-		//스프레드 및 최근거래내역 갱신
-		updateSpread(list);
+		
 		
 	}//public void routine5()
 
@@ -196,97 +199,101 @@ public class MusicTask {
 			//getSpreadInfo 결과
 			Map<String,Object> resultSpread = musicPro.getSpreadInfo(temp);
 			
+			
 			//최근거래가
 			int recentPrice = Integer.parseInt( (String)resultSpread.get("recentPrice") );
 			
-			//최근거래시간
-			Date recentPriceTime=null;
-			try {
-				recentPriceTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( (String)resultSpread.get("recentPriceTime") );
-			} catch (Exception e) {
-				e.printStackTrace();
-			}//try
+			if(recentPrice!=0) {
 			
-			
-			//매수
-			List<String[]> tempBuy = (List<String[]>)resultSpread.get("buy");
-			int buyUnit;
-			int buyPrice;
-			if(tempBuy!=null) {
-				buyPrice = Integer.parseInt(tempBuy.get(0)[0]);
-				buyUnit = Integer.parseInt(tempBuy.get(0)[1]);
-			}else {
-				buyUnit = 0;
-				buyPrice = 0;
-			}//if
-			
-			//매도
-			List<String[]> tempSell = (List<String[]>)resultSpread.get("sell");
-			int sellUnit;
-			int sellPrice;
-			if(tempSell!=null) {
-				sellPrice = Integer.parseInt(tempSell.get(0)[0]);
-				sellUnit = Integer.parseInt(tempSell.get(0)[1]);
-			}else {
-				sellUnit = 0;
-				sellPrice = 0;
-			}//if
-			
-			
-			//------------------------------
-			
-			Date dbRecnetPriceTime = mapper.getRecentPriceTime(idx);
-			
-			//basic 갱신
-			mapper.updateSpreadInfo(idx, recentPrice, recentPriceTime, buyUnit, buyPrice, sellUnit, sellPrice);
-			
-			
-			//최근거래시간이 다르면? 최근거래내역 업데이트해야지
-			if( !recentPriceTime.equals(dbRecnetPriceTime) ) {
-//						log.info("idx : " + idx);
-//						log.info("최근 거래 시간 : " + recentPriceTime); //getSpreadInfo 결과
-//						log.info("최근 DB 거래 시간 : " + dbRecnetPriceTime); //music_basic의 최근거래시간
-//						log.info("같냐? : " + (recentPriceTime.equals(dbRecnetPriceTime)) );
+				//최근거래시간
+				Date recentPriceTime=null;
+				try {
+					recentPriceTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( (String)resultSpread.get("recentPriceTime") );
+				} catch (Exception e) {
+					e.printStackTrace();
+				}//try
 				
-				//DB에 저장된 최신 거래내역 15건
-				List<Date> resultHis = mapper.getHisTime(idx);
 				
-				//사이트에서 가져온 최신 거래내역 최대 15건
-				//getRecentInfo 결과
-				List<String> resultRecent = musicPro.getRecentInfo(temp);
+				//매수
+				List<String[]> tempBuy = (List<String[]>)resultSpread.get("buy");
+				int buyUnit;
+				int buyPrice;
+				if(tempBuy!=null) {
+					buyPrice = Integer.parseInt(tempBuy.get(0)[0]);
+					buyUnit = Integer.parseInt(tempBuy.get(0)[1]);
+				}else {
+					buyUnit = 0;
+					buyPrice = 0;
+				}//if
 				
-				for(String tempRecent : resultRecent) {
+				//매도
+				List<String[]> tempSell = (List<String[]>)resultSpread.get("sell");
+				int sellUnit;
+				int sellPrice;
+				if(tempSell!=null) {
+					sellPrice = Integer.parseInt(tempSell.get(0)[0]);
+					sellUnit = Integer.parseInt(tempSell.get(0)[1]);
+				}else {
+					sellUnit = 0;
+					sellPrice = 0;
+				}//if
+				
+				
+				//------------------------------
+				
+				Date dbRecnetPriceTime = mapper.getRecentPriceTime(idx);
+				
+				//basic 갱신
+				mapper.updateSpreadInfo(idx, recentPrice, recentPriceTime, buyUnit, buyPrice, sellUnit, sellPrice);
+				
+				
+				//최근거래시간이 다르면? 최근거래내역 업데이트해야지
+				if( !recentPriceTime.equals(dbRecnetPriceTime) ) {
+	//						log.info("idx : " + idx);
+	//						log.info("최근 거래 시간 : " + recentPriceTime); //getSpreadInfo 결과
+	//						log.info("최근 DB 거래 시간 : " + dbRecnetPriceTime); //music_basic의 최근거래시간
+	//						log.info("같냐? : " + (recentPriceTime.equals(dbRecnetPriceTime)) );
 					
-					String[] tempArr = tempRecent.split(",");
+					//DB에 저장된 최신 거래내역 15건
+					List<Date> resultHis = mapper.getHisTime(idx);
 					
-					//날짜 앞에 20 더해줘야함
-					//거래시간
-					Date hisTime=null;
-					try {
-						hisTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( "20"+tempArr[0] );
-					} catch (Exception e) {
-						e.printStackTrace();
-					}//try
+					//사이트에서 가져온 최신 거래내역 최대 15건
+					//getRecentInfo 결과
+					List<String> resultRecent = musicPro.getRecentInfo(temp);
 					
-					int hisPrice = Integer.parseInt(tempArr[1]);
-					int hisUnit = Integer.parseInt(tempArr[2]);
-					
-					
-					//DB에서 가져온거랑 대조해서 없는거면 삽입
-					boolean tempFlag = false;
-					for(Date tempHistroy : resultHis) {
-						//log.info(tempHistroy + " // " + hisTime + " // " + (tempHistroy.equals(hisTime)) );
-						if( hisTime.equals(tempHistroy) ) {
-							tempFlag = true;
+					for(String tempRecent : resultRecent) {
+						
+						String[] tempArr = tempRecent.split(",");
+						
+						//날짜 앞에 20 더해줘야함
+						//거래시간
+						Date hisTime=null;
+						try {
+							hisTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse( "20"+tempArr[0] );
+						} catch (Exception e) {
+							e.printStackTrace();
+						}//try
+						
+						int hisPrice = Integer.parseInt(tempArr[1]);
+						int hisUnit = Integer.parseInt(tempArr[2]);
+						
+						
+						//DB에서 가져온거랑 대조해서 없는거면 삽입
+						boolean tempFlag = false;
+						for(Date tempHistroy : resultHis) {
+							//log.info(tempHistroy + " // " + hisTime + " // " + (tempHistroy.equals(hisTime)) );
+							if( hisTime.equals(tempHistroy) ) {
+								tempFlag = true;
+							}//if
+						}//for
+						if(!tempFlag) {
+							//거래내역 신규삽입
+							mapper.insertHistory(idx, hisTime, hisPrice, hisUnit);
+							//log.info(idx+"에 신규삽입!");
 						}//if
 					}//for
-					if(!tempFlag) {
-						//거래내역 신규삽입
-						mapper.insertHistory(idx, hisTime, hisPrice, hisUnit);
-						//log.info(idx+"에 신규삽입!");
-					}//if
-				}//for
-				
+					
+				}//if
 			}//if
 		}//for(String temp : list) {
 		
