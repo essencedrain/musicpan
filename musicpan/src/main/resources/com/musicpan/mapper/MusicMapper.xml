@@ -34,6 +34,20 @@
 			)
 	</insert>
 	
+	<update id="updateSpreadInfo">
+		UPDATE
+			music_basic
+		SET
+			recentprice = #{recentPrice}
+			, recentpricetime = #{recentPriceTime}
+			, buyunit = #{buyUnit}
+			, buyprice = #{buyPrice}
+			, sellunit = #{sellUnit}
+			, sellprice = #{sellPrice}
+		WHERE
+			idx = #{idx}
+	</update>
+	
 	<insert id="insertAuction">
 		INSERT INTO
 			music_auction
@@ -73,12 +87,81 @@
 			)
 	</insert>
 	
+	<insert id="insertHistory">
+		INSERT INTO
+			music_history
+			(
+				idx
+				, histime
+				, hisprice
+				, hisunit
+			)
+		VALUES
+			(
+				#{idx}
+				, #{hisTime}
+				, #{hisPrice}
+				, #{hisUnit}
+			)
+	</insert>
+	
+	
+	<insert id="insertFeeInfo">
+		INSERT INTO
+			music_feeinfo
+			(
+				idx
+				, feemonth
+				, broadcast
+				, transfer
+				, duplication
+				, performance
+				, oversea
+				, etc
+			)
+		VALUES
+			(
+				#{idx}
+				, #{feeMonth}
+				, #{broadcast}
+				, #{transfer}
+				, #{duplication}
+				, #{performance}
+				, #{oversea}
+				, #{etc}
+			)
+	</insert>
+	
 	<select id="getIdx" resultType="int">
 	
 		SELECT
 			idx
 		FROM
 			music_basic
+	
+	</select>
+	
+	<select id="getRecentPriceTime" resultType="date">
+	
+		SELECT
+			recentpricetime
+		FROM
+			music_basic
+		WHERE
+			idx = #{idx}
+	
+	</select>
+	
+	<select id="getHisTime" resultType="date">
+	
+		SELECT
+			histime
+		FROM
+			music_history
+		WHERE
+			idx = #{idx}
+		ORDER BY histime DESC
+		LIMIT 0,15
 	
 	</select>
 	

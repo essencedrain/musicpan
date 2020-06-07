@@ -214,7 +214,7 @@ public class MusicPro {
 			
 			
 			//----------------------------------------------------------------------------------------------------------------------------------------------
-			// getRecentInfo(String idx) : 시세
+			// getRecentInfo(String idx) : 시세, 최근거래 내역
 			// List<String> result
 			// 20-06-05 20:50:30,23500,2
 			//----------------------------------------------------------------------------------------------------------------------------------------------
@@ -412,7 +412,8 @@ public class MusicPro {
 			// 최근거래가, 최근거래시간, 팔자, 사자
 			// 파라미터 idx
 			// Map<String, Object>
-			// recentPrice(String), recentPriceTime(String), buy(List<String[갯수, 가격]>), sell(List<String[갯수, 가격]>)
+			// recentPrice(String), recentPriceTime(String), buy(List<String[가격,갯수]>), sell(List<String[가격,갯수]>)
+			// 23500				2020-06-05 13:46:51
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			public Map<String, Object> getSpreadInfo(String idx) {
 				
@@ -448,7 +449,7 @@ public class MusicPro {
 				
 				//----------------------------------------------
 				//팔자 스프레드
-				//List<String[갯수, 가격]>
+				//List<String[가격,갯수]>
 				//----------------------------------------------
 				List<String[]> sellSpreadData = new ArrayList<>();
 				
@@ -473,7 +474,7 @@ public class MusicPro {
 				
 				//----------------------------------------------
 				//사자 스프레드
-				//List<String[갯수, 가격]>
+				//List<String[가격, 갯수]>
 				//----------------------------------------------
 				List<String[]> buySpreadData = new ArrayList<>();
 				
