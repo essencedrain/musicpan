@@ -58,7 +58,7 @@ public class MusicTask {
 			
 			//기본정보(옥션포함) 삽입
 			insertBasic(list);
-		
+			
 		//3	
 		}else {// 사이트 마감된 옥션 곡 갯수와 DB 옥션 정보 갯수를 비교해서
 		//다르면 else 분기로 인해 무조건 재옥션이니 재옥션 처리 한다.
@@ -77,13 +77,12 @@ public class MusicTask {
 						setOfSite.remove(temp+"");
 					}//if
 				}//for
+			
+				//삽입
+				for(String temp : setOfSite) {
+					insertReAuction(temp);
+				}//for
 			}//if
-			
-			//삽입
-			for(String temp : setOfSite) {
-				insertReAuction(temp);
-			}//for
-			
 		}////if(list.size()!=dbIdxs.size())
 		
 		
@@ -121,7 +120,6 @@ public class MusicTask {
 				}//if
 			}//if
 		}//if
-		
 		
 	}//public void routine5()
 
@@ -213,20 +211,18 @@ public class MusicTask {
 	// 재옥션정보삽입
 	//----------------------------------------------------------------------------------------------------------------
 	private void insertReAuction(String auctionIdx) {
-		
 		//수집해오고
 		String[] auctionResult = musicPro.getAuctionInfo(auctionIdx);
-		int temp = Integer.parseInt(auctionIdx);
 		//n차 옥션에 대한 정보 music_auction에 삽입
-		for(String tempAuction : auctionResult) {
-			String[] tempSplit = tempAuction.trim().split(",");
-			int auctionCnt = Integer.parseInt(tempSplit[0]);
-			int auctionUnits = Integer.parseInt(tempSplit[1]);
-			int auctionStart = Integer.parseInt(tempSplit[2]);
-			int auctionLowPrice = Integer.parseInt(tempSplit[3]);
-			int auctionAvgPrice = Integer.parseInt(tempSplit[4]);
-			mapper.insertAuction(temp, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
-		}//for
+			int auctionCnt = Integer.parseInt(auctionResult[0]);
+			int auctionUnits = Integer.parseInt(auctionResult[1]);
+			int auctionStart = Integer.parseInt(auctionResult[2]);
+			int auctionLowPrice = Integer.parseInt(auctionResult[3]);
+			int auctionAvgPrice = Integer.parseInt(auctionResult[4]);
+			
+			int idx = mapper.getIdxFromSongAndSinger(auctionResult[5], auctionResult[6]);
+
+			mapper.insertAuction(idx, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
 		
 	}//insertAuction
 	//----------------------------------------------------------------------------------------------------------------

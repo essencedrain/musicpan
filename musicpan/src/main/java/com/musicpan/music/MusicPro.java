@@ -170,7 +170,9 @@ public class MusicPro {
 			// priceStart 옥션시작가
 			// priceLow 낙찰최저가
 			// priceAvg 낙찰평균가
-			// String[5] 차수,수량,시작가,최저낙찰가,평균가
+			//song, singer
+			//차수,수량,시작가,최저낙찰가,평균가,곡명, 가수
+			// String[7] 차수,수량,시작가,최저낙찰가,평균가,곡명, 가수
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			public String[] getAuctionInfo(String idx) {
 				Document doc= null;
@@ -182,7 +184,12 @@ public class MusicPro {
 					log.info("GetSongNums.getSongInfo().doc 에러 : " + e);
 				}//try
 				
-			
+				
+				//곡명
+				String song = doc.select("#page_auction > div > div > strong").text().trim();
+				//가수명
+				String singer = doc.select("#page_auction > div > div > em").text().trim();
+				
 				
 				//총옥션수량
 				//아래가 "옥션 수량"으로 나와야함 "낙찰 처리"가 있으면 다르게 파싱
@@ -284,13 +291,15 @@ public class MusicPro {
 				
 				//System.out.println(num + " // " + unitSum + " // "+ priceSum + " // "+ priceLow + " // "+ priceAvg + " // " + priceStart);
 				
-				String[] result = new String[5];
+				String[] result = new String[7];
 				
 				result[0] = num+"";
 				result[1] = unitSum+"";
 				result[2] = priceStart+"";
 				result[3] = priceLow+"";
 				result[4] = priceAvg+"";
+				result[5] = song;
+				result[6] = singer;
 				
 				return result;
 				

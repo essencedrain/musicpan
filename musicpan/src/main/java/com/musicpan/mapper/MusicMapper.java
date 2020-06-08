@@ -65,4 +65,6 @@ public interface MusicMapper {
 	
 	public FeeYearMonthVO getFeeYearMonth();
 	
+	public int getIdxFromSongAndSinger(@Param("song") String song, @Param("singer") String singer);
+	
 }//interface

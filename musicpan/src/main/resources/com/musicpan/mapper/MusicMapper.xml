@@ -213,4 +213,13 @@
 		LIMIT 0,1
 	</select>
 	
+	<select id="getIdxFromSongAndSinger" resultType="int">
+		SELECT
+			idx
+		FROM
+			music_basic
+		WHERE
+			song = #{song} AND singer = #{singer}
+	</select>
+	
 </mapper>
