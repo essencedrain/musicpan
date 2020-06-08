@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.musicpan.domain.MusicBasicVO;
 import com.musicpan.domain.SongBasicVO;
 
 public interface MusicMapper {
@@ -48,11 +49,15 @@ public interface MusicMapper {
 			,@Param("sellPrice") int sellPrice
 			);
 	
+
 	public List<Integer> getIdx();
+	
+	public List<MusicBasicVO> getSongAllInfo();
 	
 	public Date getRecentPriceTime(@Param("idx") int idx);
 	
 	public List<Date> getHisTime(@Param("idx") int idx);
 	
+	public int getAuctionIdx(@Param("auctionIdx") int auctionIdx);
 	
 }//interface

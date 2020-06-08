@@ -61,6 +61,7 @@
 				, auctionstart
 				, auctionlowprice
 				, auctionavgprice
+				, updatedate
 			)
 		VALUES
 			(
@@ -70,6 +71,7 @@
 				, #{auctionStart}
 				, #{auctionLowPrice}
 				, #{auctionAvgPrice}
+				, now()
 			)
 	</insert>
 	
@@ -81,12 +83,14 @@
 				idx
 				, feemonth
 				, fee
+				, updatedate
 			)
 		VALUES
 			(
 				#{idx}
 				, #{feeMonth}
 				, #{fee}
+				, now()
 			)
 	</insert>
 	
@@ -98,6 +102,7 @@
 				, histime
 				, hisprice
 				, hisunit
+				, updatedate
 			)
 		VALUES
 			(
@@ -105,6 +110,7 @@
 				, #{hisTime}
 				, #{hisPrice}
 				, #{hisUnit}
+				, now()
 			)
 	</insert>
 	
@@ -121,6 +127,7 @@
 				, performance
 				, oversea
 				, etc
+				, updatedate
 			)
 		VALUES
 			(
@@ -132,6 +139,7 @@
 				, #{performance}
 				, #{oversea}
 				, #{etc}
+				, now()
 			)
 	</insert>
 	
@@ -139,6 +147,26 @@
 	
 		SELECT
 			idx
+		FROM
+			music_basic
+	
+	</select>
+	
+	<select id="getAuctionIdx" resultType="int">
+	
+		SELECT
+			count(*)
+		FROM
+			music_auction
+		WHERE
+			auctioncnt = #{auctionIdx}
+	</select>
+	
+	
+	<select id="getSongAllInfo" resultType="com.musicpan.domain.MusicBasicVO">
+	
+		SELECT
+			*
 		FROM
 			music_basic
 	

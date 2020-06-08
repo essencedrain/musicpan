@@ -63,67 +63,194 @@ public class MusicPro {
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			
 			
+			
 			//----------------------------------------------------------------------------------------------------------------------------------------------
-			// getAuctionInfo(String idx) : 기본 정보
-			// auctionInfo[i] = auctionCnt[i]+","+auctionUnits[i]+","+auctionStart[i]+","+auctionLowPrice[i]+","+auctionAvgPrice[i];
-			// 옥션정보[옥션횟수] = 차수,수량,시작가,낙찰가,평균가
+			// getAuctionList(String song) : 곡명, 가수를 넣으면 옥션번호 가져옴
+			// List<String> 옥션idx
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			public List<String> getAuctionList(String song, String singer) {
+				List<String> songNums = new ArrayList<>();
+				String url="https://www.musicow.com/auctions?tab=closed&keyword=&page=";
+				
+				try {
+					int page=1;
+					boolean flag = true;
+					
+					while(flag) {
+						
+						Document doc = Jsoup.connect(url+page).get();
+						
+						Elements temp = doc.select(".user_buy").select("li").select("a");
+						
+						if(temp.size() < 18) {
+							flag = false;
+						}//if
+						
+						for (int i = 0; i < temp.size(); i++) {
+							String tempSong = "";
+							String tempNum = "";
+							String tempSinger = "";
+							//곡명
+							tempSong = temp.get(i).select("div.txt_box > div > dl:nth-child(1) > dd").text().trim();
+							//가수명
+							tempSinger = temp.get(i).select("div.txt_box > div > dl:nth-child(2) > dd").text().trim();
+							//곡옥션번호 idx
+							tempNum = temp.get(i).attr("href").substring(9).trim();
+							
+							//songNums.add(temp.get(i).attr("href").substring(9).trim());
+							//songNums.add(temp.get(i).select("div.txt_box > div > dl:nth-child(1) > dd").text().trim());
+							
+							//검색어(곡명, 가수명) 같은 곡만 담는다.
+							if(song.equals(tempSong)) {
+								if(singer.equals(tempSinger)) {
+									songNums.add(tempNum);
+								}
+							}
+						}//for
+						page += 1;
+						
+					}//while
+					
+				} catch (Exception e) {
+					//log.info("GetSongNums.getList() 에러 : " + e);
+				}
+				return songNums;
+			}
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			
+			
+			
+			
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			// getAuctionInfo(String idx - 옥션idx) : 옥션 정보
+			// num 옥션인덱스 옥션idx
+			// unitSum 총옥션수량
+			// priceStart 옥션시작가
+			// priceLow 낙찰최저가
+			// priceAvg 낙찰평균가
+			// String[5] 차수,수량,시작가,최저낙찰가,평균가
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			public String[] getAuctionInfo(String idx) {
 				Document doc= null;
-				String url="https://www.musicow.com/song/";
-				Elements releaseDateTemp = null;
+				String url="https://www.musicow.com/auction/";
 				
 				try {
-					doc = Jsoup.connect(url+idx+"?tab=info").get();
+					doc = Jsoup.connect(url+idx).get();
 				} catch (Exception e) {
 					log.info("GetSongNums.getSongInfo().doc 에러 : " + e);
 				}//try
 				
-				//옥션기록
-				//String[횟수]
-				//String[0] = 수량,시작가,낙찰가,평균가
-				//옥션횟수
-				//int auctionCnt = doc.select(".detail_zone .lst_numb_card").size();
-				//2=1회 4=2회 6=3회
+			
 				
-				//n차 옥션 마킹
-				//doc.select(".detail_zone h2").size()
-				//1차옥션 2개, 2차옥션3개, 3차옥션4개
-				//System.out.println(doc.select(".detail_zone h2").size());
-				String[] auctionCnt = new String[doc.select(".detail_zone h2").size()-1];
-				for(int i=1; i<doc.select(".detail_zone h2").size(); i++) {
-					//System.out.println( i+"//"+doc.select(".detail_zone:nth-child("+(i+2)+") h2").text().substring(0,1) );
-					auctionCnt[i-1] = doc.select(".detail_zone:nth-child("+(i+2)+") h2").text().substring(0,1);
+				//총옥션수량
+				//옥션 수량으로 나와야함 낙찰처리가 있으면 달라짐
+				String validation = doc.select("dl.price > dt:nth-child(3)").text().trim();
+				int totalUnits;
+				int priceStart;
+				if(validation.equals("옥션 수량")) {
+					String tempTotalUnits = doc.select("dl.price > dd:nth-child(4) > strong").text().trim();
+					String rawTotalUnits = tempTotalUnits.substring(0, tempTotalUnits.indexOf("주")).replaceAll(",", "");
+					totalUnits = Integer.parseInt(rawTotalUnits);
+					
+					String tempPriceStart = doc.select("dl.price > dd:nth-child(6) > strong").text().trim();
+					String rawPriceStart = tempPriceStart.substring(0, tempPriceStart.indexOf(" ")).replaceAll(",", "");
+					priceStart = Integer.parseInt(rawPriceStart);
+				}else {
+					String tempTotalUnits = doc.select("dl.price > dd:nth-child(6) > strong").text().trim();
+					String rawTotalUnits = tempTotalUnits.substring(0, tempTotalUnits.indexOf("주")).replaceAll(",", "");
+					totalUnits = Integer.parseInt(rawTotalUnits);
+					
+					String tempPriceStart = doc.select("dl.price > dd:nth-child(8) > strong").text().trim();
+					String rawPriceStart = tempPriceStart.substring(0, tempPriceStart.indexOf(" ")).replaceAll(",", "");
+					priceStart = Integer.parseInt(rawPriceStart);
+				}
+				
+				//헤더1줄, 마지막 집계 1줄 사이가 옥션내용
+				int totalSize = doc.select(".multi_option div").size();
+				//System.out.println(doc.select(".multi_option div").size());
+				
+				List<int[]> rawAuction = new ArrayList<>();
+				
+				
+				//입찰내역 수집
+				for(int i=1; i<totalSize-1; i++) {
+					
+					int[] rawData = new int[2];
+					
+					String rawPrice = doc.select(".multi_option div:nth-child("+(i+1)+") > ul > li:nth-child(1)").text().trim();
+					
+					//입찰가
+					String price = rawPrice.substring(0, rawPrice.indexOf(" ") ).replaceAll(",", "");
+					//입찰수량
+					String unit = doc.select(".multi_option div:nth-child("+(i+1)+") > ul > li:nth-child(2)").text().replaceAll(",", "").trim();
+					
+					//System.out.println( doc.select(".multi_option div:nth-child("+(i+1)+") > ul > li:nth-child(2)").text().trim() );
+					
+					//수량
+					rawData[0] = Integer.parseInt(unit);
+					//가격
+					rawData[1] = Integer.parseInt(price);
+					
+					rawAuction.add(rawData);
 				}//for
 				
-				
-				//좌상 옥션 수량
-				releaseDateTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(2)");
-				String[] auctionUnits = releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("주");
-				//log.info(releaseDateTemp.text());
-				
-				//좌하 옥션 시작가
-				releaseDateTemp = doc.select(".lst_numb_card:nth-child(1) dl dd:nth-child(4)");
-				String[] auctionStart = releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
-				//log.info(releaseDateTemp.text());
-				
-				//우상 최저 낙찰가
-				releaseDateTemp = doc.select(".lst_numb_card:nth-child(2) dl dd:nth-child(2)");
-				String[] auctionLowPrice= releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
-				//log.info(releaseDateTemp.text());
-				
-				
-				//우하 평균 낙찰가
-				releaseDateTemp = doc.select(".lst_numb_card:nth-child(2) dl dd:nth-child(4)");
-				String[] auctionAvgPrice= releaseDateTemp.text().trim().replaceAll(" ", "").replaceAll(",", "").trim().split("캐쉬");
-				//log.info(releaseDateTemp.text());
-				
-				String[] auctionInfo = new String[auctionUnits.length];
-				for(int i=0; i<auctionUnits.length;i++) {
-					auctionInfo[i] = auctionCnt[i]+","+auctionUnits[i]+","+auctionStart[i]+","+auctionLowPrice[i]+","+auctionAvgPrice[i];
+				int unitSum =0;
+				int priceSum = 0;
+				int priceAvg = 0;
+				int priceLow = 0;
+				for(int i=0; i<rawAuction.size(); i++) {
+					
+					if( (i+1) == rawAuction.size()){
+						int tempUnit = totalUnits - unitSum;
+						unitSum += tempUnit;
+						priceSum += (rawAuction.get(i)[1] * tempUnit);
+						
+						priceLow = rawAuction.get(i)[1];
+						priceAvg = priceSum / unitSum;
+						break;
+					}
+					
+					if(totalUnits > unitSum + rawAuction.get(i)[0]) {
+						unitSum += rawAuction.get(i)[0];
+						priceSum += (rawAuction.get(i)[1] * rawAuction.get(i)[0]);
+						
+					}else if(totalUnits == unitSum + rawAuction.get(i)[0]){
+						unitSum += rawAuction.get(i)[0];
+						priceSum += (rawAuction.get(i)[1] * rawAuction.get(i)[0]);
+						
+						priceLow = rawAuction.get(i)[1];
+						priceAvg = priceSum / unitSum;
+						break;
+					}else {
+						int tempUnit = totalUnits - unitSum;
+						unitSum += tempUnit;
+						priceSum += (rawAuction.get(i)[1] * tempUnit);
+						
+						priceLow = rawAuction.get(i)[1];
+						priceAvg = priceSum / unitSum;
+						break;
+					}//if
 				}//for
 				
-				return auctionInfo;
+				//num 옥션인덱스 
+				//unitSum 총옥션수량
+				//priceStart 옥션시작가
+				//priceLow 낙찰최저가
+				//priceAvg 낙찰평균가
+				//차수,수량,시작가,최저낙찰가,평균가
+				int num = Integer.parseInt(idx);
+				
+				//System.out.println(num + " // " + unitSum + " // "+ priceSum + " // "+ priceLow + " // "+ priceAvg + " // " + priceStart);
+				
+				String[] result = new String[5];
+				
+				result[0] = num+"";
+				result[1] = unitSum+"";
+				result[2] = priceStart+"";
+				result[3] = priceLow+"";
+				result[4] = priceAvg+"";
+				
+				return result;
 				
 			}
 			//----------------------------------------------------------------------------------------------------------------------------------------------

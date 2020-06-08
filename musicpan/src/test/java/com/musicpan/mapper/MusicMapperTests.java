@@ -1,6 +1,5 @@
 package com.musicpan.mapper;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.musicpan.domain.MusicBasicVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.music.MusicPro;
 
@@ -31,6 +31,36 @@ public class MusicMapperTests {
 	//MusicPro 로드
 	private MusicPro musicPro = new MusicPro();
 	
+	
+	
+	@Test
+	public void testBasicInfo() {
+		
+		
+		List<MusicBasicVO> result = mapper.getSongAllInfo();
+		
+		int cnt = 0;
+		
+		for(MusicBasicVO temp : result) {
+			
+			List<String> resultList = musicPro.getAuctionList(temp.getSong(), temp.getSinger());
+			
+			for(String temp2 : resultList) {
+				cnt +=1;
+				log.info(cnt + " // " + resultList.size() + " // " + temp.getSong());
+				//수집해오고
+				String[] auctionResult = musicPro.getAuctionInfo(temp2);
+				//n차 옥션에 대한 정보 music_auction에 삽입
+				int auctionCnt = Integer.parseInt(auctionResult[0]);
+				int auctionUnits = Integer.parseInt(auctionResult[1]);
+				int auctionStart = Integer.parseInt(auctionResult[2]);
+				int auctionLowPrice = Integer.parseInt(auctionResult[3]);
+				int auctionAvgPrice = Integer.parseInt(auctionResult[4]);
+				mapper.insertAuction(temp.getIdx(), auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
+				}//for
+			
+		}
+	}
 	
 	/*
 	//사이트와 DB idx 비교
