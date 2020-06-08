@@ -671,4 +671,88 @@ public class MusicPro {
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			
 			
+			
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			// getFeeInfoMonth(int dbYear, int dbMonth) : 저작권료 정보
+			/*
+			  	이 메서드는 월이 바뀌었을때 작동이 시작된다.
+			  	db 연도와 월을 넣고 사이트 스크립트에 저작권료 불러온다.
+		  		db와 사이트간에 모든곡이 차이가 1이 나야 정상이고 = true
+		  		(즉, db가 5면 사이트의 모든곡이 6이 되야 true)
+		  		한 곡이라도 차이가 0 이면 false
+			    
+			    true가 되면 저작권료 갱신을 시작한다.
+			 */
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			public boolean getFeeInfoMonth(int dbYear, int dbMonth, List<Integer> dbIdxs) {
+				
+				Document doc= null;
+				String url="https://www.musicow.com/song/";
+				
+				boolean result = false;
+				
+				int resultCnt = 0;
+				
+				for(int tempList : dbIdxs) {
+					
+				
+					try {
+						doc = Jsoup.connect(url+tempList+"?tab=info").get();
+					} catch (Exception e) {
+						//log.info("GetSongNums.getSongInfo().doc 에러 : " + e);
+					}//try
+					
+					
+					
+					//----------------------------------------------
+					// 저작권료 자료 획득
+					// List<String[연월, 저작권료]> feeList
+					//----------------------------------------------
+					
+					Elements script = doc.select("script");
+					Element script2 = script.get(10);
+					String jsonData = script2.html().substring(83,script2.html().length()-56);
+					
+					//JSON 파싱
+					JsonElement element = JsonParser.parseString(jsonData);
+					JsonObject object1 = element.getAsJsonObject();
+					
+					forout:
+					for(String k : object1.keySet()) {
+						JsonObject temp = object1.get(k).getAsJsonObject();
+						for(String j : temp.keySet()) {
+							
+							//String tempValue = k+"-"+j+"-01";
+							int year = Integer.parseInt(k);
+							int month = Integer.parseInt(j);
+							
+							if(dbMonth == 12) {//월은 12진수니 처리
+								if(year==dbYear) {
+									if( month == 1) {
+										resultCnt += 1;
+									}
+								}//if
+							}else {
+								if(year==dbYear) {
+									if( month == dbMonth+1) {
+										resultCnt += 1;
+									}
+								}//if
+							}//if
+							
+							//최신꺼 하나만 담고 바로 탈출
+							break forout;
+						}//for j
+					}//for k
+					
+					//----------------------------------------------
+				}//for(String tempList : list) {
+				
+				if(dbIdxs.size() == resultCnt) {
+					result = true;
+				}//if
+				
+				return result;
+			}
+			//----------------------------------------------------------------------------------------------------------------------------------------------
 }//class

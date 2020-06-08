@@ -1,5 +1,6 @@
 package com.musicpan.task;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.musicpan.domain.FeeYearMonthVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.mapper.MusicMapper;
 import com.musicpan.music.MusicPro;
@@ -28,7 +30,7 @@ public class MusicTask {
 	private MusicPro musicPro = new MusicPro();
 	
 	//매일 5분마다
-	@Scheduled(cron="0 */5 * * * *")
+	@Scheduled(cron="0 */10 * * * *")
 	public void routine5() throws Exception{
 		
 		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
@@ -37,11 +39,12 @@ public class MusicTask {
 		List<Integer> dbIdxs = mapper.getIdx();
 		
 		
+		//1
 		//스프레드 및 최근거래내역 갱신
 		updateSpread(list);
 		
-		//log.info("list size : "+list.size());
-		//log.info("dbIdxs size : "+dbIdxs.size());
+		
+		//2
 		//위 2개 size 비교
 		if(list.size()!=dbIdxs.size()) {//사이트와 DB간 곡 갯수가 다를때 신곡 추가해주는 루틴
 		//size다르면 신곡 추가된것, 신곡 추가해주기
@@ -55,7 +58,8 @@ public class MusicTask {
 			
 			//기본정보(옥션포함) 삽입
 			insertBasic(list);
-			
+		
+		//3	
 		}else {// 사이트 마감된 옥션 곡 갯수와 DB 옥션 정보 갯수를 비교해서
 		//다르면 else 분기로 인해 무조건 재옥션이니 재옥션 처리 한다.
 			
@@ -82,6 +86,41 @@ public class MusicTask {
 			
 		}////if(list.size()!=dbIdxs.size())
 		
+		
+		
+		//4
+		//저작권료 갱신해야하는지 체크
+		//db music_feeinfo 테이블 feemonth 최신 연월
+		FeeYearMonthVO feeYearMonthVO = mapper.getFeeYearMonth();
+		int dbYear = feeYearMonthVO.getYear();
+		int dbMonth = feeYearMonthVO.getMonth();
+		//시스템연월
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(cal.YEAR);
+		int month = (cal.get(cal.MONTH)+1);
+		
+		//시스템이 1 앞서면, 저작권갱신시기
+		if(dbMonth==12) {
+			if(dbYear==year) {
+				if(month == 1) {
+					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
+						for(int temp : dbIdxs) {
+							insertFeeOld(temp+"");
+						}//for
+					}//if
+				}//if
+			}//if
+		}else {
+			if(dbYear==year) {
+				if(dbMonth+1 == month) {
+					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
+						for(int temp : dbIdxs) {
+							insertFeeOld(temp+"");
+						}//for
+					}//if
+				}//if
+			}//if
+		}//if
 		
 		
 	}//public void routine5()
@@ -194,7 +233,7 @@ public class MusicTask {
 	
 	
 	//----------------------------------------------------------------------------------------------------------------
-	// 저작권료 정보 삽입
+	// 신곡 저작권료 정보 삽입
 	//----------------------------------------------------------------------------------------------------------------
 	private void insertFee(String idx) {
 		
@@ -218,6 +257,53 @@ public class MusicTask {
 			mapper.insertFee(tempIdx, tempfeeMonth, fee);
 			
 		}//for
+		
+		
+		//최근12개월 저작권 유형 정보 삽입
+		String tempFeeInfo = result.get(result.size()-1);
+		String[] tempFeeInfo2 = tempFeeInfo.trim().split(",");
+		Date tempfeeMonth=null;
+		try {
+			tempfeeMonth = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(tempFeeInfo2[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int broadcast = Integer.parseInt(tempFeeInfo2[1]);
+		int transfer = Integer.parseInt(tempFeeInfo2[2]);
+		int duplication = Integer.parseInt(tempFeeInfo2[3]);
+		int performance = Integer.parseInt(tempFeeInfo2[4]);
+		int oversea = Integer.parseInt(tempFeeInfo2[5]);
+		int etc = Integer.parseInt(tempFeeInfo2[6]);
+		
+		mapper.insertFeeInfo(tempIdx, tempfeeMonth, broadcast, transfer, duplication, performance, oversea, etc);
+		
+	}
+	//----------------------------------------------------------------------------------------------------------------
+	
+	
+	//----------------------------------------------------------------------------------------------------------------
+	// 헌곡 저작권료 정보 삽입
+	//----------------------------------------------------------------------------------------------------------------
+	private void insertFeeOld(String idx) {
+		
+		List<String> result = musicPro.getFeeInfo(idx);
+		int tempIdx = Integer.parseInt(idx);
+		
+			
+		String tempFee = result.get(result.size()-2);
+		String[] tempFee2 = tempFee.trim().split(",");
+		
+		Date tempfeeMonth1=null;
+		try {
+			tempfeeMonth1 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(tempFee2[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int fee = Integer.parseInt(tempFee2[1]);
+		
+		mapper.insertFee(tempIdx, tempfeeMonth1, fee);
+			
 		
 		
 		//최근12개월 저작권 유형 정보 삽입

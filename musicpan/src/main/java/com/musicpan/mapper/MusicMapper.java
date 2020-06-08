@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.musicpan.domain.FeeYearMonthVO;
 import com.musicpan.domain.MusicBasicVO;
 import com.musicpan.domain.SongBasicVO;
 
@@ -61,5 +62,7 @@ public interface MusicMapper {
 	public int getAuctionIdx(@Param("auctionIdx") int auctionIdx);
 	
 	public List<Integer> getAuctionAllCnt();
+	
+	public FeeYearMonthVO getFeeYearMonth();
 	
 }//interface

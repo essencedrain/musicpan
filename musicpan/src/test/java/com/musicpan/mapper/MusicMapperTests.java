@@ -37,29 +37,7 @@ public class MusicMapperTests {
 	public void testBasicInfo() {
 		
 		
-		List<MusicBasicVO> result = mapper.getSongAllInfo();
-		
-		int cnt = 0;
-		
-		for(MusicBasicVO temp : result) {
-			
-			List<String> resultList = musicPro.getAuctionList(temp.getSong(), temp.getSinger());
-			
-			for(String temp2 : resultList) {
-				cnt +=1;
-				log.info(cnt + " // " + resultList.size() + " // " + temp.getSong());
-				//수집해오고
-				String[] auctionResult = musicPro.getAuctionInfo(temp2);
-				//n차 옥션에 대한 정보 music_auction에 삽입
-				int auctionCnt = Integer.parseInt(auctionResult[0]);
-				int auctionUnits = Integer.parseInt(auctionResult[1]);
-				int auctionStart = Integer.parseInt(auctionResult[2]);
-				int auctionLowPrice = Integer.parseInt(auctionResult[3]);
-				int auctionAvgPrice = Integer.parseInt(auctionResult[4]);
-				mapper.insertAuction(temp.getIdx(), auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
-				}//for
-			
-		}
+		log.info(mapper.getFeeYearMonth());
 	}
 	
 	/*
