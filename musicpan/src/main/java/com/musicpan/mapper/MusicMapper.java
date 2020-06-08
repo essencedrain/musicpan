@@ -49,7 +49,7 @@ public interface MusicMapper {
 			,@Param("sellPrice") int sellPrice
 			);
 	
-
+	
 	public List<Integer> getIdx();
 	
 	public List<MusicBasicVO> getSongAllInfo();
@@ -59,5 +59,7 @@ public interface MusicMapper {
 	public List<Date> getHisTime(@Param("idx") int idx);
 	
 	public int getAuctionIdx(@Param("auctionIdx") int auctionIdx);
+	
+	public List<Integer> getAuctionAllCnt();
 	
 }//interface

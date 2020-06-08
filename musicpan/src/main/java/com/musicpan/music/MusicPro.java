@@ -120,6 +120,48 @@ public class MusicPro {
 			
 			
 			
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			// getAuctionAllList() : 모든 마감된 옥션곡 정보 반환
+			// HashSet<String> 옥션idx
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			public HashSet<String> getAuctionAllList() {
+				HashSet<String> songNums = new HashSet<>();
+				String url="https://www.musicow.com/auctions?tab=closed&keyword=&page=";
+				
+				try {
+					int page=1;
+					boolean flag = true;
+					
+					while(flag) {
+						
+						Document doc = Jsoup.connect(url+page).get();
+						
+						Elements temp = doc.select(".user_buy").select("li").select("a");
+						
+						if(temp.size() < 18) {
+							flag = false;
+						}//if
+						
+						for (int i = 0; i < temp.size(); i++) {
+							
+							//곡옥션번호
+							String tempResult = temp.get(i).attr("href").substring(9).trim();
+							
+							songNums.add(tempResult);
+						}//for
+						page += 1;
+						
+					}//while
+					
+				} catch (Exception e) {
+					log.info("GetSongNums.getList() 에러 : " + e);
+				}
+				return songNums;
+			}
+			//----------------------------------------------------------------------------------------------------------------------------------------------
+			
+			
+			
 			
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			// getAuctionInfo(String idx - 옥션idx) : 옥션 정보
@@ -143,7 +185,7 @@ public class MusicPro {
 			
 				
 				//총옥션수량
-				//옥션 수량으로 나와야함 낙찰처리가 있으면 달라짐
+				//아래가 "옥션 수량"으로 나와야함 "낙찰 처리"가 있으면 다르게 파싱
 				String validation = doc.select("dl.price > dt:nth-child(3)").text().trim();
 				int totalUnits;
 				int priceStart;

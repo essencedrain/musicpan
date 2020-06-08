@@ -162,6 +162,14 @@
 			auctioncnt = #{auctionIdx}
 	</select>
 	
+	<select id="getAuctionAllCnt" resultType="int">
+	
+		SELECT
+			auctioncnt
+		FROM
+			music_auction
+	</select>
+	
 	
 	<select id="getSongAllInfo" resultType="com.musicpan.domain.MusicBasicVO">
 	

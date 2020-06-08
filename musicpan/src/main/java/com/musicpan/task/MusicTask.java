@@ -28,7 +28,7 @@ public class MusicTask {
 	private MusicPro musicPro = new MusicPro();
 	
 	//매일 5분마다
-	//@Scheduled(cron="0 */5 * * * *")
+	@Scheduled(cron="0 */5 * * * *")
 	public void routine5() throws Exception{
 		
 		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
@@ -43,7 +43,7 @@ public class MusicTask {
 		//log.info("list size : "+list.size());
 		//log.info("dbIdxs size : "+dbIdxs.size());
 		//위 2개 size 비교
-		if(list.size()!=dbIdxs.size()) {
+		if(list.size()!=dbIdxs.size()) {//사이트와 DB간 곡 갯수가 다를때 신곡 추가해주는 루틴
 		//size다르면 신곡 추가된것, 신곡 추가해주기
 			for(int temp : dbIdxs) {
 				if(list.contains(temp+"")) {
@@ -56,7 +56,31 @@ public class MusicTask {
 			//기본정보(옥션포함) 삽입
 			insertBasic(list);
 			
-		}//if(list.size()!=dbIdxs.size()) 사이트와 DB간 곡 갯수가 다를때 신곡 추가해주는 루틴
+		}else {// 사이트 마감된 옥션 곡 갯수와 DB 옥션 정보 갯수를 비교해서
+		//다르면 else 분기로 인해 무조건 재옥션이니 재옥션 처리 한다.
+			
+			//HashSet<String> 옥션idx
+			HashSet<String> setOfSite = musicPro.getAuctionAllList();
+			
+			//DB에서 옥션 갯수 가져오자
+			List<Integer> dbAuctionAllCnt = mapper.getAuctionAllCnt();
+			
+			//비교해서 다르면 => 재옥션
+			//db에 있는거 걸러주자
+			if(dbAuctionAllCnt.size() != setOfSite.size()) {
+				for(int temp : dbAuctionAllCnt) {
+					if(setOfSite.contains(temp+"")) {
+						setOfSite.remove(temp+"");
+					}//if
+				}//for
+			}//if
+			
+			//삽입
+			for(String temp : setOfSite) {
+				insertReAuction(temp);
+			}//for
+			
+		}////if(list.size()!=dbIdxs.size())
 		
 		
 		
@@ -123,23 +147,6 @@ public class MusicTask {
 	//----------------------------------------------------------------------------------------------------------------
 	private void insertAuction(String song, String singer) {
 		
-		/*
-		//신곡이라서 아래거 안해도됨, 과거 곡이면 해야함
-		//사이트로부터 곡과 가수에 대해서 이미 진행한 옥션IDX들을 얻어온다.
-		List<String> listAuction = musicPro.getAuctionList(song, singer);
-		
-		//지금 새로 추가해야할 옥션idx
-		String target = "";
-		
-		//과거에 진행한 옥션은 걸러준다.
-		for(String temp : listAuction) {
-			//db에 같은게 없는거면
-			if( mapper.getAuctionIdx(Integer.parseInt(temp)) ==0 ) {
-				target = temp;
-			}//if
-		}//for
-		*/
-		
 		//사이트로부터 곡과 가수에 대해서 이미 진행한 옥션IDX들을 얻어온다.
 		//신곡이라서 1개밖에 안나옴
 		List<String> listAuction = musicPro.getAuctionList(song, singer);
@@ -148,6 +155,29 @@ public class MusicTask {
 		//수집해오고
 		String[] auctionResult = musicPro.getAuctionInfo(target);
 		int temp = Integer.parseInt(target);
+		//n차 옥션에 대한 정보 music_auction에 삽입
+		for(String tempAuction : auctionResult) {
+			String[] tempSplit = tempAuction.trim().split(",");
+			int auctionCnt = Integer.parseInt(tempSplit[0]);
+			int auctionUnits = Integer.parseInt(tempSplit[1]);
+			int auctionStart = Integer.parseInt(tempSplit[2]);
+			int auctionLowPrice = Integer.parseInt(tempSplit[3]);
+			int auctionAvgPrice = Integer.parseInt(tempSplit[4]);
+			mapper.insertAuction(temp, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
+		}//for
+		
+	}//insertAuction
+	//----------------------------------------------------------------------------------------------------------------
+	
+	
+	//----------------------------------------------------------------------------------------------------------------
+	// 재옥션정보삽입
+	//----------------------------------------------------------------------------------------------------------------
+	private void insertReAuction(String auctionIdx) {
+		
+		//수집해오고
+		String[] auctionResult = musicPro.getAuctionInfo(auctionIdx);
+		int temp = Integer.parseInt(auctionIdx);
 		//n차 옥션에 대한 정보 music_auction에 삽입
 		for(String tempAuction : auctionResult) {
 			String[] tempSplit = tempAuction.trim().split(",");
