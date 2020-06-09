@@ -8,6 +8,7 @@
 <!-- tabulator css -->
 <!--<link rel="stylesheet" href="/resources/css/tabulator.min.css">-->
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
             <!-- =================================================================================================  -->
             <!-- start  -->
             <!-- =================================================================================================  -->
@@ -60,63 +61,61 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ js ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
-
+<script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.3.0/tui-pagination.js"></script>
 <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
 
 <script type="text/javascript">
-const gridData = [];
-(function() {
-  for (let i = 0; i < 120; i += 1) {
-    gridData.push({
-      c1: 'User' + (i + 1),
-      c2: ((i + 5) % 8) * 100 + i,
-      c3: ((i + 3) % 7) * 60
-    });
-  }
-})();
 
-const grid = new tui.Grid({
-  el: document.getElementById('grid'),
-  data: gridData,
-  scrollX: false,
-  bodyHeight: 300,
-  rowHeaders: ['rowNum'],
-  columns: [
-    {
-      header: 'User ID',
-      name: 'c1',
-      align: 'center',
-      editor: 'text'
-    },
-    {
-      header: 'Score',
-      name: 'c2',
-      className: 'clickable',
-      editor: 'text'
-    },
-    {
-      header: 'Item Count',
-      name: 'c3',
-      editor: 'text'
-    }
-  ],
-  summary: {
-    height: 40,
-    position: 'bottom', // or 'top'
-    columnContent: {
-      c2: {
-        template: function(valueMap) {
-          return "MAX: " + valueMap.max + "<br>MIN: " + valueMap.min;
-        }
-      },
-      c3: {
-        template: function(valueMap) {
-          return "TOTAL: " + valueMap.sum+"<br>AVG: "+ valueMap.avg.toFixed(2);
-        }
-      }
-    }
-  }
+var gridData = ${dataList};
+
+var grid = new tui.Grid({
+	el: document.getElementById('grid')
+	,data: gridData
+	,columns: [
+		{
+			header: 'IDX',
+			name: 'idx'
+		}
+		,{
+			header: '노래',
+			name: 'song'
+		}
+		,{
+			header: '가수',
+			name: 'singer'
+		}
+		,{
+			header: '매도',
+			name: 'sellprice'
+		}
+		,{
+			header: '잔량',
+			name: 'sellunit'
+		}
+		,{
+			header: '매수',
+			name: 'buyprice'
+		}
+		,{
+			header: '잔량',
+			name: 'buyunit'
+		}
+		,{
+			header: '최근거래가',
+			name: 'recentprice'
+		}
+	]
+	,pageOptions: {
+		useClient: true,
+    	perPage: 15
+  	}
 });
+
+
+
+
+
 </script>
 
 

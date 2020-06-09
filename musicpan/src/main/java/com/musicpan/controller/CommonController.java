@@ -14,7 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musicpan.domain.MemberVO;
+import com.musicpan.mapper.MusicMapper;
 import com.musicpan.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
@@ -31,7 +34,6 @@ public class CommonController {
 	private MemberService memberService;
 	
 	
-	
 	//=================================================================================================
 	/*
 	 	NO			Task		Method	URL						Parameter		From		URL이동
@@ -41,7 +43,7 @@ public class CommonController {
 	 	g002		로그인		GET		/customLogin
 	 	g003		회원가입	GET		/register
 	 	g004		회원축하	GET		/registerSuccess
-	 	
+	 	g005		테이블		GET		/tableTest
 	 	
 	 	
 	 	p000		로그아웃	POST	/customLogout
@@ -191,6 +193,7 @@ public class CommonController {
 	//=========================================================================================
 	
 	
+    
 	
     
     //=========================================================================================

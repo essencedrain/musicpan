@@ -222,4 +222,12 @@
 			song = #{song} AND singer = #{singer}
 	</select>
 	
+	
+	<select id="getSongTotalInfo" resultType="com.musicpan.domain.SongTotalVO">
+		SELECT
+			*
+		FROM
+			music_mview
+	</select>
+	
 </mapper>

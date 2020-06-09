@@ -29,8 +29,8 @@ public class MusicTask {
 	//MusicPro 로드
 	private MusicPro musicPro = new MusicPro();
 	
-	//매일 5분마다
-	@Scheduled(cron="0 */10 * * * *")
+	//매일 10분마다
+	//@Scheduled(cron="0 */10 * * * *")
 	public void routine5() throws Exception{
 		
 		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
@@ -154,14 +154,14 @@ public class MusicTask {
 				vo.setArranger("");
 			}
 			
-			String dateTemp = result.get("releaseDate");
+			String dateTemp = result.get("releasedate");
 			Date to=null;
 			try {
 				to = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(dateTemp);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			vo.setReleaseDate(to);
+			vo.setReleasedate(to);
 			
 			vo.setCopyRight(Integer.parseInt(result.get("copyRight")));
 			vo.setSecRight(Integer.parseInt(result.get("secRight")));

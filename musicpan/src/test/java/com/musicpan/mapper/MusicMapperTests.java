@@ -1,6 +1,5 @@
 package com.musicpan.mapper;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,9 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.musicpan.domain.FeeYearMonthVO;
-import com.musicpan.domain.MusicBasicVO;
 import com.musicpan.domain.SongBasicVO;
+import com.musicpan.domain.SongTotalVO;
 import com.musicpan.music.MusicPro;
 
 import lombok.Setter;
@@ -38,96 +36,16 @@ public class MusicMapperTests {
 	@Test
 	public void testBasicInfo() {
 		
+//		List<SongTotalVO> result = mapper.getSongTotalInfo();
+//		
+//		log.info("////////////" + result.size());
+//		
+//		for(int i=0; i<result.size();i++) {
+//			log.info(result.get(i).toString());
+//		}
 		
-		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
-				HashSet<String> list = musicPro.getList();
-				//현재 DB에 있는 모든 곡 idx(int)획득
-				List<Integer> dbIdxs = mapper.getIdx();
-				
-				
-				//1
-				//스프레드 및 최근거래내역 갱신
-				updateSpread(list);
-				
-				log.info("통과1");
-				//2
-				//위 2개 size 비교
-				if(list.size()!=dbIdxs.size()) {//사이트와 DB간 곡 갯수가 다를때 신곡 추가해주는 루틴
-				//size다르면 신곡 추가된것, 신곡 추가해주기
-					for(int temp : dbIdxs) {
-						if(list.contains(temp+"")) {
-							//유저마켓 list(hashset)에서 삭제
-							list.remove(temp+"");
-						}//if
-					}//for
-					//log.info("list size : "+list.size());
-					
-					//기본정보(옥션포함) 삽입
-					insertBasic(list);
-					log.info("통과2");
-				//3	
-				}else {// 사이트 마감된 옥션 곡 갯수와 DB 옥션 정보 갯수를 비교해서
-				//다르면 else 분기로 인해 무조건 재옥션이니 재옥션 처리 한다.
-					
-					//HashSet<String> 옥션idx
-					HashSet<String> setOfSite = musicPro.getAuctionAllList();
-					//DB에서 옥션 갯수 가져오자
-					List<Integer> dbAuctionAllCnt = mapper.getAuctionAllCnt();
-					
-					//비교해서 다르면 => 재옥션
-					//db에 있는거 걸러주자
-					if(dbAuctionAllCnt.size() != setOfSite.size()) {
-						for(int temp : dbAuctionAllCnt) {
-							if(setOfSite.contains(temp+"")) {
-								setOfSite.remove(temp+"");
-							}//if
-						}//for
-						
-						//삽입
-						for(String temp : setOfSite) {
-							insertReAuction(temp);
-						}//for
-					}//if
-					log.info("통과3");
-				}////if(list.size()!=dbIdxs.size())
-				
-				
-				
-				//4
-				//저작권료 갱신해야하는지 체크
-				//db music_feeinfo 테이블 feemonth 최신 연월
-				FeeYearMonthVO feeYearMonthVO = mapper.getFeeYearMonth();
-				int dbYear = feeYearMonthVO.getYear();
-				int dbMonth = feeYearMonthVO.getMonth();
-				//시스템연월
-				Calendar cal = Calendar.getInstance();
-				int year = cal.get(cal.YEAR);
-				int month = (cal.get(cal.MONTH)+1);
-				
-				//시스템이 1 앞서면, 저작권갱신시기
-				if(dbMonth==12) {
-					if(dbYear==year) {
-						if(month == 1) {
-							if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
-								for(int temp : dbIdxs) {
-									insertFeeOld(temp+"");
-								}//for
-							}//if
-						}//if
-					}//if
-				}else {
-					if(dbYear==year) {
-						if(dbMonth+1 == month) {
-							if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
-								for(int temp : dbIdxs) {
-									insertFeeOld(temp+"");
-								}//for
-							}//if
-						}//if
-					}//if
-				}//if
-				log.info("통과4");
-			}//public void routine5()
+		
+	}//testBasicInfo
 	
 	
 	/*
@@ -262,7 +180,7 @@ public class MusicMapperTests {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			vo.setReleaseDate(to);
+			vo.setReleasedate(to);
 			
 			vo.setCopyRight(Integer.parseInt(result.get("copyRight")));
 			vo.setSecRight(Integer.parseInt(result.get("secRight")));
@@ -354,7 +272,6 @@ public class MusicMapperTests {
 			mapper.insertFee(tempIdx, tempfeeMonth, fee);
 			
 		}//for
-		
 		
 		//최근12개월 저작권 유형 정보 삽입
 		String tempFeeInfo = result.get(result.size()-1);
