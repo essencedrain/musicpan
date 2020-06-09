@@ -43,7 +43,6 @@ public class CommonController {
 	 	g002		로그인		GET		/customLogin
 	 	g003		회원가입	GET		/register
 	 	g004		회원축하	GET		/registerSuccess
-	 	g005		테이블		GET		/tableTest
 	 	
 	 	
 	 	p000		로그아웃	POST	/customLogout

@@ -30,7 +30,7 @@ public class MusicTask {
 	private MusicPro musicPro = new MusicPro();
 	
 	//매일 10분마다
-	//@Scheduled(cron="0 */10 * * * *")
+	@Scheduled(cron="0 */10 * * * *")
 	public void routine5() throws Exception{
 		
 		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
@@ -191,17 +191,15 @@ public class MusicTask {
 		
 		//수집해오고
 		String[] auctionResult = musicPro.getAuctionInfo(target);
-		int temp = Integer.parseInt(target);
+		int idx = mapper.getIdxFromSongAndSinger(auctionResult[5], auctionResult[6]);
+		
 		//n차 옥션에 대한 정보 music_auction에 삽입
-		for(String tempAuction : auctionResult) {
-			String[] tempSplit = tempAuction.trim().split(",");
-			int auctionCnt = Integer.parseInt(tempSplit[0]);
-			int auctionUnits = Integer.parseInt(tempSplit[1]);
-			int auctionStart = Integer.parseInt(tempSplit[2]);
-			int auctionLowPrice = Integer.parseInt(tempSplit[3]);
-			int auctionAvgPrice = Integer.parseInt(tempSplit[4]);
-			mapper.insertAuction(temp, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
-		}//for
+			int auctionCnt = Integer.parseInt(auctionResult[0]);
+			int auctionUnits = Integer.parseInt(auctionResult[1]);
+			int auctionStart = Integer.parseInt(auctionResult[2]);
+			int auctionLowPrice = Integer.parseInt(auctionResult[3]);
+			int auctionAvgPrice = Integer.parseInt(auctionResult[4]);
+			mapper.insertAuction(idx, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
 		
 	}//insertAuction
 	//----------------------------------------------------------------------------------------------------------------

@@ -39,8 +39,10 @@ public class TableController {
   	//=========================================================================================
   	@GetMapping("/tableTest")
   	public String tableTest(Model model) {
+  		
   		ObjectMapper mapperJSON = new ObjectMapper();
   		String jsonString = null;
+  		
   		try {
 			jsonString = mapperJSON.writeValueAsString(mapper.getSongTotalInfo());
 		} catch (JsonProcessingException e) {

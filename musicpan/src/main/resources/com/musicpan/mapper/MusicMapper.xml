@@ -25,7 +25,7 @@
 				#{idx}
 				, #{song}
 				, #{singer}
-				, #{releaseDate}
+				, #{releasedate}
 				, #{composer}
 				, #{lyricist}
 				, #{arranger}

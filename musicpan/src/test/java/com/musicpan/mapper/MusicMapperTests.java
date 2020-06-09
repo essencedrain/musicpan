@@ -36,14 +36,15 @@ public class MusicMapperTests {
 	@Test
 	public void testBasicInfo() {
 		
-//		List<SongTotalVO> result = mapper.getSongTotalInfo();
+//		List<String> test = musicPro.getFeeInfo("173");
 //		
-//		log.info("////////////" + result.size());
+//		log.info("------------------------------ size : " + test.size());
 //		
-//		for(int i=0; i<result.size();i++) {
-//			log.info(result.get(i).toString());
+//		for(String temp : test) {
+//			log.info("------------------------------ temp : " +temp);
 //		}
-		
+//		
+//		insertFee("173");
 		
 	}//testBasicInfo
 	
@@ -157,7 +158,7 @@ public class MusicMapperTests {
 		SongBasicVO vo = new SongBasicVO();
 		
 		for(String temp : list) {
-			//log.info("list : "+temp);
+			log.info("list : "+temp);
 			
 			result = musicPro.getBasicInfo(temp);
 			
@@ -173,7 +174,7 @@ public class MusicMapperTests {
 				vo.setArranger("");
 			}
 			
-			String dateTemp = result.get("releaseDate");
+			String dateTemp = result.get("releasedate");
 			Date to=null;
 			try {
 				to = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(dateTemp);
@@ -186,12 +187,14 @@ public class MusicMapperTests {
 			vo.setSecRight(Integer.parseInt(result.get("secRight")));
 			vo.setStockCnt(Integer.parseInt(result.get("stockCnt")));
 			
+			log.info("vo : "+vo.toString());
 			mapper.insert(vo);
-			//log.info("vo : "+vo.toString());
 			
+			log.info("mapper.insert(vo); : ok");
 			//옥션정보 삽입
 			insertAuction(vo.getSong(), vo.getSinger());
 			
+			log.info("insertAuction : ok");
 			//저작권정보 삽입
 			insertFee(temp);
 		}
@@ -208,20 +211,29 @@ public class MusicMapperTests {
 		List<String> listAuction = musicPro.getAuctionList(song, singer);
 		String target = listAuction.get(0);
 		
+		log.info("insertAuction : " + listAuction.size());
+		
+		for(String temp : listAuction) {
+			log.info(temp);
+		}
+		
 		//수집해오고
 		String[] auctionResult = musicPro.getAuctionInfo(target);
-		int temp = Integer.parseInt(target);
-		//n차 옥션에 대한 정보 music_auction에 삽입
-		for(String tempAuction : auctionResult) {
-			String[] tempSplit = tempAuction.trim().split(",");
-			int auctionCnt = Integer.parseInt(tempSplit[0]);
-			int auctionUnits = Integer.parseInt(tempSplit[1]);
-			int auctionStart = Integer.parseInt(tempSplit[2]);
-			int auctionLowPrice = Integer.parseInt(tempSplit[3]);
-			int auctionAvgPrice = Integer.parseInt(tempSplit[4]);
-			mapper.insertAuction(temp, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
-		}//for
 		
+		for(String temp : auctionResult) {
+			log.info(temp);
+		}
+		
+		int idx = mapper.getIdxFromSongAndSinger(auctionResult[5], auctionResult[6]);
+		
+		//n차 옥션에 대한 정보 music_auction에 삽입
+			int auctionCnt = Integer.parseInt(auctionResult[0]);
+			int auctionUnits = Integer.parseInt(auctionResult[1]);
+			int auctionStart = Integer.parseInt(auctionResult[2]);
+			int auctionLowPrice = Integer.parseInt(auctionResult[3]);
+			int auctionAvgPrice = Integer.parseInt(auctionResult[4]);
+			mapper.insertAuction(idx, auctionCnt, auctionUnits, auctionStart, auctionLowPrice, auctionAvgPrice);
+		log.info("insertAuction : ok");
 	}//insertAuction
 	//----------------------------------------------------------------------------------------------------------------
 	
@@ -254,7 +266,7 @@ public class MusicMapperTests {
 		
 		List<String> result = musicPro.getFeeInfo(idx);
 		int tempIdx = Integer.parseInt(idx);
-		
+		log.info("insertFee" + result.size());
 		for(int i=0; i<result.size()-1;i++) {
 			
 			String tempFee = result.get(i);
@@ -270,7 +282,7 @@ public class MusicMapperTests {
 			int fee = Integer.parseInt(tempFee2[1]);
 			
 			mapper.insertFee(tempIdx, tempfeeMonth, fee);
-			
+			log.info("insertFee ok");
 		}//for
 		
 		//최근12개월 저작권 유형 정보 삽입
