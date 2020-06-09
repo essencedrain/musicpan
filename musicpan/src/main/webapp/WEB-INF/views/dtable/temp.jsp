@@ -72,38 +72,92 @@ var gridData = ${dataList};
 var grid = new tui.Grid({
 	el: document.getElementById('grid')
 	,data: gridData
+	,scrollX: true
+    ,scrollY: false
+    //,rowHeaders: ['rowNum']
+    ,columnOptions: {
+        resizable: true
+        ,minWidth: 100
+        ,frozenCount: 1 // 3개의 컬럼을 고정하고
+        ,frozenBorderWidth: 2 // 고정 컬럼의 경계선 너비를 2px로 한다.
+   		}
 	,columns: [
 		{
-			header: 'IDX',
-			name: 'idx'
+			header: '노래'
+			,name: 'song'
+			,sortable: true
+			,filter: 'select'
 		}
 		,{
-			header: '노래',
-			name: 'song'
+			header: '가수'
+			,name: 'singer'
+			,sortable: true
+			,filter: 'select'
 		}
 		,{
-			header: '가수',
-			name: 'singer'
+			header: '매도'
+			,name: 'sellprice'
+			,sortable: true
 		}
 		,{
-			header: '매도',
-			name: 'sellprice'
+			header: '잔량'
+			,name: 'sellunit'
+			,sortable: true
 		}
 		,{
-			header: '잔량',
-			name: 'sellunit'
+			header: '매수'
+			,name: 'buyprice'
+			,sortable: true
 		}
 		,{
-			header: '매수',
-			name: 'buyprice'
+			header: '잔량'
+			,name: 'buyunit'
+			,sortable: true
 		}
 		,{
-			header: '잔량',
-			name: 'buyunit'
+			header: '최근거래가'
+			,name: 'recentprice'
+			,sortable: true
 		}
 		,{
-			header: '최근거래가',
-			name: 'recentprice'
+			header: '8%적정가'
+			,name: 'pricefor8'
+			,sortable: true
+		}
+		,{
+			header: '옥션갭low'
+			,name: 'auctiongap_low'
+			,sortable: true
+		}
+		,{
+			header: '옥션갭avg'
+			,name: 'auctiongap_avg'
+			,sortable: true
+		}
+		,{
+			header: '수익률3'
+			,name: 'avg3f'
+			,sortable: true
+		}
+		,{
+			header: '수익률6'
+			,name: 'avg6f'
+			,sortable: true
+		}
+		,{
+			header: '수익률12'
+			,name: 'avg12f'
+			,sortable: true
+		}
+		,{
+			header: '수익률All'
+			,name: 'avgallf'
+			,sortable: true
+		}
+		,{
+			header: '뮤카지분율'
+			,name: 'mucastock'
+			,sortable: true
 		}
 	]
 	,pageOptions: {

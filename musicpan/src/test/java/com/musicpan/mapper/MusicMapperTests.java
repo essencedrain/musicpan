@@ -36,6 +36,11 @@ public class MusicMapperTests {
 	@Test
 	public void testBasicInfo() {
 		
+		int a = 49800;
+		int b = 30500;
+		float c = (float)(Math.round((float)(a-b)/(float)b*1000)/10.00);
+		log.info( c );
+		
 //		List<String> test = musicPro.getFeeInfo("173");
 //		
 //		log.info("------------------------------ size : " + test.size());

@@ -18,30 +18,39 @@ public class SongTotalVO {
 	private int secRight;//9
 	private int stockCnt;//10
 	private int recentprice;//11
-	private Date recntpricetime;//12
-	private int buyunit;//13
-	private int buyprice;//14
-	private int sellunit;//15
-	private int sellprice;//16
-	private Date updatedate;//17
-	private int auctionunits;//18
-	private int auctionstart;//19
-	private int auctionmin;//20
-	private int auctionavg;//21
-	private int avg3;//22
-	private int avg6;//23
-	private int avg12;//24
-	private int avgall;//25
-	private float cv12;//26
-	private float cvall;//27
-	private int alltime;//28
-	private Date feeinfomonth;//29
-	private int broadcast;//30
-	private int transfer;//31
-	private int duplication;//32
-	private int performance;//33
-	private int oversea;//34
-	private int etc;//35
+	private int buyunit;//12
+	private int buyprice;//13
+	private int sellunit;//14
+	private int sellprice;//15
+	private Date updatedate;//16
+	private int auctionunits;//17
+	private int auctionstart;//18
+	private int auctionmin;//19
+	private int auctionavg;//20
+	private int avg3;//21
+	private int avg6;//22
+	private int avg12;//23
+	private int avgall;//24
+	private float cv12;//25
+	private float cvall;//26
+	private int alltime;//27
+	private Date feeinfomonth;//28
+	private float broadcast;//29
+	private float transfer;//30
+	private float duplication;//31
+	private float performance;//32
+	private float oversea;//33
+	private float etc;//34
 	
+	//music_basic 컬럼에서 recentprice 제외
+	//아래는 DB에 없는 커스텀
 	
+	private float auctiongap_low;
+	private float auctiongap_avg;
+	private float mucastock;
+	private float avg3f;
+	private float avg6f;
+	private float avg12f;
+	private float avgallf;
+	private int pricefor8;
 }//class
