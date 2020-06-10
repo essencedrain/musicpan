@@ -49,7 +49,7 @@ public class LikeServiceImpl implements LikeService {
 			memberMapper.addGradePoint(id, 3);//글작성자 점수추가
 			boardMapper.updateLike(vo.getBno(), vo.getB_name(), 1);
 		}else {
-			memberMapper.addGradePoint(id, -3);//글작성자 점수깎기
+			memberMapper.addGradePoint(id, -2);//글작성자 점수깎기
 			boardMapper.updatedisLike(vo.getBno(), vo.getB_name(), 1);
 		}
 		return result;
@@ -81,10 +81,10 @@ public class LikeServiceImpl implements LikeService {
 		String id = boardMapper.getId(vo.getBno(), vo.getB_name());
 		
 		if(vo.getFlag() == 1) {
-			memberMapper.addGradePoint(id, -3);//글작성자 점수추가
+			memberMapper.addGradePoint(id, -3);//글작성자 점수제거
 			boardMapper.updateLike(vo.getBno(), vo.getB_name(), -1);
 		}else {
-			memberMapper.addGradePoint(id, 3);//글작성자 점수복구
+			memberMapper.addGradePoint(id, 2);//글작성자 점수복구
 			boardMapper.updatedisLike(vo.getBno(), vo.getB_name(), -1);
 		}
 		return result;
@@ -127,7 +127,7 @@ public class LikeServiceImpl implements LikeService {
 			memberMapper.addGradePoint(id, 2);//댓글작성자 점수추가
 			replyMapper.updateLike(vo.getRno(), vo.getB_name(), 1);
 		}else {
-			memberMapper.addGradePoint(id, -2);//댓글작성자 점수깎기
+			memberMapper.addGradePoint(id, -1);//댓글작성자 점수깎기
 			replyMapper.updatedisLike(vo.getRno(), vo.getB_name(), 1);
 		}
 		
@@ -164,7 +164,7 @@ public class LikeServiceImpl implements LikeService {
 			memberMapper.addGradePoint(id, -2);//댓글작성자 점수삭제
 			replyMapper.updateLike(vo.getRno(), vo.getB_name(), -1);
 		}else {
-			memberMapper.addGradePoint(id, 2);//댓글작성자 점수복구
+			memberMapper.addGradePoint(id, 1);//댓글작성자 점수복구
 			replyMapper.updatedisLike(vo.getRno(), vo.getB_name(), -1);
 		}
 		return result;

@@ -43,7 +43,12 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	public ReplyVO get(Long rno, String b_name) {
-		return mapper.read(rno, b_name);
+		
+		ReplyVO result = mapper.read(rno, b_name);
+		
+		result.setGrade( convertGrade(result) );
+		
+		return result;
 	}
 
 	
@@ -82,7 +87,14 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Override
 	public List<ReplyVO> getList(Criteria cri, Long bno) {
-		return mapper.getListWithPaging(cri, bno);
+		
+		List<ReplyVO> result = mapper.getListWithPaging(cri, bno);
+		
+		for(ReplyVO temp : result) {
+			temp.setGrade( convertGrade(temp) );
+		}//for
+		
+		return result;
 	}
 
 
@@ -105,10 +117,57 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+		
+		List<ReplyVO> result = mapper.getListWithPaging(cri, bno);
+		
+		for(ReplyVO temp : result) {
+			temp.setGrade( convertGrade(temp) );
+		}//for
+		
+		
 		return new ReplyPageDTO(
 				mapper.getCountByBno(bno, cri.getB_name())
-				,mapper.getListWithPaging(cri, bno)
+				,result
 				);
 	}
 
+	
+	//===============================================================
+	// db유저 경험치 -> 등급변환
+	/*
+	 	0~9 	: 레벨업경험치 100		//	0~999
+	 	10~49	: 레벨업경험치 200		//	1,000~8,999	
+	 	50~99	: 레벨업경험치 400		//	9,000~28,999
+	 	100~149	: 레벨업경험치 800		//	29,000~68,999
+	 	150~179	: 레벨업경험치 2,000	//	69,000~128,999
+	 	180~199	: 레벨업경험치 20,000	//	129000~509,000
+	 	
+	 	경험치
+	 		로그인		:	10
+	 		글쓰기		:	20
+	 		댓글쓰기	:	2
+	 		글추/비추	:	3/-2
+	 		댓글추/비추	:	2/-1
+	 		
+	 */
+	//===============================================================
+	private int convertGrade(ReplyVO temp) {
+		
+		int grade = temp.getGrade();
+		
+		if(grade>=0 && grade<1000) {
+			return (int)Math.floor(grade/100);
+		}else if(grade>=1000 && grade<9000){
+			return (int)Math.floor( ((grade-1000)/200)+10 );
+		}else if(grade>=9000 && grade<29000){
+			return (int)Math.floor( ((grade-9000)/400)+50 );
+		}else if(grade>=29000 && grade<69000){
+			return (int)Math.floor( ((grade-29000)/800)+100 );
+		}else if(grade>=69000 && grade<129000){
+			return (int)Math.floor( ((grade-69000)/2000)+150 );
+		}else {
+			return (int)Math.floor( ((grade-129000)/20000)+180 );
+		}
+	}
+	//===============================================================
 }//class
