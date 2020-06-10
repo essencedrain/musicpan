@@ -14,6 +14,7 @@ import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.Criteria;
 import com.musicpan.mapper.BoardAttachMapper;
 import com.musicpan.mapper.BoardMapper;
+import com.musicpan.mapper.MemberMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -25,6 +26,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MemberMapper memberMapper;
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardAttachMapper attachMapper;
@@ -73,6 +77,7 @@ public class BoardServiceImpl implements BoardService{
 			mapper.insertNotice(board);
 		}
 		
+		memberMapper.addGradePoint(board.getId(), 20);
 		
 		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
 			return board.getBno();
