@@ -18,4 +18,7 @@ public interface MemberMapper {
 	public EmailAuthVO getEmailKey(String email);
 	public int checkEmailFromKey(String email);
 	public int deleteEmailKey(String email);
+	
+	public int addGradePoint(@Param("id") String id, @Param("point") int point);
+	public int isUpdated(@Param("id") String id);
 }

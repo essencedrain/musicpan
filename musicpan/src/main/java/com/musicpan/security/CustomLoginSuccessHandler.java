@@ -8,15 +8,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.musicpan.mapper.MemberMapper;
+import com.musicpan.security.domain.CustomUser;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+	
+	@Setter(onMethod_ = {@Autowired})
+	private MemberMapper memberMapper;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -35,6 +42,16 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     		prevPage = "/";
     	}
     	
+    	//인증된 사용자의 정보를 추출
+    	CustomUser user = (CustomUser) authentication.getPrincipal();
+    	
+    	//오늘 활동이 있는지 확인
+    	boolean isUpdated = memberMapper.isUpdated(user.getUsername())==1?true:false;
+    	
+    	//없으면 로그인점수 10점 추가
+    	if(!isUpdated) {
+    		memberMapper.addGradePoint(user.getUsername(), 10);
+    	}//if
     	
     	
     	Map<String, String> items = new HashMap<String,String>();	

@@ -32,12 +32,34 @@
 	
 	
 	<insert id="insert">
-		insert into member(id, pwd, name, email, regdate, user_del, grade) values (#{id},#{pwd},#{name},#{email},now(),0,0)
+		insert into member(id, pwd, name, email, regdate, user_del, grade, updatedate) values (#{id},#{pwd},#{name},#{email},now(),0,0,now())
 	</insert>
 	
 	<insert id="insert_auth1">
 		insert into member_auth(id, auth) values (#{id}, 'ROLE_USER')
 	</insert>
+	
+	<update id="addGradePoint">
+		UPDATE
+			member
+		SET
+			grade = grade + #{point}
+			,updatedate = now()
+		WHERE
+			id = #{id}
+	</update>
+	
+	<select id="isUpdated" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			member
+		WHERE
+			id = #{id}
+			and
+			DATE(updatedate) = DATE(NOW())
+	</select>
+	
 	
 	<select id="checkId" resultType="int">
 		select count(*) from member where id = #{id}
