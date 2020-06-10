@@ -100,6 +100,7 @@ var grid = new tui.Grid({
 			header: '매수'
 			,name: 'buyprice'
 			,sortable: true
+			,sortingType: 'desc'
 			,width: 80
 			,align: 'center'
 		}
@@ -107,12 +108,14 @@ var grid = new tui.Grid({
 			header: '잔량'
 			,name: 'buyunit'
 			,sortable: true
+			,sortingType: 'desc'
 			,width: 30
 			,align: 'center'
 		}
 		,{
 			header: '매도'
 			,name: 'sellprice'
+			,sortingType: 'desc'
 			,sortable: true
 			,width: 80
 			,align: 'center'
@@ -121,6 +124,7 @@ var grid = new tui.Grid({
 			header: '잔량'
 			,name: 'sellunit'
 			,sortable: true
+			,sortingType: 'desc'
 			,width: 30
 			,align: 'center'
 		}
@@ -149,8 +153,9 @@ var grid = new tui.Grid({
 			header: '옥션갭low%'
 			,name: 'auctiongap_low'
 			,sortable: true
-			,width: 100
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '옥션평균가'
@@ -163,36 +168,45 @@ var grid = new tui.Grid({
 			header: '옥션갭avg%'
 			,name: 'auctiongap_avg'
 			,sortable: true
-			,width: 100
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '수익률3'
 			,name: 'avg3f'
 			,sortable: true
-			,width: 80
+			,sortingType: 'desc'
+			,width: 100
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '수익률6'
 			,name: 'avg6f'
 			,sortable: true
-			,width: 80
+			,sortingType: 'desc'
+			,width: 100
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '수익률12'
 			,name: 'avg12f'
 			,sortable: true
-			,width: 80
+			,sortingType: 'desc'
+			,width: 100
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '수익률All'
 			,name: 'avgallf'
 			,sortable: true
-			,width: 80
+			,sortingType: 'desc'
+			,width: 100
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '자료제공횟수'
@@ -205,15 +219,25 @@ var grid = new tui.Grid({
 			header: '변동계수12'
 			,name: 'cv12'
 			,sortable: true
-			,width: 100
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '변동계수all'
 			,name: 'cvall'
 			,sortable: true
+			,width: 120
+			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
+		}
+		,{
+			header: '공표년'
+			,name: 'finalrelease'
+			,sortable: true
 			,width: 100
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '뮤카옥션수량'
@@ -230,71 +254,112 @@ var grid = new tui.Grid({
 			,align: 'center'
 		}
 		,{
-			header: '뮤카지분율%'
-			,name: 'mucastock'
-			,sortable: true
-			,width: 100
-			,align: 'center'
-		}
-		,{
-			header: '저작권갱신월'
-			,name: 'feeinfomonth'
-			,sortable: true
-			,width: 100
-			,align: 'center'
-		}
-		,{
 			header: '구성율-방송'
 			,name: 'broadcast'
 			,sortable: true
-			,width: 100
+			,sortingType: 'desc'
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '구성율-전송'
 			,name: 'transfer'
 			,sortable: true
-			,width: 100
+			,sortingType: 'desc'
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '구성율-복제'
 			,name: 'duplication'
 			,sortable: true
-			,width: 100
+			,sortingType: 'desc'
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '구성율-공연'
 			,name: 'performance'
 			,sortable: true
-			,width: 100
+			,sortingType: 'desc'
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '구성율-해외'
 			,name: 'oversea'
 			,sortable: true
-			,width: 100
+			,sortingType: 'desc'
+			,width: 120
 			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
 			header: '구성율-기타'
 			,name: 'etc'
 			,sortable: true
+			,sortingType: 'desc'
+			,width: 120
+			,align: 'center'
+			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
+		}
+		,{
+			header: '저작권기준월'
+			,name: 'feemonth'
 			,width: 100
+			,align: 'center'
+		}
+		,{
+			header: '업데이트'
+			,name: 'finalupdate'
+			,width: 60
+			,align: 'center'
+		}
+		,{
+			header: 'idx'
+			,name: 'idx'
+			,width: 60
 			,align: 'center'
 		}
 		
 	]
 	,pageOptions: {
 		useClient: true,
-    	perPage: 30
+    	perPage: 15
   	}
 });
 
+tui.Grid.applyTheme('clean');
 
 
+grid.on('click', (ev) => {
+	  if (ev.columnName === 'song') {
+		  Swal.fire({
+			  title: '새창을 띄우시겠습니까?',
+			  text: "뮤지카우 유저마켓 "+ev.nativeEvent.target.textContent+'곡으로',
+			  icon: 'question',
+			  showCancelButton: true,
+			  confirmButtonColor: '#0F4C81',
+			  cancelButtonColor: '#b71515',
+			  confirmButtonText: '이동',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.value) {
+				  window.open("https://www.musicow.com/song/"+grid.getValue(ev.rowKey,"idx"));
+			  }
+			})
+	  }//if
+	  //return ev.stop();
+	  //console.log('test : ' + ev);
+	  //console.log('ev.rowKey : ' + ev.rowKey);
+	  //console.log('ev.columnName : ' + ev.columnName);
+	  //console.log('ev.nativeEvent.target.textContent : ' + ev.nativeEvent.target.textContent);
+	  //console.log('test : ' + grid.getValue(ev.rowKey,"idx") );
+});
 
 
 </script>

@@ -1,5 +1,6 @@
 package com.musicpan.mapper;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,20 +37,23 @@ public class MusicMapperTests {
 	@Test
 	public void testBasicInfo() {
 		
-		int a = 49800;
-		int b = 30500;
-		float c = (float)(Math.round((float)(a-b)/(float)b*1000)/10.00);
-		log.info( c );
-		
-//		List<String> test = musicPro.getFeeInfo("173");
-//		
-//		log.info("------------------------------ size : " + test.size());
-//		
-//		for(String temp : test) {
-//			log.info("------------------------------ temp : " +temp);
-//		}
-//		
-//		insertFee("173");
+		List<SongTotalVO> result = mapper.getSongTotalInfo();
+  		
+  		for(SongTotalVO temp : result) {
+  			
+  			
+  			Date tempfeeMonth = temp.getFeeinfomonth();
+  			SimpleDateFormat transFormat = new SimpleDateFormat("MM");
+  			String to = transFormat.format(tempfeeMonth);
+  			
+  			
+  			Date updatedate = temp.getUpdatedate();
+  			SimpleDateFormat transFormat2 = new SimpleDateFormat("HH:mm");
+  			String to2 = transFormat2.format(updatedate);
+  			
+  			log.info(to2);
+  			
+  		}//for
 		
 	}//testBasicInfo
 	

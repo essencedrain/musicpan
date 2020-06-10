@@ -42,15 +42,5 @@ public class SongTotalVO {
 	private float oversea;//33: 최근12개월 저작권구성비율 - 해외
 	private float etc;//34: 최근12개월 저작권구성비율 - 기타
 	
-	//music_basic 컬럼에서 recentprice 제외
-	//아래는 DB에 없는 커스텀
 	
-	private float auctiongap_low;//옥션최저낙찰가와 현재 매도최저가 gap%
-	private float auctiongap_avg;//옥션평균낙찰가와 현재 매도최저가 gap%
-	private float mucastock;//전체지분중 뮤카 보유율
-	private float avg3f;// 최근 3개월 기준 연수익률
-	private float avg6f;// 최근 6개월 기준 연수익률
-	private float avg12f;// 최근 12개월 기준 연수익률
-	private float avgallf;// 최근 alltime 기준 연수익률
-	private int pricefor8;// 8%적정가
 }//class

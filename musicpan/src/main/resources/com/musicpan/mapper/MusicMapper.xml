@@ -228,6 +228,7 @@
 			*
 		FROM
 			music_mview
+		ORDER BY singer asc
 	</select>
 	
 </mapper>
