@@ -169,7 +169,7 @@
 						                        		<span class="list_replyCnt">&nbsp;&nbsp;${board2.replyCnt>0?board2.replyCnt:""}</span>
 						                        	</a>
 		                    					</td>
-						                        <td style="width: 17%;" class="text-left list_else td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
+						                        <td style="width: 17%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
 						                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
 						                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
 						                        
@@ -689,7 +689,7 @@
 					}else{
 						str += '<div class="card-header py-1 pl-3">';
 					}
-		            		str += '<div class="d-flex">';
+		            		str += '<div class="reply_grade d-flex">';
 			    	            str += '<img src="/resources/level_icon/'+ list[i].grade +'.gif">';//grade
 			    	            str += '<span class="card-user-name">'+ list[i].name +'</span>';
 			    	            str += '<span class="card-user-time ml-auto">'+  replyService.displayTime(list[i].regdate) +'</span>';

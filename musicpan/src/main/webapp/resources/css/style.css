@@ -363,6 +363,8 @@ a.article:hover {
 	color: #999;
 }
 .table_gtx .mo_sub img{
+	width: 22px;
+	height: 16px;
 	margin-bottom: 3px;
 }
 .table_gtx .td_mo{
@@ -408,6 +410,8 @@ a.article:hover {
 	background-color: #f8f8f8;
 }
 .table_gtx .list_grade img{
+	width: 22px;
+	height: 16px;
 	vertical-align:middle;
 	margin-bottom: 5px;
 }
@@ -470,8 +474,11 @@ a.article:hover {
 }
 
 .reply_area .card_area .card-header img{
+	width: 22px;
+	height: 16px;
 	vertical-align:middle;
-	margin-bottom: 3px;
+	margin-bottom: 0px;
+	margin-top: 2px;
 	margin-right: 5px;
 }
 .reply_area .card_area .card-text{
