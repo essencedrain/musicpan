@@ -26,7 +26,14 @@ public class BoardMapperTests {
 	
 	
 	@Test
-	  public void testSearch() {
+	public void testSearch() {
+		log.info(mapper.getId(8227L, "sample"));
+	}
+	
+	
+	/*
+	@Test
+	public void testSearch() {
 
 	    Criteria cri = new Criteria();
 	    cri.setKeyword("일반사용자0");
@@ -39,6 +46,7 @@ public class BoardMapperTests {
 
 	    list.forEach(board -> log.info(board));
 	  }
+	*/
 	/*
 	@Test
 	public void testGetList() {

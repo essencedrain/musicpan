@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.musicpan.domain.LikeVO;
 import com.musicpan.mapper.BoardMapper;
 import com.musicpan.mapper.LikeMapper;
+import com.musicpan.mapper.MemberMapper;
 import com.musicpan.mapper.ReplyMapper;
 
 import lombok.Setter;
@@ -29,6 +30,9 @@ public class LikeServiceImpl implements LikeService {
 	@Setter(onMethod_ = @Autowired)
 	private ReplyMapper replyMapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private MemberMapper memberMapper;
+	
 	@Transactional
 	@Override
 	public Map<String, Integer> insertLike(LikeVO vo) {
@@ -39,9 +43,13 @@ public class LikeServiceImpl implements LikeService {
 		result.put("like", mapper.readLike(vo));
 		result.put("dislike", mapper.readDislike(vo));
 		
+		String id = boardMapper.getId(vo.getBno(), vo.getB_name());
+		
 		if(vo.getFlag() == 1) {
+			memberMapper.addGradePoint(id, 3);//글작성자 점수추가
 			boardMapper.updateLike(vo.getBno(), vo.getB_name(), 1);
 		}else {
+			memberMapper.addGradePoint(id, -3);//글작성자 점수깎기
 			boardMapper.updatedisLike(vo.getBno(), vo.getB_name(), 1);
 		}
 		return result;
@@ -70,9 +78,13 @@ public class LikeServiceImpl implements LikeService {
 		result.put("like", mapper.readLike(vo));
 		result.put("dislike", mapper.readDislike(vo));
 		
+		String id = boardMapper.getId(vo.getBno(), vo.getB_name());
+		
 		if(vo.getFlag() == 1) {
+			memberMapper.addGradePoint(id, -3);//글작성자 점수추가
 			boardMapper.updateLike(vo.getBno(), vo.getB_name(), -1);
 		}else {
+			memberMapper.addGradePoint(id, 3);//글작성자 점수복구
 			boardMapper.updatedisLike(vo.getBno(), vo.getB_name(), -1);
 		}
 		return result;
@@ -109,9 +121,13 @@ public class LikeServiceImpl implements LikeService {
 		result.put("like", mapper.readLike_reply(vo));
 		result.put("dislike", mapper.readDislike_reply(vo));
 		
+		String id = replyMapper.getId(vo.getRno(), vo.getB_name());
+		
 		if(vo.getFlag() == 1) {
+			memberMapper.addGradePoint(id, 2);//댓글작성자 점수추가
 			replyMapper.updateLike(vo.getRno(), vo.getB_name(), 1);
 		}else {
+			memberMapper.addGradePoint(id, -2);//댓글작성자 점수깎기
 			replyMapper.updatedisLike(vo.getRno(), vo.getB_name(), 1);
 		}
 		
@@ -142,9 +158,13 @@ public class LikeServiceImpl implements LikeService {
 		result.put("like", mapper.readLike_reply(vo));
 		result.put("dislike", mapper.readDislike_reply(vo));
 		
+		String id = replyMapper.getId(vo.getRno(), vo.getB_name());
+		
 		if(vo.getFlag() == 1) {
+			memberMapper.addGradePoint(id, -2);//댓글작성자 점수삭제
 			replyMapper.updateLike(vo.getRno(), vo.getB_name(), -1);
 		}else {
+			memberMapper.addGradePoint(id, 2);//댓글작성자 점수복구
 			replyMapper.updatedisLike(vo.getRno(), vo.getB_name(), -1);
 		}
 		return result;

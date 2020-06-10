@@ -181,5 +181,14 @@
     		dislikecnt = dislikecnt + #{amount}
     	where
     		rno = #{rno}
-	</update> 
+	</update>
+	
+	<select id="getId" resultType="string">
+		SELECT
+			id
+		FROM
+			reply_${b_name}
+		WHERE
+			rno = #{rno}
+	</select> 
 </mapper>

@@ -128,5 +128,15 @@
     		dislikecnt = dislikecnt + #{amount}
     	where
     		bno = #{bno}
-	</update> 
+	</update>
+	
+	<select id="getId" resultType="string">
+		SELECT
+			id
+		FROM
+			board_${b_name}
+		WHERE
+			bno = #{bno}
+		
+	</select>
 </mapper>

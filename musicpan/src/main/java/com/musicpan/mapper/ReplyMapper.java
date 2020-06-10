@@ -30,4 +30,6 @@ public interface ReplyMapper {
 	
 	public void updateLike(@Param("rno") Long rno, @Param("b_name") String b_name, @Param("amount") int amount);
 	public void updatedisLike(@Param("rno") Long rno, @Param("b_name") String b_name, @Param("amount") int amount);
+	
+	public String getId(@Param("rno") Long rno, @Param("b_name") String b_name);
 }//class

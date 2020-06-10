@@ -33,4 +33,6 @@ public interface BoardMapper {
 	
 	public void updateLike(@Param("bno") Long bno, @Param("b_name") String b_name, @Param("amount") int amount);
 	public void updatedisLike(@Param("bno") Long bno, @Param("b_name") String b_name, @Param("amount") int amount);
+	
+	public String getId(@Param("bno") Long bno, @Param("b_name") String b_name);
 }
