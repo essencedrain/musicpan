@@ -19,7 +19,7 @@ public class BoardVO {
 	//회원정보
 	private String id;
 	private String name;
-	private int grade;
+	private long grade;
 	
 	
 	private String modiDate;

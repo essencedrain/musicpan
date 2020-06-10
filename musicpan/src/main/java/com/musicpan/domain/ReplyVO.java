@@ -18,7 +18,7 @@ public class ReplyVO {
 	private String name;
 	
 	private int reply_step;
-	private int grade;
+	private long grade;
 	private int del_flag;
 	private int likeCnt;
 	private int dislikeCnt;
