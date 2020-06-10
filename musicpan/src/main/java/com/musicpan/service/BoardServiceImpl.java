@@ -123,6 +123,8 @@ public class BoardServiceImpl implements BoardService{
 		
 		boolean deleteResult = mapper.updateFlag(board) == 1;
 		
+		memberMapper.addGradePoint(board.getId(), -20);
+		
 		attachMapper.deleteAll(board);
 		
 		return deleteResult;
