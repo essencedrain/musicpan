@@ -10,6 +10,7 @@ import com.musicpan.domain.Criteria;
 import com.musicpan.domain.ReplyPageDTO;
 import com.musicpan.domain.ReplyVO;
 import com.musicpan.mapper.BoardMapper;
+import com.musicpan.mapper.MemberMapper;
 import com.musicpan.mapper.ReplyMapper;
 
 import lombok.Setter;
@@ -23,6 +24,9 @@ public class ReplyServiceImpl implements ReplyService {
 	private ReplyMapper mapper;
 	
 	@Setter(onMethod_ = @Autowired)
+	private MemberMapper memberMapper;
+	
+	@Setter(onMethod_ = @Autowired)
 	private BoardMapper boardMapper;
 	
 	@Transactional
@@ -30,6 +34,7 @@ public class ReplyServiceImpl implements ReplyService {
 	public int register(ReplyVO vo) {
 		
 		mapper.insert(vo);
+		memberMapper.addGradePoint(vo.getId(), 2);
 		boardMapper.updateReplyCnt(vo.getBno(), 1, vo.getB_name());
 		return mapper.updateRef(vo);
 	}
@@ -55,6 +60,8 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		ReplyVO vo = mapper.read(rno, b_name);
 		vo.setB_name(b_name);
+		
+		memberMapper.addGradePoint(vo.getId(), -2);
 		
 		int ref = mapper.getRef(vo);
 		vo.setRef(ref);
@@ -89,7 +96,7 @@ public class ReplyServiceImpl implements ReplyService {
 		int maxStep = mapper.getMaxStep(vo);
 		
 		vo.setReply_step(maxStep+1);
-		
+		memberMapper.addGradePoint(vo.getId(), 2);
 		boardMapper.updateReplyCnt(vo.getBno(), 1, vo.getB_name());
 		return mapper.insertRe(vo);
 	}

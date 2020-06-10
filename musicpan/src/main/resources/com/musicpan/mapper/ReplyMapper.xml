@@ -68,7 +68,7 @@
 		FROM
 			reply_${b_name}
 		WHERE
-			ref = #{ref}
+			ref = #{ref} and del_flag=0
 	</select>
 	
 	<select id="getRef" resultType="int">
@@ -163,7 +163,7 @@
 		FROM
 			reply_${b_name}
 		WHERE
-			bno = #{bno} AND del_flag < 1
+			bno = #{bno} AND del_flag = 0
 	]]>
 	</select>
 	

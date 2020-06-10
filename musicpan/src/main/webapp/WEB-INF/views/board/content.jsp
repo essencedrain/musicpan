@@ -485,9 +485,9 @@
     			return;
     		}
     		
-    		//쿠키 체크, 댓글은 1분에 1개
+    		//쿠키 체크, 댓글은 15초에 1개
 			if(getCookie('mplrck'+b_name+bnoValue)!=null){
-				swa("error","한 게시물에 댓글은 1분에 1개만 작성가능합니다");
+				swa("error","한 게시물에 댓글은 15초에 1개만 작성가능합니다");
 				return;
 			}
     		
@@ -511,7 +511,7 @@
     		replyService.add(reply, b_name, function(result){
     			$('#reply_textarea').val('');
     			//쿠키생성
-    			setCookie('mplrck'+b_name+bnoValue, 'yes', 60);
+    			setCookie('mplrck'+b_name+bnoValue, 'yes', 15);
     			showList(-1, bnoValue, b_name, 2, 0);
    			});
     		
@@ -666,6 +666,7 @@
 	        
 	        if(list == null || list.length == 0){
 	        	$('.card_area').html("<div class='text-center'><span>작성된 댓글이 없습니다.</span></div>");
+	        	showReplyPage(replyCnt, page);
 	            return;
 	        }//if
 
@@ -914,9 +915,9 @@
 			return;
 		}
 		
-		//쿠키 체크, 댓글은 1분에 1개
+		//쿠키 체크, 댓글은 15초에 1개
 		if(getCookie('mplrck'+b_name2+bnoValue2)!=null){
-			swa("error","한 게시물에 댓글은 1분에 1개만 작성가능합니다");
+			swa("error","한 게시물에 댓글은 15초에 1개만 작성가능합니다");
 			return;
 		}
 	    
@@ -943,6 +944,9 @@
 		};
    		
    		replyService.addRe(reply2, b_name2, function(result){
+   			
+   			//쿠키생성
+			setCookie('mplrck'+b_name2+bnoValue2, 'yes', 15);
    			showList(page, bnoValue2, b_name2, 3, rnoReply);
 		});
     		
