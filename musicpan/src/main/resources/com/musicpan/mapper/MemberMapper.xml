@@ -24,10 +24,19 @@
   
 	<select id="read" resultMap="memberMap">
 		SELECT 
-		  mem.id,  pwd, name, email, regdate, user_del, grade, auth
+			m.id, m.pwd, m.name, m.email, m.regdate, m.user_del, m.grade, a.auth
 		FROM 
-		  member mem LEFT OUTER JOIN member_auth auth on mem.id = auth.id 
-		WHERE mem.id = #{id} 
+			member m LEFT OUTER JOIN member_auth a on m.id = a.id 
+		WHERE m.id = #{id} 
+	</select>
+	
+	<select id="readInfo" resultType="com.musicpan.domain.MemberVO">
+		SELECT 
+			id, name, email, regdate, user_del, grade, updatedate
+		FROM 
+			member
+		WHERE
+			id = #{id} 
 	</select>
 	
 	
@@ -70,6 +79,9 @@
 	<select id="checkEmail" resultType="int">
 		select count(*) from member where email = #{email}
 	</select>
+	<select id="checkPwd" resultType="string">
+		select pwd from member where id = #{id}
+	</select>
 	
 	
 	<select id="checkEmailFromKey" resultType="int">
@@ -84,7 +96,16 @@
 	<delete id="deleteEmailKey">
 		delete from emailkey where email = #{email}
 	</delete>
-
+	
+	
+	<update id="updatePwd">
+		UPDATE
+			member
+		SET
+			pwd = #{pwd}
+		WHERE
+			id = #{id}
+	</update>
 	
 	
 </mapper>

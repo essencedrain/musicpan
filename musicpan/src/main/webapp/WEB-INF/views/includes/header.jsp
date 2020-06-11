@@ -106,7 +106,7 @@
             <ul class="list-unstyled CTAs">
             	<sec:authorize access="isAuthenticated()">
             		<li>
-	                    <a href="#" class="download">마이페이지</a>
+	                    <a href="/mypage" class="download">마이페이지</a>
 	                </li>
 	                <li>
 	                    <a href="#" class="article logoutBtn">로그아웃</a>
@@ -143,7 +143,7 @@
                     
                     <sec:authorize access="isAuthenticated()">
 	                    <div class="d-inline-block d-md-none ml-auto">
-	                    	<button class="btn btn-outline-dark mr-1" type="button"><i class="fas fa-user"></i></button>
+	                    	<button class="btn btn-outline-dark" type="button" onclick="location.href='/mypage';"><i class="fas fa-user"></i></button>
 	                    	<button class="btn btn-outline-dark logoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
 	                    </div>	
                     </sec:authorize>
@@ -163,7 +163,7 @@
                             </li>
                             <sec:authorize access="isAuthenticated()">
 	                            <li class="nav-item">
-	                            	<a class="nav-link" href="#">마이페이지</a>
+	                            	<a class="nav-link" href="/mypage">마이페이지</a>
 	                            </li>
                             </sec:authorize>
                             <li class="nav-item">

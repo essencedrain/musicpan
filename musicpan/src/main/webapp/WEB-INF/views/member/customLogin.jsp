@@ -101,6 +101,9 @@
         					window.location = response.item.url;	//이전페이지로 돌아가기
         				} else {
         					swa("error","아이디 또는 비밀번호가 일치하지 않습니다");
+        					$('#username_temp').val("");
+                        	$('#password_temp').val("");
+                        	$('#username_temp').focus();
         				}
         			},
         			error : function(a,b,c){

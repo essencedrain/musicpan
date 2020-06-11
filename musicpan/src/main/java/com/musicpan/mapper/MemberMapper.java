@@ -8,11 +8,15 @@ import com.musicpan.domain.MemberVO;
 public interface MemberMapper {
 
 	public MemberVO read(String id);
+	public MemberVO readInfo(String id);
 	public int insert(MemberVO vo);
 	public int insert_auth1(String id);
 	public int checkId(String id);
 	public int checkName(String name);
 	public int checkEmail(String email);
+	
+	public String checkPwd(String id);
+	public int updatePwd(@Param("id") String id, @Param("pwd") String pwd);
 	
 	public int insertEmailKey(@Param("authEmailKey") String authEmailKey, @Param("email") String email);
 	public EmailAuthVO getEmailKey(String email);
@@ -21,4 +25,5 @@ public interface MemberMapper {
 	
 	public int addGradePoint(@Param("id") String id, @Param("point") int point);
 	public int isUpdated(@Param("id") String id);
+	
 }

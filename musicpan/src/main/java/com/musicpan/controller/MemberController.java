@@ -9,6 +9,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +67,31 @@ public class MemberController {
 		
 		return service.member_Name_validation(name)==true ?
 				"true" : "false";
+		
+	}
+	//=========================================================================================
+	
+	
+	
+	
+	//=========================================================================================
+	// 기능 : 비밀번호 변경
+	// 리턴 : "true" 중복된 이메일 || "false" 사용가능한 이메일
+	// 메서드 : POST
+	// URI : member/changePassword
+	//=========================================================================================
+	@PreAuthorize("principal.username == #m_id")
+	@PostMapping(value = "/changePassword", 
+			produces = "text/plain; charset=UTF-8")
+	public String changePassword(
+			@RequestParam String m_id
+			,@RequestParam String newPwd
+			,@RequestParam String recentPwd
+	) {
+		
+		//log.info("MemberController changePassword: " + m_id + " // " + newPwd  + " // " + recentPwd);
+		
+		return service.checkPassword(m_id, recentPwd, newPwd)+"";
 		
 	}
 	//=========================================================================================

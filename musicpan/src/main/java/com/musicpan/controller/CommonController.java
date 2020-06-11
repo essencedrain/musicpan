@@ -15,10 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musicpan.domain.MemberVO;
-import com.musicpan.mapper.MusicMapper;
 import com.musicpan.security.domain.CustomUser;
 import com.musicpan.service.MemberService;
 
@@ -28,9 +25,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class CommonController {
 	
-	
-	@Autowired
-	private PasswordEncoder pwencoder;
 	
 	@Autowired
 	private MemberService memberService;
@@ -45,7 +39,7 @@ public class CommonController {
 	 	g002		로그인		GET		/customLogin
 	 	g003		회원가입	GET		/register
 	 	g004		회원축하	GET		/registerSuccess
-	 	
+	 	g005		마이페이지	GET		/mypage
 	 	
 	 	p000		로그아웃	POST	/customLogout
 	 	p001		회원가입	POST	/register
@@ -192,6 +186,32 @@ public class CommonController {
 	
 	
 	//=========================================================================================
+	// g005
+	// 기능		:	마이페이지 보여줌
+	// 메서드	:	GET
+	// URI		:	/mypage
+	//=========================================================================================
+	@GetMapping("/mypage")
+	@PreAuthorize("isAuthenticated()")
+	public String mypage(Authentication authentication, Model model) {
+		
+		CustomUser user = (CustomUser) authentication.getPrincipal();
+		String id = user.getUsername();
+		
+		MemberVO vo = memberService.getMemberInfo(id);
+		
+		model.addAttribute("vo", vo);
+		
+		//log.info(vo);
+		
+		return "member/mypage";
+	}
+	//=========================================================================================
+	
+	
+	
+	
+	//=========================================================================================
 	// p001
 	// 기능		:	회원가입 처리
 	// 메서드	:	POST
@@ -200,11 +220,6 @@ public class CommonController {
     @PostMapping("/register")
     public String memberInsert(MemberVO memberVO) throws Exception{
          
-        //비밀번호 암호화
-        memberVO.setPwd(pwencoder.encode(memberVO.getPwd()));
-        
-        log.info("register post : " + memberVO.toString());
-        
         //가입처리
         if(memberService.register(memberVO)) {
         	return "redirect:/registerSuccess";

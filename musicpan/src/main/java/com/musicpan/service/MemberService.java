@@ -12,4 +12,8 @@ public interface MemberService {
 	public boolean createEmailKey(String email);
 	public boolean authEmailKey(String email, String authEmailKey);
 	
+	public MemberVO getMemberInfo(String id);
+	
+	public int checkPassword(String id, String recentPwd, String newPwd);
+	
 }//interface
