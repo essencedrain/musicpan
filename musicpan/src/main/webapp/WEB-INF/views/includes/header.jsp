@@ -66,7 +66,10 @@
                     <a href="/">홈</a>
                 </li>
                 <li>
-                    <a href="/tables/tauTable1">타우테이블1.0</a>
+                    <a href="/tables/tauTable1">타우테이블 V1</a>
+				</li>
+                <li>
+                    <a href="/tables/tauTable2">타우테이블 V2</a>
 				</li>
 				<!--
 				<li>
@@ -139,8 +142,11 @@
                     </sec:authorize>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/tables/tauTable1">타우테이블1.0</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/tables/tauTable1">타우테이블 V1</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/tables/tauTable2">타우테이블 V2</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/board/free/list">자유게시판</a>

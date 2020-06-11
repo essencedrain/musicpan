@@ -614,6 +614,16 @@ a.article:hover {
 }
 
 
+
+/* ---------------------------------------------------
+    배너 STYLE
+----------------------------------------------------- */
+
+
+
+
+
+
 /* ---------------------------------------------------
     배너 STYLE
 ----------------------------------------------------- */
@@ -661,4 +671,20 @@ a.article:hover {
 	,.board_551banner_bot_520{
 		display: none;
 	}
+	table.dataTable th:nth-child(1) {
+  width: 100px;
+  max-width: 100px;
+  word-break: break-all;
+  white-space: pre-line;
+  text-overflow: ellipsis;
+}
+
+table.dataTable td:nth-child(1) {
+  width: 100px;
+  max-width: 100px;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+}
+	
 }

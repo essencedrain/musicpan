@@ -10,7 +10,7 @@
             <!-- start  -->
             <!-- =================================================================================================  -->
             
-			<div class="container">
+			<div class="container pb-5">
 		        <div class="row">
 		            <div class="loginFormWrap mx-auto col-md-6 col-md-offset-3">
 		                <div class="heading pb-1 text-center pb-4">

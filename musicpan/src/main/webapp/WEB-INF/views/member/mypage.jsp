@@ -10,7 +10,7 @@
             <!-- start  -->
             <!-- =================================================================================================  -->
             
-            <div class="container">
+            <div class="container pb-5">
 	            <div class="row">
 	            
 	            	<div class="left_area col-md-2">

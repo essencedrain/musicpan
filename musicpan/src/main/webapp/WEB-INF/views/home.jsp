@@ -18,9 +18,11 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		                	<h2 class="text-primary"><a href="/tables/tauTable1">타우테이블 v1.0</a></h2>
-		                	
-		                	<h5>타우테이블 v1.0은 뮤지카우에 상장된 곡들의 데이터를 효율적으로 보여줍니다.</h5>
+		                	<h2><a class="text-primary" href="/tables/tauTable1">타우테이블 V1</a></h2>
+		                	<h2><a class="text-danger" href="/tables/tauTable2">타우테이블 V2</a></h2>
+		                	<br>
+		                	<h5>타우테이블은 뮤지카우에 상장된 곡들의 데이터를 효율적으로 보여줍니다.</h5>
+		                	<h5>현재 타우테이블은 개발중이며 V1, V2 두가지 버전으로 테스트 가능합니다.</h5>
 		                	<h5>지금 회원가입하고 로그인하여 이용해보세요!</h5>
 		                	<h5 class="text-danger">테스트 기간중 비회원도 이용가능</h5>
 		                	<br>
@@ -29,9 +31,8 @@
 							<img class="img-fluid" src="/resources/img/main_img.jpg">				
 				            <div class="line"></div>
 				            
-				            <h2>메뉴보면 자유게시판도 있습니다.</h2>
-				            <p>ㅠㅠ</p>
-				
+				            <h2>메뉴보시면 자유게시판도 있습니다.</h2>
+							<p>메인화면 준비중</p>
 				
 				            <div class="line"></div>
 				

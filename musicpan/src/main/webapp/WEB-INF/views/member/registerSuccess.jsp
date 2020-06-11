@@ -10,7 +10,7 @@
             <!-- start  -->
             <!-- =================================================================================================  -->
             
-            <div class="container-fluid pt-5">
+            <div class="container-fluid pt-5 pb-5">
 			<div class="py-5 text-center">
             <h1 class="display-3">회원가입을 축하합니다.</h1>
             <h3>잠시후 로그인 페이지로 이동합니다.</h3>

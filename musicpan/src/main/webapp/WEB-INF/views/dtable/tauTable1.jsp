@@ -81,7 +81,7 @@
 		                		</tr>
 		                		<tr>
 		                			<td class="text-nowrap font-weight-bold">자료제공횟수</td>
-		                			<td class="text-nowrap">뮤지카우에서 제공한 월저작권료정보 제공 횟수 (ex:65 = 15,16,17,18,19년도 60개 + 20년도 1~5월)</td>
+		                			<td class="text-nowrap">뮤지카우에서 제공한 월저작권료 정보제공 횟수 (ex:65 = 15,16,17,18,19년도 60개 + 20년도 1~5월)</td>
 		                		</tr>
 		                		<tr>
 		                			<td class="text-nowrap font-weight-bold">변동계수</td>
@@ -187,7 +187,7 @@ var grid = new tui.Grid({
 			,name: 'song'
 			,sortable: true
 			,filter: 'select'
-			,width: 150
+			,width: 120
 		}
 		,{
 			header: '가수'
@@ -341,6 +341,20 @@ var grid = new tui.Grid({
 			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
+			header: '형태'
+			,name: 'copyRight'
+			,sortable: true
+			,width: 100
+			,align: 'center'
+		}
+		,{
+			header: '2차작성권'
+			,name: 'secRight'
+			,sortable: true
+			,width: 100
+			,align: 'center'
+		}
+		,{
 			header: '뮤카옥션수량'
 			,name: 'auctionunits'
 			,sortable: true
@@ -438,7 +452,7 @@ tui.Grid.applyTheme('clean');
 
 
 grid.on('click', (ev) => {
-	  if (ev.columnName === 'song') {
+	  if (ev.columnName === 'song' && ev.rowKey >=0) {
 		  Swal.fire({
 			  title: '새창을 띄우시겠습니까?',
 			  text: "뮤지카우 유저마켓 "+ev.nativeEvent.target.textContent+'곡으로',
@@ -456,7 +470,7 @@ grid.on('click', (ev) => {
 	  }//if
 	  //return ev.stop();
 	  //console.log('test : ' + ev);
-	  //console.log('ev.rowKey : ' + ev.rowKey);
+	  console.log('ev.rowKey : ' + ev.rowKey);
 	  //console.log('ev.columnName : ' + ev.columnName);
 	  //console.log('ev.nativeEvent.target.textContent : ' + ev.nativeEvent.target.textContent);
 	  //console.log('test : ' + grid.getValue(ev.rowKey,"idx") );

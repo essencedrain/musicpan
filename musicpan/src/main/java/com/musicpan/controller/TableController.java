@@ -1,12 +1,12 @@
 package com.musicpan.controller;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.musicpan.domain.ForTauTable2;
 import com.musicpan.domain.SongJSON;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.mapper.MusicMapper;
@@ -153,4 +154,88 @@ public class TableController {
 	
 	
 	
+  	//=========================================================================================
+  	// g001
+  	// 기능		:	
+  	// 메서드	:	GET 
+  	// URI		:	/tables/tauTable2
+  	//=========================================================================================
+  	//@PreAuthorize("isAuthenticated()")
+  	@GetMapping("/tauTable2")
+  	public String tableTest2(Model model) {
+  		
+  		List<SongTotalVO> resultTemp = mapper.getSongTotalInfo();
+  		
+  		//후처리결과
+  		List<ForTauTable2> result = new ArrayList<>();
+  		
+  		//후처리
+  		for(SongTotalVO temp : resultTemp) {
+  			
+  			ForTauTable2 tempData = new ForTauTable2();
+  			
+  			//avg 시리즈 매도가 기준 백분율전환 (최근x개월기준 수익률)
+  			if(temp.getSellprice()!=0) {
+  				tempData.setAvg3f( (float)(Math.round( (float)temp.getAvg3()/(float)temp.getSellprice()*10000) / 100.00) );
+  				tempData.setAvg6f( (float)(Math.round( (float)temp.getAvg6()/(float)temp.getSellprice()*10000) / 100.00) );
+  				tempData.setAvg12f( (float)(Math.round( (float)temp.getAvg12()/(float)temp.getSellprice()*10000) / 100.00) );
+  				tempData.setAvgallf( (float)(Math.round( (float)temp.getAvgall()/(float)temp.getSellprice()*10000) / 100.00) );
+  			}else {
+  				tempData.setAvg3f(0);
+  				tempData.setAvg6f(0);
+  				tempData.setAvg12f(0);
+  				tempData.setAvgallf(0);
+  			}//if
+  			
+  			
+  			//매도가-옥션최저낙찰가 가격차 -> 백분율
+  			if(temp.getSellprice()<1 || temp.getAuctionmin()<1) {
+  				tempData.setAuctiongap_low(0);
+  			}else {
+  				tempData.setAuctiongap_low( (float)(Math.round((float)(temp.getSellprice()-temp.getAuctionmin())/(float)temp.getAuctionmin()*1000)/10.0) );
+  			}//if
+  			
+  			
+  			//최근12기준 8%적정가 = avg12/0.08
+  			tempData.setPricefor8( (int)Math.round(temp.getAvg12()/0.08) );
+  			
+  			
+  			//공표년
+  			Date tempTime = temp.getReleasedate();
+  			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy");
+  			String to = transFormat.format(tempTime);
+  			tempData.setFinalrelease(to);
+  			
+  			//나머지데이터 정리
+  			tempData.setSong(temp.getSong());
+  			tempData.setSinger(temp.getSinger());
+  			tempData.setBuyunit(temp.getBuyunit());
+  			tempData.setBuyprice(temp.getBuyprice());
+  			tempData.setSellunit(temp.getSellunit());
+  			tempData.setSellprice(temp.getSellprice());
+  			tempData.setRecentprice(temp.getRecentprice());
+  			tempData.setCvall(temp.getCvall());
+  			tempData.setIdx(temp.getIdx());
+  			tempData.setAlltime(temp.getAlltime());
+  			tempData.setAuctionmin(temp.getAuctionmin());
+  			
+  			result.add(tempData);
+  		}//for
+  		
+  		
+  		Date tempTime = resultTemp.get(0).getUpdatedate();
+		SimpleDateFormat transFormat = new SimpleDateFormat("MM-dd hh:mm:ss");
+		String updatedate = transFormat.format(tempTime);
+		
+  		
+  		
+		model.addAttribute("updatedate", updatedate);
+  		model.addAttribute("dataList", result);
+  		
+  		return "dtable/tauTable2";
+  	}
+  	//=========================================================================================
+  	
+  	
+  	
 }//class
