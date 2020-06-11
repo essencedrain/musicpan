@@ -56,19 +56,33 @@
             </div>
 
             <div class="sidebar-header">
-                <h3>킹봉아</h3>
-                <h3>이름지어줘</h3>
+                <h3>킹봉쓰</h3>
             </div>
 
             <ul class="list-unstyled components">
-                <p>제작중</p>
-                <li class="active">
+                <li>
                     <a href="/">홈</a>
                 </li>
                 <li>
                     <a href="/board/sample/list">샘플 게시판</a>
+				</li>
+				<li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+				<li>
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">Pages2</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu2">
                         <li>
                             <a href="#">Page 1</a>
                         </li>
@@ -87,14 +101,25 @@
                     <a href="#">Contact</a>
                 </li>
             </ul>
-
+			
+			
             <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
+            	<sec:authorize access="isAuthenticated()">
+            		<li>
+	                    <a href="#" class="download">마이페이지</a>
+	                </li>
+	                <li>
+	                    <a href="#" class="article logoutBtn">로그아웃</a>
+	                </li>
+            	</sec:authorize>
+            	<sec:authorize access="isAnonymous()">
+	                <li>
+	                    <a href="/customLogin" class="download">로그인</a>
+	                </li>
+	                <li>
+	                    <a href="/register" class="article">회원가입</a>
+	                </li>
+                </sec:authorize>
             </ul>
         </nav>
         <!-- =================================================================================================  -->
@@ -121,7 +146,7 @@
                     </button>
  					-->
  					<sec:authorize access="isAuthenticated()">
-                    	<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto" type="button" id="logoutBtn2"><i class="fas fa-sign-out-alt"></i></button>
+                    	<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto logoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
                     </sec:authorize>
                     <sec:authorize access="isAnonymous()">
 	 					<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto" type="button" onclick="location.href='/customLogin';"><i class="fas fa-sign-in-alt"></i></button>
@@ -139,15 +164,15 @@
                             </li>
                             <li class="nav-item">
                             	<sec:authorize access="isAuthenticated()">
-                                	<a id="logoutBtn" class="nav-link" href="#">로그아웃</a>
+                                	<a class="nav-link logoutBtn" href="#">로그아웃</a>
                                 </sec:authorize>
                                 <sec:authorize access="isAnonymous()">
-                                	<a id="loginBtn" class="nav-link" href="/customLogin">로그인</a>
+                                	<a class="nav-link" href="/customLogin">로그인</a>
                                 </sec:authorize>
                             </li>
                             <li class="nav-item">
                                 <sec:authorize access="isAnonymous()">
-                                	<a id="loginBtn" class="nav-link" href="/register">회원가입</a>
+                                	<a class="nav-link" href="/register">회원가입</a>
                                 </sec:authorize>
                             </li>
                             

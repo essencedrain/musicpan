@@ -77,6 +77,11 @@ a:focus {
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
+0F4C81
+135ea0
+156bb7
+3292e7
+e8f3fc
 ----------------------------------------------------- */
 
 #sidebar {
@@ -86,8 +91,8 @@ a:focus {
     left: -250px;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
-    color: #fff;
+    background: #fff;
+    color: #000;
     transition: all 0.3s;
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
@@ -102,7 +107,7 @@ a:focus {
     height: 35px;
     line-height: 35px;
     text-align: center;
-    background: #7386D5;
+    background: #156bb7;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -110,11 +115,12 @@ a:focus {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
+    color: #fff;
 }
 
 #dismiss:hover {
     background: #fff;
-    color: #7386D5;
+    color: #0F4C81;
 }
 
 .overlay {
@@ -134,12 +140,13 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #0F4C81;
+    color: #fff;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #999;
 }
 
 #sidebar ul p {
@@ -154,14 +161,14 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    color: #fff;
+    background: #0F4C81;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #0F4C81;
 }
 
 a[data-toggle="collapse"] {
@@ -179,29 +186,30 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #135ea0;
+    color: #fff;
 }
 
 ul.CTAs {
-    padding: 20px;
+    padding: 10px 20px;
 }
 
 ul.CTAs a {
     text-align: center;
     font-size: 0.9em !important;
     display: block;
-    border-radius: 5px;
     margin-bottom: 5px;
 }
 
 a.download {
     background: #fff;
-    color: #7386D5;
+    color: #0F4C81;
+    border : 1px solid #999;
 }
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
+    background: #0F4C81 !important;
     color: #fff !important;
 }
 

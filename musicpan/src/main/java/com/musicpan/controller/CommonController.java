@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musicpan.domain.MemberVO;
 import com.musicpan.mapper.MusicMapper;
+import com.musicpan.security.domain.CustomUser;
 import com.musicpan.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
@@ -95,7 +97,13 @@ public class CommonController {
 	// URI		:	/customLogin
 	//=========================================================================================
 	@GetMapping("/customLogin")
-	public String loginInput(HttpServletRequest request, HttpServletResponse response) {
+	public String loginInput(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+		
+		//로그인 시 접근 불가
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			if(user.getUsername().length()>0) {return "redirect:/";}
+		}
 		
 		RequestCache requestCache = new HttpSessionRequestCache();
 		SavedRequest savedRequest = requestCache.getRequest(request, response); 
@@ -145,7 +153,15 @@ public class CommonController {
 	// URI		:	/register
 	//=========================================================================================
 	@GetMapping("/register")
-	public String register() {
+	public String register(Authentication authentication) {
+		
+		//로그인 시 접근 불가
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			if(user.getUsername().length()>0) {return "redirect:/";}
+		}
+		
+		
 		return "member/register";
 	}
 	//=========================================================================================
@@ -160,7 +176,14 @@ public class CommonController {
 	// URI		:	/registerSuccess
 	//=========================================================================================
 	@GetMapping("/registerSuccess")
-	public String registerSuccess() {
+	public String registerSuccess(Authentication authentication) {
+		
+		//로그인 시 접근 불가
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			if(user.getUsername().length()>0) {return "redirect:/";}
+		}
+		
 		return "member/registerSuccess";
 	}
 	//=========================================================================================

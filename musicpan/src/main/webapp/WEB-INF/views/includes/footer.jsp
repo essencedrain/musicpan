@@ -141,11 +141,7 @@
     <!-- =================================================================================================  -->
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#logoutBtn').on('click', function(e){
-            	e.preventDefault();
-                $("#logoutForm").submit();
-            });
-            $('#logoutBtn2').on('click', function(e){
+            $('.logoutBtn').on('click', function(e){
             	e.preventDefault();
                 $("#logoutForm").submit();
             });
