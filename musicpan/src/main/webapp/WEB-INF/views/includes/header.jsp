@@ -140,13 +140,12 @@
                         <i class="fas fa-align-left"></i>
                     </button>
                     <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;뮤직판</a></span>
-                    <!-- 
-                    <button class="btn btn-dark d-inline-block d-md-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
- 					-->
- 					<sec:authorize access="isAuthenticated()">
-                    	<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto logoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
+                    
+                    <sec:authorize access="isAuthenticated()">
+	                    <div class="d-inline-block d-md-none ml-auto">
+	                    	<button class="btn btn-outline-dark mr-1" type="button"><i class="fas fa-user"></i></button>
+	                    	<button class="btn btn-outline-dark logoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
+	                    </div>	
                     </sec:authorize>
                     <sec:authorize access="isAnonymous()">
 	 					<button class="btn btn-outline-dark d-inline-block d-md-none ml-auto" type="button" onclick="location.href='/customLogin';"><i class="fas fa-sign-in-alt"></i></button>
@@ -162,6 +161,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Page</a>
                             </li>
+                            <sec:authorize access="isAuthenticated()">
+	                            <li class="nav-item">
+	                            	<a class="nav-link" href="#">마이페이지</a>
+	                            </li>
+                            </sec:authorize>
                             <li class="nav-item">
                             	<sec:authorize access="isAuthenticated()">
                                 	<a class="nav-link logoutBtn" href="#">로그아웃</a>
