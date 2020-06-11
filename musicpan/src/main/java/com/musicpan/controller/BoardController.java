@@ -429,6 +429,7 @@ public class BoardController {
 		
 		switch(b_name) {
 			case "sample": return "샘플";
+			case "free": return "자유";
 		}
 		
 		return null;
@@ -446,6 +447,7 @@ public class BoardController {
 		
 		switch(b_name) {
 			case "sample": return false;
+			case "free": return false;
 			default : return true;
 		}
 		

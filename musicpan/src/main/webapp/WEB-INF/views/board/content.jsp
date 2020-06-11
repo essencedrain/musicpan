@@ -75,6 +75,37 @@
 						<!-- end 컨텐츠  -->
 						<!-- =================================================================================================  -->
 						
+						<div class="my-3 py-3 board_1200banner_bot_930">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253342 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_993banner_bot_780">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253345 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_768banner_bot_700">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253348 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_551banner_bot_520">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253352 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_550banner_bot_320 text-center">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253356 });
+							</script>
+		            	</div>
+						
 						<!-- =================================================================================================  -->
 						<!-- start 댓글  -->
 						<!-- =================================================================================================  -->
@@ -221,6 +252,37 @@
 									</c:otherwise>
 								</c:choose>
 							</ul>
+		            	</div>
+		            	
+		            	<div class="my-3 py-3 board_1200banner_bot_930">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253342 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_993banner_bot_780">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253345 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_768banner_bot_700">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253348 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_551banner_bot_520">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253352 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_550banner_bot_320 text-center">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253356 });
+							</script>
 		            	</div>
 						<!-- =================================================================================================  -->
 						<!-- end 목록  -->
@@ -746,7 +808,7 @@
 	        //자동스크롤링
 	        if(scrollFlag==1){//최상단
 		        var position = $("#spy_"+scroll1st).offset();
-		        $('html, body').animate({scrollTop : position.top-150}, 500);
+		        $('html, body').animate({scrollTop : position.top-300}, 500);
 	        }else if(scrollFlag==2){//최하단
 	        	var position = $("#spy_"+scrollLast).offset();
 		        $('html, body').animate({scrollTop : position.top-150}, 500);
@@ -1107,7 +1169,7 @@
    			
    			var position = $(".reply_area").offset();
    			$('body,html').animate({
-   				scrollTop: position.top-20
+   				scrollTop: position.top-300
    			}, 500);
    			return false;
    		});

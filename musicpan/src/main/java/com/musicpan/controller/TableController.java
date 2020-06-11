@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,10 @@ public class TableController {
   	// g000
   	// 기능		:	
   	// 메서드	:	GET 
-  	// URI		:	/tables/tableTest
+  	// URI		:	/tables/tauTable1
   	//=========================================================================================
-  	@GetMapping("/tableTest")
+	//@PreAuthorize("isAuthenticated()")
+  	@GetMapping("/tauTable1")
   	public String tableTest(Model model) {
   		
   		ObjectMapper mapperJSON = new ObjectMapper();
@@ -143,7 +145,7 @@ public class TableController {
   		
     	model.addAttribute("dataList", jsonString);
     	
-  		return "dtable/temp";
+  		return "dtable/tauTable1";
   	}
   	//=========================================================================================
 	

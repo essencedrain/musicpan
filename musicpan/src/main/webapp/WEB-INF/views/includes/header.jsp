@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>뮤직판</title>
+    <title>뮤직타우</title>
 
     <!-- Bootstrap 4.1 -->
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
@@ -39,7 +39,9 @@
     -->
     <!-- jQuery -->
     <script src="/resources/js/jquery.min.js"></script>
-
+    
+    <!-- google ad -->
+	<script data-ad-client="ca-pub-4431859588660085" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 
 <body>
@@ -56,7 +58,7 @@
             </div>
 
             <div class="sidebar-header">
-                <h3>킹봉쓰</h3>
+                <h3>뮤직타우(beta)</h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -64,41 +66,26 @@
                     <a href="/">홈</a>
                 </li>
                 <li>
-                    <a href="/board/sample/list">샘플 게시판</a>
+                    <a href="/tables/tauTable1">타우테이블1.0</a>
 				</li>
+				<!--
 				<li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">게시판</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="/board/free/list">자유게시판</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="#">게시판(예정)</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a href="#">게시판(예정)</a>
                         </li>
                     </ul>
                 </li>
-				<li>
-                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">Pages2</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu2">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li>
+                -->
                 <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="/board/free/list">자유게시판</a>
                 </li>
             </ul>
 			
@@ -139,7 +126,7 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;뮤직판</a></span>
+                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;뮤직타우(beta)</a></span>
                     
                     <sec:authorize access="isAuthenticated()">
 	                    <div class="d-inline-block d-md-none ml-auto">
@@ -153,13 +140,10 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/board/sample/list">게시판</a>
+                                <a class="nav-link" href="/tables/tauTable1">타우테이블1.0</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="/board/free/list">자유게시판</a>
                             </li>
                             <sec:authorize access="isAuthenticated()">
 	                            <li class="nav-item">

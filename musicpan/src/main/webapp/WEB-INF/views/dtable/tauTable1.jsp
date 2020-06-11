@@ -9,6 +9,7 @@
 <!--<link rel="stylesheet" href="/resources/css/tabulator.min.css">-->
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
 <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+
             <!-- =================================================================================================  -->
             <!-- start  -->
             <!-- =================================================================================================  -->
@@ -21,12 +22,112 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	
-		            	<div class="heading pb-4">
-		                	<h1 class="pb-5">데이터 테이블 샘플</h1>
+		            	<div class="pb-1">
+		                	<h3 class="board_heading"><a href="/tables/tauTable1">타우테이블v1.0</a></h3>
 		                	<!--  <div id="example-table"></div>-->
-		                	<div id="grid"></div>
 		                </div>
 		                
+		                <div class="my-3 py-3 board_1200banner_bot_930">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253342 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_993banner_bot_780">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253345 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_768banner_bot_700">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253348 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_551banner_bot_520">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253352 });
+							</script>
+		            	</div>
+		            	<div class="my-3 py-3 board_550banner_bot_320 text-center">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253356 });
+							</script>
+		            	</div>
+		                
+		                <div class="table-responsive pt-2 pb-4">
+		                	<table class="table table-bordered table-sm">
+		                		<tr class="table-secondary text-center font-weight-bold">
+		                			<td colspan="2" class="text-nowrap">모든 자료의 현재가 기준 : 현재 매도호가</td>
+		                		</tr>
+		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">8%적정가</td>
+		                			<td class="text-nowrap">12개월 수익률이 8%가 되기 위한 가격</td>
+		                		</tr>
+		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">옥션갭low%</td>
+		                			<td class="text-nowrap">옥션 전회차 최저낙찰가 대비 현재가%</td>
+		                		</tr>
+		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">옥션갭avg%</td>
+		                			<td class="text-nowrap">옥션 전회차 평균낙찰가 대비 현재가%</td>
+		                		</tr>
+		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">수익률x</td>
+		                			<td class="text-nowrap">최근 x개월 저작권료 기준 12개월 수익률 (all은 자료제공횟수)</td>
+		                		</tr>
+		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">자료제공횟수</td>
+		                			<td class="text-nowrap">뮤지카우에서 제공한 월저작권료정보 제공 횟수 (ex:65 = 15,16,17,18,19년도 60개 + 20년도 1~5월)</td>
+		                		</tr>
+		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">변동계수</td>
+		                			<td class="text-nowrap">저작권료 상대표준편차 : 값이 낮을수록 월저작권료가 일정 / 높을수록 큰 달 작은 달 기복이 심함</td>
+		                		</tr>
+		                		<tr class="table-info">
+		                			<td colspan="2" class="text-nowrap text-center">노래제목 클릭시 뮤직카우 이동 가능, 엑셀로 블럭 복붙가능, 키보드 화살표 이동가능, 정렬, 필터(검색) 사용 가능</td>
+		                		</tr>
+		                		<tr class="table-danger">
+		                			<td colspan="2" class="text-nowrap text-center">화면에 아무것도 뜨지 않을때는 업데이트 중이므로 몇초뒤에 새로고침 해보시기 바랍니다.</td>
+		                		</tr>
+		                	</table>
+		                </div>
+		                
+	                	<div id="grid"></div>
+		                
+		                <div class="my-4 py-4 board_1200banner_bot_930">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253342 });
+							</script>
+		            	</div>
+		            	<div class="my-4 py-4 board_993banner_bot_780">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253345 });
+							</script>
+		            	</div>
+		            	<div class="my-4 py-4 board_768banner_bot_700">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253348 });
+							</script>
+		            	</div>
+		            	<div class="my-4 py-4 board_551banner_bot_520">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253352 });
+							</script>
+		            	</div>
+		            	<div class="my-4 py-4 board_550banner_bot_320 text-center">
+		            		<script src="https://ads-partners.coupang.com/g.js"></script>
+							<script>
+								new PartnersCoupang.G({ id:253356 });
+							</script>
+		            	</div>
 		            </div><!-- <div class="center_area col-lg-10" > -->
 		            
 		            <div class="right_area col-lg-1">
@@ -254,7 +355,7 @@ var grid = new tui.Grid({
 			,align: 'center'
 		}
 		,{
-			header: '구성율-방송'
+			header: '구성률-방송'
 			,name: 'broadcast'
 			,sortable: true
 			,sortingType: 'desc'
@@ -263,7 +364,7 @@ var grid = new tui.Grid({
 			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
-			header: '구성율-전송'
+			header: '구성률-전송'
 			,name: 'transfer'
 			,sortable: true
 			,sortingType: 'desc'
@@ -272,7 +373,7 @@ var grid = new tui.Grid({
 			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
-			header: '구성율-복제'
+			header: '구성률-복제'
 			,name: 'duplication'
 			,sortable: true
 			,sortingType: 'desc'
@@ -281,7 +382,7 @@ var grid = new tui.Grid({
 			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
-			header: '구성율-공연'
+			header: '구성률-공연'
 			,name: 'performance'
 			,sortable: true
 			,sortingType: 'desc'
@@ -290,7 +391,7 @@ var grid = new tui.Grid({
 			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
-			header: '구성율-해외'
+			header: '구성률-해외'
 			,name: 'oversea'
 			,sortable: true
 			,sortingType: 'desc'
@@ -299,7 +400,7 @@ var grid = new tui.Grid({
 			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
 		}
 		,{
-			header: '구성율-기타'
+			header: '구성률-기타'
 			,name: 'etc'
 			,sortable: true
 			,sortingType: 'desc'
@@ -329,7 +430,7 @@ var grid = new tui.Grid({
 	]
 	,pageOptions: {
 		useClient: true,
-    	perPage: 15
+    	perPage: 20
   	}
 });
 

@@ -18,25 +18,30 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	<div class="heading pb-4">
-		                	<h2>Collapsible Sidebar Using Bootstrap 4</h2>
-				            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		                	<h2 class="text-primary"><a href="/tables/tauTable1">타우테이블 v1.0</a></h2>
+		                	
+		                	<h5>타우테이블 v1.0은 뮤지카우에 상장된 곡들의 데이터를 효율적으로 보여줍니다.</h5>
+		                	<h5>지금 회원가입하고 로그인하여 이용해보세요!</h5>
+		                	<h5 class="text-danger">테스트 기간중 비회원도 이용가능</h5>
+		                	<br>
+		                	<h6>(아래 사진은 예시입니다.)</h6>
+		                	
+							<img class="img-fluid" src="/resources/img/main_img.jpg">				
+				            <div class="line"></div>
+				            
+				            <h2>메인화면 준비중1</h2>
+				            <p>메인화면 준비중</p>
+				
+				
+				            <div class="line"></div>
+				
+				            <h2>메인화면 준비중2</h2>
+				            <p>메인화면 준비중</p>
 				
 				            <div class="line"></div>
 				            
-				            <h2>테스트1</h2>
-				            <p>테스트</p>
-				
-				
-				            <div class="line"></div>
-				
-				            <h2>테스트2</h2>
-				            <p>테스트</p>
-				
-				            <div class="line"></div>
-				            
-				            <h2>테스트3</h2>
-				            <p>테스트</p>
+				            <h2>메인화면 준비중3</h2>
+				            <p>메인화면 준비중</p>
 		                </div>
 		            </div>
 		            
