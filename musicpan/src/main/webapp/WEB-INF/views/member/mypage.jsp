@@ -13,10 +13,10 @@
             <div class="container">
 	            <div class="row">
 	            
-	            	<div class="left_area col-lg-1">
+	            	<div class="left_area col-md-2">
 		            </div>
 		            
-		            <div class="center_area col-lg-10" >
+		            <div class="center_area col-md-8" >
 		            	<div class="heading pb-4">
 		                	<h1>마이페이지</h1>
 		                </div>
@@ -58,7 +58,7 @@
 		                </table>
 		            </div>
 		            
-		            <div class="right_area col-lg-1">
+		            <div class="right_area col-md-2">
 	           	 	</div>
 	            
 	            </div>
