@@ -132,7 +132,24 @@ public class BoardServiceImpl implements BoardService{
 		return deleteResult;
 	}
 
-	
+	@Override
+	public List<BoardAttachVO> getAttachList(Long bno, String b_name) {
+		
+		return attachMapper.findByBno(bno, b_name);
+	}
+
+
+	@Override
+	public void removeAttach(Long bno, String b_name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public List<BoardVO> getListForHome() {
+		return mapper.getListForHome();
+	}
 	
 	
 	//===============================================================
@@ -228,19 +245,6 @@ public class BoardServiceImpl implements BoardService{
             }
         }
 	}
-
-
-	@Override
-	public List<BoardAttachVO> getAttachList(Long bno, String b_name) {
-		
-		return attachMapper.findByBno(bno, b_name);
-	}
-
-
-	@Override
-	public void removeAttach(Long bno, String b_name) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	//===============================================================
 }//class

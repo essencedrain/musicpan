@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.musicpan.domain.MemberVO;
 import com.musicpan.security.domain.CustomUser;
+import com.musicpan.service.BoardService;
+import com.musicpan.service.CommonService;
 import com.musicpan.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
@@ -28,6 +29,11 @@ public class CommonController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private CommonService commonService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	
 	//=================================================================================================
@@ -55,7 +61,10 @@ public class CommonController {
 	// URI		:	/
 	//=========================================================================================
 	@GetMapping("/")
-	public String home() {
+	public String home(Model model) {
+		
+		model.addAttribute("txVol24", commonService.getTxVol24());
+		model.addAttribute("board", boardService.getListForHome());
 		return "home";
 	}
 	//=========================================================================================

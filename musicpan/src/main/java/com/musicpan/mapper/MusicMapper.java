@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.musicpan.domain.FeeYearMonthVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.domain.SongTotalVO;
+import com.musicpan.domain.SongTxVolVO;
 
 public interface MusicMapper {
 
@@ -67,5 +68,5 @@ public interface MusicMapper {
 	
 	public List<SongTotalVO> getSongTotalInfo();
 	
-	
+	public List<SongTxVolVO> getTxVol24();
 }//interface

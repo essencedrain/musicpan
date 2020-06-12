@@ -616,10 +616,17 @@ a.article:hover {
 
 
 /* ---------------------------------------------------
-    배너 STYLE
+    홈화면 STYLE
 ----------------------------------------------------- */
-
-
+#txVol24{
+	table-layout: fixed;
+	color: #555;
+}
+#txVol24 .txVol24_text{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
 
 
 

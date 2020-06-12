@@ -119,29 +119,29 @@
 										<td style="width:90px;" class="text-primary"><a href="https://www.musicow.com/song/${list.idx}" target='_blank'>${list.song}</a></td>
 										<td>${list.singer}</td>
 										
-										<td class="text-white bg-primary font-weight-bold">${list.sellprice}</td>
-										<td class="text-white bg-primary font-weight-bold">${list.sellunit}</td>
+										<td class="text-white bg-primary font-weight-bold"><fmt:formatNumber value="${list.sellprice}" pattern="#,###" /></td>
+										<td class="text-white bg-primary font-weight-bold"><fmt:formatNumber value="${list.sellunit}" pattern="#,###" /></td>
 										
 										<c:choose>
 											<c:when test="${list.buyprice < list.auctionmin}">
-												<td class="text-warning bg-danger font-weight-bold">${list.buyprice}</td>
+												<td class="text-warning bg-danger font-weight-bold"><fmt:formatNumber value="${list.buyprice}" pattern="#,###" /></td>
 											</c:when>
 											<c:otherwise>
-												<td class="text-white bg-danger font-weight-bold">${list.buyprice}</td>
+												<td class="text-white bg-danger font-weight-bold"><fmt:formatNumber value="${list.buyprice}" pattern="#,###" /></td>
 											</c:otherwise>
 										</c:choose>
 										
-										<td class="text-white bg-danger font-weight-bold">${list.buyunit}</td>
+										<td class="text-white bg-danger font-weight-bold"><fmt:formatNumber value="${list.buyunit}" pattern="#,###" /></td>
 										
-										<td>${list.recentprice}</td>
-										<td>${list.auctionmin}</td>
+										<td><fmt:formatNumber value="${list.recentprice}" pattern="#,###" /></td>
+										<td><fmt:formatNumber value="${list.auctionmin}" pattern="#,###" /></td>
 										
 										<c:choose>
 											<c:when test="${list.sellprice > list.pricefor8}">
-												<td class="text-info font-weight-bold">${list.pricefor8}</td>
+												<td class="text-info font-weight-bold"><fmt:formatNumber value="${list.pricefor8}" pattern="#,###" /></td>
 											</c:when>
 											<c:otherwise>
-												<td>${list.pricefor8}</td>
+												<td><fmt:formatNumber value="${list.pricefor8}" pattern="#,###" /></td>
 											</c:otherwise>
 										</c:choose>
 										
