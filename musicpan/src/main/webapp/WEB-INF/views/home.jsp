@@ -32,7 +32,7 @@
 		            			</table>
 		            		</div>
 		            		<div class="col-md-6 pt-3">
-		            			<h5 class="font-weight-bold">최근 24시간 거래대금 순위</h6>
+		            			<h5 class="font-weight-bold" style="color: #666">거래량 TOP5 (24시간)<span class="float-right" id="todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol24" class="table table-sm text-center table-hover">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
@@ -112,11 +112,29 @@
 
 
 <!-- =================================================================================================  -->
-<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ FORM ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ JS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
+<script type="text/javascript">
+let today = new Date();   
+let year = today.getFullYear(); // 년도
+let month = today.getMonth() + 1;  // 월
+let date = today.getDate();  // 날짜
+let day = today.getDay();  // 요일
+let hours = today.getHours(); // 시
+let minutes = today.getMinutes();  // 분
+let seconds = today.getSeconds();  // 초
+$('#todayTime').text("("+
+		month
+		+ '.' + date
+		+ " " + (hours < 9 ? "0"+hours : hours)
+		+ ':' + (minutes < 9 ? "0"+minutes : minutes)
+		+ ':' + (seconds < 9 ? "0"+seconds : seconds)+ " 기준)");
+
+</script>
+
 <!-- =================================================================================================  -->
-<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ FORM ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ JS ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->
 
 
