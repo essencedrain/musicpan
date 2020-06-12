@@ -39,7 +39,7 @@
 			            		</tr>
 			            		
 			            		<tr>
-			            			<td class="content_main_td"><i class="fas fa-link content_gray"></i>&nbsp;<span class="content_gray_small"><a href="/board/${cri.b_name}/content/${board.bno}">/board/${cri.b_name}/content/${board.bno}</a></span></td>
+			            			<td class="content_main_td"><i class="fas fa-link content_gray"></i>&nbsp;<span class="content_gray_small"><a href="/board/${cri.b_name}/content/${board.bno}">http://musictau.com/board/${cri.b_name}/content/${board.bno}</a></span></td>
 			            		</tr>
 			            		
 			            		<tr class="content_file_place_parent">
@@ -1046,7 +1046,13 @@
 			    //수정처리시작
 			    $("#replyForm").find("input[name='rno']").val( rno );
 			    $("#replyForm").find("input[name='id']").val( replyer );
-			    $("#replyForm").find("input[name='reply']").val( $('#reply_'+rno).text() );
+			    
+			    var oriStr = $('#reply_'+rno).html();
+			    oriStr = oriStr.replace(/<br> ?/g, '&#013;&#010;');
+			  	//댓글내용에 html 제거
+	    		oriStr = oriStr.replace(/(<([^>]+)>)/ig,"");
+	    		
+			    $("#replyForm").find("input[name='reply']").val( oriStr );
 			    $("#replyForm").find("input[name='replyPage']").val( $('#spy_'+rno).data('page') );
 			    $("#replyForm").submit();
 			  }//if

@@ -20,7 +20,7 @@
 		            	<div class="heading pb-4">
 		            		<h3 class="board_heading"><a href="/board/${cri.b_name}/list">${cri.b_name2} 게시판 [댓글수정]</a></h3>
 		                </div>
-		                <form action="/board/replyPro" method="post">
+		                <form action="/board/replyPro" method="post" id="replyModiForm">
 	                		
 	                		<div class="form-group">
 							  <textarea id="replyModifyTextarea" class="form-control" rows="5" name="reply">${reply}</textarea>
@@ -29,7 +29,7 @@
 
 	                		<div class="text-right mt-2">
 				                <button type="button" class="btn btn-outline-secondary text-center mx-1" onclick="location.href='/board/${cri.b_name}/content/${cri.bno}'">돌아가기</button>
-				                <button type="submit" id="replyModifySubmitBtn" class="btn btn-primary text-center mx-1">등록</button>
+				                <button type="button" id="replyModifySubmitBtn" class="btn btn-primary text-center mx-1">등록</button>
 			                </div>
 			                <input type='hidden' name='pageNum' value='${cri.pageNum}'>
 			                <input type="hidden" name="id" value='<sec:authentication property="principal.username"/>' />
@@ -80,7 +80,28 @@
     <!-- =================================================================================================  -->
     <script>
     $(document).ready(function(){
-	    
+    	$('#replyModifySubmitBtn').on("click", function(e){
+    		e.preventDefault();
+    		var oriStr=$('#replyModifyTextarea').val();
+    		
+    		if($.trim(oriStr) =="" || $.trim(oriStr).length ==0){
+    			swa("error","댓글 내용을 작성해주세요");
+    			return;
+    		}
+    		
+    		//댓글내용에 html 제거
+    		oriStr = oriStr.replace(/(<([^>]+)>)/ig,"");
+    		
+    		if(oriStr.length > 1500){
+    			swa("error","댓글은 1500자까지 입력가능합니다 (현재 : "+oriStr.length+"자)");
+				return;
+    		}
+    		
+    		oriStr = oriStr.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    		
+    		$('#replyModifyTextarea').val(oriStr);
+    		$('#replyModiForm').submit();
+    	});
     });
     </script>
 	<!-- =================================================================================================  -->

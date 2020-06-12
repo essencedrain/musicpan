@@ -30,7 +30,7 @@ public class MusicTask {
 	private MusicPro musicPro = new MusicPro();
 	
 	//매일 10분마다
-	//@Scheduled(cron="0 */10 * * * *")
+	@Scheduled(cron="0 */10 * * * *")
 	public void routine5() throws Exception{
 		
 		//현재 유저마켓에 있는 모든 곡 idx(Stirng) 획득
