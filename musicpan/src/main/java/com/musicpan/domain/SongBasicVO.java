@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class SongBasicVO {
-
 	private int idx;
 	private String song;
 	private String singer;
@@ -24,6 +23,5 @@ public class SongBasicVO {
 	private int sellunit;
 	private int sellprice;
 	private Date updatedate;
-	
 	
 }//class

@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.musicpan.domain.FeeYearMonthVO;
-import com.musicpan.domain.MusicBasicVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.domain.SongTotalVO;
 
@@ -54,8 +53,6 @@ public interface MusicMapper {
 	
 	public List<Integer> getIdx();
 	
-	public List<MusicBasicVO> getSongAllInfo();
-	
 	public Date getRecentPriceTime(@Param("idx") int idx);
 	
 	public List<Date> getHisTime(@Param("idx") int idx);
@@ -69,5 +66,6 @@ public interface MusicMapper {
 	public int getIdxFromSongAndSinger(@Param("song") String song, @Param("singer") String singer);
 	
 	public List<SongTotalVO> getSongTotalInfo();
+	
 	
 }//interface

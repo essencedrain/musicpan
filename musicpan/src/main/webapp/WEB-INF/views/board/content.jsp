@@ -109,6 +109,7 @@
 						<!-- =================================================================================================  -->
 						<!-- start 댓글  -->
 						<!-- =================================================================================================  -->
+						<h5><i class="far fa-comment-dots font-weight-bold pt-3 pb-2"></i>&nbsp;<span class="replyCnt_h6"></span>개의 댓글</h5>
 						<div class="reply_area">
 							<div class="card_area">
 								
@@ -731,6 +732,8 @@
 	        	showReplyPage(replyCnt, page);
 	            return;
 	        }//if
+	        
+	        $('.replyCnt_h6').text(replyCnt);
 
 	        for(var i =0, len=list.length || 0; i<len; i++){
 	        	
@@ -808,7 +811,7 @@
 	        //자동스크롤링
 	        if(scrollFlag==1){//최상단
 		        var position = $("#spy_"+scroll1st).offset();
-		        $('html, body').animate({scrollTop : position.top-300}, 500);
+		        $('html, body').animate({scrollTop : position.top-330}, 500);
 	        }else if(scrollFlag==2){//최하단
 	        	var position = $("#spy_"+scrollLast).offset();
 		        $('html, body').animate({scrollTop : position.top-150}, 500);
@@ -1169,7 +1172,7 @@
    			
    			var position = $(".reply_area").offset();
    			$('body,html').animate({
-   				scrollTop: position.top-300
+   				scrollTop: position.top-330
    			}, 500);
    			return false;
    		});

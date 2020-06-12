@@ -171,15 +171,6 @@
 	</select>
 	
 	
-	<select id="getSongAllInfo" resultType="com.musicpan.domain.MusicBasicVO">
-	
-		SELECT
-			*
-		FROM
-			music_basic
-	
-	</select>
-	
 	<select id="getRecentPriceTime" resultType="date">
 	
 		SELECT
