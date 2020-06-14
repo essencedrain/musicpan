@@ -9,7 +9,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+	<meta name="description" content="뮤직카우 곡, 가격 데이터 조회 사이트">
+	<meta property="og:type" content="website"> 
+	<meta property="og:title" content="뮤직타우(MusicTau)">
+	<meta property="og:description" content="뮤직카우 곡, 가격 데이터 조회 사이트">
+	<meta property="og:image" content="http://www.musictau.com/resources/img/MusicTau2.png">
+	<meta property="og:url" content="http://www.musictau.com">
     <title>뮤직타우</title>
 
     <!-- Bootstrap 4.1 -->
@@ -140,7 +145,7 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;뮤직타우(beta)</a></span>
+                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;<img class="BigTitleImg" src="/resources/img/MusicTau1.png"><img class="smallTitleImg" src="/resources/img/MusicTau2.png"></a></span>
                     
                     <sec:authorize access="isAuthenticated()">
 	                    <div class="d-inline-block d-md-none ml-auto">

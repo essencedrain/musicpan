@@ -647,6 +647,15 @@ e8f3fc
 
 
 /* ---------------------------------------------------
+    메인 타이틀 STYLE
+----------------------------------------------------- */
+.BigTitleImg{
+	padding-bottom: 2px;
+}
+.smallTitleImg{
+	padding-bottom: 4px;
+}
+/* ---------------------------------------------------
     배너 STYLE
 ----------------------------------------------------- */
 @media only screen and (min-width: 1200px){
@@ -678,6 +687,7 @@ e8f3fc
 }
 
 @media only screen and (min-width:551px) and (max-width: 767px){
+	
 	.board_1200banner_bot_930
 	,.board_993banner_bot_780
 	,.board_768banner_bot_700
@@ -685,6 +695,8 @@ e8f3fc
 		display: none;
 	}
 }
+@media only screen and (min-width:451px){.smallTitleImg{display: none;}}
+@media only screen and (max-width:450px){.BigTitleImg{display: none;}}
 
 @media only screen and (max-width: 550px){
 	.board_1200banner_bot_930
@@ -709,4 +721,10 @@ table.dataTable td:nth-child(1) {
   overflow: hidden;
 }
 	
+}
+
+@media only screen and (max-width: 340px){
+	.smallTitleImg{
+		width: 120px;
+	}
 }
