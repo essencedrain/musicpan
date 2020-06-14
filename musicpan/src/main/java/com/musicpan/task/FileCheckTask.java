@@ -43,13 +43,13 @@ public class FileCheckTask {
 	
 	
 	//매일 02시 마다
-	@Scheduled(cron="0 0 2 * * *")
+	@Scheduled(cron="0 50 2 * * *")
 	public void checkFiles() throws Exception{
 		
 		log.warn("File Check Task run.....");
 		log.warn("========================================================");
 		
-		String[] boardArr = {"sample"};
+		String[] boardArr = {"sample", "free", "analysis"};
 		
 		for(String temp : boardArr) {
 			
@@ -77,7 +77,6 @@ public class FileCheckTask {
 			
 			
 			log.warn("-----------------------------------------------------------");
-			
 			for (File file : removeFiles) {
 				
 				log.warn(file.getAbsolutePath());
