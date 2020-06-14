@@ -21,7 +21,7 @@
 		            <div class="center_area col-lg-10" style="overflow: hidden;">
 		            	
 		            	<div class="pb-1">
-		                	<h3 class="board_heading"><a href="/tables/tauTable2">타우테이블v2.0</a></h3>
+		                	<h3 class="board_heading"><a href="/tables/tauTable2">가격 정보</a></h3>
 		                	<!--  <div id="example-table"></div>-->
 		                </div>
 		                
@@ -59,7 +59,7 @@
 		                <div class="table-responsive pt-2 pb-4">
 		                	<table class="table table-bordered table-sm">
 		                		<tr class="table-secondary text-center font-weight-bold">
-		                			<td colspan="2" class="text-nowrap">모든 자료의 현재가 기준 : 현재 최저 매도호가</td>
+		                			<td colspan="2" class="text-nowrap">현재가 기준 : 최저 매도호가</td>
 		                		</tr>
 		                		<tr>
 		                			<td class="text-nowrap font-weight-bold">8%적정가</td>
@@ -71,7 +71,7 @@
 		                		</tr>
 		                		<tr>
 		                			<td class="text-nowrap font-weight-bold">수익률x</td>
-		                			<td class="text-nowrap">최근 x개월 저작권료 기준 12개월 수익률 (all은 자료제공횟수)</td>
+		                			<td class="text-nowrap">현재가 및 최근 x개월 저작권료 기준 12개월 환산 수익률 (all은 자료제공횟수)</td>
 		                		</tr>
 		                		<tr>
 		                			<td class="text-nowrap font-weight-bold">자료제공</td>
@@ -155,19 +155,54 @@
 											</c:otherwise>
 										</c:choose>
 										
-										<td>${list.avg3f}%</td>
-										<td>${list.avg6f}%</td>
+										<c:choose>
+											<c:when test="${list.avg3f>7}">
+												<td class="text-success font-weight-bold">${list.avg3f}%</td>
+											</c:when>
+											<c:when test="${list.avg3f<=7 && list.avg3f>5}">
+												<td class="text-warning">${list.avg3f}%</td>
+											</c:when>
+											<c:otherwise>
+												<td class="text-danger">${list.avg3f}%</td>
+											</c:otherwise>
+										</c:choose>
+										
+										<c:choose>
+											<c:when test="${list.avg6f>7}">
+												<td class="text-success font-weight-bold">${list.avg6f}%</td>
+											</c:when>
+											<c:when test="${list.avg6f<=7 && list.avg6f>5}">
+												<td class="text-warning">${list.avg6f}%</td>
+											</c:when>
+											<c:otherwise>
+												<td class="text-danger">${list.avg6f}%</td>
+											</c:otherwise>
+										</c:choose>
 										
 										<c:choose>
 											<c:when test="${list.avg12f>7}">
 												<td class="text-success font-weight-bold">${list.avg12f}%</td>
 											</c:when>
+											<c:when test="${list.avg12f<=7 && list.avg12f>5}">
+												<td class="text-warning">${list.avg12f}%</td>
+											</c:when>
 											<c:otherwise>
-												<td>${list.avg12f}%</td>
+												<td class="text-danger">${list.avg12f}%</td>
 											</c:otherwise>
 										</c:choose>
 										
-										<td>${list.avgallf}%</td>
+										<c:choose>
+											<c:when test="${list.avgallf>7}">
+												<td class="text-success font-weight-bold">${list.avgallf}%</td>
+											</c:when>
+											<c:when test="${list.avgallf<=7 && list.avgallf>5}">
+												<td class="text-warning">${list.avgallf}%</td>
+											</c:when>
+											<c:otherwise>
+												<td class="text-danger">${list.avgallf}%</td>
+											</c:otherwise>
+										</c:choose>
+										
 										
 										<c:choose>
 											<c:when test="${list.alltime < 12}">
@@ -278,7 +313,7 @@ $(document).ready( function () {
     	pageLength: 13
     	,scrollX: true
     	,fixedColumns: true
-    	,order: [[ 12, "desc" ]]
+    	,order: [[ 13, "desc" ]]
     });
     $('#myTable_length').css("display", "none");
     

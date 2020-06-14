@@ -23,7 +23,7 @@
 		            <div class="center_area col-lg-10" >
 		            	
 		            	<div class="pb-1">
-		                	<h3 class="board_heading"><a href="/tables/tauTable1">타우테이블v1.0</a></h3>
+		                	<h3 class="board_heading"><a href="/tables/tauTable1">곡 정보</a></h3>
 		                	<!--  <div id="example-table"></div>-->
 		                </div>
 		                
@@ -60,33 +60,6 @@
 		                
 		                <div class="table-responsive pt-2 pb-4">
 		                	<table class="table table-bordered table-sm">
-		                		<tr class="table-secondary text-center font-weight-bold">
-		                			<td colspan="2" class="text-nowrap">모든 자료의 현재가 기준 : 현재 매도호가</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">8%적정가</td>
-		                			<td class="text-nowrap">12개월 수익률이 8%가 되기 위한 가격</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">옥션갭low%</td>
-		                			<td class="text-nowrap">옥션 전회차 최저낙찰가 대비 현재가%</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">옥션갭avg%</td>
-		                			<td class="text-nowrap">옥션 전회차 평균낙찰가 대비 현재가%</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">수익률x</td>
-		                			<td class="text-nowrap">최근 x개월 저작권료 기준 12개월 수익률 (all은 자료제공횟수)</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">자료제공횟수</td>
-		                			<td class="text-nowrap">뮤지카우에서 제공한 월저작권료 정보제공 횟수 (ex:65 = 15,16,17,18,19년도 60개 + 20년도 1~5월)</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">변동계수</td>
-		                			<td class="text-nowrap">저작권료 상대표준편차 : 값이 낮을수록 월저작권료가 일정 / 높을수록 큰 달 작은 달 기복이 심함</td>
-		                		</tr>
 		                		<tr class="table-info">
 		                			<td colspan="2" class="text-nowrap text-center">노래제목 클릭시 뮤직카우 이동 가능, 엑셀로 블럭 복붙가능, 키보드 화살표 이동가능, 정렬, 필터(검색) 사용 가능</td>
 		                		</tr>
@@ -198,141 +171,6 @@ var grid = new tui.Grid({
 			,align: 'center'
 		}
 		,{
-			header: '매수'
-			,name: 'buyprice'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 80
-			,align: 'center'
-		}
-		,{
-			header: '잔량'
-			,name: 'buyunit'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 30
-			,align: 'center'
-		}
-		,{
-			header: '매도'
-			,name: 'sellprice'
-			,sortingType: 'desc'
-			,sortable: true
-			,width: 80
-			,align: 'center'
-		}
-		,{
-			header: '잔량'
-			,name: 'sellunit'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 30
-			,align: 'center'
-		}
-		,{
-			header: '최근거래가'
-			,name: 'recentprice'
-			,sortable: true
-			,width: 100
-			,align: 'center'
-		}
-		,{
-			header: '8%적정가'
-			,name: 'pricefor8'
-			,sortable: true
-			,width: 100
-			,align: 'center'
-		}
-		,{
-			header: '최저낙찰가'
-			,name: 'auctionmin'
-			,sortable: true
-			,width: 100
-			,align: 'center'
-		}
-		,{
-			header: '옥션갭low%'
-			,name: 'auctiongap_low'
-			,sortable: true
-			,width: 120
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '옥션평균가'
-			,name: 'auctionavg'
-			,sortable: true
-			,width: 100
-			,align: 'center'
-		}
-		,{
-			header: '옥션갭avg%'
-			,name: 'auctiongap_avg'
-			,sortable: true
-			,width: 120
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '수익률3'
-			,name: 'avg3f'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 100
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '수익률6'
-			,name: 'avg6f'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 100
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '수익률12'
-			,name: 'avg12f'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 100
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '수익률All'
-			,name: 'avgallf'
-			,sortable: true
-			,sortingType: 'desc'
-			,width: 100
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '자료제공횟수'
-			,name: 'alltime'
-			,sortable: true
-			,width: 120
-			,align: 'center'
-		}
-		,{
-			header: '변동계수12'
-			,name: 'cv12'
-			,sortable: true
-			,width: 120
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
-			header: '변동계수all'
-			,name: 'cvall'
-			,sortable: true
-			,width: 120
-			,align: 'center'
-			,filter: { type: 'number', showApplyBtn: true, showClearBtn: true }
-		}
-		,{
 			header: '공표년'
 			,name: 'finalrelease'
 			,sortable: true
@@ -440,6 +278,27 @@ var grid = new tui.Grid({
 			,width: 60
 			,align: 'center'
 		}
+		,{
+			header: '작곡가'
+			,name: 'composer'
+			,sortable: true
+			,filter: 'select'
+			,width: 300
+		}
+		,{
+			header: '작사가'
+			,name: 'lyricist'
+			,sortable: true
+			,filter: 'select'
+			,width: 300
+		}
+		,{
+			header: '편곡가'
+			,name: 'arranger'
+			,sortable: true
+			,filter: 'select'
+			,width: 300
+		}
 		
 	]
 	,pageOptions: {
@@ -470,7 +329,7 @@ grid.on('click', (ev) => {
 	  }//if
 	  //return ev.stop();
 	  //console.log('test : ' + ev);
-	  console.log('ev.rowKey : ' + ev.rowKey);
+	  //console.log('ev.rowKey : ' + ev.rowKey);
 	  //console.log('ev.columnName : ' + ev.columnName);
 	  //console.log('ev.nativeEvent.target.textContent : ' + ev.nativeEvent.target.textContent);
 	  //console.log('test : ' + grid.getValue(ev.rowKey,"idx") );

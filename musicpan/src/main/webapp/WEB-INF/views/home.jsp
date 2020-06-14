@@ -60,6 +60,7 @@
 		            	
 		            	<div class="heading pb-5">
 		            		<div class="line"></div>
+		            		<!-- 
 		                	<h2><a class="text-primary font-weight-bold" href="/tables/tauTable1">-> 타우테이블 V1 <-</a></h2>
 		                	<h2><a class="text-danger font-weight-bold" href="/tables/tauTable2">-> 타우테이블 V2 <-</a></h2>
 		                	<br>
@@ -72,7 +73,7 @@
 		                	
 							<img class="img-fluid" src="/resources/img/main_img.jpg">				
 				            <div class="line"></div>
-				            
+				             -->
 				            <!-- 
 				            <h2>메뉴보시면 자유게시판도 있습니다.</h2>
 							<p>메인화면 준비중</p>

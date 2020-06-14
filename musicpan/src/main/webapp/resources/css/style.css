@@ -123,7 +123,7 @@ e8f3fc
     color: #0F4C81;
 }
 
-.overlay {
+#sidebar .overlay {
     display: none;
     position: fixed;
     width: 100vw;
@@ -133,7 +133,7 @@ e8f3fc
     opacity: 0;
     transition: all 0.5s ease-in-out;
 }
-.overlay.active {
+#sidebar .overlay.active {
     display: block;
     opacity: 1;
 }
@@ -166,16 +166,16 @@ e8f3fc
 }
 
 #sidebar ul li.active>a,
-a[aria-expanded="true"] {
+#sidebar a[aria-expanded="true"] {
     color: #fff;
     background: #0F4C81;
 }
 
-a[data-toggle="collapse"] {
+#sidebar a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
+#sidebar .dropdown-toggle::after {
     display: block;
     position: absolute;
     top: 50%;
@@ -183,32 +183,32 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
+#sidebar ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #135ea0;
     color: #fff;
 }
 
-ul.CTAs {
+#sidebar ul.CTAs {
     padding: 10px 20px;
 }
 
-ul.CTAs a {
+#sidebar ul.CTAs a {
     text-align: center;
     font-size: 0.9em !important;
     display: block;
     margin-bottom: 5px;
 }
 
-a.download {
+#sidebar a.download {
     background: #fff;
     color: #0F4C81;
     border : 1px solid #999;
 }
 
-a.article,
-a.article:hover {
+#sidebar a.article,
+#sidebar a.article:hover {
     background: #0F4C81 !important;
     color: #fff !important;
 }

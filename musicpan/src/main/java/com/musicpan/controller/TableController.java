@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.musicpan.domain.ForTauTable2;
-import com.musicpan.domain.SongJSON;
+import com.musicpan.domain.PriceInfoVO;
+import com.musicpan.domain.MetaInfoJSON;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.mapper.MusicMapper;
 
@@ -37,24 +37,25 @@ public class TableController {
   	// g000
   	// 기능		:	
   	// 메서드	:	GET 
-  	// URI		:	/tables/tauTable1
+  	// URI		:	/tables/metaInfo
   	//=========================================================================================
 	//@PreAuthorize("isAuthenticated()")
-  	@GetMapping("/tauTable1")
+  	@GetMapping("/metaInfo")
   	public String tableTest(Model model) {
   		
   		ObjectMapper mapperJSON = new ObjectMapper();
   		String jsonString = null;
+  		
   		List<SongTotalVO> resultTemp = mapper.getSongTotalInfo();
   		
   		//후처리결과
-  		List<SongJSON> result = new ArrayList<>();
+  		List<MetaInfoJSON> result = new ArrayList<>();
   		
   		//후처리
   		for(SongTotalVO temp : resultTemp) {
   			
-  			SongJSON tempData = new SongJSON();
-  			
+  			MetaInfoJSON tempData = new MetaInfoJSON();
+  			/*
   			//avg 시리즈 매도가 기준 백분율전환 (최근x개월기준 수익률)
   			if(temp.getSellprice()!=0) {
 				tempData.setAvg3f( (float)(Math.round( (float)temp.getAvg3()/(float)temp.getSellprice()*10000) / 100.00) );
@@ -87,6 +88,7 @@ public class TableController {
   			
   			//최근12기준 8%적정가 = avg12/0.08
   			tempData.setPricefor8( (int)Math.round(temp.getAvg12()/0.08) );
+  			*/
   			
   			//저작권기준월
   			Date tempTime = temp.getFeeinfomonth();
@@ -115,16 +117,7 @@ public class TableController {
   			//나머지데이터 정리
   			tempData.setSong(temp.getSong());
   			tempData.setSinger(temp.getSinger());
-  			tempData.setBuyunit(temp.getBuyunit());
-  			tempData.setBuyprice(temp.getBuyprice());
-  			tempData.setSellunit(temp.getSellunit());
-  			tempData.setSellprice(temp.getSellprice());
-  			tempData.setRecentprice(temp.getRecentprice());
   			tempData.setAuctionunits(temp.getAuctionunits());
-  			tempData.setAuctionmin(temp.getAuctionmin());
-  			tempData.setAuctionavg(temp.getAuctionavg());
-  			tempData.setCv12(temp.getCv12());
-  			tempData.setCvall(temp.getCvall());
   			tempData.setStockCnt(temp.getStockCnt());
   			tempData.setBroadcast(temp.getBroadcast());
   			tempData.setTransfer(temp.getTransfer());
@@ -132,8 +125,10 @@ public class TableController {
   			tempData.setPerformance(temp.getPerformance());
   			tempData.setOversea(temp.getOversea());
   			tempData.setEtc(temp.getEtc());
-  			tempData.setAlltime(temp.getAlltime());
   			tempData.setIdx(temp.getIdx());
+  			tempData.setComposer(temp.getComposer());
+  			tempData.setLyricist(temp.getLyricist());
+  			tempData.setArranger(temp.getArranger());
   			
   			result.add(tempData);
   		}//for
@@ -146,7 +141,7 @@ public class TableController {
   		
     	model.addAttribute("dataList", jsonString);
     	
-  		return "dtable/tauTable1";
+  		return "dtable/metaInfo";
   	}
   	//=========================================================================================
 	
@@ -158,21 +153,21 @@ public class TableController {
   	// g001
   	// 기능		:	
   	// 메서드	:	GET 
-  	// URI		:	/tables/tauTable2
+  	// URI		:	/tables/priceInfo
   	//=========================================================================================
   	//@PreAuthorize("isAuthenticated()")
-  	@GetMapping("/tauTable2")
+  	@GetMapping("/priceInfo")
   	public String tableTest2(Model model) {
   		
   		List<SongTotalVO> resultTemp = mapper.getSongTotalInfo();
   		
   		//후처리결과
-  		List<ForTauTable2> result = new ArrayList<>();
+  		List<PriceInfoVO> result = new ArrayList<>();
   		
   		//후처리
   		for(SongTotalVO temp : resultTemp) {
   			
-  			ForTauTable2 tempData = new ForTauTable2();
+  			PriceInfoVO tempData = new PriceInfoVO();
   			
   			//avg 시리즈 매도가 기준 백분율전환 (최근x개월기준 수익률)
   			if(temp.getSellprice()!=0) {
@@ -232,7 +227,7 @@ public class TableController {
 		model.addAttribute("updatedate", updatedate);
   		model.addAttribute("dataList", result);
   		
-  		return "dtable/tauTable2";
+  		return "dtable/priceInfo";
   	}
   	//=========================================================================================
   	

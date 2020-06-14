@@ -58,19 +58,27 @@
             </div>
 
             <div class="sidebar-header">
-                <h3>뮤직타우(beta)</h3>
+                <h3 class="font-weight-bold"><a href="/">뮤직타우</a></h3>
             </div>
 
             <ul class="list-unstyled components">
                 <li>
                     <a href="/">홈</a>
                 </li>
-                <li>
-                    <a href="/tables/tauTable1">타우테이블 V1</a>
-				</li>
-                <li>
-                    <a href="/tables/tauTable2">타우테이블 V2</a>
-				</li>
+				<li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">타우테이블 <i class="fas fa-angle-down"></i></a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="/tables/priceInfo">가격 정보</a>
+                        </li>
+                        <li>
+                            <a href="/tables/metaInfo">곡 정보</a>
+                        </li>
+                        <li>
+                            <a href="#">거래량 정보</a>
+                        </li>
+                    </ul>
+                </li>
 				<!--
 				<li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">게시판</a>
@@ -88,7 +96,10 @@
                 </li>
                 -->
                 <li>
-                    <a href="/board/free/list">자유게시판</a>
+                    <a href="/board/free/list">자유 게시판</a>
+                </li>
+                <li>
+                    <a href="/board/free/list">정보·분석 게시판</a>
                 </li>
             </ul>
 			
@@ -142,15 +153,24 @@
                     </sec:authorize>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/tables/tauTable1">타우테이블 V1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/tables/tauTable2">타우테이블 V2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/board/free/list">자유게시판</a>
-                            </li>
+                        	<li class="nav-item dropdown">
+						        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						        타우테이블
+					        </a>
+					        <div class="dropdown-menu">
+						        <a class="dropdown-item" href="/tables/priceInfo">가격 정보</a>
+						        <a class="dropdown-item" href="/tables/metaInfo">곡 정보</a>
+					        </div>
+						    </li>
+                        	<li class="nav-item dropdown">
+						        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						        게시판
+					        </a>
+					        <div class="dropdown-menu">
+						        <a class="dropdown-item" href="/board/free/list">자유게시판</a>
+						        <a class="dropdown-item" href="#">정보·분석</a>
+					        </div>
+						    </li>
                             <sec:authorize access="isAuthenticated()">
 	                            <li class="nav-item">
 	                            	<a class="nav-link" href="/mypage">마이페이지</a>

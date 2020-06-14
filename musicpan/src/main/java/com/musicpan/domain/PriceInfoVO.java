@@ -3,7 +3,7 @@ package com.musicpan.domain;
 import lombok.Data;
 
 @Data
-public class ForTauTable2 {
+public class PriceInfoVO {
 
 	
 	private int idx; //인덱스
