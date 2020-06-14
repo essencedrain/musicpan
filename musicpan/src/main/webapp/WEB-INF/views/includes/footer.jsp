@@ -65,6 +65,7 @@
 	<script type="text/javascript">
 	$(document).ready(function () {
 		console.log("전체방문자 : ${countAll} // 오늘방문자 : ${countToday}");
+		console.log("전체 고유 방문자 : ${countAllDistinct} // 오늘 고유 방문자 : ${countTodayDistinct}");
 	});
 	</script>
 	<!-- =================================================================================================  -->

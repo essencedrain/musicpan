@@ -95,6 +95,8 @@ public class BoardController {
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
+		//게시판스타일boardStyle
+		model.addAttribute("boardStyle", boardStyle(boardName));
 		return "board/list";
 	}
 	//=========================================================================================	
@@ -128,7 +130,7 @@ public class BoardController {
 		//log.info("////////////////////cri : " + cri.toString());
 		//log.info("////////////////////pageMaker : " + new PageDTO(cri, total).toString());
 		//log.info("////////////////////board : " + service.content(cri).toString());
-		
+		model.addAttribute("boardStyle", boardStyle(cri.getB_name()));
 		return "board/content";
 	}
 	//=========================================================================================	
@@ -165,6 +167,7 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("board", service.content(cri));
 		
+		model.addAttribute("boardStyle", boardStyle(cri.getB_name()));
 		
 		return "board/content";
 	}
@@ -433,6 +436,7 @@ public class BoardController {
 		switch(b_name) {
 			case "sample": return "샘플";
 			case "free": return "자유";
+			case "analysis": return "정보·분석";
 		}
 		
 		return null;
@@ -451,6 +455,7 @@ public class BoardController {
 		switch(b_name) {
 			case "sample": return false;
 			case "free": return false;
+			case "analysis": return false;
 			default : return true;
 		}
 		
@@ -461,6 +466,24 @@ public class BoardController {
 	
 	//=========================================================================================
 	// 메서드3
+	// 게시판 스타일 지정 
+	// 0: 조회수, 1:좋아요
+	//=========================================================================================
+	private int boardStyle(String b_name) {
+		
+		switch(b_name) {
+		case "analysis": return 1;
+		case "free": return 1;
+		default : return 0;
+		}
+		
+	}//b_name2
+	//=========================================================================================
+	
+	
+	
+	//=========================================================================================
+	// 메서드4
 	// 파일삭제 메서드
 	//=========================================================================================
 	private void deleteFiles(List<BoardAttachVO> attachList) {

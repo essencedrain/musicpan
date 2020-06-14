@@ -30,10 +30,12 @@ public class VisitServiceImpl implements VisitService{
 		
 		
 		
-		int[] countArray = new int[2];
+		int[] countArray = new int[4];
 		
 		countArray[0] =  mapper.countAll();
 		countArray[1] =  mapper.countToday(todate);
+		countArray[2] =  mapper.countAllDistinct();
+		countArray[3] =  mapper.countTodayDistinct(todate);
 		
 		
 		return countArray;

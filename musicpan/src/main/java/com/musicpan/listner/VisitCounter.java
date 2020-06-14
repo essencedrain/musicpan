@@ -39,6 +39,8 @@ public class VisitCounter implements HttpSessionListener{
         
         session.setAttribute("countAll", countArray[0]+"");
         session.setAttribute("countToday", countArray[1]+"");
+        session.setAttribute("countAllDistinct", countArray[2]+"");
+        session.setAttribute("countTodayDistinct", countArray[3]+"");
 		
 	}
 

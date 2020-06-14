@@ -267,6 +267,7 @@ public class LikeController {
 		switch(b_name) {
 			case "sample": return false;
 			case "free": return false;
+			case "analysis": return false;
 			default : return true;
 		}
 		

@@ -154,7 +154,15 @@
 				                        <th class="td_pc" style="width: 63%;">제목</td>
 				                        <th class="td_pc" style="width: 17%;">글쓴이</td>
 				                        <th class="td_pc" style="width: 10%;">등록일</td>
-				                        <th class="td_pc" style="width: 5%;">조회수</td>
+				                        <!-- 게시판 스타일 -->
+				                        <c:choose>
+				                        	<c:when test="${boardStyle==1}">
+				                        		<th class="td_pc" style="width: 5%;">추천</td>
+				                        	</c:when>
+				                        	<c:otherwise>
+				                        		<th class="td_pc" style="width: 5%;">조회수</td>
+				                        	</c:otherwise>
+				                        </c:choose>
 				                    </tr>
 			                    </thead>
                     			<tbody class="text-center">
@@ -173,7 +181,7 @@
 		                    					</td>
 						                        <td style="width: 17%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
 						                        <td style="width: 10%;" class="list_else list_regdate td_pc">${board2.modiDate}</td>
-						                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
+						                        <td style="width: 5%;" class="list_else td_pc"></td>
 						                        
 						                        <td class="td_mo py-1 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
 						                        	<div class="mo_main py-1 d-flex justify-content-start">
@@ -203,7 +211,15 @@
 		                    					</td>
 						                        <td style="width: 17%;" class="text-left list_else list_grade td_pc"><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</td>
 						                        <td style="width: 10%;" class="list_else td_pc">${board2.modiDate}</td>
-						                        <td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
+						                        <!-- 게시판 스타일 -->
+							                        <c:choose>
+							                        	<c:when test="${boardStyle==1}">
+							                        		<td style="width: 5%;" class="list_else list_replyCnt td_pc">${board2.likeCnt>0?board2.likeCnt:""}</td>
+							                        	</c:when>
+							                        	<c:otherwise>
+							                        		<td style="width: 5%;" class="list_else td_pc">${board2.hit}</td>
+							                        	</c:otherwise>
+							                        </c:choose>
 						                        
 						                        
 						                        <td class="td_mo py-2 d-none clickable-row" style="width: 100%;" data-href="${board2.bno}">
@@ -216,8 +232,16 @@
 						                        		</a>
 						                        	</div>
 						                        	<div class="mo_sub d-flex justify-content-between">
-						                        		<div><i class="far fa-clock"></i> ${board2.modiDate}</div>  <div><img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}</div>
-						                        	</div>
+							                        		<div>
+							                        			<c:if test="${boardStyle==1}">
+							                        				<i class="far fa-thumbs-up"></i>&nbsp;${board2.likeCnt}&nbsp;&nbsp;
+							                        			</c:if>
+							                        			<i class="far fa-clock"></i>&nbsp;${board2.modiDate}
+							                        		</div>
+							                        		<div>
+							                        			<img src="/resources/level_icon/${board2.grade}.gif"> ${board2.name}
+							                        		</div>
+							                        	</div>
 						                        </td>
                     						</tr>
                     						</c:otherwise>

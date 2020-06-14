@@ -42,4 +42,24 @@
 			visit_time < STR_TO_DATE(#{todate},'%Y-%m-%d')+1
 	]]>
 	</select>
+	
+	<select id="countAllDistinct" resultType="int">
+		select
+			count(distinct visit_ip)
+		from
+			visitor
+	</select>
+	
+	<select id="countTodayDistinct" resultType="int">
+	<![CDATA[
+		select
+			count(distinct visit_ip)
+		from
+			visitor
+		where
+			visit_time > STR_TO_DATE(#{todate},'%Y-%m-%d')
+			AND
+			visit_time < STR_TO_DATE(#{todate},'%Y-%m-%d')+1
+	]]>
+	</select>
 </mapper>
