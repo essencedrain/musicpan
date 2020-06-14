@@ -75,7 +75,7 @@
                             <a href="/tables/metaInfo">곡 정보</a>
                         </li>
                         <li>
-                            <a href="#">거래량 정보</a>
+                            <a href="#">빈버튼</a>
                         </li>
                     </ul>
                 </li>

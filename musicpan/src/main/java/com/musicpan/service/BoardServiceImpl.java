@@ -79,7 +79,11 @@ public class BoardServiceImpl implements BoardService{
 			mapper.insertNotice(board);
 		}
 		
-		memberMapper.addGradePoint(board.getId(), 20);
+		if(board.getB_name().equals("analysis")) {
+			memberMapper.addGradePoint(board.getId(), 200);//정보 분석글 200점
+		}else {
+			memberMapper.addGradePoint(board.getId(), 20);
+		}//글쓰기 점수
 		
 		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
 			return board.getBno();

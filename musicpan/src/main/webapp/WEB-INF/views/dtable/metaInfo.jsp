@@ -22,11 +22,12 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            	
-		            	<div class="pb-1">
-		                	<h3 class="board_heading"><a href="/tables/tauTable1">곡 정보</a></h3>
+		            	<div class="pb-3">
+		                	<h3 class="board_heading"><a href="/tables/metaInfo">곡 정보</a></h3>
 		                	<!--  <div id="example-table"></div>-->
 		                </div>
-		                
+		                <%@include file="../includes/info_buttons.jsp"%>
+		                <div class="py-2"></div>
 		                <div class="my-3 py-3 board_1200banner_bot_930">
 		            		<script src="https://ads-partners.coupang.com/g.js"></script>
 							<script>
@@ -339,25 +340,25 @@ grid.on('click', (ev) => {
 </script>
 
 
-<!-- tabulator js -->
- 
-<!-- <script src="/resources/js/tabulator.min.js"></script>
-<script type="text/javascript">
-//define data
-var tabledata = [
-    {id:1, name:"Billy Bob", age:12, gender:"male", height:95, col:"red", dob:"14/05/2010"},
-    {id:2, name:"Jenny Jane", age:42, gender:"female", height:142, col:"blue", dob:"30/07/1954"},
-    {id:3, name:"Steve McAlistaire", age:35, gender:"male", height:176, col:"green", dob:"04/11/1982"},
-];
-
-//define table
-var table = new Tabulator("#example-table", {
-    data:tabledata,
-    autoColumns:true,
-});
-</script>-->
-<!-- tabulator js -->
-
+	<!-- =================================================================================================  -->
+    <!-- 스크롤 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	$('.back-to-top99').fadeIn();
+    	
+   		// 최상단
+   		$('#back-to-top91').click(function () {
+   			$('body,html').animate({
+   				scrollTop: 0
+   			}, 500);
+   			return false;
+   		});
+   		
+    });
+    </script>
+    <!-- =================================================================================================  -->
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 <!-- =================================================================================================  -->

@@ -50,7 +50,7 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     	
     	//없으면 로그인점수 10점 추가
     	if(!isUpdated) {
-    		memberMapper.addGradePoint(user.getUsername(), 10);
+    		memberMapper.addGradePoint(user.getUsername(), 30);
     	}//if
     	
     	

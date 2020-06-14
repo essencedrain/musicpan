@@ -20,11 +20,12 @@
 		            
 		            <div class="center_area col-lg-10" style="overflow: hidden;">
 		            	
-		            	<div class="pb-1">
-		                	<h3 class="board_heading"><a href="/tables/tauTable2">가격 정보</a></h3>
+		            	<div class="pb-3">
+		                	<h3 class="board_heading"><a href="/tables/priceInfo">가격 정보</a></h3>
 		                	<!--  <div id="example-table"></div>-->
 		                </div>
-		                
+		                <%@include file="../includes/info_buttons.jsp"%>
+		                <div class="py-2"></div>
 		                <div class="my-3 py-3 board_1200banner_bot_930">
 		            		<script src="https://ads-partners.coupang.com/g.js"></script>
 							<script>
@@ -220,7 +221,7 @@
 											<c:when test="${list.cvall < 1.7 && list.cvall > 1}">
 												<td class="text-warning font-weight-bold">${list.cvall}</td>	
 											</c:when>
-											<c:when test="${list.cvall > 1.7}">
+											<c:when test="${list.cvall >= 1.7}">
 												<td class="text-danger font-weight-bold">${list.cvall}</td>	
 											</c:when>
 											<c:otherwise>
@@ -328,7 +329,25 @@ function numberWithCommas(x) {
 
 </script>
 
-
+	<!-- =================================================================================================  -->
+    <!-- 스크롤 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	$('.back-to-top99').fadeIn();
+    	
+   		// 최상단
+   		$('#back-to-top91').click(function () {
+   			$('body,html').animate({
+   				scrollTop: 0
+   			}, 500);
+   			return false;
+   		});
+   		
+    });
+    </script>
+    <!-- =================================================================================================  -->
 
 
 <!-- =================================================================================================  -->

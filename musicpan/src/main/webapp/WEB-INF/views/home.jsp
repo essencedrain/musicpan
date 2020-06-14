@@ -17,9 +17,9 @@
 		            </div>
 		            
 		            <div class="center_area col-lg-10">
-		            
-		            	<div class="row">
-		            		<div class="col-md-6 pt-3">
+		            	<%@include file="./includes/info_buttons.jsp"%>
+		           		<div class="row">
+		            		<div class="col-md-6 py-4">
 		            			<h5 class="text-primary font-weight-bold"><a href="/board/free/list">자유게시판</a></h6>
 		            			<table id="txVol" class="table table-sm text-left table-hover">
 		            				<tbody>
@@ -31,21 +31,19 @@
 		            				</tbody>
 		            			</table>
 		            		</div>
-		            		<div class="col-md-6 pt-3">
-		            			<h5 class="text-primary font-weight-bold"><a href="/board/free/list">정보·분석 게시판</a></h6>
+		            		<div class="col-md-6 py-4">
+		            			<h5 class="text-primary font-weight-bold"><a href="/board/analysis/list">정보·분석 게시판</a></h6>
 		            			<table id="txVol" class="table table-sm text-left table-hover pr-3">
 		            				<tbody>
 		            					<c:forEach items="${boardAnalysis}" var="list">
 			            					<tr>
-			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            						<td class="txVol_text"><a href="/board/analysis/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
 			            					</tr>	
 		            					</c:forEach>
 		            				</tbody>
 		            			</table>
 		            		</div>
-		            		
-		            		
-		            		<div class="col-md-6 pt-3">
+		            		<div class="col-md-6 py-4">
 		            			<h5 class="font-weight-bold" style="color: #666">거래량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
@@ -92,7 +90,7 @@
 		            				</tbody>
 		            			</table>
 		            		</div>
-		            		<div class="col-md-6 pt-3">
+		            		<div class="col-md-6 py-4">
 		            			<h5 class="font-weight-bold" style="color: #666">거래량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
@@ -216,6 +214,27 @@ $('.todayTime').text("("+
 		+ ':' + (seconds < 9 ? "0"+seconds : seconds)+ " 기준)");
 
 </script>
+
+
+	<!-- =================================================================================================  -->
+    <!-- 스크롤 -->
+    <!-- =================================================================================================  -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	$('.back-to-top99').fadeIn();
+    	
+   		// 최상단
+   		$('#back-to-top91').click(function () {
+   			$('body,html').animate({
+   				scrollTop: 0
+   			}, 500);
+   			return false;
+   		});
+   		
+    });
+    </script>
+    <!-- =================================================================================================  -->
 
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ JS ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
