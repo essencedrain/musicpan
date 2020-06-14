@@ -64,7 +64,9 @@ public class CommonController {
 	public String home(Model model) {
 		
 		model.addAttribute("txVol24", commonService.getTxVol24());
-		model.addAttribute("board", boardService.getListForHome());
+		model.addAttribute("txVolWeek", commonService.getTxVolWeek());
+		model.addAttribute("boardFree", boardService.getListForHomeFree());
+		model.addAttribute("boardAnalysis", boardService.getListForHomeAnalysis());
 		return "home";
 	}
 	//=========================================================================================

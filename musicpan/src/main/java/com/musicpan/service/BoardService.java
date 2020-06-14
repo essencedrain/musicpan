@@ -26,6 +26,7 @@ public interface BoardService {
 	
 	public void removeAttach(Long bno, String b_name);
 	
-	public List<BoardVO> getListForHome();
+	public List<BoardVO> getListForHomeFree();
+	public List<BoardVO> getListForHomeAnalysis();
 	
 }//interface

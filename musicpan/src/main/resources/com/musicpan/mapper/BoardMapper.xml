@@ -47,10 +47,21 @@
 		order BY b.bno desc
 	</select>
 	
-	<select id="getListForHome" resultType="com.musicpan.domain.BoardVO">
+	<select id="getListForHomeFree" resultType="com.musicpan.domain.BoardVO">
 		SELECT
 			bno, title, replycnt
 		from board_free
+		where 
+			del_flag = 0
+			and notice_flag = 0
+		order BY bno desc
+		LIMIT 0,6
+	</select>
+	
+	<select id="getListForHomeAnalysis" resultType="com.musicpan.domain.BoardVO">
+		SELECT
+			bno, title, replycnt
+		from board_analysis
 		where 
 			del_flag = 0
 			and notice_flag = 0

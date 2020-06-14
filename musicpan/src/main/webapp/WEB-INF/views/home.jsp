@@ -21,35 +21,118 @@
 		            	<div class="row">
 		            		<div class="col-md-6 pt-3">
 		            			<h5 class="text-primary font-weight-bold"><a href="/board/free/list">자유게시판</a></h6>
-		            			<table id="txVol24" class="table table-sm text-left table-hover">
+		            			<table id="txVol" class="table table-sm text-left table-hover">
 		            				<tbody>
-		            					<c:forEach items="${board}" var="list">
+		            					<c:forEach items="${boardFree}" var="list">
 			            					<tr>
-			            						<td class="txVol24_text"><a href="/board/free/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
 			            					</tr>	
 		            					</c:forEach>
 		            				</tbody>
 		            			</table>
 		            		</div>
 		            		<div class="col-md-6 pt-3">
-		            			<h5 class="font-weight-bold" style="color: #666">거래량 TOP5 (24시간)<span class="float-right" id="todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table id="txVol24" class="table table-sm text-center table-hover">
+		            			<h5 class="text-primary font-weight-bold"><a href="/board/free/list">정보·분석 게시판</a></h6>
+		            			<table id="txVol" class="table table-sm text-left table-hover pr-3">
+		            				<tbody>
+		            					<c:forEach items="${boardAnalysis}" var="list">
+			            					<tr>
+			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            					</tr>	
+		            					</c:forEach>
+		            				</tbody>
+		            			</table>
+		            		</div>
+		            		
+		            		
+		            		<div class="col-md-6 pt-3">
+		            			<h5 class="font-weight-bold" style="color: #666">거래량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
-			            					<td class="txVol24_text" style="width:6%">#</td>
-			            					<td class="txVol24_text" style="width:33%">곡명</td>
-			            					<td class="txVol24_text" style="width:33%">가수</td>
-			            					<td class="txVol24_text" style="width:28%">거래대금</td>
+			            					<td class="txVol_text" style="width:6%">#</td>
+			            					<td class="txVol_text" style="width:33%">곡명</td>
+			            					<td class="txVol_text" style="width:33%">가수</td>
+			            					<td class="txVol_text" style="width:28%">거래대금</td>
 		            					</tr>
 		            				</thead>
 		            				<tbody>
 		            					<c:set var="rowNum" value="1"/>
 		            					<c:forEach items="${txVol24}" var="list">
-		            					<tr class="${rowNum==1?"table-warning font-weight-bold":""}">
-		            						<td class="txVol24_text" style="width:6%">${rowNum}</td>
-		            						<td class="txVol24_text" style="width:33%">${list.song}</td>
-		            						<td class="txVol24_text" style="width:33%">${list.singer}</td>
-		            						<td class="txVol24_text" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+		            					<tr>
+	            						<c:choose>
+	            							<c:when test="${rowNum==1}">
+	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
+	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:when>
+	            							<c:when test="${rowNum==2}">
+	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
+	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:when>
+	            							<c:when test="${rowNum==3}">
+	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
+	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:when>
+	            							<c:otherwise>
+	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
+	            								<td class="txVol_text" style="width:32%">${list.song}</td>
+			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:otherwise>
+	            						</c:choose>
+		            					</tr>	
+		            					<c:set var="rowNum" value="${rowNum+1}"/>
+		            					</c:forEach>
+		            				</tbody>
+		            			</table>
+		            		</div>
+		            		<div class="col-md-6 pt-3">
+		            			<h5 class="font-weight-bold" style="color: #666">거래량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<table id="txVol" class="table table-sm text-center">
+		            				<thead class="font-weight-bold">
+		            					<tr class="">
+			            					<td class="txVol_text" style="width:8%">#</td>
+			            					<td class="txVol_text" style="width:32%">곡명</td>
+			            					<td class="txVol_text" style="width:32%">가수</td>
+			            					<td class="txVol_text" style="width:28%">거래대금</td>
+		            					</tr>
+		            				</thead>
+		            				<tbody>
+		            					<c:set var="rowNum" value="1"/>
+		            					<c:forEach items="${txVolWeek}" var="list">
+		            					<tr>
+	            						<c:choose>
+	            							<c:when test="${rowNum==1}">
+	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
+	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:when>
+	            							<c:when test="${rowNum==2}">
+	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
+	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:when>
+	            							<c:when test="${rowNum==3}">
+	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
+	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:when>
+	            							<c:otherwise>
+	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
+	            								<td class="txVol_text" style="width:32%">${list.song}</td>
+			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
+			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
+	            							</c:otherwise>
+	            						</c:choose>
 		            					</tr>	
 		            					<c:set var="rowNum" value="${rowNum+1}"/>
 		            					</c:forEach>
@@ -125,7 +208,7 @@ let day = today.getDay();  // 요일
 let hours = today.getHours(); // 시
 let minutes = today.getMinutes();  // 분
 let seconds = today.getSeconds();  // 초
-$('#todayTime').text("("+
+$('.todayTime').text("("+
 		month
 		+ '.' + date
 		+ " " + (hours < 9 ? "0"+hours : hours)

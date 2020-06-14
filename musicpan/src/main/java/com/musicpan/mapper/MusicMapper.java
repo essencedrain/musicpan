@@ -69,4 +69,5 @@ public interface MusicMapper {
 	public List<SongTotalVO> getSongTotalInfo();
 	
 	public List<SongTxVolVO> getTxVol24();
+	public List<SongTxVolVO> getTxVolWeek();
 }//interface

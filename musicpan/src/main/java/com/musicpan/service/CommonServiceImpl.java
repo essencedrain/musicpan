@@ -24,5 +24,10 @@ public class CommonServiceImpl implements CommonService {
 	public List<SongTxVolVO> getTxVol24() {
 		return mapper.getTxVol24();
 	}
+	
+	@Override
+	public List<SongTxVolVO> getTxVolWeek() {
+		return mapper.getTxVolWeek();
+	}
 
 }//class

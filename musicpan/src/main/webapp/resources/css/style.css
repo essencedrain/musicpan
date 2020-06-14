@@ -618,16 +618,31 @@ e8f3fc
 /* ---------------------------------------------------
     홈화면 STYLE
 ----------------------------------------------------- */
-#txVol24{
+#txVol{
 	table-layout: fixed;
 	color: #555;
 }
-#txVol24 .txVol24_text{
+#txVol .txVol_text{
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
-
+#txVol .txVol_gold_td{
+	background: #ffe799;
+	font-weight: 700;
+}
+#txVol .txVol_silver_td{
+	background: #ececec;
+	font-weight: 700;
+}
+#txVol .txVol_bronze_td{
+	background: #e7cdc9;
+	font-weight: 700;
+}
+.txVol_text img{
+	width: 16px !important;
+	height: 16px !important;
+}
 
 
 

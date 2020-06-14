@@ -109,8 +109,8 @@
 									<td>수익률12</td>
 									<td>수익률All</td>
 									<td>자료제공</td>
-									<td>공표년</td>
 									<td>CV</td>
+									<td>공표년</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -216,8 +216,6 @@
 											</c:otherwise>
 										</c:choose>
 										
-										<td>${list.finalrelease}</td>
-										
 										<c:choose>
 											<c:when test="${list.cvall < 1.7 && list.cvall > 1}">
 												<td class="text-warning font-weight-bold">${list.cvall}</td>	
@@ -229,6 +227,8 @@
 												<td>${list.cvall}</td>
 											</c:otherwise>
 										</c:choose>
+										
+										<td>${list.finalrelease}</td>
 										
 									</tr>							
 								</c:forEach>

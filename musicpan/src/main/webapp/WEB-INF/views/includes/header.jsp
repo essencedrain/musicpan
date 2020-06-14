@@ -168,7 +168,7 @@
 					        </a>
 					        <div class="dropdown-menu">
 						        <a class="dropdown-item" href="/board/free/list">자유게시판</a>
-						        <a class="dropdown-item" href="/board/analysis/list">정보·분석</a>
+						        <a class="dropdown-item" href="/board/analysis/list">정보·분석 게시판</a>
 					        </div>
 						    </li>
                             <sec:authorize access="isAuthenticated()">

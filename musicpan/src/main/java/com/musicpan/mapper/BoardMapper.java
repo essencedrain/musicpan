@@ -13,7 +13,13 @@ public interface BoardMapper {
 	
 	public List<BoardVO> getListNotice(Criteria cri);
 	
-	public List<BoardVO> getListForHome();
+	
+	
+	public List<BoardVO> getListForHomeFree();
+	public List<BoardVO> getListForHomeAnalysis();
+	
+	
+	
 	
 	public int getTotalCount(Criteria cri);
 	

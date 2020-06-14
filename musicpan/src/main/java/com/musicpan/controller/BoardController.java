@@ -473,7 +473,6 @@ public class BoardController {
 		
 		switch(b_name) {
 		case "analysis": return 1;
-		case "free": return 1;
 		default : return 0;
 		}
 		

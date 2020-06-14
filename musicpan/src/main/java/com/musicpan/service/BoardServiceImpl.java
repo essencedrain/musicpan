@@ -147,8 +147,12 @@ public class BoardServiceImpl implements BoardService{
 
 
 	@Override
-	public List<BoardVO> getListForHome() {
-		return mapper.getListForHome();
+	public List<BoardVO> getListForHomeFree() {
+		return mapper.getListForHomeFree();
+	}
+	@Override
+	public List<BoardVO> getListForHomeAnalysis() {
+		return mapper.getListForHomeAnalysis();
 	}
 	
 	
