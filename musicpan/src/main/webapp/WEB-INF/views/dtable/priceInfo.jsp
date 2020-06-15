@@ -83,7 +83,7 @@
 		                			<td class="text-nowrap">저작권료 상대표준편차 : 값이 낮을수록 월 저작권료가 일정 / 높을수록 큰 달 작은 달 기복이 심함</td>
 		                		</tr>
 		                		<tr class="table">
-		                			<td class="text-nowrap text-left text-danger font-weight-bold">
+		                			<td colspan="2" class="text-nowrap text-left text-danger font-weight-bold">
 		                				<h3>주의 사항</h3>
 										<p>※ 가격정보는 10분마다 업데이트가 되므로 실시간 정보가 아닙니다.</p>
 										<p>※ 본 데이터는 크롤링 특성상 갱신되지 않아 틀릴 수 있습니다.</p>
