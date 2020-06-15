@@ -237,7 +237,6 @@
 			AND	alltime > 48
 			AND	cvall < 0.7
 			AND	cv12 < 0.7
-			AND	(sellprice/auctionavg*100) between 85 and 115
 	]]>
 	</select>
 	

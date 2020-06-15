@@ -129,7 +129,11 @@ public class BoardServiceImpl implements BoardService{
 		
 		boolean deleteResult = mapper.updateFlag(board) == 1;
 		
-		memberMapper.addGradePoint(board.getId(), -20);
+		if(board.getB_name().equals("analysis")) {
+			memberMapper.addGradePoint(board.getId(), -200);//정보 분석글 200점
+		}else {
+			memberMapper.addGradePoint(board.getId(), -20);
+		}//글쓰기 점수
 		
 		attachMapper.deleteAll(board);
 		

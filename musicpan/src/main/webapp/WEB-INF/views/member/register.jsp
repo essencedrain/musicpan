@@ -58,7 +58,7 @@
 		                        
 		                        <div class="mb-3 d-none" id="name_len"><h6>닉네임은 2글자 ~ 8글자로 사용해야 합니다.</h6></div>
 		                        <div class="mb-3 d-none" id="name_fir"><h6>닉네임에 사용할 수 없는 단어가 있습니다.</h6></div>
-		                        
+		                        <input type="hidden" name="name_validation" id="name_validation" value="0">
 		                        
 		                        <div class="input-group mb-3">
 		                            <div class="input-group-prepend">
@@ -216,6 +216,7 @@
 		        		for(var i=1; i<len; i++){
 		        			//특수문자가 없다
 		        			if( ( 'A' <= str.charAt(i) && 'Z' >= str.charAt(i) ) || ( '0'<=str.charAt(i) && '9'>=str.charAt(i) ) ){
+		        				
 		        				// -1 -> 정상
 		    	        		validation = -1;
 		    	        		
@@ -341,11 +342,12 @@
 			var strName = "123"+$("#name").val();
 			var lenName = $("#name").val().length;
 			var forbidName = 0;
-			var wordItems = ["관리자","admin","운영자"];
+			var wordItems = ["관리자","admin","운영자","Admin","ADMIN","root", "ROOT","moonkero","MOONKERO","musictau","MusicTau","MUSICTAU","Musictau"];
 			if(lenName < 2 || lenName > 8){ //2글자 이하 8글자 초과
 	       	
 	    		// 1 -> 오류
 	        	nameValidation = 1;
+	    		$('#name_validation').val('1');
 	        	
 	        	//보이기
 	        	//"닉네임은 2글자 ~ 8글자로 사용해야 합니다."
@@ -367,12 +369,14 @@
 	       			
 	       			// 1 -> 오류
 	            	nameValidation = 1;
+	            	$('#name_validation').val('1');
 	       			
 	       		}else{
 	       			
 	       			//-1 -> 정상
 		       		nameValidation = -1;
-		        	
+		       		$('#name_validation').val('-1');
+		       		
 		        	//가리기
 		    		//"아이디는 영문과 숫자 조합 4~30글자로 입력해주세요."
 		    		if(!$("#name_len").hasClass("d-none")){$("#name_len").addClass("d-none");}
@@ -741,11 +745,16 @@
 	 			return false;
 	 		}
 	 		
-	 		if(!isNull(ff.name,"이름을 입력하세요")){
+	 		if(!isNull(ff.name,"닉네임을 입력하세요")){
 	 			//ff.name.focus();
 	 			setTimeout(ff.name.focus(),10);
 	 			return false;
 	 		}//if
+	 		
+	 		if($('#name_validation').val()!=-1){
+	 			swa("error","닉네임을 올바르게 입력해주세요요.");
+	 			return false;
+	 		}
 	 		
 	 		if(!isEmail(ff.email)){
 	 			ff.email.focus();

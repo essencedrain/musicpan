@@ -35,7 +35,11 @@ public class ReplyServiceImpl implements ReplyService {
 	public int register(ReplyVO vo) {
 		
 		mapper.insert(vo);
-		memberMapper.addGradePoint(vo.getId(), 2);
+		
+		if(!vo.getId().equals(boardMapper.getId(vo.getBno(), vo.getB_name()))) {
+			memberMapper.addGradePoint(vo.getId(), 2);
+		}
+		
 		boardMapper.updateReplyCnt(vo.getBno(), 1, vo.getB_name());
 		return mapper.updateRef(vo);
 	}
@@ -67,7 +71,11 @@ public class ReplyServiceImpl implements ReplyService {
 		ReplyVO vo = mapper.read(rno, b_name);
 		vo.setB_name(b_name);
 		
-		memberMapper.addGradePoint(vo.getId(), -2);
+		
+		if(!vo.getId().equals(boardMapper.getId(vo.getBno(), vo.getB_name()))) {
+			memberMapper.addGradePoint(vo.getId(), -2);
+		}
+		
 		
 		int ref = mapper.getRef(vo);
 		vo.setRef(ref);

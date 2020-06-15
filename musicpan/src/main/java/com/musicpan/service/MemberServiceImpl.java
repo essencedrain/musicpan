@@ -201,7 +201,7 @@ public class MemberServiceImpl implements MemberService {
 		vo.setNextExp( getExp( vo.getLevel()+1 ) );
 		
 		//경험치percent
-		long percent = Math.round( ( (float)(vo.getNextExp()-vo.getGrade()) / (float)(vo.getNextExp()-start) *100) );
+		long percent = Math.round( ( (float)(vo.getGrade()-start) / (float)(vo.getNextExp()-start) *100) );
 		vo.setExpPercent(percent);
 		
 		//날짜변환

@@ -80,10 +80,7 @@
                             <a href="/tables/metaInfo">곡 정보</a>
                         </li>
                         <li>
-                            <a href="#">&nbsp;</a>
-                        </li>
-                        <li>
-                            <a href="/tables/tauPickV1">타우픽 V1</a>
+                            <a href="/tables/tauPickV1"><i class="far fa-id-card"></i> 타우픽 V1</a>
                         </li>
                     </ul>
                 </li>
@@ -169,7 +166,7 @@
 						        <a class="dropdown-item" href="/tables/priceInfo">가격 정보</a>
 						        <a class="dropdown-item" href="/tables/metaInfo">곡 정보</a>
 						        <div class="dropdown-divider"></div>
-						        <a class="dropdown-item" href="/tables/tauPickV1">타우픽 V1</a>
+						        <a class="dropdown-item" href="/tables/tauPickV1"><i class="far fa-id-card"></i> 타우픽 V1</a>
 					        </div>
 						    </li>
                         	<li class="nav-item dropdown">
