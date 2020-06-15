@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,48 +43,54 @@ public class FileCheckTask {
 	
 	
 	
-	//매일 02시 마다
-	@Scheduled(cron="0 0 2 * * *")
+	//매일 02시 13분마다
+	@Scheduled(cron="0 13 2 * * *")
 	public void checkFiles() throws Exception{
 		
 		log.warn("File Check Task run.....");
 		log.warn("========================================================");
 		
 		String[] boardArr = {"sample", "free", "analysis"};
+		List<BoardAttachVO> fileList = new ArrayList<>();
 		
 		for(String temp : boardArr) {
 			
 			//file list in database
-			List<BoardAttachVO> fileList = attachMapper.getOldFiles(temp);
-			
-			
-			//ready for check file in directory with database file list
-			List<Path> fileListPaths = fileList.stream()
-												.map(vo -> Paths.get("/home/upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName()) )
-												.collect(Collectors.toList());
-			
-			//image file has thumnail file
-			fileList.stream().filter(vo -> vo.isFileType() == true)
-							.map(vo -> Paths.get("/home/upload", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName() ) )
-							.forEach(p -> fileListPaths.add(p));
-			log.warn("========================================================");
-			
-			fileListPaths.forEach(p -> log.warn(p));
-			
-			// files in yesterday directory
-			File targetDir = Paths.get("/home/upload", getFolderYesterDay()).toFile();
-			
-			File[] removeFiles = targetDir.listFiles(file -> fileListPaths.contains(file.toPath()) == false );
-			
-			
-			log.warn("-----------------------------------------------------------");
-			for (File file : removeFiles) {
+			List<BoardAttachVO> tempList = attachMapper.getOldFiles(temp);
 				
-				log.warn(file.getAbsolutePath());
-				file.delete();
-				
-			}//for
-		}//for(String temp : boardArr) {
+			for(BoardAttachVO tempVO : tempList) {
+				fileList.add(tempVO);
+			}
+			
+		}//for(String temp : boardArr)	
+		
+		//ready for check file in directory with database file list
+		List<Path> fileListPaths = fileList.stream()
+											.map(vo -> Paths.get("/home/upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName()) )
+											.collect(Collectors.toList());
+		
+		//image file has thumnail file
+		fileList.stream().filter(vo -> vo.isFileType() == true)
+						.map(vo -> Paths.get("/home/upload", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName() ) )
+						.forEach(p -> fileListPaths.add(p));
+		log.warn("========================================================");
+		
+		fileListPaths.forEach(p -> log.warn(p));
+		
+		// files in yesterday directory
+		File targetDir = Paths.get("/home/upload", getFolderYesterDay()).toFile();
+		
+		File[] removeFiles = targetDir.listFiles(file -> fileListPaths.contains(file.toPath()) == false );
+		
+		
+		log.warn("-----------------------------------------------------------");
+		for (File file : removeFiles) {
+			
+			log.warn(file.getAbsolutePath());
+			file.delete();
+			
+		}//for
+		
 		
 		
 	}//checkFiles()
