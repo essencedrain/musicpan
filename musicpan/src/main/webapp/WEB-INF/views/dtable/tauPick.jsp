@@ -314,7 +314,7 @@ $(document).ready( function () {
     	,fixedColumns: true
     	,order: [[ 13, "desc" ]]
     });
-    $('#myTable_length').css("display", "none");
+    //$('#myTable_length').css("display", "none");
     
     
 } );
