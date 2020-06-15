@@ -145,7 +145,7 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;<img class="BigTitleImg" src="/resources/img/MusicTau1.png"></span>
+                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;<img class="BigTitleImg" src="/resources/img/MusicTau1.png"></a></span>
                     
                     <sec:authorize access="isAuthenticated()">
 	                    <div class="d-inline-block d-md-none ml-auto">
