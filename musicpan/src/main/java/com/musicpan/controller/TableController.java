@@ -1,12 +1,12 @@
 package com.musicpan.controller;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.musicpan.domain.PriceInfoVO;
 import com.musicpan.domain.MetaInfoJSON;
+import com.musicpan.domain.PriceInfoVO;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.mapper.MusicMapper;
 
@@ -35,7 +35,7 @@ public class TableController {
 	
 	//=========================================================================================
   	// g000
-  	// 기능		:	
+  	// 기능		:	곡 정보
   	// 메서드	:	GET 
   	// URI		:	/tables/metaInfo
   	//=========================================================================================
@@ -151,7 +151,7 @@ public class TableController {
 	
   	//=========================================================================================
   	// g001
-  	// 기능		:	
+  	// 기능		:	가격정보
   	// 메서드	:	GET 
   	// URI		:	/tables/priceInfo
   	//=========================================================================================
@@ -162,10 +162,70 @@ public class TableController {
   		List<SongTotalVO> resultTemp = mapper.getSongTotalInfo();
   		
   		//후처리결과
+  		List<PriceInfoVO> result = procPriceInfo(resultTemp);
+  		
+  		
+  		Date tempTime = resultTemp.get(0).getUpdatedate();
+		SimpleDateFormat transFormat = new SimpleDateFormat("MM-dd hh:mm:ss");
+		String updatedate = transFormat.format(tempTime);
+		
+  		
+  		
+		model.addAttribute("updatedate", updatedate);
+  		model.addAttribute("dataList", result);
+  		model.addAttribute("tableTitle", "가격 정보");
+  		model.addAttribute("tableLink", "priceInfo");
+  		
+  		return "dtable/priceInfo";
+  	}
+  	//=========================================================================================
+  	
+  	
+  	//=========================================================================================
+  	// g002
+   	// 기능		:	타우픽
+   	// 메서드	:	GET
+   	// URI		:	/tables/tauPickV1
+  	//=========================================================================================
+  	@PreAuthorize("isAuthenticated()")
+  	@GetMapping("/tauPickV1")
+  	public String tauPick(Model model) {
+  		
+  		List<SongTotalVO> resultTemp = mapper.getTauPick();
+  		
+  		//후처리결과
+  		List<PriceInfoVO> result = procPriceInfo(resultTemp);
+  		
+  		
+  		Date tempTime = resultTemp.get(0).getUpdatedate();
+		SimpleDateFormat transFormat = new SimpleDateFormat("MM-dd hh:mm:ss");
+		String updatedate = transFormat.format(tempTime);
+		
+  		
+  		
+		model.addAttribute("updatedate", updatedate);
+  		model.addAttribute("dataList", result);
+  		model.addAttribute("tableTitle", "타우픽 V1");
+  		model.addAttribute("tableLink", "tauPickV1");
+  		model.addAttribute("tableDescription", "tauPickV1");
+  		
+  		return "dtable/tauPick";
+  	}
+  	//=========================================================================================
+  	
+  	
+  	
+  	
+  	//-----------------------------------------------------------------------------------------
+  	// 가격정보 후처리 펑션
+  	//-----------------------------------------------------------------------------------------
+  	private List<PriceInfoVO> procPriceInfo(List<SongTotalVO> inputData){
+  		
+  	//후처리결과
   		List<PriceInfoVO> result = new ArrayList<>();
   		
   		//후처리
-  		for(SongTotalVO temp : resultTemp) {
+  		for(SongTotalVO temp : inputData) {
   			
   			PriceInfoVO tempData = new PriceInfoVO();
   			
@@ -217,20 +277,8 @@ public class TableController {
   			result.add(tempData);
   		}//for
   		
-  		
-  		Date tempTime = resultTemp.get(0).getUpdatedate();
-		SimpleDateFormat transFormat = new SimpleDateFormat("MM-dd hh:mm:ss");
-		String updatedate = transFormat.format(tempTime);
-		
-  		
-  		
-		model.addAttribute("updatedate", updatedate);
-  		model.addAttribute("dataList", result);
-  		
-  		return "dtable/priceInfo";
+  		return result;
   	}
-  	//=========================================================================================
-  	
-  	
+  	//-----------------------------------------------------------------------------------------
   	
 }//class

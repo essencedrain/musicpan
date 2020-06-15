@@ -80,7 +80,10 @@
                             <a href="/tables/metaInfo">곡 정보</a>
                         </li>
                         <li>
-                            <a href="#">빈버튼</a>
+                            <a href="#">&nbsp;</a>
+                        </li>
+                        <li>
+                            <a href="/tables/tauPickV1">타우픽 V1</a>
                         </li>
                     </ul>
                 </li>
@@ -145,7 +148,7 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;<img class="BigTitleImg" src="/resources/img/MusicTau1.png"><img class="smallTitleImg" src="/resources/img/MusicTau2.png"></a></span>
+                    <span class="nav_heading mr-auto"><a href="/">&nbsp;&nbsp;<img class="BigTitleImg" src="/resources/img/MusicTau1.png"></span>
                     
                     <sec:authorize access="isAuthenticated()">
 	                    <div class="d-inline-block d-md-none ml-auto">
@@ -165,6 +168,8 @@
 					        <div class="dropdown-menu">
 						        <a class="dropdown-item" href="/tables/priceInfo">가격 정보</a>
 						        <a class="dropdown-item" href="/tables/metaInfo">곡 정보</a>
+						        <div class="dropdown-divider"></div>
+						        <a class="dropdown-item" href="/tables/tauPickV1">타우픽 V1</a>
 					        </div>
 						    </li>
                         	<li class="nav-item dropdown">

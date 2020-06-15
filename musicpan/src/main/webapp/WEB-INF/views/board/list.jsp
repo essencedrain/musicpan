@@ -25,9 +25,10 @@
 					 -->
 		            
 		            <div class="center_area col-lg-10 mb-5">
-			            <div class="pb-3">
+			            <div class="pb-2">
 		                	<h3 class="board_heading"><a href="/board/${pageMaker.cri.b_name}/list">${pageMaker.cri.b_name2} 게시판</a></h3>
 		                </div>
+		                <%@include file="../includes/boards_buttons.jsp"%>
 		            	<div class="mt-3">
 			            		<div class="py-2 d-flex justify-content-between">
 			            			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fas fa-search"></i></button>

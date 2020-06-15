@@ -222,6 +222,26 @@
 		ORDER BY singer asc
 	</select>
 	
+	
+	<select id="getTauPick" resultType="com.musicpan.domain.SongTotalVO">
+	<![CDATA[
+		SELECT
+			*
+		FROM
+			music_mview
+		WHERE
+			(avg3/sellprice*100) > 7
+			AND	(avg6/sellprice*100) > 7
+			AND	(avg12/sellprice*100) > 7
+			AND	(avgall/sellprice*100) > 7
+			AND	alltime > 48
+			AND	cvall < 0.7
+			AND	cv12 < 0.7
+			AND	(sellprice/auctionavg*100) between 85 and 115
+	]]>
+	</select>
+	
+	
 	<select id="getTxVol24" resultType="com.musicpan.domain.SongTxVolVO">
 		SELECT
 			b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol'

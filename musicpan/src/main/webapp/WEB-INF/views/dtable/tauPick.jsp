@@ -59,28 +59,20 @@
 		                
 		                <div class="table-responsive pt-2 pb-4">
 		                	<table class="table table-bordered table-sm">
-		                		<tr class="table-secondary text-center font-weight-bold">
-		                			<td colspan="2" class="text-nowrap">현재가 기준 : 최저 매도호가</td>
-		                		</tr>
 		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">8%적정가</td>
-		                			<td class="text-nowrap">12개월 수익률이 8%가 되기 위한 가격</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">옥션갭%</td>
-		                			<td class="text-nowrap">옥션 전회차 최저낙찰가 대비 현재가%</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">수익률x</td>
-		                			<td class="text-nowrap">현재가 및 최근 x개월 저작권료 기준 12개월 환산 수익률 (all은 자료제공횟수)</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">자료제공</td>
-		                			<td class="text-nowrap">뮤지카우에서 제공한 월저작권료 정보제공 횟수 (ex:65 = 15,16,17,18,19년도 60개 + 20년도 1~5월)</td>
-		                		</tr>
-		                		<tr>
-		                			<td class="text-nowrap font-weight-bold">변동계수(CV)</td>
-		                			<td class="text-nowrap">저작권료 상대표준편차 : 값이 낮을수록 월 저작권료가 일정 / 높을수록 큰 달 작은 달 기복이 심함</td>
+		                			<td class="text-nowrap">
+		                				<h3>타우픽 V1 : 설명</h3>
+		                				<br>
+		                				<h5>테마</h5>
+		                				<p> - 저작권료가 기복없이 안정적으로 지급되고 있을 것</p>
+		                				<p> - 가치가 상대적으로 과소평가되어 있을 것</p>
+		                				<br>
+		                				<h5>구성</h5>
+		                				<p> - 수익률3,6,12,all > 7%</p>
+		                				<p> - 저작권자료 48건(=개월) 이상</p>
+		                				<p> - 변동계수(CV) 12, all < 0.7 </p>
+		                				<p> - 85% < 매도가/옥션평균가 < 115% </p>
+		                			</td>
 		                		</tr>
 		                		<tr class="table">
 		                			<td class="text-nowrap text-left text-danger font-weight-bold">
@@ -91,7 +83,7 @@
 		                			</td>
 		                		</tr>
 		                		<tr class="table-danger">
-		                			<td colspan="2" class="text-nowrap text-center">화면에 아무것도 뜨지 않을때는 업데이트 중이므로 몇초뒤에 새로고침 해보시기 바랍니다.</td>
+		                			<td class="text-nowrap text-left">화면에 아무것도 뜨지 않을때는 업데이트 중이므로 몇초뒤에 새로고침 해보시기 바랍니다.</td>
 		                		</tr>
 		                	</table>
 		                </div>

@@ -43,7 +43,7 @@ public class FileCheckTask {
 	
 	
 	//매일 02시 마다
-	@Scheduled(cron="0 50 2 * * *")
+	@Scheduled(cron="0 0 2 * * *")
 	public void checkFiles() throws Exception{
 		
 		log.warn("File Check Task run.....");
