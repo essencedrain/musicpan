@@ -1157,25 +1157,31 @@
     //모바일
     	//console.log(window.innerWidth);
     
-	    if(window.innerWidth<768){
-	    	
-			$('.td_pc').each(function(){
-				$(this).toggleClass('d-none');
-			});
-			
-			
-			$('.td_mo').each(function(){
-				$(this).toggleClass('d-none');
-			});
-			
-	    }
-	    
-	  	//24글자 이상 ellipsis, 글자수 제한
+    if(window.innerWidth<768){
+    	
+		$('.td_pc').each(function(){
+			$(this).toggleClass('d-none');
+		});
+		
+		
+		$('.td_mo').each(function(){
+			$(this).toggleClass('d-none');
+		});
+		
+		//26글자 이상 ellipsis, 글자수 제한
 		$('.main_title').each(function(){
-			if($(this).text().length>24){
-				$(this).text($(this).text().substring(0,24)+"...");
+			if($(this).text().length>23){
+				$(this).text($(this).text().substring(0,23)+"...");
 			}
 		});
+    }else{
+    	//26글자 이상 ellipsis, 글자수 제한
+		$('.main_title').each(function(){
+			if($(this).text().length>36){
+				$(this).text($(this).text().substring(0,36)+"...");
+			}
+		});
+    }
 	</script>
 	<!-- =================================================================================================  -->
     <!-- end 모바일전환 / 타이틀 ellipsis -->

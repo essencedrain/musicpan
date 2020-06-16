@@ -283,7 +283,7 @@ e8f3fc
 /* 댓글카운트 */
 .table_gtx .list_replyCnt{
     color: #3292e7 !important;
-    font-weight: 100;
+    font-weight: 300;
 }
 
 /* 컨텐츠 목록에서 제목 호버링 */

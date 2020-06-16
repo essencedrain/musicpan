@@ -25,7 +25,7 @@
 		            				<tbody>
 		            					<c:forEach items="${boardFree}" var="list">
 			            					<tr>
-			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}"><span class="main_title">&nbsp;${list.title}&nbsp;</span><span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
 			            					</tr>	
 		            					</c:forEach>
 		            				</tbody>
@@ -37,7 +37,7 @@
 		            				<tbody>
 		            					<c:forEach items="${boardAnalysis}" var="list">
 			            					<tr>
-			            						<td class="txVol_text"><a href="/board/analysis/content/${list.bno}">&nbsp;${list.title}&nbsp;<span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            						<td class="txVol_text"><a href="/board/analysis/content/${list.bno}"><span class="main_title">&nbsp;${list.title}&nbsp;</span><span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
 			            					</tr>	
 		            					</c:forEach>
 		            				</tbody>
@@ -294,7 +294,26 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ JS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <!-- =================================================================================================  -->
 
+
+
 <script type="text/javascript">
+//26글자 이상 ellipsis, 글자수 제한
+if(window.innerWidth<768){
+	$('.main_title').each(function(){
+		if($(this).text().length>23){
+			$(this).text($(this).text().substring(0,23)+" ... ");
+		}
+	});
+}else{
+	$('.main_title').each(function(){
+		if($(this).text().length>36){
+			$(this).text($(this).text().substring(0,36)+" .. ");
+		}
+	});
+}
+
+
+
 let today = new Date();   
 let year = today.getFullYear(); // 년도
 let month = today.getMonth() + 1;  // 월
