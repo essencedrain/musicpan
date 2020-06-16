@@ -65,6 +65,15 @@
 		            	
 		            	<div class="pb-5 mb-5">
 		            		<table class="table table-bordered">
+		            			<tr>
+		                			<td colspan="2" class="text-nowrap text-left text-danger font-weight-bold">
+		                				<h3>주의 사항</h3>
+										<p>※ 차트는 뮤직타우에서 수집된 자료 범위내에서만 표현됩니다.</p>
+										<p>※ 가격정보는 10분마다 업데이트가 되므로 실시간 정보가 아닙니다.</p>
+										<p>※ 본 데이터는 크롤링 특성상 갱신되지 않아 틀릴 수 있습니다.</p>
+										<p>※ 본 데이터는 투자에 참고용으로만 사용해주십시오.</p>
+		                			</td>
+		                		</tr>
 		            			<tr class="table-secondary text-center font-weight-bold">
 		                			<td colspan="2" class="text-nowrap">곡 정보</td>
 		                		</tr>

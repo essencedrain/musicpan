@@ -64,6 +64,13 @@
 		                		<tr class="table-info">
 		                			<td colspan="2" class="text-nowrap text-center">노래제목 클릭시 뮤직카우 이동 가능, 엑셀로 블럭 복붙가능, 키보드 화살표 이동가능, 정렬, 필터(검색) 사용 가능</td>
 		                		</tr>
+		                		<tr>
+		                			<td colspan="2" class="text-nowrap text-left text-danger font-weight-bold">
+		                				<h3>주의 사항</h3>
+										<p>※ 본 데이터는 크롤링 특성상 갱신되지 않아 틀릴 수 있습니다.</p>
+										<p>※ 본 데이터는 투자에 참고용으로만 사용해주십시오.</p>
+		                			</td>
+		                		</tr>
 		                		<tr class="table-danger">
 		                			<td colspan="2" class="text-nowrap text-center">화면에 아무것도 뜨지 않을때는 업데이트 중이므로 몇초뒤에 새로고침 해보시기 바랍니다.</td>
 		                		</tr>

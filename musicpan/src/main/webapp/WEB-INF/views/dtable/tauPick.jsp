@@ -72,7 +72,7 @@
 		                				<p> - 변동계수(CV) 12, all < 0.7 </p>
 		                			</td>
 		                		</tr>
-		                		<tr class="table">
+		                		<tr>
 		                			<td class="text-nowrap text-left text-danger font-weight-bold">
 		                				<h3>주의 사항</h3>
 										<p>※ 가격정보는 10분마다 업데이트가 되므로 실시간 정보가 아닙니다.</p>

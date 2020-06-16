@@ -82,7 +82,7 @@
 		                			<td class="text-nowrap font-weight-bold">변동계수(CV)</td>
 		                			<td class="text-nowrap">저작권료 상대표준편차 : 값이 낮을수록 월 저작권료가 일정 / 높을수록 큰 달 작은 달 기복이 심함</td>
 		                		</tr>
-		                		<tr class="table">
+		                		<tr>
 		                			<td colspan="2" class="text-nowrap text-left text-danger font-weight-bold">
 		                				<h3>주의 사항</h3>
 										<p>※ 가격정보는 10분마다 업데이트가 되므로 실시간 정보가 아닙니다.</p>
