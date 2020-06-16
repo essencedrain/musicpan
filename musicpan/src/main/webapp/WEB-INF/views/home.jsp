@@ -46,7 +46,7 @@
 		            		
 		            		
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="font-weight-bold" style="color: #666">거래대금 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<h5 class="text-info font-weight-bold"">거래대금 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
@@ -93,7 +93,7 @@
 		            			</table>
 		            		</div>
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="font-weight-bold" style="color: #666">거래대금 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<h5 class="text-info font-weight-bold"">거래대금 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
@@ -141,7 +141,7 @@
 		            		</div>
 		            		
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="font-weight-bold" style="color: #666">거래수량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<h5 class="text-info font-weight-bold"">거래수량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
@@ -188,7 +188,7 @@
 		            			</table>
 		            		</div>
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="font-weight-bold" style="color: #666">거래수량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<h5 class="text-info font-weight-bold"">거래수량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
 		            			<table id="txVol" class="table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">

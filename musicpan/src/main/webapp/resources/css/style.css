@@ -83,6 +83,9 @@ a:focus {
 3292e7
 e8f3fc
 ----------------------------------------------------- */
+.main_font_color{
+	color: #0F4C81;
+}
 
 #sidebar {
     width: 250px;
