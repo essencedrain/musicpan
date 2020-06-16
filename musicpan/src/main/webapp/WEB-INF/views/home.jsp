@@ -61,25 +61,25 @@
 	            						<c:choose>
 	            							<c:when test="${rowNum==1}">
 	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_gold_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:when>
 	            							<c:when test="${rowNum==2}">
 	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_silver_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:when>
 	            							<c:when test="${rowNum==3}">
 	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_bronze_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:when>
 	            							<c:otherwise>
 	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
-	            								<td class="txVol_text" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:otherwise>
@@ -108,25 +108,25 @@
 	            						<c:choose>
 	            							<c:when test="${rowNum==1}">
 	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_gold_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:when>
 	            							<c:when test="${rowNum==2}">
 	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_silver_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:when>
 	            							<c:when test="${rowNum==3}">
 	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text txVol_bronze_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:when>
 	            							<c:otherwise>
 	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
-	            								<td class="txVol_text" style="width:32%">${list.song}</td>
+	            								<td class="txVol_text" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
 			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
 			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
 	            							</c:otherwise>
