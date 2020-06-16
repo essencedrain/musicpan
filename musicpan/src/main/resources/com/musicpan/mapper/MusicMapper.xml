@@ -286,4 +286,23 @@
 		LIMIT 0,10
 	</select>
 	
+	<select id="getHistoryIdx" resultType="com.musicpan.domain.SongHistoryVO">
+		SELECT
+			histime, hisprice, hisunit
+		FROM
+			music_history
+		WHERE
+			idx = #{idx}
+		ORDER BY histime asc
+	</select>
+	
+	
+	<select id="getOneSong" resultType="com.musicpan.domain.SongBasicVO">
+		SELECT
+			*
+		FROM
+			music_basic
+		WHERE
+			idx = #{idx}
+	</select>
 </mapper>

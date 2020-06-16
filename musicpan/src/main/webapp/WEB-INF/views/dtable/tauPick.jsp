@@ -93,8 +93,9 @@
 	                	<table id="myTable" id="dataTables_set" class="display compact cell-border text-center" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<td style="width:90px;">곡명</td>
+									<td>곡명</td>
 									<td>가수</td>
+									<td>차트</td>
 									<td>매도</td>
 									<td>잔량</td>
 									<td>매수</td>
@@ -117,7 +118,7 @@
 									<tr>
 										<td style="width:90px;" class="text-primary"><a href="https://www.musicow.com/song/${list.idx}" target='_blank'>${list.song}</a></td>
 										<td>${list.singer}</td>
-										
+										<td class="text-primary"><a href="/chart/idx/${list.idx}" target='_blank'><i class="far fa-chart-bar"></i></a></td>
 										<td class="text-white bg-primary font-weight-bold"><fmt:formatNumber value="${list.sellprice}" pattern="#,###" /></td>
 										<td class="text-white bg-primary font-weight-bold"><fmt:formatNumber value="${list.sellunit}" pattern="#,###" /></td>
 										

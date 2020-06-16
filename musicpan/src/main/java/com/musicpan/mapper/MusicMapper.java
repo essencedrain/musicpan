@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.musicpan.domain.FeeYearMonthVO;
 import com.musicpan.domain.SongBasicVO;
+import com.musicpan.domain.SongHistoryVO;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.domain.SongTxVolVO;
 
@@ -51,6 +52,7 @@ public interface MusicMapper {
 			,@Param("sellPrice") int sellPrice
 			);
 	
+	public SongBasicVO getOneSong(@Param("idx") int idx);
 	
 	public List<Integer> getIdx();
 	
@@ -75,4 +77,7 @@ public interface MusicMapper {
 	
 	public List<SongTxVolVO> getTxUnit24();
 	public List<SongTxVolVO> getTxUnitWeek();
+	
+	public List<SongHistoryVO> getHistoryIdx(@Param("idx") int idx);
+	
 }//interface

@@ -172,6 +172,13 @@ var grid = new tui.Grid({
 			,align: 'center'
 		}
 		,{
+			header: '차트'
+			,defaultValue: '<i class="far fa-chart-bar"></i>'
+			,name: 'chart'
+			,width: 50
+			,align: 'center'
+		}
+		,{
 			header: '공표년'
 			,name: 'finalrelease'
 			,sortable: true
@@ -327,7 +334,23 @@ grid.on('click', (ev) => {
 				  window.open("https://www.musicow.com/song/"+grid.getValue(ev.rowKey,"idx"));
 			  }
 			})
-	  }//if
+	  }else if(ev.columnName === 'chart' && ev.rowKey >=0){
+		  Swal.fire({
+			  title: '새창을 띄우시겠습니까?',
+			  text: ev.nativeEvent.target.textContent+' 차트를 봅니다.',
+			  icon: 'question',
+			  showCancelButton: true,
+			  confirmButtonColor: '#0F4C81',
+			  cancelButtonColor: '#b71515',
+			  confirmButtonText: '이동',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.value) {
+				  window.open("/chart/idx/"+grid.getValue(ev.rowKey,"idx"));
+			  }
+			})
+      }//if
+      
 	  //return ev.stop();
 	  //console.log('test : ' + ev);
 	  //console.log('ev.rowKey : ' + ev.rowKey);
