@@ -354,8 +354,10 @@ public class BoardController {
 		if(isSqlInjection(cri.getB_name())) {throw new Exception();}
 		cri.setB_name2(makeKorean(cri.getB_name())); // 한글 게시판명 생성
 		//[-- 수정된 댓글 --]&#013;&#010; 삭제
-		if(reply.substring(0,26).equals("[-- 수정된 댓글 --]&#013;&#010;")) {
-			reply = reply.substring(26);
+		if(reply.length()>27) {
+			if(reply.substring(0,26).equals("[-- 수정된 댓글 --]&#013;&#010;")) {
+				reply = reply.substring(26);
+			}
 		}
 		model.addAttribute("rno", rno);
 		model.addAttribute("reply", reply);
