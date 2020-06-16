@@ -243,7 +243,7 @@
 	
 	<select id="getTxVol24" resultType="com.musicpan.domain.SongTxVolVO">
 		SELECT
-			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol'
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
 		FROM
 			music_history h INNER JOIN music_basic b ON h.idx=b.idx
 		WHERE
@@ -254,13 +254,35 @@
 	</select>
 	<select id="getTxVolWeek" resultType="com.musicpan.domain.SongTxVolVO">
 		SELECT
-			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol'
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
 		FROM
 			music_history h INNER JOIN music_basic b ON h.idx=b.idx
 		WHERE
 			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW()
 		GROUP BY h.idx
 		ORDER BY vol DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxUnit24" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 day) AND NOW()
+		GROUP BY h.idx
+		ORDER BY units DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxUnitWeek" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW()
+		GROUP BY h.idx
+		ORDER BY units DESC
 		LIMIT 0,10
 	</select>
 	

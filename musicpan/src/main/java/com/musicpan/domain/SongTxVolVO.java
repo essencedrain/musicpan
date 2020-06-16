@@ -9,5 +9,7 @@ public class SongTxVolVO {
 	private String song;
 	private String singer;
 	private long vol;
+	private int units;
+	
 	
 }
