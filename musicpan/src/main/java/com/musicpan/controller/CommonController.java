@@ -46,6 +46,7 @@ public class CommonController {
 	 	g003		회원가입	GET		/register
 	 	g004		회원축하	GET		/registerSuccess
 	 	g005		마이페이지	GET		/mypage
+	 	g006		포트폴리오	GET		/portfolio67274321
 	 	
 	 	p000		로그아웃	POST	/customLogout
 	 	p001		회원가입	POST	/register
@@ -76,14 +77,14 @@ public class CommonController {
 	
 	//=========================================================================================
 	// g000
-	// 기능		:	홈화면
+	// 기능		:	포트폴리오
 	// 메서드	:	GET 
-	// URI		:	/chart
+	// URI		:	/portfolio
 	//=========================================================================================
-	@GetMapping("/chart")
-	public String chart() {
+	@GetMapping("/portfolio67274321")
+	public String portfolio() {
 		
-		return "dchart/chartTest";
+		return "portfolio";
 	}
 	//=========================================================================================
 	
