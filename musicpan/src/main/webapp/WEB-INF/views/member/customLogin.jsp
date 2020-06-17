@@ -32,7 +32,7 @@
 		                            <input type="password" class="form-control" id="password_temp" placeholder="비밀번호">
 		                        </div>
 		                        
-								<label class="form-check-label mb-2"><input type="checkbox" id="remember_temp"> 로그인 상태 유지(48시간)</input></label>
+								<label class="form-check-label mb-2"><input type="checkbox" id="remember_temp"> 로그인 상태 유지(1주일)</input></label>
 								
 		                        <button type="submit" id="submitBtn" class="btn btn-lg btn-outline-secondary w-100">로그인</button>
 		                    </form>
