@@ -128,9 +128,9 @@
 							                        	</div>
 							                        </td>
 							                    </tr>
+				                    		<c:set var="rowNum" value="${rowNum-1}"/>
 		                    				</c:otherwise>
 	                    				</c:choose>
-		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>

@@ -188,9 +188,9 @@
 						                        	<div class="mo_main py-1 d-flex justify-content-start">
 						                        		<a class="move" href="${board2.bno}">
 								                        	<div class='text-left ${board.bno==board2.bno ? "hover_color":"" }'>
-								                        		<span class="list_replyCnt">&nbsp;공지</span>
+								                        		<span class="list_replyCnt">&nbsp;${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":"공지"}</span>
 								                        		&nbsp;&nbsp;
-								                        		<span class="main_notice text-danger">${board.bno==board2.bno?"<i class='fas fa-arrow-right'></i>":""}${board2.title}</span>
+								                        		<span class="main_notice text-danger">${board2.title}</span>
 								                        		&nbsp;
 								                        		<span class="list_replyCnt">${board2.replyCnt>0?board2.replyCnt:""}</span>
 							                        		</div>
@@ -245,10 +245,9 @@
 							                        	</div>
 						                        </td>
                     						</tr>
+				                    		<c:set var="rowNum" value="${rowNum-1}"/>
                     						</c:otherwise>
                     					</c:choose>
-		                    			
-		                    		<c:set var="rowNum" value="${rowNum-1}"/>
 	                    			</c:forEach>
                     			</tbody>
 		            		</table>
