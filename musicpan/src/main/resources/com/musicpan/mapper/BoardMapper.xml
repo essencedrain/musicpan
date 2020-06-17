@@ -76,6 +76,8 @@
 		where
 		<include refid="criteria"></include>
 		del_flag = 0
+		AND
+		notice_flag = 0
 	</select>
 	
 	<select id="read" resultType="com.musicpan.domain.BoardVO">
