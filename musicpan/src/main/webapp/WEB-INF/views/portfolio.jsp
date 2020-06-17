@@ -108,6 +108,8 @@
 												<p>
 													<strong>개요 :</strong>
 													<br>&nbsp;&nbsp;&nbsp;· Framework을 사용하지 않고, jsp/servlet만을 이용하여 제작한 텀블러 쇼핑몰 프로젝트
+													<br><br><strong>개발인원 :</strong>
+													<br>&nbsp;&nbsp;&nbsp;· 1인
 													<br><br><strong>개발기간 :</strong>
 													<br>&nbsp;&nbsp;&nbsp;· 2020-03-02 ~ 2020-04-09
 													<br><br><strong>환경 :</strong>
@@ -179,7 +181,9 @@
 												<br>
 												<p>
 													<strong>개요 :</strong>
-													<br>&nbsp;&nbsp;&nbsp;· Spring을 이용한 상품 가치 분석 및 커뮤니티 사이트 개인 프로젝트
+													<br>&nbsp;&nbsp;&nbsp;· Spring을 이용한 상품 가치 분석 및 커뮤니티 사이트 프로젝트
+													<br><br><strong>개발인원 :</strong>
+													<br>&nbsp;&nbsp;&nbsp;·  1인
 													<br><br><strong>개발기간 :</strong>
 													<br>&nbsp;&nbsp;&nbsp;·  2020-05-20 ~ 현재 서비스 및 유지보수 중
 													<br><br><strong>환경 :</strong>
@@ -188,7 +192,7 @@
 													<br>&nbsp;&nbsp;&nbsp;· WAS : Tomcat 8.0
 													<br><br><strong>사용기술 :</strong>
 													<br>&nbsp;&nbsp;&nbsp;· Java (JDK1.8.04), Spring 4.3.4, Maven
-													<br>&nbsp;&nbsp;&nbsp;· MariaDB 10.3.22, MyBatis, TOMCAT 8.0, HTML5, CSS3, JS
+													<br>&nbsp;&nbsp;&nbsp;· MariaDB 10.3.22, MyBatis, HTML5, CSS3, JS
 													<br><br><strong>사용 라이브러리 :</strong>
 													<br>&nbsp;&nbsp;&nbsp;· Back: Spring Security 4.1.3, quartz, lombok, jackson, HikariCP
 													<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbnailator, jsoup, gson, javax.mail, jasypt
