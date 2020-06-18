@@ -106,7 +106,7 @@
 	<select id="getRank" resultType="int">
 		SELECT t.rank
 		FROM (SELECT bno, rank() over(ORDER BY bno ASC) AS rank
-				FROM board_${b_name} where del_flag = 0) t
+				FROM board_${b_name} where del_flag = 0 and notice_flag = 0) t
 		WHERE t.bno= #{bno}
 	</select>
 	
