@@ -140,6 +140,7 @@
 												<h4 style="color: #4acaa8 !important;">2. SPRING 프로젝트 (현재 서비스 중)</h4>
 												<h4 style="color: #4acaa8 !important;">&nbsp;&nbsp;&nbsp;- MusicTau : 저작권 가격 분석 및 커뮤니티 사이트</h4>
 												<br><strong>서비스 URL :</strong>
+												<br>테스트 계정 : test/67274321
 												<br>&nbsp;&nbsp;&nbsp;· <a href="http://www.musictau.com/" target="_blank">http://www.musictau.com/</a>
 												<br>
 												<br>
@@ -202,6 +203,7 @@
 													<br><br><strong>GitHub :</strong>
 													<br>&nbsp;&nbsp;&nbsp;· <a href="https://github.com/essencedrain/musicpan" target="_blank">https://github.com/essencedrain/musicpan</a>
 													<br><br><strong>서비스 URL :</strong>
+													<br>테스트 계정 : test/67274321
 													<br>&nbsp;&nbsp;&nbsp;· <a href="http://www.musictau.com/" target="_blank">http://www.musictau.com/</a>
 
 												</p>

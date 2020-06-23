@@ -21,7 +21,7 @@
 		            </div>
 		            
 		            <div class="center_area col-lg-10" >
-		            
+		            	<!-- 
 		            	<div class="mb-4 pb-4 board_1200banner_bot_930">
 		            		<script src="https://ads-partners.coupang.com/g.js"></script>
 							<script>
@@ -52,7 +52,7 @@
 								new PartnersCoupang.G({ id:253356 });
 							</script>
 		            	</div>
-		            
+		            	 -->
 		            
 		            	<div class="pt-3 pb-4">
 		                	<h3 class="board_heading"><a href="/chart/idx/${songBasic.idx}">가격·거래량 차트 <i class="fas fa-sync-alt"></i></a></h3>
