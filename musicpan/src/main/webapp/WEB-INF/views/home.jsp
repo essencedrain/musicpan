@@ -306,8 +306,8 @@ if(window.innerWidth<768){
 	});
 }else{
 	$('.main_title').each(function(){
-		if($(this).text().length>36){
-			$(this).text($(this).text().substring(0,36)+" .. ");
+		if($(this).text().length>31){
+			$(this).text($(this).text().substring(0,31)+" .. ");
 		}
 	});
 }
