@@ -305,4 +305,35 @@
 		WHERE
 			idx = #{idx}
 	</select>
+	
+	
+	<insert id="insertNowAuction">
+		INSERT INTO
+			music_nowauction
+			(
+				idx
+				, song
+				, singer
+				, totalunits
+				, startprice
+				, bidprice
+				, bidunit
+				, bidsum
+				, bidgap
+				, updatedate
+			)
+		VALUES
+			(
+				#{idx}
+				, #{song}
+				, #{singer}
+				, #{totalunits}
+				, #{startprice}
+				, #{bidprice}
+				, #{bidunit}
+				, #{bidsum}
+				, #{bidgap}
+				, now()
+			)
+	</insert>
 </mapper>

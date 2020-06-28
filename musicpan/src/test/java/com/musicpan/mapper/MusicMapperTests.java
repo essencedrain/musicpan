@@ -1,6 +1,5 @@
 package com.musicpan.mapper;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,15 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.musicpan.domain.NowAuctionVO;
 import com.musicpan.domain.SongBasicVO;
-import com.musicpan.domain.SongTotalVO;
 import com.musicpan.music.MusicPro;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml","file:src/main/webapp/WEB-INF/spring/security-context.xml"})
 @Log4j
 public class MusicMapperTests {
 
@@ -32,8 +31,15 @@ public class MusicMapperTests {
 	//MusicPro 로드
 	private MusicPro musicPro = new MusicPro();
 	
+	@Test
+	public void testNowAuction() {
+		List<Integer> list = musicPro.getNowAuctionIdx();
+		for(int temp : list) {
+			mapper.insertNowAuction(musicPro.getNowAuctionSongInfo(temp));
+		}
+	}
 	
-	
+	/*
 	@Test
 	public void testBasicInfo() {
 		
@@ -56,7 +62,7 @@ public class MusicMapperTests {
   		}//for
 		
 	}//testBasicInfo
-	
+	*/
 	
 	/*
 	//사이트와 DB idx 비교

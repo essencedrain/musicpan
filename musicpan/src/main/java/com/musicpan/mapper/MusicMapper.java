@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.musicpan.domain.FeeYearMonthVO;
+import com.musicpan.domain.NowAuctionVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.domain.SongHistoryVO;
 import com.musicpan.domain.SongTotalVO;
@@ -80,4 +81,6 @@ public interface MusicMapper {
 	
 	public List<SongHistoryVO> getHistoryIdx(@Param("idx") int idx);
 	
+	//진행중 옥션 누적합
+	public int insertNowAuction(NowAuctionVO vo);
 }//interface

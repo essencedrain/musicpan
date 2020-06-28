@@ -29,7 +29,19 @@ public class MusicTask {
 	//MusicPro 로드
 	private MusicPro musicPro = new MusicPro();
 	
-	//매일 10분마다
+	
+	//진행중 옥션 누적합
+	//50초마다
+	//@Scheduled(cron="*/50 * * * * *")
+	public void nowAuction() throws Exception{
+		List<Integer> list = musicPro.getNowAuctionIdx();
+		for(int temp : list) {
+			mapper.insertNowAuction(musicPro.getNowAuctionSongInfo(temp));
+		}
+	}
+	
+	
+	//기본 - 매일 10분마다
 	//@Scheduled(cron="0 */10 * * * *")
 	public void routine5() throws Exception{
 		
