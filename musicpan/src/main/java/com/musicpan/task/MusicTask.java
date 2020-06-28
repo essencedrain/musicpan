@@ -35,10 +35,21 @@ public class MusicTask {
 	//@Scheduled(cron="*/50 * * * * *")
 	public void nowAuction() throws Exception{
 		List<Integer> list = musicPro.getNowAuctionIdx();
+		List<Integer> dbIdxs = mapper.getIdxNowAuction();
+		
+		//진행중 옥션에서 마감된 곡은 지우기
+		if(list.size()!=dbIdxs.size()) {
+			for(int temp : dbIdxs) {
+				if(!list.contains(temp)) {
+					mapper.deleteByIdxNowAuction(temp);
+				}//if
+			}//for
+		}//if
+		
 		for(int temp : list) {
 			mapper.insertNowAuction(musicPro.getNowAuctionSongInfo(temp));
 		}
-	}
+	}//nowAuction()
 	
 	
 	//기본 - 매일 10분마다

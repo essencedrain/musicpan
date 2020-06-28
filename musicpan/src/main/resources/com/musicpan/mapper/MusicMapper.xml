@@ -342,4 +342,18 @@
 			, bidgap = #{bidgap}
 			, updatedate = now()
 	</insert>
+	
+	<select id="getIdxNowAuction" resultType="int">
+		SELECT
+			idx
+		FROM
+			music_nowauction
+	</select>
+	
+	<delete id="deleteByIdxNowAuction">
+		delete from
+			music_nowauction
+		where
+			idx = #{idx}
+	</delete>
 </mapper>

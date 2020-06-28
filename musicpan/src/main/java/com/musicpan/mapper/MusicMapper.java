@@ -82,5 +82,7 @@ public interface MusicMapper {
 	public List<SongHistoryVO> getHistoryIdx(@Param("idx") int idx);
 	
 	//진행중 옥션 누적합
+	public List<Integer> getIdxNowAuction();
 	public int insertNowAuction(NowAuctionVO vo);
+	public int deleteByIdxNowAuction(@Param("idx") int idx);
 }//interface
