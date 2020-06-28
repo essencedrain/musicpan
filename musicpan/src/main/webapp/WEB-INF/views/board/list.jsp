@@ -201,7 +201,6 @@
 								</c:choose>
 							</ul>
 		            	</div>
-		            	<!--  
 		            	<div class="my-4 py-4 board_1200banner_bot_930">
 		            		<script src="https://ads-partners.coupang.com/g.js"></script>
 							<script>
@@ -232,7 +231,6 @@
 								new PartnersCoupang.G({ id:253356 });
 							</script>
 		            	</div>
-		            	-->
 		            	
 		            </div><!-- div class="center_area col-lg-10 mb-5" -->
 		            
