@@ -1,5 +1,6 @@
 package com.musicpan.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.musicpan.domain.NowAuctionVO;
+import com.musicpan.domain.NowAuctionWeb;
 import com.musicpan.domain.SongTxVolVO;
 import com.musicpan.mapper.MusicMapper;
 
@@ -116,6 +119,89 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Date getRecentUpdatedateBasic() {
 		return mapper.getRecentUpdatedateBasic();
+	}
+
+	
+	@Override
+	public NowAuctionWeb getOneNowAuction() {
+		NowAuctionVO vo = mapper.getOneNowAuction();
+		NowAuctionWeb web = new NowAuctionWeb();
+		
+		web.setIdx(vo.getIdx());
+		web.setSong(vo.getSong());
+		web.setSinger(vo.getSinger());
+		web.setTotalunits(vo.getTotalunits());
+		web.setStartprice(vo.getStartprice());
+		web.setUpdatedate(vo.getUpdatedate());
+		web.setTxt_time_left(vo.getTxt_time_left());
+		web.setSong_img3(vo.getSong_img3());
+		
+		
+		String[] bidprice = vo.getBidprice().split(",");
+		String[] bidunit = vo.getBidunit().split(",");
+		String[] bidsum = vo.getBidsum().split(",");
+		String[] bidgap = vo.getBidgap().split(",");
+		
+		List<String[]> bidInfo = new ArrayList<>();
+		
+		for(int i=0; i<5; i++) {
+			String[] temp = new String[4];
+			temp[0] = bidprice[i];
+			temp[1] = bidunit[i];
+			temp[2] = bidsum[i];
+			temp[3] = bidgap[i];
+			
+			bidInfo.add(temp);
+		}
+		
+		web.setBidInfo(bidInfo);
+		
+		return web;
+	}
+
+	@Override
+	public List<NowAuctionWeb> getAllNowAuction() {
+		List<NowAuctionVO> voList = mapper.getAllNowAuction();
+		List<NowAuctionWeb> result = new ArrayList<>();
+		
+		for(NowAuctionVO vo : voList) {
+			
+			NowAuctionWeb web = new NowAuctionWeb();
+			
+			web.setIdx(vo.getIdx());
+			web.setSong(vo.getSong());
+			web.setSinger(vo.getSinger());
+			web.setTotalunits(vo.getTotalunits());
+			web.setStartprice(vo.getStartprice());
+			web.setUpdatedate(vo.getUpdatedate());
+			web.setTxt_time_left(vo.getTxt_time_left());
+			web.setSong_img3(vo.getSong_img3());
+			
+			
+			String[] bidprice = vo.getBidprice().split(",");
+			String[] bidunit = vo.getBidunit().split(",");
+			String[] bidsum = vo.getBidsum().split(",");
+			String[] bidgap = vo.getBidgap().split(",");
+			
+			List<String[]> bidInfo = new ArrayList<>();
+			
+			for(int i=0; i<5; i++) {
+				String[] temp = new String[4];
+				temp[0] = bidprice[i];
+				temp[1] = bidunit[i];
+				temp[2] = bidsum[i];
+				temp[3] = bidgap[i];
+				
+				bidInfo.add(temp);
+			}
+			
+			web.setBidInfo(bidInfo);
+			
+			result.add(web);
+			
+		}//for
+		
+		return result;
 	}
 
 }//class

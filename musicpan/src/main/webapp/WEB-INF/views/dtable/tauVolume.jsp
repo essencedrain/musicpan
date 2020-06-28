@@ -18,7 +18,7 @@
 		            
 		            <div class="center_area col-lg-10">
 		            	<div class="pb-3">
-		                	<h3 class="board_heading"><a href="/tables/volume">거래량 정보</a></h3>
+		                	<h3 class="board_heading"><a href="/tables/tauVolume">거래량 정보</a></h3>
 		                	<!--  <div id="example-table"></div>-->
 		                </div>
 		                <%@include file="../includes/info_buttons.jsp"%>

@@ -94,4 +94,6 @@ public interface MusicMapper {
 	public int insertNowAuction(NowAuctionVO vo);
 	public int deleteByIdxNowAuction(@Param("idx") int idx);
 	public Date getRecentUpdatedateBasic();
+	public NowAuctionVO getOneNowAuction();
+	public List<NowAuctionVO> getAllNowAuction();
 }//interface

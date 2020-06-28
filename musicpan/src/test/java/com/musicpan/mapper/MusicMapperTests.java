@@ -31,6 +31,7 @@ public class MusicMapperTests {
 	//MusicPro 로드
 	private MusicPro musicPro = new MusicPro();
 	
+	/*
 	@Test
 	public void testNowAuction() {
 		List<Integer> list = musicPro.getNowAuctionIdx();
@@ -49,6 +50,7 @@ public class MusicMapperTests {
 			mapper.insertNowAuction(musicPro.getNowAuctionSongInfo(temp));
 		}
 	}
+	*/
 	
 	/*
 	@Test

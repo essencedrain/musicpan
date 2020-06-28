@@ -19,34 +19,9 @@
 		            <div class="center_area col-lg-10">
 		            	<%@include file="./includes/info_buttons.jsp"%>
 		           		<div class="row">
-		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-primary font-weight-bold"><a href="/board/free/list">자유게시판</a></h6>
-		            			<table id="txVol" class="table table-sm text-left table-hover">
-		            				<tbody>
-		            					<c:forEach items="${boardFree}" var="list">
-			            					<tr>
-			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}"><span class="main_title">&nbsp;${list.title}&nbsp;</span><span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
-			            					</tr>	
-		            					</c:forEach>
-		            				</tbody>
-		            			</table>
-		            		</div>
-		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-primary font-weight-bold"><a href="/board/analysis/list">정보·분석 게시판</a></h6>
-		            			<table id="txVol" class="table table-sm text-left table-hover pr-3">
-		            				<tbody>
-		            					<c:forEach items="${boardAnalysis}" var="list">
-			            					<tr>
-			            						<td class="txVol_text"><a href="/board/analysis/content/${list.bno}"><span class="main_title">&nbsp;${list.title}&nbsp;</span><span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
-			            					</tr>	
-		            					</c:forEach>
-		            				</tbody>
-		            			</table>
-		            		</div>
-		            		
-		            		
-		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold">거래대금 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		           			
+		           			<div class="col-md-6 py-4">
+		            			<h5 class="text-info font-weight-bold"><a href="/tables/tauVolume">거래량 (24시간) <i class="fas fa-external-link-square-alt"></i></a></h6>
 		            			<table class="txVol table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
@@ -92,148 +67,74 @@
 		            				</tbody>
 		            			</table>
 		            		</div>
-		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold">거래대금 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		           			
+		           			
+		           			<div class="col-md-6 py-4">
+		            			<h5 class="text-info font-weight-bold"><a href="/tables/auctionInfo">옥션 정보 <i class="fas fa-external-link-square-alt"></i></a></h6>
 		            			<table class="txVol table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
-			            					<td class="txVol_text" style="width:8%">#</td>
-			            					<td class="txVol_text" style="width:32%">곡명</td>
-			            					<td class="txVol_text" style="width:32%">가수</td>
-			            					<td class="txVol_text" style="width:28%">거래대금</td>
+			            					<td class="txVol_text align-middle" colspan="4" style="height: 132px">
+			            						<a href="https://www.musicow.com/auction/${auction.idx}" target="_blank"><img class="float-left" style="width: 120px !important; height: 120px !important;" src="${auction.song_img3}"></a>
+			            						<a href="https://www.musicow.com/auction/${auction.idx}" target="_blank"><h4 class="text-left font-weight-bold">&nbsp;&nbsp;${auction.song}</h4></a>
+			            						<h5 class="text-left font-weight-bold">&nbsp;&nbsp;${auction.singer}</h5>
+			            						<h5 class="text-left font-weight-bold text-danger">&nbsp;&nbsp;${auction.txt_time_left}</h5>
+			            						<h6 class="text-left font-weight-bold" style="color:#999">&nbsp;&nbsp;업데이트 : <fmt:formatDate value="${auction.updatedate}" pattern="HH:mm:ss"/></h6>
+			            					</td>
+		            					</tr>
+		            					<tr>
+		            						<td colspan="4" class="" style="color:#999">
+		            							&nbsp;&nbsp;옥션 수량 : <fmt:formatNumber value="${auction.totalunits}" pattern="#,###" />주 / 시작가 : <fmt:formatNumber value="${auction.startprice}" pattern="#,###" />원
+		            						</td>
+		            					</tr>
+		            					<tr class="">
+			            					<td class="txVol_text" style="width:25%">입찰가격</td>
+			            					<td class="txVol_text" style="width:25%">입찰수량</td>
+			            					<td class="txVol_text" style="width:25%">누적수량</td>
+			            					<td class="txVol_text" style="width:25%">여유수량</td>
 		            					</tr>
 		            				</thead>
 		            				<tbody>
 		            					<c:set var="rowNum" value="1"/>
-		            					<c:forEach items="${txVolWeek}" var="list">
-		            					<tr>
-	            						<c:choose>
-	            							<c:when test="${rowNum==1}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:when test="${rowNum==2}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:when test="${rowNum==3}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:otherwise>
-	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
-	            								<td class="txVol_text" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.vol}" pattern="#,###" /></td>
-	            							</c:otherwise>
-	            						</c:choose>
-		            					</tr>	
-		            					<c:set var="rowNum" value="${rowNum+1}"/>
+		            					<c:forEach items="${auction.bidInfo}" var="list">
+	            							<tr class="${rowNum==5?"text-danger font-weight-bold":""} ${rowNum==4?"text-info font-weight-bold":""}">
+		           								<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[0]}" pattern="#,###" /></td>
+		           								<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[1]}" pattern="#,###" /></td>
+			            						<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[2]}" pattern="#,###" /></td>
+			            						<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[3]}" pattern="#,###" /></td>
+			            					</tr>
+			            				<c:set var="rowNum" value="${rowNum+1}"/>
+		            					</c:forEach>	
+		            				</tbody>
+		            			</table>
+		            		</div>
+		           			
+		           		
+		            		<div class="col-md-6 py-4">
+		            			<h5 class="text-primary font-weight-bold"><a href="/board/free/list">자유게시판</a></h6>
+		            			<table id="txVol" class="table table-sm text-left table-hover">
+		            				<tbody>
+		            					<c:forEach items="${boardFree}" var="list">
+			            					<tr>
+			            						<td class="txVol_text"><a href="/board/free/content/${list.bno}"><span class="main_title">&nbsp;${list.title}&nbsp;</span><span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            					</tr>	
+		            					</c:forEach>
+		            				</tbody>
+		            			</table>
+		            		</div>
+		            		<div class="col-md-6 py-4">
+		            			<h5 class="text-primary font-weight-bold"><a href="/board/analysis/list">정보·분석 게시판</a></h6>
+		            			<table id="txVol" class="table table-sm text-left table-hover pr-3">
+		            				<tbody>
+		            					<c:forEach items="${boardAnalysis}" var="list">
+			            					<tr>
+			            						<td class="txVol_text"><a href="/board/analysis/content/${list.bno}"><span class="main_title">&nbsp;${list.title}&nbsp;</span><span class="text-primary">${list.replyCnt>0?list.replyCnt:""}</span></a></td>
+			            					</tr>	
 		            					</c:forEach>
 		            				</tbody>
 		            			</table>
 		            		</div>
 		            		
-		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold">거래수량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table class="txVol table table-sm text-center">
-		            				<thead class="font-weight-bold">
-		            					<tr class="">
-			            					<td class="txVol_text" style="width:8%">#</td>
-			            					<td class="txVol_text" style="width:32%">곡명</td>
-			            					<td class="txVol_text" style="width:32%">가수</td>
-			            					<td class="txVol_text" style="width:28%">거래수량</td>
-		            					</tr>
-		            				</thead>
-		            				<tbody>
-		            					<c:set var="rowNum" value="1"/>
-		            					<c:forEach items="${txUnit24h}" var="list">
-		            					<tr>
-	            						<c:choose>
-	            							<c:when test="${rowNum==1}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:when test="${rowNum==2}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:when test="${rowNum==3}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:otherwise>
-	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
-	            								<td class="txVol_text" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:otherwise>
-	            						</c:choose>
-		            					</tr>	
-		            					<c:set var="rowNum" value="${rowNum+1}"/>
-		            					</c:forEach>
-		            				</tbody>
-		            			</table>
-		            		</div>
-		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold">거래수량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table class="txVol table table-sm text-center">
-		            				<thead class="font-weight-bold">
-		            					<tr class="">
-			            					<td class="txVol_text" style="width:8%">#</td>
-			            					<td class="txVol_text" style="width:32%">곡명</td>
-			            					<td class="txVol_text" style="width:32%">가수</td>
-			            					<td class="txVol_text" style="width:28%">거래수량</td>
-		            					</tr>
-		            				</thead>
-		            				<tbody>
-		            					<c:set var="rowNum" value="1"/>
-		            					<c:forEach items="${txUnitWeek}" var="list">
-		            					<tr>
-	            						<c:choose>
-	            							<c:when test="${rowNum==1}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/gold_medal.gif"></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_gold_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_gold_td" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:when test="${rowNum==2}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/silver_medal.gif"></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_silver_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_silver_td" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:when test="${rowNum==3}">
-	            								<td class="txVol_text" style="width:8%"><img src="/resources/level_icon/bronze_medal.gif"></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-	            								<td class="txVol_text txVol_bronze_td" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text txVol_bronze_td" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:when>
-	            							<c:otherwise>
-	            								<td class="txVol_text" style="width:8%">${rowNum}</td>
-	            								<td class="txVol_text" style="width:32%"><a href="https://www.musicow.com/song/${list.idx}"  target='_blank'>${list.song}</a></td>
-			            						<td class="txVol_text" style="width:32%">${list.singer}</td>
-			            						<td class="txVol_text" style="width:28%"><fmt:formatNumber value="${list.units}" pattern="#,###" /></td>
-	            							</c:otherwise>
-	            						</c:choose>
-		            					</tr>	
-		            					<c:set var="rowNum" value="${rowNum+1}"/>
-		            					</c:forEach>
-		            				</tbody>
-		            			</table>
-		            		</div>
 		            	</div>
 		            	
 		            	<div class="heading pb-5">
@@ -312,22 +213,6 @@ if(window.innerWidth<768){
 	});
 }
 
-
-
-let today = new Date();   
-let year = today.getFullYear(); // 년도
-let month = today.getMonth() + 1;  // 월
-let date = today.getDate();  // 날짜
-let day = today.getDay();  // 요일
-let hours = today.getHours(); // 시
-let minutes = today.getMinutes();  // 분
-let seconds = today.getSeconds();  // 초
-$('.todayTime').text("("+
-		month
-		+ '.' + date
-		+ " " + (hours < 9 ? "0"+hours : hours)
-		+ ':' + (minutes < 9 ? "0"+minutes : minutes)
-		+ ':' + (seconds < 9 ? "0"+seconds : seconds)+ " 기준)");
 
 </script>
 

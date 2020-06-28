@@ -1,5 +1,6 @@
 package com.musicpan.task;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.musicpan.domain.FeeYearMonthVO;
+import com.musicpan.domain.NowAuctionVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.mapper.MusicMapper;
 import com.musicpan.music.MusicPro;
@@ -34,20 +36,29 @@ public class MusicTask {
 	//50초마다
 	//@Scheduled(cron="*/50 * * * * *")
 	public void nowAuction() throws Exception{
-		List<Integer> list = musicPro.getNowAuctionIdx();
+		List<String[]> list = musicPro.getNowAuctionIdx();
+		List<Integer> idxList = new ArrayList();
+		
+		for(String[] temp : list) {
+			idxList.add(Integer.parseInt(temp[0]));
+		}
+		
 		List<Integer> dbIdxs = mapper.getIdxNowAuction();
 		
 		//진행중 옥션에서 마감된 곡은 지우기
-		if(list.size()!=dbIdxs.size()) {
+		if(idxList.size()!=dbIdxs.size()) {
 			for(int temp : dbIdxs) {
-				if(!list.contains(temp)) {
+				if(!idxList.contains(temp)) {
 					mapper.deleteByIdxNowAuction(temp);
 				}//if
 			}//for
 		}//if
 		
-		for(int temp : list) {
-			mapper.insertNowAuction(musicPro.getNowAuctionSongInfo(temp));
+		for(String[] temp : list) {
+			NowAuctionVO vo = musicPro.getNowAuctionSongInfo( Integer.parseInt(temp[0]) );
+			vo.setTxt_time_left(temp[1]);
+			vo.setSong_img3(temp[2]);
+			mapper.insertNowAuction(vo);
 		}
 	}//nowAuction()
 	

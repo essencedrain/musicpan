@@ -362,7 +362,9 @@ e8f3fc
     border-color: #0F4C81 !important;
     color: #f6f5ef !important;
 }
-
+.btn-light{
+	border-radius: 0;
+}
 /* ==========================버튼============================== */
 
 /* ---------------------------------------------------
@@ -647,7 +649,11 @@ e8f3fc
 	height: 16px !important;
 }
 
-
+.txVol_text a:hover{
+    color: #007bff;
+    text-decoration: none;
+    transition: all 0.3s;
+}
 
 
 /* ---------------------------------------------------

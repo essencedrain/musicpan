@@ -417,6 +417,8 @@
 				, bidsum
 				, bidgap
 				, updatedate
+				, txt_time_left
+				, song_img3
 			)
 		VALUES
 			(
@@ -430,6 +432,8 @@
 				, #{bidsum}
 				, #{bidgap}
 				, now()
+				, #{txt_time_left}
+				, #{song_img3}
 			)
 		ON DUPLICATE KEY UPDATE
 			bidprice = #{bidprice}
@@ -437,6 +441,8 @@
 			, bidsum = #{bidsum}
 			, bidgap = #{bidgap}
 			, updatedate = now()
+			, txt_time_left = #{txt_time_left}
+			, song_img3 = #{song_img3}
 	</insert>
 	
 	<select id="getIdxNowAuction" resultType="int">
@@ -461,5 +467,26 @@
 		ORDER BY
 			updatedate desc
 		LIMIT 0,1
+	</select>
+	
+	
+	<select id="getOneNowAuction" resultType="com.musicpan.domain.NowAuctionVO">
+		SELECT
+			*
+		FROM
+			music_nowauction
+		ORDER BY
+			idx asc
+		LIMIT 0,1
+	</select>
+	
+	
+	<select id="getAllNowAuction" resultType="com.musicpan.domain.NowAuctionVO">
+		SELECT
+			*
+		FROM
+			music_nowauction
+		ORDER BY
+			idx asc
 	</select>
 </mapper>

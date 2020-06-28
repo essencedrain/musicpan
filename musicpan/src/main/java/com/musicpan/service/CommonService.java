@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.musicpan.domain.NowAuctionWeb;
 import com.musicpan.domain.SongTxVolVO;
 
 
@@ -28,5 +29,6 @@ public interface CommonService {
 	
 	public Date getRecentUpdatedateBasic();
 	
-	
+	public NowAuctionWeb getOneNowAuction();
+	public List<NowAuctionWeb> getAllNowAuction();
 }//interface

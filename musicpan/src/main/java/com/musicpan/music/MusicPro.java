@@ -772,11 +772,11 @@ public class MusicPro {
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			// getNowAuctionIdx() : 현재 진행중인 옥션 idx list로 반환
 			//----------------------------------------------------------------------------------------------------------------------------------------------
-			public List<Integer> getNowAuctionIdx() {
+			public List<String[]> getNowAuctionIdx() {
 				
 				int page = 1;
 				boolean last_page = false;
-				List<Integer> result = new ArrayList<>();
+				List<String[]> result = new ArrayList<>();
 				
 				while(!last_page) {
 					Document doc= null;
@@ -799,8 +799,12 @@ public class MusicPro {
 					//log.info(ids.size());//현재 페이지 옥션중인 곡 size
 					
 					for(int i=0; i<ids.size();i++) {
-						String test = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("id").getAsString();
-						result.add(Integer.parseInt(test.trim()));
+						String[] temp = new String[3]; 
+						temp[0] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("id").getAsString();
+						temp[1] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("txt_time_left").getAsString();
+						temp[2] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("song_img3").getAsString();
+						
+						result.add(temp);
 					}//for
 					
 					
