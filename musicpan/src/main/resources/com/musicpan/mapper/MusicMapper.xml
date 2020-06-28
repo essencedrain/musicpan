@@ -241,7 +241,42 @@
 	</select>
 	
 	
-	<select id="getTxVol24" resultType="com.musicpan.domain.SongTxVolVO">
+	
+	
+	<select id="getTxVol20m" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -20 minute) AND NOW()
+		GROUP BY h.idx
+		ORDER BY vol DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxVol1h" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 hour) AND NOW()
+		GROUP BY h.idx
+		ORDER BY vol DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxVol4h" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -4 hour) AND NOW()
+		GROUP BY h.idx
+		ORDER BY vol DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxVol24h" resultType="com.musicpan.domain.SongTxVolVO">
 		SELECT
 			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
 		FROM
@@ -263,7 +298,54 @@
 		ORDER BY vol DESC
 		LIMIT 0,10
 	</select>
-	<select id="getTxUnit24" resultType="com.musicpan.domain.SongTxVolVO">
+	<select id="getTxVolMonth" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 month) AND NOW()
+		GROUP BY h.idx
+		ORDER BY vol DESC
+		LIMIT 0,10
+	</select>
+	
+	
+	
+	<select id="getTxUnit20m" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -20 minute) AND NOW()
+		GROUP BY h.idx
+		ORDER BY units DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxUnit1h" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 hour) AND NOW()
+		GROUP BY h.idx
+		ORDER BY units DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxUnit4h" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -4 hour) AND NOW()
+		GROUP BY h.idx
+		ORDER BY units DESC
+		LIMIT 0,10
+	</select>
+	<select id="getTxUnit24h" resultType="com.musicpan.domain.SongTxVolVO">
 		SELECT
 			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
 		FROM
@@ -285,6 +367,20 @@
 		ORDER BY units DESC
 		LIMIT 0,10
 	</select>
+	<select id="getTxUnitMonth" resultType="com.musicpan.domain.SongTxVolVO">
+		SELECT
+			b.idx, b.song, b.singer, SUM(h.hisprice * h.hisunit) AS 'vol', SUM(h.hisunit) AS 'units'
+		FROM
+			music_history h INNER JOIN music_basic b ON h.idx=b.idx
+		WHERE
+			h.histime BETWEEN DATE_ADD(NOW(), INTERVAL -1 month) AND NOW()
+		GROUP BY h.idx
+		ORDER BY units DESC
+		LIMIT 0,10
+	</select>
+	
+	
+	
 	
 	<select id="getHistoryIdx" resultType="com.musicpan.domain.SongHistoryVO">
 		SELECT
@@ -356,4 +452,14 @@
 		where
 			idx = #{idx}
 	</delete>
+	
+	<select id="getRecentUpdatedateBasic" resultType="date">
+		SELECT
+			updatedate
+		FROM
+			music_basic
+		ORDER BY
+			updatedate desc
+		LIMIT 0,1
+	</select>
 </mapper>

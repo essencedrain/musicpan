@@ -64,9 +64,9 @@ public class CommonController {
 	@GetMapping("/")
 	public String home(Model model) {
 		
-		model.addAttribute("txVol24", commonService.getTxVol24());
+		model.addAttribute("txVol24h", commonService.getTxVol24h());
 		model.addAttribute("txVolWeek", commonService.getTxVolWeek());
-		model.addAttribute("txUnit24", commonService.getTxUnit24());
+		model.addAttribute("txUnit24h", commonService.getTxUnit24h());
 		model.addAttribute("txUnitWeek", commonService.getTxUnitWeek());
 		model.addAttribute("boardFree", boardService.getListForHomeFree());
 		model.addAttribute("boardAnalysis", boardService.getListForHomeAnalysis());

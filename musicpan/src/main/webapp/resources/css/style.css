@@ -621,24 +621,24 @@ e8f3fc
 /* ---------------------------------------------------
     홈화면 STYLE
 ----------------------------------------------------- */
-#txVol{
+.txVol{
 	table-layout: fixed;
 	color: #555;
 }
-#txVol .txVol_text{
+.txVol .txVol_text{
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
-#txVol .txVol_gold_td{
+.txVol .txVol_gold_td{
 	background: #ffe799;
 	font-weight: 700;
 }
-#txVol .txVol_silver_td{
+.txVol .txVol_silver_td{
 	background: #ececec;
 	font-weight: 700;
 }
-#txVol .txVol_bronze_td{
+.txVol .txVol_bronze_td{
 	background: #e7cdc9;
 	font-weight: 700;
 }

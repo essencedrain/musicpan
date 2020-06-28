@@ -18,6 +18,23 @@
 </div>
 <!-- scroll to top -->
 
+
+<!-- tauVolume 페이지 전용 -->
+<!-- scroll to top -->
+<div class="utilBtns back-to-top-tauVolume">
+	<div>
+		<a id="back-to-top-tauVolume1" href="#" class="btn btn-primary btn-sm" role="button"><i class="fas fa-chevron-up back-to-top_i"></i></a>
+		<a id="back-to-top-tauVolume2" href="#" class="btn btn-primary btn-sm" role="button">10m</a>
+		<a id="back-to-top-tauVolume3" href="#" class="btn btn-primary btn-sm" role="button">1H</a>
+		<a id="back-to-top-tauVolume4" href="#" class="btn btn-primary btn-sm" role="button">4H</a>
+		<a id="back-to-top-tauVolume5" href="#" class="btn btn-primary btn-sm" role="button">24H</a>
+		<a id="back-to-top-tauVolume6" href="#" class="btn btn-primary btn-sm" role="button">1W</a>
+		<a id="back-to-top-tauVolume7" href="#" class="btn btn-primary btn-sm" role="button">1M</a>
+	</div>
+</div>
+<!-- scroll to top -->
+
+
 <!-- 그외 페이지 -->
 <!-- scroll to top -->
 <div class="utilBtns back-to-top99">

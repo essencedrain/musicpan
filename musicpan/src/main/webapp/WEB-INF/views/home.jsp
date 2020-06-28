@@ -46,8 +46,8 @@
 		            		
 		            		
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold"">거래대금 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table id="txVol" class="table table-sm text-center">
+		            			<h5 class="text-info font-weight-bold">거래대금 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<table class="txVol table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
 			            					<td class="txVol_text" style="width:8%">#</td>
@@ -58,7 +58,7 @@
 		            				</thead>
 		            				<tbody>
 		            					<c:set var="rowNum" value="1"/>
-		            					<c:forEach items="${txVol24}" var="list">
+		            					<c:forEach items="${txVol24h}" var="list">
 		            					<tr>
 	            						<c:choose>
 	            							<c:when test="${rowNum==1}">
@@ -93,8 +93,8 @@
 		            			</table>
 		            		</div>
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold"">거래대금 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table id="txVol" class="table table-sm text-center">
+		            			<h5 class="text-info font-weight-bold">거래대금 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<table class="txVol table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
 			            					<td class="txVol_text" style="width:8%">#</td>
@@ -141,8 +141,8 @@
 		            		</div>
 		            		
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold"">거래수량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table id="txVol" class="table table-sm text-center">
+		            			<h5 class="text-info font-weight-bold">거래수량 TOP10 (24시간)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<table class="txVol table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
 			            					<td class="txVol_text" style="width:8%">#</td>
@@ -153,7 +153,7 @@
 		            				</thead>
 		            				<tbody>
 		            					<c:set var="rowNum" value="1"/>
-		            					<c:forEach items="${txUnit24}" var="list">
+		            					<c:forEach items="${txUnit24h}" var="list">
 		            					<tr>
 	            						<c:choose>
 	            							<c:when test="${rowNum==1}">
@@ -188,8 +188,8 @@
 		            			</table>
 		            		</div>
 		            		<div class="col-md-6 py-4">
-		            			<h5 class="text-info font-weight-bold"">거래수량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
-		            			<table id="txVol" class="table table-sm text-center">
+		            			<h5 class="text-info font-weight-bold">거래수량 TOP10 (1주일)<span class="float-right todayTime" style="font-size: 14px !important; padding-top: 8px; color: #666"></span></h6>
+		            			<table class="txVol table table-sm text-center">
 		            				<thead class="font-weight-bold">
 		            					<tr class="">
 			            					<td class="txVol_text" style="width:8%">#</td>

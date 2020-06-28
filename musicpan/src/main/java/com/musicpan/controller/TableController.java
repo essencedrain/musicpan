@@ -18,6 +18,7 @@ import com.musicpan.domain.MetaInfoJSON;
 import com.musicpan.domain.PriceInfoVO;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.mapper.MusicMapper;
+import com.musicpan.service.CommonService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -31,7 +32,8 @@ public class TableController {
 	@Autowired
 	private MusicMapper mapper;
 	
-	
+	@Autowired
+	private CommonService commonService;
 	
 	//=========================================================================================
   	// g000
@@ -181,6 +183,8 @@ public class TableController {
   	//=========================================================================================
   	
   	
+  	
+  	
   	//=========================================================================================
   	// g002
    	// 기능		:	타우픽
@@ -210,6 +214,35 @@ public class TableController {
   		model.addAttribute("tableDescription", "tauPickV1");
   		
   		return "dtable/tauPick";
+  	}
+  	//=========================================================================================
+  	
+  	
+  	
+  	
+  	//=========================================================================================
+  	// g003
+  	// 기능		:	거래대금
+  	// 메서드	:	GET
+  	// URI		:	/tables/tauVolume
+  	//=========================================================================================
+  	@GetMapping("/tauVolume")
+  	public String tauVolume(Model model) {
+  		
+  		String[][] timeArray = {
+  				{"20m","10분"}
+  				,{"1h","1시간"}
+  				,{"4h","4시간"}
+  				,{"24h","24시간"}
+  				,{"Week","1주일"}
+  				,{"Month","1달"}
+  				};
+  		model.addAttribute("txVol", commonService.getTxVol());
+  		model.addAttribute("txUnit", commonService.getTxUnit());
+  		model.addAttribute("timeArray", timeArray);
+  		model.addAttribute("updatedate", commonService.getRecentUpdatedateBasic());
+  	
+  		return "dtable/tauVolume";
   	}
   	//=========================================================================================
   	

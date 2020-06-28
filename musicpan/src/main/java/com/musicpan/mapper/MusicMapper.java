@@ -73,11 +73,19 @@ public interface MusicMapper {
 	
 	public List<SongTotalVO> getTauPick();
 	
-	public List<SongTxVolVO> getTxVol24();
+	public List<SongTxVolVO> getTxVol20m();
+	public List<SongTxVolVO> getTxVol1h();
+	public List<SongTxVolVO> getTxVol4h();
+	public List<SongTxVolVO> getTxVol24h();
 	public List<SongTxVolVO> getTxVolWeek();
+	public List<SongTxVolVO> getTxVolMonth();
 	
-	public List<SongTxVolVO> getTxUnit24();
+	public List<SongTxVolVO> getTxUnit20m();
+	public List<SongTxVolVO> getTxUnit1h();
+	public List<SongTxVolVO> getTxUnit4h();
+	public List<SongTxVolVO> getTxUnit24h();
 	public List<SongTxVolVO> getTxUnitWeek();
+	public List<SongTxVolVO> getTxUnitMonth();
 	
 	public List<SongHistoryVO> getHistoryIdx(@Param("idx") int idx);
 	
@@ -85,4 +93,5 @@ public interface MusicMapper {
 	public List<Integer> getIdxNowAuction();
 	public int insertNowAuction(NowAuctionVO vo);
 	public int deleteByIdxNowAuction(@Param("idx") int idx);
+	public Date getRecentUpdatedateBasic();
 }//interface
