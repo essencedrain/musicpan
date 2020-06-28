@@ -335,5 +335,11 @@
 				, #{bidgap}
 				, now()
 			)
+		ON DUPLICATE KEY UPDATE
+			bidprice = #{bidprice}
+			, bidunit = #{bidunit}
+			, bidsum = #{bidsum}
+			, bidgap = #{bidgap}
+			, updatedate = now()
 	</insert>
 </mapper>
