@@ -38,9 +38,11 @@
 			            			</td>
 			            		</tr>
 			            		
-			            		<tr>
-			            			<td class="content_main_td"><i class="fas fa-link content_gray"></i>&nbsp;<span class="content_gray_small"><a href="/board/${cri.b_name}/content/${board.bno}">http://musictau.com/board/${cri.b_name}/content/${board.bno}</a></span></td>
-			            		</tr>
+			            		<c:if test="${board.notice_flag==0}">
+				            		<tr>
+				            			<td class="content_main_td"><i class="fas fa-link content_gray"></i>&nbsp;<span class="content_gray_small"><a href="/board/${cri.b_name}/content/${board.bno}">http://musictau.com/board/${cri.b_name}/content/${board.bno}</a></span></td>
+				            		</tr>
+			            		</c:if>
 			            		
 			            		<tr class="content_file_place_parent">
 			            			<td class="content_file_place">
