@@ -419,6 +419,7 @@
 				, updatedate
 				, txt_time_left
 				, song_img3
+				, song_amt_royalty_avg
 			)
 		VALUES
 			(
@@ -434,6 +435,7 @@
 				, now()
 				, #{txt_time_left}
 				, #{song_img3}
+				, #{song_amt_royalty_avg}
 			)
 		ON DUPLICATE KEY UPDATE
 			bidprice = #{bidprice}
@@ -443,6 +445,7 @@
 			, updatedate = now()
 			, txt_time_left = #{txt_time_left}
 			, song_img3 = #{song_img3}
+			, song_amt_royalty_avg = #{song_amt_royalty_avg}
 	</insert>
 	
 	<select id="getIdxNowAuction" resultType="int">

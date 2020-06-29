@@ -799,10 +799,11 @@ public class MusicPro {
 					//log.info(ids.size());//현재 페이지 옥션중인 곡 size
 					
 					for(int i=0; i<ids.size();i++) {
-						String[] temp = new String[3]; 
+						String[] temp = new String[4]; 
 						temp[0] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("id").getAsString();
 						temp[1] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("txt_time_left").getAsString();
 						temp[2] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("song_img3").getAsString();
+						temp[3] = object.get("auctions").getAsJsonArray().get(i).getAsJsonObject().getAsJsonPrimitive("song_amt_royalty_avg").getAsString();
 						
 						result.add(temp);
 					}//for
@@ -860,53 +861,59 @@ public class MusicPro {
 				//log.info(doc.select(".option").size());
 				//log.info(doc.select("#page_auction > section.sec_auction > div.tbl_price > ul > li > div:nth-child(2) > ul > li:nth-child(1)").size());
 				//#page_auction > section.sec_auction > div.tbl_price > ul > li > div:nth-child(2) > ul > li:nth-child(1)
-				int totalBid = 0;
-				for(int i=0;i<bidSize;i++) {
-					boolean isLast = doc.select(".option").get(i).select("li:nth-child(3)").text().length() > 2?true:false;
-					int[] temp= new int[3];
-					
-					String units_temp = doc.select(".option").get(i).select("li:nth-child(2)").text();
-					String price_temp = doc.select(".option").get(i).select("li:nth-child(1)").text();
-					temp[0] = Integer.parseInt( units_temp.replaceAll(",", "") );
-					temp[1] = Integer.parseInt( price_temp.substring(0, price_temp.indexOf("캐")-1).replaceAll(",", "") );
-					
-					totalBid += temp[0];
-					temp[2] = totalBid;
-					bidList.add(temp);
-					
-					if(isLast) {
-						break;
-					}
-				}//for
 				
-				if(bidList.size()>5) {
-					int fixSize = bidList.size();
-					for(int i=0; i<(fixSize-5); i++) {
-						bidList.remove(0);
+				if(bidSize >0) {
+					int totalBid = 0;
+					for(int i=0;i<bidSize;i++) {
+						boolean isLast = doc.select(".option").get(i).select("li:nth-child(3)").text().length() > 2?true:false;
+						int[] temp= new int[3];
+						
+						String units_temp = doc.select(".option").get(i).select("li:nth-child(2)").text();
+						String price_temp = doc.select(".option").get(i).select("li:nth-child(1)").text();
+						temp[0] = Integer.parseInt( units_temp.replaceAll(",", "") );
+						temp[1] = Integer.parseInt( price_temp.substring(0, price_temp.indexOf("캐")-1).replaceAll(",", "") );
+						
+						totalBid += temp[0];
+						temp[2] = totalBid;
+						bidList.add(temp);
+						
+						if(isLast) {
+							break;
+						}
 					}//for
-				}//if
-				
-				boolean isFirst = true;
-				for(int[] temp : bidList) {
-					if(isFirst) {
-						bidUnit += temp[0];
-						bidPrice += temp[1];
-						bidSum += temp[2];
-						bidGap += totalUnits-temp[2];
-						isFirst = false;
-					}else {
-						bidUnit += ","+temp[0];
-						bidPrice += ","+temp[1];
-						bidSum += ","+temp[2];
-						bidGap += ","+(totalUnits-temp[2]);
+					
+					if(bidList.size()>5) {
+						int fixSize = bidList.size();
+						for(int i=0; i<(fixSize-5); i++) {
+							bidList.remove(0);
+						}//for
+					}//if
+					
+					boolean isFirst = true;
+					for(int[] temp : bidList) {
+						if(isFirst) {
+							bidUnit += temp[0];
+							bidPrice += temp[1];
+							bidSum += temp[2];
+							bidGap += totalUnits-temp[2];
+							isFirst = false;
+						}else {
+							bidUnit += ","+temp[0];
+							bidPrice += ","+temp[1];
+							bidSum += ","+temp[2];
+							bidGap += ","+(totalUnits-temp[2]);
+						}
 					}
-				}
-				
+					result.setBidprice(bidPrice);
+					result.setBidunit(bidUnit);
+					result.setBidsum(bidSum);
+					result.setBidgap(bidGap);
+				}//if(bidSize >0) {
 				result.setBidprice(bidPrice);
 				result.setBidunit(bidUnit);
 				result.setBidsum(bidSum);
 				result.setBidgap(bidGap);
-				
+					
 				return result;
 			}//getNowAuctionSongInfo
 			//----------------------------------------------------------------------------------------------------------------------------------------------

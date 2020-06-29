@@ -58,6 +58,7 @@ public class MusicTask {
 			NowAuctionVO vo = musicPro.getNowAuctionSongInfo( Integer.parseInt(temp[0]) );
 			vo.setTxt_time_left(temp[1]);
 			vo.setSong_img3(temp[2]);
+			vo.setSong_amt_royalty_avg( Integer.parseInt(temp[3]) );
 			mapper.insertNowAuction(vo);
 		}
 	}//nowAuction()

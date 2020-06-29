@@ -63,7 +63,7 @@
 			            			<table class="txVol table table-sm text-center">
 			            				<thead class="font-weight-bold">
 			            					<tr class="">
-				            					<td class="txVol_text align-middle" colspan="4" style="height: 132px">
+				            					<td class="txVol_text align-middle" colspan="5" style="height: 132px">
 				            						<a href="https://www.musicow.com/auction/${auction.idx}" target="_blank"><img class="float-left" style="width: 120px !important; height: 120px !important;" src="${auction.song_img3}"></a>
 				            						<a href="https://www.musicow.com/auction/${auction.idx}" target="_blank"><h4 class="text-left font-weight-bold">&nbsp;&nbsp;${auction.song}</h4></a>
 				            						<h5 class="text-left font-weight-bold">&nbsp;&nbsp;${auction.singer}</h5>
@@ -72,15 +72,16 @@
 				            					</td>
 			            					</tr>
 			            					<tr>
-			            						<td colspan="4" class="" style="color:#999">
+			            						<td colspan="5" class="" style="color:#999">
 			            							&nbsp;&nbsp;옥션 수량 : <fmt:formatNumber value="${auction.totalunits}" pattern="#,###" />주 / 시작가 : <fmt:formatNumber value="${auction.startprice}" pattern="#,###" />원
 			            						</td>
 			            					</tr>
 			            					<tr class="">
-				            					<td class="txVol_text" style="width:25%">입찰가격</td>
-				            					<td class="txVol_text" style="width:25%">입찰수량</td>
-				            					<td class="txVol_text" style="width:25%">누적수량</td>
-				            					<td class="txVol_text" style="width:25%">여유수량</td>
+				            					<td class="txVol_text" style="width:20%">가격</td>
+				            					<td class="txVol_text" style="width:20%">입찰</td>
+				            					<td class="txVol_text" style="width:20%">누적</td>
+				            					<td class="txVol_text" style="width:20%">여유</td>
+				            					<td class="txVol_text" style="width:20%">수익</td>
 			            					</tr>
 			            				</thead>
 			            				<tbody>
@@ -91,6 +92,7 @@
 			           								<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[1]}" pattern="#,###" /></td>
 				            						<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[2]}" pattern="#,###" /></td>
 				            						<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[3]}" pattern="#,###" /></td>
+				            						<td class="txVol_text" style="width:25%"><fmt:formatNumber value="${list[4]}" pattern=".0" />%</td>
 				            					</tr>
 				            				<c:set var="rowNum" value="${rowNum+1}"/>
 			            					</c:forEach>	

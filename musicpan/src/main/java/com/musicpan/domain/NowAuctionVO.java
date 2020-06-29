@@ -18,5 +18,6 @@ public class NowAuctionVO {
 	private String bidgap;
 	private String txt_time_left;
 	private String song_img3;
+	private int song_amt_royalty_avg;
 	private Date updatedate;
 }

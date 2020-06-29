@@ -136,20 +136,22 @@ public class CommonServiceImpl implements CommonService {
 		web.setTxt_time_left(vo.getTxt_time_left());
 		web.setSong_img3(vo.getSong_img3());
 		
-		
-		String[] bidprice = vo.getBidprice().split(",");
-		String[] bidunit = vo.getBidunit().split(",");
-		String[] bidsum = vo.getBidsum().split(",");
-		String[] bidgap = vo.getBidgap().split(",");
+		String[] dummyArray = {"","","",""};
+		String[] bidprice = vo.getBidprice().length() > 0 ? vo.getBidprice().split(","):dummyArray;
+		String[] bidunit = vo.getBidunit().length() > 0 ? vo.getBidunit().split(","):dummyArray;
+		String[] bidsum = vo.getBidsum().length() > 0 ? vo.getBidsum().split(","):dummyArray;
+		String[] bidgap = vo.getBidgap().length() > 0 ? vo.getBidgap().split(","):dummyArray;
 		
 		List<String[]> bidInfo = new ArrayList<>();
 		
 		for(int i=0; i<5; i++) {
-			String[] temp = new String[4];
+			String[] temp = new String[5];
 			temp[0] = bidprice[i];
 			temp[1] = bidunit[i];
 			temp[2] = bidsum[i];
 			temp[3] = bidgap[i];
+			float profitTemp = ( (float)vo.getSong_amt_royalty_avg()/(float)Integer.parseInt(temp[0]) )*100.00f;
+			temp[4] = profitTemp+"";
 			
 			bidInfo.add(temp);
 		}
@@ -178,19 +180,22 @@ public class CommonServiceImpl implements CommonService {
 			web.setSong_img3(vo.getSong_img3());
 			
 			
-			String[] bidprice = vo.getBidprice().split(",");
-			String[] bidunit = vo.getBidunit().split(",");
-			String[] bidsum = vo.getBidsum().split(",");
-			String[] bidgap = vo.getBidgap().split(",");
+			String[] dummyArray = {"","","",""};
+			String[] bidprice = vo.getBidprice().length() > 0 ? vo.getBidprice().split(","):dummyArray;
+			String[] bidunit = vo.getBidunit().length() > 0 ? vo.getBidunit().split(","):dummyArray;
+			String[] bidsum = vo.getBidsum().length() > 0 ? vo.getBidsum().split(","):dummyArray;
+			String[] bidgap = vo.getBidgap().length() > 0 ? vo.getBidgap().split(","):dummyArray;
 			
 			List<String[]> bidInfo = new ArrayList<>();
 			
 			for(int i=0; i<5; i++) {
-				String[] temp = new String[4];
+				String[] temp = new String[5];
 				temp[0] = bidprice[i];
 				temp[1] = bidunit[i];
 				temp[2] = bidsum[i];
 				temp[3] = bidgap[i];
+				float profitTemp = ( (float)vo.getSong_amt_royalty_avg()/(float)Integer.parseInt(temp[0]) )*100.00f;
+				temp[4] = profitTemp+"";
 				
 				bidInfo.add(temp);
 			}
