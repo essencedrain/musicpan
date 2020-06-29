@@ -31,4 +31,7 @@ public interface CommonService {
 	
 	public NowAuctionWeb getOneNowAuction();
 	public List<NowAuctionWeb> getAllNowAuction();
+	
+	public int saveTableConfig(String id, List<Integer> list);
+	public List<Integer> getTableConfing(String id);
 }//interface

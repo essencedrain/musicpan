@@ -7,10 +7,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +21,7 @@ import com.musicpan.domain.MetaInfoJSON;
 import com.musicpan.domain.PriceInfoVO;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.mapper.MusicMapper;
+import com.musicpan.security.domain.CustomUser;
 import com.musicpan.service.CommonService;
 
 import lombok.AllArgsConstructor;
@@ -159,7 +163,20 @@ public class TableController {
   	//=========================================================================================
   	//@PreAuthorize("isAuthenticated()")
   	@GetMapping("/priceInfo")
-  	public String tableTest2(Model model) {
+  	public String tableTest2(Model model, Authentication authentication) {
+  		
+  		
+  		//로그인시 테이블 설정 전달
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			if(user.getUsername().length()>0){
+				List<Integer> result = commonService.getTableConfing( user.getUsername() );
+				if(result!=null) {
+					model.addAttribute("config", result);
+				}
+			}
+		}
+  		
   		
   		List<SongTotalVO> resultTemp = mapper.getSongTotalInfo();
   		
@@ -261,6 +278,30 @@ public class TableController {
   		model.addAttribute("auctionList", commonService.getAllNowAuction());
   		
   		return "dtable/auctionInfo";
+  	}
+  	//=========================================================================================
+  	
+  	
+  	
+  	
+  	//=========================================================================================
+  	// p000
+  	// 기능		:	컬럼체크 정보 저장
+  	// 메서드	:	post
+  	// URI		:	/tables/saveTableConfig
+  	//=========================================================================================
+  	@PostMapping("/saveTableConfig")
+  	public String saveTableConfig(
+  			Model model
+  			, @RequestParam(value="priceCheckBox",required=true) List<Integer> priceCheckBox
+  			, @RequestParam(value="id",required=true) String id
+  	) {
+  		
+  		//log.info("test : " + id+"//"+priceCheckBox.toString());
+  		
+  		commonService.saveTableConfig(id, priceCheckBox);
+  		
+  		return "redirect:/tables/priceInfo";
   	}
   	//=========================================================================================
   	

@@ -492,4 +492,33 @@
 		ORDER BY
 			idx asc
 	</select>
+	
+	
+	<insert id="saveTableConfig">
+		INSERT INTO
+			music_pricetableconfig
+			(
+				id
+				, checkedbox
+				, updatedate
+			)
+		VALUES
+			(
+				#{id}
+				, #{checkedbox}
+				, now()
+			)
+		ON DUPLICATE KEY UPDATE
+			checkedbox = #{checkedbox}
+			, updatedate = now()
+	</insert>
+	
+	<select id="getTableConfing" resultType="string">
+		SELECT
+			checkedbox
+		FROM
+			music_pricetableconfig
+		WHERE
+			id = #{id}
+	</select>
 </mapper>

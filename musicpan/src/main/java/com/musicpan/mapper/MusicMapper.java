@@ -96,4 +96,9 @@ public interface MusicMapper {
 	public Date getRecentUpdatedateBasic();
 	public NowAuctionVO getOneNowAuction();
 	public List<NowAuctionVO> getAllNowAuction();
+	
+	
+	//테이블설정저장
+	public int saveTableConfig(@Param("id") String id, @Param("checkedbox") String checkedbox);
+	public String getTableConfing(@Param("id") String id);
 }//interface

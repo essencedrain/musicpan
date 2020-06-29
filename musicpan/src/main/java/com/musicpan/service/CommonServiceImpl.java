@@ -209,4 +209,39 @@ public class CommonServiceImpl implements CommonService {
 		return result;
 	}
 
+	
+	
+	@Override
+	public int saveTableConfig(String id, List<Integer> list) {
+		
+		String checkedbox ="";
+		
+		for(int temp : list) {
+			if(checkedbox.length()==0) {
+				checkedbox += temp;
+			}else {
+				checkedbox += ","+temp;
+			}
+		}
+		
+		return mapper.saveTableConfig(id, checkedbox);
+	}
+
+	@Override
+	public List<Integer> getTableConfing(String id) {
+		
+		List<Integer> result = new ArrayList<>();
+		String temp = mapper.getTableConfing(id);
+		
+		if(temp.length()>0) {
+			String[] temp2 = temp.split(",");
+			for(String temp3 : temp2) {
+				result.add(Integer.parseInt(temp3));
+			}
+		}else {
+			result = null;
+		}
+		return result;
+	}
+
 }//class

@@ -94,10 +94,91 @@
 		                		</tr>
 		                	</table>
 		                </div>
-		                
-		                
-		                
-		                
+							
+							
+						<form id="checkForm" name="checkForm" method="post" action="/tables/saveTableConfig">
+		                	<div class="table-responsive pt-2 pb-4">
+			                	<table class="table table-bordered table-sm">
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox1" class="priceCheckBox" name="priceCheckBox" data-cno="1" value="1">
+				    						<label for="priceCheckBox1">가수</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox2" class="priceCheckBox" name="priceCheckBox" data-cno="2" value="2">
+				    						<label for="priceCheckBox2">차트</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox3" class="priceCheckBox" name="priceCheckBox" data-cno="3" value="3">
+				    						<label for="priceCheckBox3">매도호가</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox4" class="priceCheckBox" name="priceCheckBox" data-cno="4" value="4">
+				    						<label for="priceCheckBox4">매도잔량</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox5" class="priceCheckBox" name="priceCheckBox" data-cno="5" value="5">
+				    						<label for="priceCheckBox5">매수호가</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox6" class="priceCheckBox" name="priceCheckBox" data-cno="6" value="6">
+				    						<label for="priceCheckBox6">매수잔량</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox7" class="priceCheckBox" name="priceCheckBox" data-cno="7" value="7">
+				    						<label for="priceCheckBox7">최근거래가</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox8" class="priceCheckBox" name="priceCheckBox" data-cno="8" value="8">
+				    						<label for="priceCheckBox8">옥션최저가</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox9" class="priceCheckBox" name="priceCheckBox" data-cno="9" value="9">
+				    						<label for="priceCheckBox9">8%적정가</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox10" class="priceCheckBox" name="priceCheckBox" data-cno="10" value="10">
+				    						<label for="priceCheckBox10">옥션갭%</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox11" class="priceCheckBox" name="priceCheckBox" data-cno="11" value="11">
+				    						<label for="priceCheckBox11">수익률 3개월</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox12" class="priceCheckBox" name="priceCheckBox" data-cno="12" value="12">
+				    						<label for="priceCheckBox12">수익률 6개월</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox13" class="priceCheckBox" name="priceCheckBox" data-cno="13" value="13">
+				    						<label for="priceCheckBox13">수익률 1년</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox14" class="priceCheckBox" name="priceCheckBox" data-cno="14" value="14">
+				    						<label for="priceCheckBox14">수익률 전체</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox15" class="priceCheckBox" name="priceCheckBox" data-cno="15" value="15">
+				    						<label for="priceCheckBox15">저작권 정보 제공 횟수</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox16" class="priceCheckBox" name="priceCheckBox" data-cno="16" value="16">
+				    						<label for="priceCheckBox16">CV(변동계수, 상대표준편차)</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox17" class="priceCheckBox" name="priceCheckBox" data-cno="17" value="17">
+				    						<label for="priceCheckBox17">공표일</label>
+			                			</td>
+		                			</tr>
+		                			<tr>
+		                				<td>
+		                					 <button class="btn btn-outline-primary" id="checkAll">전체선택</button>
+		                					 <button class="btn btn-outline-primary" id="uncheckAll">전체해제</button>
+		                					 <button class="btn btn-primary" id="saveCheckData">저장하기</button>
+		                				</td>
+		                			</tr>
+			                	</table>
+		                	</div>
+		                	<sec:authorize access="isAuthenticated()">
+		                		<input type='hidden' name='id' value="<sec:authentication property="principal.username"/>">
+		                	</sec:authorize>
+		                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                </form>
 		                
 	                	<table id="myTable" id="dataTables_set" class="display compact cell-border text-center" cellspacing="0" width="100%">
 							<thead>
@@ -315,15 +396,111 @@
 <script src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/ellipsis.js"></script>
 
+<c:choose>
+	<c:when test="${config!=null}">
+	    <c:forEach items="${config}" var="config2">
+	    	<script>
+	    		$('#priceCheckBox${config2}').prop("checked", true);
+	    	</script>
+		</c:forEach>
+	</c:when>
+	<c:otherwise>
+		<script>
+			$('.priceCheckBox').each(function (index, item) {
+	    		$(item).prop("checked", true);
+	    	});
+    	</script>
+	</c:otherwise>
+</c:choose>
+
 <script>
 $(document).ready( function () {
-    $('#myTable').DataTable({
-    	pageLength: 13
-    	,scrollX: true
-    	,fixedColumns: true
-    	,order: [[ 13, "desc" ]]
-    });
+	var table = $('#myTable').DataTable({
+			    	pageLength: 13
+			    	,scrollX: true
+			    	,fixedColumns: true
+			    	,order: [[ 13, "desc" ]]
+			    });
     $('#myTable_length').css("display", "none");
+    
+    
+    
+  
+	//컬럼 체크박스처리
+    $('.priceCheckBox').each(function (index, item) {
+    	//console.log($(item).data('cno'));
+    	if($(item).is(":checked")){
+    		table.column( $(item).data('cno') ).visible( true );
+    	}else{
+    		table.column( $(item).data('cno') ).visible( false );
+    	}
+    	
+    	$(item).change(function(){
+    		if($(item).is(":checked")){
+        		table.column( $(item).data('cno') ).visible( true );
+        	}else{
+        		table.column( $(item).data('cno') ).visible( false );
+        	}
+    	});
+    });
+
+    $('#checkAll').click(function(e){
+    	e.preventDefault();
+    	$('.priceCheckBox').each(function (index, item) {
+    		$(item).prop("checked", true);
+    		table.column( $(item).data('cno') ).visible( true );
+    	});
+    });
+    $('#uncheckAll').click(function(e){
+    	e.preventDefault();
+    	$('.priceCheckBox').each(function (index, item) {
+    		$(item).prop("checked", false);
+    		table.column( $(item).data('cno') ).visible( false );
+    	});
+    });
+    
+    $('#saveCheckData').click(function(e){
+    	e.preventDefault();
+    	
+    	var isSigned = false;
+    	
+    	<sec:authorize access="isAuthenticated()">
+    		isSigned = true;
+    	</sec:authorize>
+    	
+    	if(!isSigned){
+    		swa("error",'로그인이 필요한 기능입니다.');
+    		return;
+    	}
+    	
+    	if ( $("input:checkbox[name=priceCheckBox]:checked").length<1 ) {
+    		swa("error",'1개 이상 체크하셔야 합니다.');
+    		return;
+   	    }
+    	$('#checkForm').submit();
+    });
+    
+    /*
+    $("#sellInfo").change(function(){
+    	if($("#sellInfo").is(":checked")){
+    		table.column(3).visible( true );
+    		table.column(4).visible( true );
+        }else{
+        	table.column(3).visible( false );
+        	table.column(4).visible( false );
+        }
+    });
+    $("#buyInfo").change(function(){
+    	if($("#buyInfo").is(":checked")){
+    		table.column(5).visible( true );
+    		table.column(6).visible( true );
+        }else{
+        	table.column(5).visible( false );
+        	table.column(6).visible( false );
+        }
+    });
+    */
+    //table.column( 3 ).visible( false );
     
     
 } );
