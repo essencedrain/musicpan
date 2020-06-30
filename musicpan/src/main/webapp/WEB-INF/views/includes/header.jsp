@@ -17,7 +17,7 @@
 	<meta property="og:url" content="http://www.musictau.com">
     <title>뮤직타우</title>
 
-    <!-- Bootstrap 4.1 -->
+    <!-- Bootstrap 4.5 -->
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,500,700,900&display=swap&subset=korean" rel="stylesheet">
@@ -53,6 +53,7 @@
     <!-- =================================================================================================  -->
     <!-- start wrapper  -->
     <!-- =================================================================================================  -->
+    <div id="loading"><div id="loading-image" class="spinner-border text-dark" role="status" style="width: 4rem; height: 4rem;"></div></div>
     <div class="wrapper">
         <!-- =================================================================================================  -->
         <!-- start Sidebar  -->
