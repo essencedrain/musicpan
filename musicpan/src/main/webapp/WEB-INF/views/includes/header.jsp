@@ -53,7 +53,7 @@
     <!-- =================================================================================================  -->
     <!-- start wrapper  -->
     <!-- =================================================================================================  -->
-    <div id="loading"><div id="loading-image" class="spinner-border text-dark" role="status" style="width: 4rem; height: 4rem;"></div></div>
+    <div id="loading"><div id="loading-image" class="spinner-border text-dark" role="status"></div></div>
     <div class="wrapper">
         <!-- =================================================================================================  -->
         <!-- start Sidebar  -->

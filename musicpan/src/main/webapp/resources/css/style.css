@@ -45,9 +45,11 @@ body {
  text-align: center; } 
   
 #loading-image {  
- position: fixed;
- top: 50%;  
- left: 50%; 
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ margin-top:-2rem;
+ margin-left: -2rem;
  z-index: 1000;
  }
 /* ==========================로딩처리============================== */
@@ -685,12 +687,20 @@ e8f3fc
 	.board_550banner_bot_350_adfit{
 		display: none;
 	}
+	#loading-image{
+		width: 4rem;
+		height: 4rem;
+	}
 }
 
 
 @media only screen and (max-width:767px){
 	.board_768banner_bot_720_adfit{
 		display: none;
+	}
+	#loading-image{
+		width: 4rem;
+		height: 4rem;
 	}
 }
 
