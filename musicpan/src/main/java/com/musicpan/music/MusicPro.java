@@ -686,11 +686,11 @@ public class MusicPro {
 			/*
 			  	이 메서드는 월이 바뀌었을때 작동이 시작된다.
 			  	db 연도와 월을 넣고 사이트 스크립트에 저작권료 불러온다.
-		  		db와 사이트간에 모든곡이 차이가 1이 나야 정상이고 = true
+		  		db와 사이트간에 모든곡 저작권 업데이트 월차이가 1이 나야 정상이고 = true
 		  		(즉, db가 5면 사이트의 모든곡이 6이 되야 true)
-		  		한 곡이라도 차이가 0 이면 false
+		  		한 곡이라도 차이가 0 이면 false이다.
 			    
-			    true가 되면 저작권료 갱신을 시작한다.
+			    true가 되야만(사이트 모든곡 저작권이 갱신되엇을 때) db 저작권료 갱신을 시작한다.
 			 */
 			//----------------------------------------------------------------------------------------------------------------------------------------------
 			public boolean getFeeInfoMonth(int dbYear, int dbMonth, List<Integer> dbIdxs) {
@@ -736,7 +736,7 @@ public class MusicPro {
 							int month = Integer.parseInt(j);
 							
 							if(dbMonth == 12) {//월은 12진수니 처리
-								if(year==dbYear) {
+								if(year==dbYear+1) {
 									if( month == 1) {
 										resultCnt += 1;
 									}

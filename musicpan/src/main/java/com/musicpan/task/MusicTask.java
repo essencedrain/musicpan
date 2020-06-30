@@ -135,7 +135,7 @@ public class MusicTask {
 		
 		//시스템이 1 앞서면, 저작권갱신시기
 		if(dbMonth==12) {
-			if(dbYear==year) {
+			if(dbYear+1==year) {
 				if(month == 1) {
 					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
 						for(int temp : dbIdxs) {
