@@ -66,6 +66,7 @@
     <script src="/resources/js/sweetalert2.min.js"></script>
     <!--  wow js file  -->
     <script src="/resources/js/wow.js"></script>
+    
     <script>
         new WOW().init();
     </script>

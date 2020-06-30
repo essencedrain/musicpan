@@ -657,7 +657,25 @@ e8f3fc
 
 
 /* ---------------------------------------------------
-    배너 STYLE
+    adfit 배너 STYLE
+----------------------------------------------------- */
+@media only screen and (min-width: 768px){
+	.board_550banner_bot_350_adfit{
+		display: none;
+	}
+}
+
+
+@media only screen and (max-width:767px){
+	.board_768banner_bot_720_adfit{
+		display: none;
+	}
+}
+
+
+
+/* ---------------------------------------------------
+    쿠팡배너 STYLE
 ----------------------------------------------------- */
 @media only screen and (min-width: 1200px){
 	.board_993banner_bot_780
@@ -704,21 +722,22 @@ e8f3fc
 	,.board_551banner_bot_520{
 		display: none;
 	}
+		
 	table.dataTable th:nth-child(1) {
-  width: 100px;
-  max-width: 100px;
-  word-break: break-all;
-  white-space: pre-line;
-  text-overflow: ellipsis;
-}
-
-table.dataTable td:nth-child(1) {
-  width: 100px;
-  max-width: 100px;
-  word-break: break-all;
-  white-space: nowrap;
-  overflow: hidden;
-}
+	  width: 100px;
+	  max-width: 100px;
+	  word-break: break-all;
+	  white-space: pre-line;
+	  text-overflow: ellipsis;
+	}
+	
+	table.dataTable td:nth-child(1) {
+	  width: 100px;
+	  max-width: 100px;
+	  word-break: break-all;
+	  white-space: nowrap;
+	  overflow: hidden;
+	}
 	
 }
 
