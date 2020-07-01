@@ -48,6 +48,8 @@ body {
  position: absolute;
  top: 50%;
  left: 50%;
+ width: 4rem;
+ height: 4rem;
  margin-top:-2rem;
  margin-left: -2rem;
  z-index: 1000;
@@ -677,31 +679,6 @@ e8f3fc
     color: #007bff;
     text-decoration: none;
     transition: all 0.3s;
-}
-
-
-/* ---------------------------------------------------
-    adfit 배너 STYLE
------------------------------------------------------ */
-@media only screen and (min-width: 768px){
-	.board_550banner_bot_350_adfit{
-		display: none;
-	}
-	#loading-image{
-		width: 4rem;
-		height: 4rem;
-	}
-}
-
-
-@media only screen and (max-width:767px){
-	.board_768banner_bot_720_adfit{
-		display: none;
-	}
-	#loading-image{
-		width: 4rem;
-		height: 4rem;
-	}
 }
 
 

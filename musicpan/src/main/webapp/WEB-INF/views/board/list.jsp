@@ -201,8 +201,7 @@
 								</c:choose>
 							</ul>
 		            	</div>
-		            	<%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit2.jsp"%>
+		            	<%@include file="../includes/coopang.jsp"%>
 		            	
 		            </div><!-- div class="center_area col-lg-10 mb-5" -->
 		            

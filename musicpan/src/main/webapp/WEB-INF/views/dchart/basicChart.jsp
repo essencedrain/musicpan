@@ -22,8 +22,7 @@
 		            
 		            <div class="center_area col-lg-10" >
 		            
-		            	<%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit.jsp"%>
+		            	<%@include file="../includes/coopang.jsp"%>
 		            
 		            	<div class="pt-3 pb-4">
 		                	<h3 class="board_heading"><a href="/chart/idx/${songBasic.idx}">가격·거래량 차트 <i class="fas fa-sync-alt"></i></a></h3>
@@ -104,8 +103,7 @@
 		            		<div class="line"></div>
 		                </div>
 		                
-		                <%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit2.jsp"%>
+		                <%@include file="../includes/coopang.jsp"%>
 		            </div>
 		            
 		            <div class="right_area col-lg-1">

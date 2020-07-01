@@ -23,8 +23,7 @@
 		                </div>
 		                <%@include file="../includes/info_buttons.jsp"%>
 		                <div class="py-2"></div>
-		                <%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit.jsp"%>
+		                <%@include file="../includes/coopang.jsp"%>
 		            	<div class="pb-2"></div>
 		            	
             			
@@ -81,8 +80,7 @@
 		            		<div class="line"></div>
 		                </div>
 		                
-		                <%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit2.jsp"%>
+		                <%@include file="../includes/coopang.jsp"%>
 		            </div>
 		            
 		            <div class="right_area col-lg-1">

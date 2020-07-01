@@ -26,8 +26,7 @@
 		                </div>
 		                <%@include file="../includes/info_buttons.jsp"%>
 		                <div class="py-2"></div>
-		                <%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit.jsp"%>
+		                <%@include file="../includes/coopang.jsp"%>
 		                
 		                <div class="table-responsive pt-2 pb-4">
 		                	<table class="table table-bordered table-sm">
@@ -208,8 +207,7 @@
 	                	</table>
 		                <h6>업데이트 : ${updatedate}</h6>
 		                
-		                <%-- <%@include file="../includes/coopang.jsp"%>--%>
-		                <%@include file="../includes/adfit2.jsp"%>
+		                <%@include file="../includes/coopang.jsp"%>
 		                
 		            </div><!-- <div class="center_area col-lg-10" > -->
 		            
