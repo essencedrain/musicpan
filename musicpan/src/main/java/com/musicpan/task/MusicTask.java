@@ -134,9 +134,9 @@ public class MusicTask {
 		int month = (cal.get(cal.MONTH)+1);
 		
 		//시스템이 1 앞서면, 저작권갱신시기
-		if(dbMonth==12) {
+		if(dbMonth > 10) {
 			if(dbYear+1==year) {
-				if(month == 1) {
+				if(month == (dbMonth-10) ) {
 					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
 						for(int temp : dbIdxs) {
 							insertFeeOld(temp+"");
@@ -146,7 +146,7 @@ public class MusicTask {
 			}//if
 		}else {
 			if(dbYear==year) {
-				if(dbMonth+1 == month) {
+				if(dbMonth+2 == month) {
 					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
 						for(int temp : dbIdxs) {
 							insertFeeOld(temp+"");

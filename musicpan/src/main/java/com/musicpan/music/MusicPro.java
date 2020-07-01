@@ -722,6 +722,11 @@ public class MusicPro {
 					Element script2 = script.get(10);
 					String jsonData = script2.html().substring(83,script2.html().length()-56);
 					
+					//저작권 정보가 아예 없는 신곡은 그냥 카운트처리(20200701)
+					if(jsonData.length()==2) {
+						resultCnt += 1;
+					}
+					
 					//JSON 파싱
 					JsonElement element = JsonParser.parseString(jsonData);
 					JsonObject object1 = element.getAsJsonObject();
@@ -740,23 +745,22 @@ public class MusicPro {
 									if( month == 1) {
 										resultCnt += 1;
 									}
-								}//if
+								}
 							}else {
 								if(year==dbYear) {
 									if( month == dbMonth+1) {
 										resultCnt += 1;
 									}
-								}//if
+								}
 							}//if
 							
 							//최신꺼 하나만 담고 바로 탈출
 							break forout;
 						}//for j
 					}//for k
-					
 					//----------------------------------------------
 				}//for(String tempList : list) {
-				
+					
 				if(dbIdxs.size() == resultCnt) {
 					result = true;
 				}//if

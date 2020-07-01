@@ -1,5 +1,6 @@
 package com.musicpan.mapper;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.musicpan.domain.FeeYearMonthVO;
 import com.musicpan.domain.NowAuctionVO;
 import com.musicpan.domain.SongBasicVO;
 import com.musicpan.music.MusicPro;
@@ -30,6 +32,57 @@ public class MusicMapperTests {
 	
 	//MusicPro 로드
 	private MusicPro musicPro = new MusicPro();
+	
+	@Test
+	public void testNowAuction() {
+		//현재 DB에 있는 모든 곡 idx(int)획득
+		List<Integer> dbIdxs = mapper.getIdx();
+		
+		log.info("test : " + dbIdxs.size());
+		
+		//4
+		//저작권료 갱신해야하는지 체크
+		//db music_feeinfo 테이블 feemonth 최신 연월
+		FeeYearMonthVO feeYearMonthVO = mapper.getFeeYearMonth();
+		int dbYear = feeYearMonthVO.getYear();
+		int dbMonth = feeYearMonthVO.getMonth();
+		//시스템연월
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(cal.YEAR);
+		int month = (cal.get(cal.MONTH)+1);
+		
+		//시스템이 1 앞서면, 저작권갱신시기
+		if(dbMonth>10) {
+			if(dbYear+1==year) {
+				if(month == (dbMonth-10) ) {
+					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
+						for(int temp : dbIdxs) {
+							log.info("통과");
+							//insertFeeOld(temp+"");
+						}//for
+					}else {
+						log.info("통과못함");
+					}
+				}//if
+			}//if
+		}else {
+			if(dbYear==year) {
+				log.info("통과1");
+				log.info("통과1 : " + dbYear + "//" + dbMonth + "//" + month);
+				if(dbMonth+2 == month) {
+					log.info("통과2");
+					if(musicPro.getFeeInfoMonth(dbYear, dbMonth, dbIdxs)) {
+						for(int temp : dbIdxs) {
+							log.info("통과3");
+							//insertFeeOld(temp+"");
+						}//for
+					}else {
+						log.info("통과못함");
+					}
+				}//if
+			}//if
+		}//if
+	}
 	
 	/*
 	@Test
