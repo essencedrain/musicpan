@@ -233,13 +233,15 @@ public class CommonServiceImpl implements CommonService {
 		List<Integer> result = new ArrayList<>();
 		String temp = mapper.getTableConfing(id);
 		
-		if(temp.length()>0) {
-			String[] temp2 = temp.split(",");
-			for(String temp3 : temp2) {
-				result.add(Integer.parseInt(temp3));
+		if(temp!=null) {
+			if(temp.length()>0) {
+				String[] temp2 = temp.split(",");
+				for(String temp3 : temp2) {
+					result.add(Integer.parseInt(temp3));
+				}
+			}else {
+				result = null;
 			}
-		}else {
-			result = null;
 		}
 		return result;
 	}
