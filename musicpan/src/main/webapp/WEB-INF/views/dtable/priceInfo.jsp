@@ -34,6 +34,10 @@
 		                			<td colspan="2" class="text-nowrap">현재가 기준 : 최저 매도호가</td>
 		                		</tr>
 		                		<tr>
+		                			<td class="text-nowrap font-weight-bold">시가총액</td>
+		                			<td class="text-nowrap">최근거래가 x 해당곡의 총 지분수</td>
+		                		</tr>
+		                		<tr>
 		                			<td class="text-nowrap font-weight-bold">8%적정가</td>
 		                			<td class="text-nowrap">12개월 수익률이 8%가 되기 위한 가격</td>
 		                		</tr>
