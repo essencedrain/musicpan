@@ -79,63 +79,68 @@
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox2" class="priceCheckBox" name="priceCheckBox" data-cno="2" value="2">
 				    						<label for="priceCheckBox2">차트</label>
-			                			</td>
-		                			</tr>
-			                		<tr>
-			                			<td class="text-nowrap">
 			                				<input type="checkbox" id="priceCheckBox3" class="priceCheckBox" name="priceCheckBox" data-cno="3" value="3">
-				    						<label for="priceCheckBox3">매도호가</label>
+				    						<label for="priceCheckBox3">시총순위</label>
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox4" class="priceCheckBox" name="priceCheckBox" data-cno="4" value="4">
-				    						<label for="priceCheckBox4">매도잔량</label>
-				    						&nbsp;
-						                	<input type="checkbox" id="priceCheckBox5" class="priceCheckBox" name="priceCheckBox" data-cno="5" value="5">
-				    						<label for="priceCheckBox5">매수호가</label>
+				    						<label for="priceCheckBox4">시가총액</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox5" class="priceCheckBox" name="priceCheckBox" data-cno="5" value="5">
+				    						<label for="priceCheckBox5">매도호가</label>
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox6" class="priceCheckBox" name="priceCheckBox" data-cno="6" value="6">
-				    						<label for="priceCheckBox6">매수잔량</label>
-			                			</td>
-		                			</tr>
-			                		<tr>
-			                			<td class="text-nowrap">
-			                				<input type="checkbox" id="priceCheckBox7" class="priceCheckBox" name="priceCheckBox" data-cno="7" value="7">
-				    						<label for="priceCheckBox7">최근거래가</label>
+				    						<label for="priceCheckBox6">매도잔량</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox7" class="priceCheckBox" name="priceCheckBox" data-cno="7" value="7">
+				    						<label for="priceCheckBox7">매수호가</label>
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox8" class="priceCheckBox" name="priceCheckBox" data-cno="8" value="8">
-				    						<label for="priceCheckBox8">옥션최저가</label>
-				    						&nbsp;
-						                	<input type="checkbox" id="priceCheckBox9" class="priceCheckBox" name="priceCheckBox" data-cno="9" value="9">
-				    						<label for="priceCheckBox9">8%적정가</label>
+				    						<label for="priceCheckBox8">매수잔량</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox9" class="priceCheckBox" name="priceCheckBox" data-cno="9" value="9">
+				    						<label for="priceCheckBox9">최근거래가</label>
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox10" class="priceCheckBox" name="priceCheckBox" data-cno="10" value="10">
-				    						<label for="priceCheckBox10">옥션갭%</label>
-			                			</td>
-		                			</tr>
-			                		<tr>
-			                			<td class="text-nowrap">
-			                				<input type="checkbox" id="priceCheckBox11" class="priceCheckBox" name="priceCheckBox" data-cno="11" value="11">
-				    						<label for="priceCheckBox11">수익률 3개월</label>
+				    						<label for="priceCheckBox10">옥션최저가</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox11" class="priceCheckBox" name="priceCheckBox" data-cno="11" value="11">
+				    						<label for="priceCheckBox11">8%적정가</label>
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox12" class="priceCheckBox" name="priceCheckBox" data-cno="12" value="12">
-				    						<label for="priceCheckBox12">수익률 6개월</label>
-				    						&nbsp;
-						                	<input type="checkbox" id="priceCheckBox13" class="priceCheckBox" name="priceCheckBox" data-cno="13" value="13">
-				    						<label for="priceCheckBox13">수익률 1년</label>
-				    						&nbsp;
-						                	<input type="checkbox" id="priceCheckBox14" class="priceCheckBox" name="priceCheckBox" data-cno="14" value="14">
-				    						<label for="priceCheckBox14">수익률 전체</label>
+				    						<label for="priceCheckBox12">옥션갭%</label>
 			                			</td>
 		                			</tr>
 			                		<tr>
 			                			<td class="text-nowrap">
-			                				<input type="checkbox" id="priceCheckBox15" class="priceCheckBox" name="priceCheckBox" data-cno="15" value="15">
-				    						<label for="priceCheckBox15">저작권 정보 제공 횟수</label>
+			                				<input type="checkbox" id="priceCheckBox13" class="priceCheckBox" name="priceCheckBox" data-cno="13" value="13">
+				    						<label for="priceCheckBox13">수익률 3개월</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox14" class="priceCheckBox" name="priceCheckBox" data-cno="14" value="14">
+				    						<label for="priceCheckBox14">수익률 6개월</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox15" class="priceCheckBox" name="priceCheckBox" data-cno="15" value="15">
+				    						<label for="priceCheckBox15">수익률 1년</label>
 				    						&nbsp;
 						                	<input type="checkbox" id="priceCheckBox16" class="priceCheckBox" name="priceCheckBox" data-cno="16" value="16">
-				    						<label for="priceCheckBox16">CV(변동계수, 상대표준편차)</label>
+				    						<label for="priceCheckBox16">수익률 전체</label>
+			                			</td>
+		                			</tr>
+			                		<tr>
+			                			<td class="text-nowrap">
+			                				<input type="checkbox" id="priceCheckBox17" class="priceCheckBox" name="priceCheckBox" data-cno="17" value="17">
+				    						<label for="priceCheckBox17">저작권 정보 제공 횟수</label>
 				    						&nbsp;
-						                	<input type="checkbox" id="priceCheckBox17" class="priceCheckBox" name="priceCheckBox" data-cno="17" value="17">
-				    						<label for="priceCheckBox17">공표일</label>
+						                	<input type="checkbox" id="priceCheckBox18" class="priceCheckBox" name="priceCheckBox" data-cno="18" value="18">
+				    						<label for="priceCheckBox18">CV(변동계수, 상대표준편차)</label>
+				    						&nbsp;
+						                	<input type="checkbox" id="priceCheckBox19" class="priceCheckBox" name="priceCheckBox" data-cno="19" value="19">
+				    						<label for="priceCheckBox19">공표일</label>
 			                			</td>
 		                			</tr>
 		                			<tr>
@@ -159,6 +164,8 @@
 									<td>곡명</td>
 									<td>가수</td>
 									<td>차트</td>
+									<td>시총순위</td>
+									<td>시총(천원)</td>
 									<td>매도</td>
 									<td>잔량</td>
 									<td>매수</td>
@@ -182,6 +189,10 @@
 										<td style="width:90px;" class="text-primary"><a href="https://www.musicow.com/song/${list.idx}" target='_blank'>${list.song}</a></td>
 										<td>${list.singer}</td>
 										<td class="text-primary"><a href="/chart/idx/${list.idx}" target='_blank'><i class="far fa-chart-bar"></i></a></td>
+										
+										<td>${list.marketrank}</td>
+										<td><fmt:formatNumber value="${list.marketcap}" pattern="#,###" /></td>
+										
 										<td class="text-white bg-primary font-weight-bold"><fmt:formatNumber value="${list.sellprice}" pattern="#,###" /></td>
 										<td class="text-white bg-primary font-weight-bold"><fmt:formatNumber value="${list.sellunit}" pattern="#,###" /></td>
 										
@@ -290,7 +301,6 @@
 												<td>${list.cvall}</td>
 											</c:otherwise>
 										</c:choose>
-										
 										<td>${list.finalrelease}</td>
 										
 									</tr>							
@@ -363,13 +373,10 @@ $(document).ready( function () {
 			    	pageLength: 13
 			    	,scrollX: true
 			    	,fixedColumns: true
-			    	,order: [[ 13, "desc" ]]
+			    	,order: [[ 2, "desc" ]]
 			    });
     $('#myTable_length').css("display", "none");
     
-    
-    
-  
 	//컬럼 체크박스처리
     $('.priceCheckBox').each(function (index, item) {
     	//console.log($(item).data('cno'));
@@ -476,7 +483,6 @@ function numberWithCommas(x) {
     });
     </script>
     <!-- =================================================================================================  -->
-
 
 <!-- =================================================================================================  -->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ js ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

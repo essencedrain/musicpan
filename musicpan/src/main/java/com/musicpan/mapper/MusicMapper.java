@@ -101,4 +101,5 @@ public interface MusicMapper {
 	//테이블설정저장
 	public int saveTableConfig(@Param("id") String id, @Param("checkedbox") String checkedbox);
 	public String getTableConfing(@Param("id") String id);
+	
 }//interface

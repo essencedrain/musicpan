@@ -216,12 +216,11 @@
 	
 	<select id="getSongTotalInfo" resultType="com.musicpan.domain.SongTotalVO">
 		SELECT
-			*
+			*, stockcnt * recentprice AS 'marketcap'
 		FROM
 			music_mview
-		ORDER BY singer asc
+		ORDER BY marketcap DESC 
 	</select>
-	
 	
 	<select id="getTauPick" resultType="com.musicpan.domain.SongTotalVO">
 	<![CDATA[

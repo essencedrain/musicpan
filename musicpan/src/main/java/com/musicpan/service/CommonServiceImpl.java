@@ -1,5 +1,6 @@
 package com.musicpan.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,8 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.musicpan.domain.MetaInfoJSON;
 import com.musicpan.domain.NowAuctionVO;
 import com.musicpan.domain.NowAuctionWeb;
+import com.musicpan.domain.PriceInfoVO;
+import com.musicpan.domain.SongTotalVO;
 import com.musicpan.domain.SongTxVolVO;
 import com.musicpan.mapper.MusicMapper;
 
@@ -245,5 +251,111 @@ public class CommonServiceImpl implements CommonService {
 		}
 		return result;
 	}
+
+	
+	
+	@Override
+	public String metaInfo() {
+
+
+		ObjectMapper mapperJSON = new ObjectMapper();
+  		String jsonString = null;
+  		
+  		List<SongTotalVO> resultTemp = mapper.getSongTotalInfo();
+  		
+  		//후처리결과
+  		List<MetaInfoJSON> result = new ArrayList<>();
+  		
+  		//후처리
+  		for(SongTotalVO temp : resultTemp) {
+  			
+  			MetaInfoJSON tempData = new MetaInfoJSON();
+  			/*
+  			//avg 시리즈 매도가 기준 백분율전환 (최근x개월기준 수익률)
+  			if(temp.getSellprice()!=0) {
+				tempData.setAvg3f( (float)(Math.round( (float)temp.getAvg3()/(float)temp.getSellprice()*10000) / 100.00) );
+				tempData.setAvg6f( (float)(Math.round( (float)temp.getAvg6()/(float)temp.getSellprice()*10000) / 100.00) );
+				tempData.setAvg12f( (float)(Math.round( (float)temp.getAvg12()/(float)temp.getSellprice()*10000) / 100.00) );
+				tempData.setAvgallf( (float)(Math.round( (float)temp.getAvgall()/(float)temp.getSellprice()*10000) / 100.00) );
+  			}else {
+  				tempData.setAvg3f(0);
+  				tempData.setAvg6f(0);
+  				tempData.setAvg12f(0);
+  				tempData.setAvgallf(0);
+  			}//if
+  			
+  			
+  			//매도가-옥션최저낙찰가 가격차 -> 백분율
+  			if(temp.getSellprice()<1 || temp.getAuctionmin()<1) {
+  				tempData.setAuctiongap_low(0);
+  			}else {
+  				tempData.setAuctiongap_low( (float)(Math.round((float)(temp.getSellprice()-temp.getAuctionmin())/(float)temp.getAuctionmin()*1000)/10.0) );
+  			}//if
+  			
+  			
+  			//매도가-옥션평균낙찰가 가격차 -> 백분율
+  			if(temp.getSellprice()<1 || temp.getAuctionavg()<1) {
+  				tempData.setAuctiongap_avg(0);
+  			}else {
+  				tempData.setAuctiongap_avg( (float)(Math.round((float)(temp.getSellprice()-temp.getAuctionavg())/(float)temp.getAuctionavg()*1000)/10.0) );
+  			}//if
+
+  			
+  			//최근12기준 8%적정가 = avg12/0.08
+  			tempData.setPricefor8( (int)Math.round(temp.getAvg12()/0.08) );
+  			*/
+  			
+  			//저작권기준월
+  			Date tempTime = temp.getFeeinfomonth();
+  			SimpleDateFormat transFormat = new SimpleDateFormat("MM");
+  			String to = transFormat.format(tempTime);
+  			tempData.setFeemonth(to);
+  			
+  			//최종업데이트시간
+  			tempTime = temp.getUpdatedate();
+  			transFormat = new SimpleDateFormat("HH:mm");
+  			to = transFormat.format(tempTime);
+  			tempData.setFinalupdate(to);
+  			
+  			//공표년
+  			tempTime = temp.getReleasedate();
+  			transFormat = new SimpleDateFormat("yyyy");
+  			to = transFormat.format(tempTime);
+  			tempData.setFinalrelease(to);
+  			
+  			//1:저작권, 0:인접권
+  			tempData.setCopyRight( temp.getCopyRight()==1?"저작권":"인접권" );
+  			
+  			//2차저작물작성권 1:O 2:X
+  			tempData.setSecRight( temp.getSecRight()==1?"O":"X" );
+  			
+  			//나머지데이터 정리
+  			tempData.setSong(temp.getSong());
+  			tempData.setSinger(temp.getSinger());
+  			tempData.setAuctionunits(temp.getAuctionunits());
+  			tempData.setStockCnt(temp.getStockCnt());
+  			tempData.setBroadcast(temp.getBroadcast());
+  			tempData.setTransfer(temp.getTransfer());
+  			tempData.setDuplication(temp.getDuplication());
+  			tempData.setPerformance(temp.getPerformance());
+  			tempData.setOversea(temp.getOversea());
+  			tempData.setEtc(temp.getEtc());
+  			tempData.setIdx(temp.getIdx());
+  			tempData.setComposer(temp.getComposer());
+  			tempData.setLyricist(temp.getLyricist());
+  			tempData.setArranger(temp.getArranger());
+  			
+  			result.add(tempData);
+  		}//for
+  		
+  		try {
+			jsonString = mapperJSON.writeValueAsString(result);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return jsonString;
+	}
+	
 
 }//class

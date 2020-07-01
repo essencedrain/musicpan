@@ -41,6 +41,6 @@ public class SongTotalVO {
 	private float performance;//32: 최근12개월 저작권구성비율 - 공연
 	private float oversea;//33: 최근12개월 저작권구성비율 - 해외
 	private float etc;//34: 최근12개월 저작권구성비율 - 기타
-	
+	private long marketcap;//35: 시가총액
 	
 }//class

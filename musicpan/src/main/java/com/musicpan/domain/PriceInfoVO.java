@@ -24,4 +24,6 @@ public class PriceInfoVO {
 	private String finalrelease;//공표일
 	private float cvall;//올타임 변동계수
 	private int alltime;//저작권정보제공월
+	private int marketrank;//시총순위
+	private long marketcap;//시가총액
 }//class

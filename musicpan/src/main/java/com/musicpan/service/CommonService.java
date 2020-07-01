@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.musicpan.domain.MetaInfoJSON;
 import com.musicpan.domain.NowAuctionWeb;
+import com.musicpan.domain.PriceInfoVO;
 import com.musicpan.domain.SongTxVolVO;
 
 
 public interface CommonService {
-
+	
+	public String metaInfo();
+	
 	public List<SongTxVolVO> getTxVol20m();
 	public List<SongTxVolVO> getTxVol1h();
 	public List<SongTxVolVO> getTxVol4h();
