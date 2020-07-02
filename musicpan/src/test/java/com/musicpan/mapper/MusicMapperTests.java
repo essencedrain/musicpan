@@ -34,6 +34,12 @@ public class MusicMapperTests {
 	private MusicPro musicPro = new MusicPro();
 	
 	@Test
+	public void test() {
+		log.info("test : "+mapper.getTableConfing("test"));
+	}
+	
+	/*
+	@Test
 	public void testNowAuction() {
 		//현재 DB에 있는 모든 곡 idx(int)획득
 		List<Integer> dbIdxs = mapper.getIdx();
@@ -83,6 +89,7 @@ public class MusicMapperTests {
 			}//if
 		}//if
 	}
+	*/
 	
 	/*
 	@Test
