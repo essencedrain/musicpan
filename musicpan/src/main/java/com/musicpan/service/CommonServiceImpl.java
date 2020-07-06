@@ -194,16 +194,32 @@ public class CommonServiceImpl implements CommonService {
 			
 			List<String[]> bidInfo = new ArrayList<>();
 			
-			for(int i=0; i<5; i++) {
-				String[] temp = new String[5];
-				temp[0] = bidprice[i];
-				temp[1] = bidunit[i];
-				temp[2] = bidsum[i];
-				temp[3] = bidgap[i];
-				float profitTemp = ( (float)vo.getSong_amt_royalty_avg()/(float)Integer.parseInt(temp[0]) )*100.00f;
-				temp[4] = profitTemp+"";
+			if(bidprice.length<5) {
+			
+				for(int i=0; i<bidprice.length; i++) {
+					String[] temp = new String[5];
+					temp[0] = bidprice[i];
+					temp[1] = bidunit[i];
+					temp[2] = bidsum[i];
+					temp[3] = bidgap[i];
+					float profitTemp = ( (float)vo.getSong_amt_royalty_avg()/(float)Integer.parseInt(temp[0]) )*100.00f;
+					temp[4] = profitTemp+"";
+					
+					bidInfo.add(temp);
+				}
 				
-				bidInfo.add(temp);
+			}else {
+				for(int i=0; i<5; i++) {
+					String[] temp = new String[5];
+					temp[0] = bidprice[i];
+					temp[1] = bidunit[i];
+					temp[2] = bidsum[i];
+					temp[3] = bidgap[i];
+					float profitTemp = ( (float)vo.getSong_amt_royalty_avg()/(float)Integer.parseInt(temp[0]) )*100.00f;
+					temp[4] = profitTemp+"";
+					
+					bidInfo.add(temp);
+				}
 			}
 			
 			web.setBidInfo(bidInfo);

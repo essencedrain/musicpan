@@ -37,7 +37,7 @@ public class MusicTask {
 	//@Scheduled(cron="*/50 * * * * *")
 	public void nowAuction() throws Exception{
 		List<String[]> list = musicPro.getNowAuctionIdx();
-		List<Integer> idxList = new ArrayList();
+		List<Integer> idxList = new ArrayList<>();
 		
 		for(String[] temp : list) {
 			idxList.add(Integer.parseInt(temp[0]));
