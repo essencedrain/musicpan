@@ -17,5 +17,5 @@ public class NowAuctionWeb {
 	private String txt_time_left;
 	private String song_img3;
 	private Date updatedate;
-	
+	private int sortNo;
 }

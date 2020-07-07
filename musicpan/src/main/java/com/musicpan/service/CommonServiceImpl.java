@@ -2,6 +2,7 @@ package com.musicpan.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musicpan.domain.MetaInfoJSON;
 import com.musicpan.domain.NowAuctionVO;
 import com.musicpan.domain.NowAuctionWeb;
-import com.musicpan.domain.PriceInfoVO;
 import com.musicpan.domain.SongTotalVO;
 import com.musicpan.domain.SongTxVolVO;
 import com.musicpan.mapper.MusicMapper;
@@ -130,6 +130,10 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Override
 	public NowAuctionWeb getOneNowAuction() {
+		
+		List<NowAuctionWeb> list = getAllNowAuction();
+		return list.get(0);
+		/*
 		NowAuctionVO vo = mapper.getOneNowAuction();
 		NowAuctionWeb web = new NowAuctionWeb();
 		
@@ -165,6 +169,7 @@ public class CommonServiceImpl implements CommonService {
 		web.setBidInfo(bidInfo);
 		
 		return web;
+		*/
 	}
 
 	@Override
@@ -185,6 +190,12 @@ public class CommonServiceImpl implements CommonService {
 			web.setTxt_time_left(vo.getTxt_time_left());
 			web.setSong_img3(vo.getSong_img3());
 			
+			//정렬순서매기기
+			if( web.getTxt_time_left().indexOf("시간")>0 ) {
+				web.setSortNo( -1*(24-Integer.parseInt(web.getTxt_time_left().substring(0, web.getTxt_time_left().indexOf("시간")))) );
+			}else {
+				web.setSortNo( Integer.parseInt( web.getTxt_time_left().substring(0, web.getTxt_time_left().indexOf("일")) ) );
+			}
 			
 			String[] dummyArray = {"","","",""};
 			String[] bidprice = vo.getBidprice().length() > 0 ? vo.getBidprice().split(","):dummyArray;
@@ -227,6 +238,20 @@ public class CommonServiceImpl implements CommonService {
 			result.add(web);
 			
 		}//for
+		
+		//정렬
+		result.sort(new Comparator<NowAuctionWeb>() {
+			@Override
+			public int compare(NowAuctionWeb o1, NowAuctionWeb o2) {
+				// TODO Auto-generated method stub
+				int a1 = o1.getSortNo();
+				int a2 = o2.getSortNo();
+				
+				if(a1==a2) {return 0;}
+				else if(a1>a2) {return 1;}
+				else {return -1;}
+			}
+		});
 		
 		return result;
 	}
