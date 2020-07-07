@@ -869,7 +869,7 @@ public class MusicPro {
 				if(bidSize >0) {
 					int totalBid = 0;
 					for(int i=0;i<bidSize;i++) {
-						boolean isLast = doc.select(".option").get(i).select("li:nth-child(3)").text().length() > 2?true:false;
+						boolean isLast = doc.select(".option").get(i).select("li:nth-child(3)").text().length() > 3?true:false;
 						int[] temp= new int[3];
 						
 						String units_temp = doc.select(".option").get(i).select("li:nth-child(2)").text();
