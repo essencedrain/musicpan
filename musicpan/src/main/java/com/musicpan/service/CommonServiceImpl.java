@@ -193,6 +193,8 @@ public class CommonServiceImpl implements CommonService {
 			//정렬순서매기기
 			if( web.getTxt_time_left().indexOf("시간")>0 ) {
 				web.setSortNo( -1*(24-Integer.parseInt(web.getTxt_time_left().substring(0, web.getTxt_time_left().indexOf("시간")))) );
+			}else if( web.getTxt_time_left().indexOf("분")>0 ) {
+				web.setSortNo( -1*(200-Integer.parseInt(web.getTxt_time_left().substring(0, web.getTxt_time_left().indexOf("분")))) );
 			}else {
 				web.setSortNo( Integer.parseInt( web.getTxt_time_left().substring(0, web.getTxt_time_left().indexOf("일")) ) );
 			}
