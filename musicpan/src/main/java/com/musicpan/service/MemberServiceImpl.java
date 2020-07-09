@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.musicpan.domain.BoardVO;
 import com.musicpan.domain.EmailAuthVO;
 import com.musicpan.domain.MemberVO;
 import com.musicpan.mapper.MemberMapper;
@@ -275,17 +276,40 @@ public class MemberServiceImpl implements MemberService {
 	//===============================================================
 	// 구간 경험치 획득
 	/*
+	 	(구)
 	 	1~10	:	100level
 	 	11~50	:	200level-1000
 	 	51~100	:	800level-31000
 	 	101~150	:	3000level-251000
 	 	151~180	:	30000level-4301000
 	 	181~199	:	300000level-52901000
+	 	
+	 	(신)
+	 	1~10	:	30level
+	 	11~100	:	50level-200
+	 	101~150	:	100level-5200
+	 	151~180	:	1000level-140200
+	 	181~199	:	10000level-1760200
 	 */
 	//===============================================================
 	
 	private long getExp(long level) {
 		
+		if(level>=0 && level<11) {
+			return 30*level;
+		}else if(level>=11 && level<101){
+			return 50*level-200;
+		}else if(level>=101 && level<151){
+			return 100*level-5200;
+		}else if(level>=151 && level<181){
+			return 1000*level-140200;
+		}else if(level>=181 && level<200){
+			return 10000*level-1760200;
+		}else {
+			return 9999900;
+		}
+		
+		/*
 		if(level>=0 && level<11) {
 			return 100*level;
 		}else if(level>=11 && level<51){
@@ -299,6 +323,7 @@ public class MemberServiceImpl implements MemberService {
 		}else {
 			return 300000*level-52901000;
 		}
+		*/
 		
 	}
 	//===============================================================
@@ -308,48 +333,82 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	//===============================================================
-	// db유저 경험치 -> 등급변환
-	/*
-	 	0~9 	: 레벨업경험치 100		//	0~999
-	 	10~49	: 레벨업경험치 200		//	1,000~8,999	
-	 	50~99	: 레벨업경험치 800		//	9,000~48,999
-	 	100~149	: 레벨업경험치 3,000	//	49,000~198,999
-	 	150~179	: 레벨업경험치 30,000	//	199,000~1,098,999
-	 	180~199	: 레벨업경험치 300,000	//	1,099,000~7,098,999
-	 	
-	 	경험치
-	 		로그인		:	10
-	 		글쓰기		:	20
-	 		댓글쓰기	:	2
-	 		글추/비추	:	3/-2
-	 		댓글추/비추	:	2/-1
-	 		
-	 */
-	//===============================================================
-	private long convertGrade(long grade) {
-		
-		if(grade>=0 && grade<1000) {
-			return (long)Math.floor(grade/100);
+		// db유저 경험치 -> 등급변환
+		/*
+		    (구)
+		 	0~9 	: 레벨업경험치 100		//	0~999
+		 	10~49	: 레벨업경험치 200		//	1,000~8,999	
+		 	50~99	: 레벨업경험치 800		//	9,000~48,999
+		 	100~149	: 레벨업경험치 3,000	//	49,000~198,999
+		 	150~179	: 레벨업경험치 30,000	//	199,000~1,098,999
+		 	180~199	: 레벨업경험치 300,000	//	1,099,000~7,098,999
+		 	
+		 	(신)
+		 	0~9 	: 레벨업경험치 30		//	0~299
+		 	10~99	: 레벨업경험치 50		//	300~4,799	
+		 	100~149	: 레벨업경험치 100		//	4,800~9,799
+		 	150~179	: 레벨업경험치 1,000	//	9,800~39,799
+		 	180~199	: 레벨업경험치 10,000	//	39,800~239,799
+		 	
+		 	경험치
+		 		로그인		:	30
+		 		글쓰기		:	20
+		 		댓글쓰기	:	2
+		 		글추/비추	:	3/-2
+		 		댓글추/비추	:	2/-1
+		 		
+		 */
+		//===============================================================
+		private long convertGrade(long grade) {
 			
-		}else if(grade>=1000 && grade<9000){
-			
-			return (long)Math.floor( ((grade-1000)/200)+10 );
-			
-		}else if(grade>=9000 && grade<49000){
-			
-			return (long)Math.floor( ((grade-9000)/800)+50 );
-			
-		}else if(grade>=49000 && grade<199000){
-			
-			return (long)Math.floor( ((grade-49000)/3000)+100 );
-			
-		}else if(grade>=199000 && grade<1099000){
-			
-			return (long)Math.floor( ((grade-199000)/30000)+150 );
-			
-		}else {
-			return (long)Math.floor( ((grade-1099000)/300000)+180 );
+			if(grade>=0 && grade<300) {
+				return (long)Math.floor(grade/30);
+				
+			}else if(grade>=300 && grade<4800){
+				
+				return (long)Math.floor( ((grade-300)/50)+10 );
+				
+			}else if(grade>=4800 && grade<9800){
+				
+				return (long)Math.floor( ((grade-4800)/100)+100 );
+				
+			}else if(grade>=9800 && grade<39800){
+				
+				return (long)Math.floor( ((grade-9800)/1000)+150 );
+				
+			}else if(grade>=39800 && grade<239800){
+				
+				return (long)Math.floor( ((grade-39800)/10000)+180 );
+				
+			}else {
+				return 200;
+			}
+			/*
+			(구)
+			if(grade>=0 && grade<1000) {
+				return (long)Math.floor(grade/100);
+				
+			}else if(grade>=1000 && grade<9000){
+				
+				return (long)Math.floor( ((grade-1000)/200)+10 );
+				
+			}else if(grade>=9000 && grade<49000){
+				
+				return (long)Math.floor( ((grade-9000)/800)+50 );
+				
+			}else if(grade>=49000 && grade<199000){
+				
+				return (long)Math.floor( ((grade-49000)/3000)+100 );
+				
+			}else if(grade>=199000 && grade<1099000){
+				
+				return (long)Math.floor( ((grade-199000)/30000)+150 );
+				
+			}else {
+				return (long)Math.floor( ((grade-1099000)/300000)+180 );
+			}
+			*/
 		}
-	}
-	//===============================================================
+		//===============================================================
+		
 }//class
