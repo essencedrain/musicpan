@@ -80,7 +80,7 @@ public class BoardServiceImpl implements BoardService{
 		}
 		
 		if(board.getB_name().equals("analysis")) {
-			memberMapper.addGradePoint(board.getId(), 200);//정보 분석글 200점
+			memberMapper.addGradePoint(board.getId(), 100);//정보 분석글 100점
 		}else {
 			memberMapper.addGradePoint(board.getId(), 20);
 		}//글쓰기 점수
@@ -130,7 +130,7 @@ public class BoardServiceImpl implements BoardService{
 		boolean deleteResult = mapper.updateFlag(board) == 1;
 		
 		if(board.getB_name().equals("analysis")) {
-			memberMapper.addGradePoint(board.getId(), -200);//정보 분석글 200점
+			memberMapper.addGradePoint(board.getId(), -100);//정보 분석글 200점
 		}else {
 			memberMapper.addGradePoint(board.getId(), -20);
 		}//글쓰기 점수
