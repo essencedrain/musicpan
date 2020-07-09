@@ -144,6 +144,7 @@ public class ReplyServiceImpl implements ReplyService {
 	//===============================================================
 	// db유저 경험치 -> 등급변환
 	/*
+	    (구)
 	 	0~9 	: 레벨업경험치 100		//	0~999
 	 	10~49	: 레벨업경험치 200		//	1,000~8,999	
 	 	50~99	: 레벨업경험치 800		//	9,000~48,999
@@ -151,8 +152,15 @@ public class ReplyServiceImpl implements ReplyService {
 	 	150~179	: 레벨업경험치 30,000	//	199,000~1,098,999
 	 	180~199	: 레벨업경험치 300,000	//	1,099,000~7,098,999
 	 	
+	 	(신)
+	 	0~9 	: 레벨업경험치 30		//	0~299
+	 	10~99	: 레벨업경험치 50		//	300~4,799	
+	 	100~149	: 레벨업경험치 100		//	4,800~9,799
+	 	150~179	: 레벨업경험치 1,000	//	9,800~39,799
+	 	180~199	: 레벨업경험치 10,000	//	39,800~239,799
+	 	
 	 	경험치
-	 		로그인		:	10
+	 		로그인		:	30
 	 		글쓰기		:	20
 	 		댓글쓰기	:	2
 	 		글추/비추	:	3/-2
@@ -164,27 +172,27 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		long grade = temp.getGrade();
 		
-		if(grade>=0 && grade<1000) {
-			return (long)Math.floor(grade/100);
+		if(grade>=0 && grade<300) {
+			return (long)Math.floor(grade/30);
 			
-		}else if(grade>=1000 && grade<9000){
+		}else if(grade>=300 && grade<4800){
 			
-			return (long)Math.floor( ((grade-1000)/200)+10 );
+			return (long)Math.floor( ((grade-300)/50)+10 );
 			
-		}else if(grade>=9000 && grade<49000){
+		}else if(grade>=4800 && grade<9800){
 			
-			return (long)Math.floor( ((grade-9000)/800)+50 );
+			return (long)Math.floor( ((grade-4800)/100)+100 );
 			
-		}else if(grade>=49000 && grade<199000){
+		}else if(grade>=9800 && grade<39800){
 			
-			return (long)Math.floor( ((grade-49000)/3000)+100 );
+			return (long)Math.floor( ((grade-9800)/1000)+150 );
 			
-		}else if(grade>=199000 && grade<1099000){
+		}else if(grade>=39800 && grade<239800){
 			
-			return (long)Math.floor( ((grade-199000)/30000)+150 );
+			return (long)Math.floor( ((grade-39800)/10000)+180 );
 			
 		}else {
-			return (long)Math.floor( ((grade-1099000)/300000)+180 );
+			return 200;
 		}
 	}
 	//===============================================================
